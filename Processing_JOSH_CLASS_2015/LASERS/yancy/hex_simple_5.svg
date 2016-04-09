@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="265" height="306" viewBox="0 0 265 306" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g id="Layer6">
+        <path d="M132.502,0L0,76.5L0,229.5L33.125,210.375L33.125,95.625L132.502,38.25L132.502,0Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M33.125,95.625L33.125,210.375L132.502,267.75L132.502,229.5L66.251,191.25L66.251,114.75L33.125,95.625Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M132.502,267.75L33.125,210.375L0,229.5L132.502,306L265.004,229.5L231.878,210.375L132.502,267.75Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M132.502,0L265.004,76.5L265.004,229.5L231.878,210.375L231.878,95.625L132.502,38.25L132.502,0Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M132.502,229.5L132.502,267.75L231.878,210.375L231.878,95.625L198.753,114.75L198.753,191.25L132.502,229.5" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M198.753,114.75L231.878,95.625L132.502,38.25L33.125,95.625L66.251,114.75L132.502,76.5L198.753,114.75" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M132.502,76.5L66.251,114.75L66.251,191.25L99.376,172.125L99.376,133.875L132.502,114.75L132.502,76.5Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M99.376,172.125L66.251,191.25L132.502,229.5L198.753,191.25L165.627,172.125L132.502,191.25L99.376,172.125Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M165.627,172.125L198.753,191.25L198.753,114.75L132.502,76.5L132.502,114.75L165.627,133.875L165.627,172.125Z" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+        <path d="M132.502,114.75L99.376,133.875L99.376,172.125L132.502,191.25L165.627,172.125L165.627,133.875L132.502,114.75" style="fill:white;stroke-width:2.08px;stroke:black;"/>
+    </g>
+</svg>

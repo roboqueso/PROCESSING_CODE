@@ -1,0 +1,566 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ng-cl",
+				"ng-click	AngularJS"
+			],
+			[
+				"ng-re",
+				"ng-repeat	AngularJS"
+			],
+			[
+				"show",
+				"_showMessagesInline"
+			],
+			[
+				"head",
+				"header-navigation-menu-item-color"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"copy",
+				"copy-index"
+			],
+			[
+				"le",
+				"leftObs"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"bor",
+				"border-bottom"
+			],
+			[
+				"mo",
+				"module"
+			],
+			[
+				"in",
+				"include"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "hype_playground.pde",
+			"settings":
+			{
+				"buffer_size": 889,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "HYPE.pde",
+			"settings":
+			{
+				"buffer_size": 123540,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Processing/Processing.sublime-build",
+	"command_palette":
+	{
+		"height": 115.0,
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 516.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/joel/Code/processing/hype-projects/hype_playground"
+	],
+	"file_history":
+	[
+		"/Users/joel/Code/workshops/thorlabs/NGBootCamp/vendor/angular/angular.js",
+		"/Users/joel/Code/processing/hype-projects/hype_playground/HOrbiter.pde",
+		"/Users/joel/Code/processing/hype-projects/hype_playground/data/square.svg",
+		"/Users/joel/Code/processing/book_work/ch_03_draw/ch_03.pde",
+		"/Users/joel/Code/egghead/egghead-frontend/src/sass/components/_header.scss",
+		"/Users/joel/Code/egghead/egghead-frontend/src/app/common/header/header.tpl.html",
+		"/Users/joel/Code/egghead/egghead-frontend/src/sass/_mixins.scss",
+		"/Users/joel/Code/egghead/egghead-frontend/src/sass/_variables.scss",
+		"/Users/joel/Code/vertafore/vertafore_skillup_2014_angularjs_workshops/Advanced Providers/package.json",
+		"/Users/joel/Code/vertafore/vertafore_skillup_2014_angularjs_workshops/ui-router Fundamentals/lessons/05_targeting_views/targeting_views.js",
+		"/Users/joel/Code/egghead/egghead-frontend/build/app/app/app.js",
+		"/Users/joel/Code/egghead/egghead-frontend/src/sass/main.scss",
+		"/Users/joel/Code/e-depo-workshop/workshop-seed/src/index.html",
+		"/Users/joel/Downloads/AngularJSWorkshop/solutions/21_http_interceptor/http_interceptor.js",
+		"/Users/joel/Downloads/AngularJSWorkshop/solutions/01_html_only/html_only_spec.js",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/config/preamble.tex",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/01-the-foundation.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/build_essentials_for_angular.tex",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/07-local-node-server.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/16-serving-mock-data-with-node.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/latex_styles/pygments.sty",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/Book.txt",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/05-bower.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/12-LESS-style-sheets.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/00-preface.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/06-the-grunt-build.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/08-angular-partial-templates.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/09-routing-with-ui-router.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/10-underscore.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/config/book.yml",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/html/stylesheets/pygments.css",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/latex_styles/custom_pdf.sty",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/11-using-browserify-modules.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/03-modular-angular.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/04-grunt-basics.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/generated_polytex/03-modular-angular.tex",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/html/11-Using-Browserify-Modules--32-_fragment.html",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/.highlight_cache",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters/00 preface.md",
+		"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/generated_polytex/02 Project Structure -14-.tex",
+		"/Users/joel/Code/egghead/lessons/learnrx/02/index.html",
+		"/Users/joel/Code/egghead/lessons/learnrx/basics/index.html",
+		"/Users/joel/Code/egghead/egghead-rails/app/assets/stylesheets/articles.css.scss",
+		"/Users/joel/Code/egghead/egghead-rails/app/controllers/lessons_controller.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/views/technologies/show.html.erb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/technology.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/article.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/views/articles/index.html.erb",
+		"/Users/joel/Code/egghead/egghead-rails/app/views/articles/show.html.erb",
+		"/Users/joel/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/joel/Code/egghead/egghead-rails/app/views/layouts/_navbar_right.html.erb",
+		"/Users/joel/Code/egghead/egghead-rails/db/migrate/20131124205555_add_instructors_association_to_lessons.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/instructor.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/views/layouts/_navigation.html.erb",
+		"/Users/joel/Code/egghead/egghead-rails/log/newrelic_agent.log",
+		"/Users/joel/Code/egghead/egghead-rails/config/newrelic.yml",
+		"/Users/joel/Code/egghead/egghead-rails/spec/models/lesson_erratum_spec.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/lesson_erratum.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/lesson.rb",
+		"/Users/joel/Code/egghead/egghead-rails/config.ru",
+		"/Users/joel/Code/egghead/egghead-rails/app/workers/create_or_update_swiftype_document_job.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/models/contact_message.rb",
+		"/Users/joel/Code/egghead/egghead-rails/app/controllers/application_controller.rb",
+		"/Users/joel/.emacs",
+		"/Users/joel/Library/Application Support/Sublime Text 3/Packages/User/clang.sublime-build",
+		"/Users/joel/Code/learn-c-lisp/a.out",
+		"/Users/joel/Dropbox/_egghead-contributors/egghead-maddalone/react-fundamentals/17. Build a JSX Compiler/Transformer.js",
+		"/Users/joel/Dropbox/_egghead-contributors/egghead-maddalone/react-fundamentals/17. Build a JSX Compiler/index.html",
+		"/Users/joel/Desktop/Tomorrow-Night.tmTheme",
+		"/Users/joel/Dropbox/_egghead-contributors/_packaged/113-model-caching/caching-code/scripts/lib/app.js",
+		"/Users/joel/Code/um/bionics/bioniclabs-fakebank/package.json",
+		"/Users/joel/Library/Caches/Cleanup At Startup/Transmit/EF290005-5091-414F-BEF5-FFCD8B863ECD/header.php",
+		"/Users/joel/Library/Caches/Cleanup At Startup/Transmit/741A55E5-1881-4300-97FC-7B6490B24E1F/.profile",
+		"/Users/joel/Library/Caches/Cleanup At Startup/Transmit/6D206909-4BE7-4C00-94D8-C87DAC61C71A/footer.php",
+		"/Users/joel/Downloads/schedule-your-session-today/index.html"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 98.0,
+		"where_history":
+		[
+			"/Users/joel/Dropbox/_angular and grunt book/book/build_essentials_for_angular/chapters",
+			"/Users/joel/Code/egghead/egghead-frontend",
+			"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters",
+			"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular",
+			"/Users/joel/Dropbox/_angular and grunt book/build_essentials_for_angular/chapters",
+			"",
+			"/Users/joel/Downloads/Qtracks-master/app",
+			"/Users/joel/Downloads/Qtracks-master",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			");\n",
+			"<%= target %>",
+			">\n",
+			"Hg-",
+			"logo.svg",
+			"icon-FontAwesome",
+			"']);\n",
+			"self-contained",
+			"[rgb]{0.73,0.13,0.13}",
+			"hll",
+			"documentclass",
+			"``` ",
+			"``` javascript",
+			"render_back_js",
+			"libraries",
+			"tracklist",
+			"libraries",
+			"store",
+			"sql",
+			"\n    animate(mover, 'top', 300, 1000).forEach(function(test) {\n      mover.css({top: test})\n    })",
+			".paginate(:page => page, :per_page => 25)",
+			"<% unless instructor.nil? %>\n  <div class=\"row h5\">\n\n    <%= link_to @lesson.technology do %><img src=\"<%= @lesson.technology.icon.url(:small) %>\" class=\"h1-logo-inline\" alt=\"<%= @lesson.technology.label %> - <%= @lesson.title %>\"><%= @lesson.old_technology %><% end %><span class=\"text-muted\"> Video Tutorial</span> by <%= link_to instructor, instructor_path(instructor) %>\n  </div>\n<% end %>",
+			"slug_candidates",
+			"Instructor",
+			"gravatar_ima",
+			"class",
+			"#FFFF"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"<%= dist_target %>",
+			"```javascript"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "hype_playground.pde",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/Processing/Syntax/Processing.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 276.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "HYPE.pde",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 123540,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								123540,
+								123540
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"syntax": "Packages/Processing/Syntax/Processing.tmLanguage"
+						},
+						"translation.x": 987354.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 133.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.haskell_sublime_load":
+	{
+		"height": 83.0
+	},
+	"project": "HPlayground.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"less",
+				"app/models/lesson.rb"
+			],
+			[
+				"na",
+				"app/views/layouts/_navbar_right.html.erb"
+			],
+			[
+				"lesco",
+				"app/controllers/lessons_controller.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 245.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
