@@ -31,8 +31,10 @@ public class ColorFader_LAMP64 extends PApplet {
 BlinkStick device;
 
 
-//Change this to the number of LEDs connected
+//  Change this to the number of LEDs connected
+// NOTE: leds is used all over the place.  don't remove it
 int leds = 64;
+
 int[] colors;
 int thisColor;
 
@@ -40,29 +42,31 @@ public void setup()
 {
   
 
-frameRate(69);
+  //  NOTE: don't mess with frameRate for the time being
+  //  delay(leds) seems to be helping throughout this sketch
+  // frameRate(24);
 
   colors =  getColors( 10, 10, 400, 400, 255 );
   
   device = BlinkStick.findFirst();
-  delay(11);
+  delay(leds);
 
 }
 
 public void draw ()
 {
-	thisColor = colors[ (frameCount%colors.length) ];
-	background( thisColor );
+  //  TODO : does this "smooth" things out
+  if(frameCount %leds==0){
 
-  if (device != null)
-  {
-    setColors( thisColor );
-    delay(30);
+  	thisColor = colors[ (frameCount%colors.length) ];
+  	background( thisColor );
+
+    if (device != null)
+    {
+      setColors( thisColor );
+      delay(leds);
+    }
   }
-
-
-
-
 }
 
 public int[] getColors ( int x, int y, int w, int h, int c )
@@ -120,7 +124,7 @@ public void setColors(int c){
   {
   	try{
 	    device.setIndexedColor(i, c);
-	    delay(1);
+	    delay((int)sqrt(leds));
 	} catch( Exception e )
 	{
 		println("Exception: "+ e);

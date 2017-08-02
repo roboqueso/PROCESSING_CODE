@@ -1,3 +1,21 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import blinkstick.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class LAMP_BRAIN_VIZ extends PApplet {
+
 /*
 
   LAMP brain & visualization
@@ -11,7 +29,7 @@
 */
 
 
-import blinkstick.*;
+
 BlinkStick device;
 
 
@@ -25,9 +43,9 @@ String LAMP_MODE = "";  //  K - kitt, D - "default",
 Boolean toggle = false;  // generic toggle switch
 
 /////////////////////////////////////////////////////////
-void setup(){
+public void setup(){
 
-  size( 1420, 420 );
+  
   frameRate(8);
 
   device = BlinkStick.findFirst();
@@ -41,7 +59,7 @@ void setup(){
 
 
 /////////////////////////////////////////////////////////
-void draw(){
+public void draw(){
 
   println(LAMP_MODE);
   
@@ -97,7 +115,7 @@ void draw(){
 	- Write LAMP behavior for every letter in alphabet
 	- Write LAMP behavior for each #
 */
-void keyPressed(){
+public void keyPressed(){
 
   switch(key)
   {
@@ -132,7 +150,7 @@ void keyPressed(){
 
 //  BEHAVIORS  ////////////////////////////////////////////////////////////
   // see: https://www.youtube.com/watch?v=wAoKzfbGnCc
-void behave_kittMode(int activeLed){
+public void behave_kittMode(int activeLed){
 //  TODO: figure out tail logic
 
     for( int i = 0; i < leds; i++){
@@ -140,7 +158,7 @@ void behave_kittMode(int activeLed){
 
       if(i==activeLed){
         fill(color(250,0,0));
-        stroke(#EF2017);
+        stroke(0xffEF2017);
         rect( (i*led_w), leds, led_w, led_h);
         
         fill(0xEF2017);
@@ -169,7 +187,7 @@ void behave_kittMode(int activeLed){
 
 ////////////////////////////////////////////////////////////////////////
 //  FICKES 
-void LAMP_OFF(){
+public void LAMP_OFF(){
 
     if(device!=null){
 
@@ -196,4 +214,14 @@ public void setColors(int c){
 	}
   }
 
+}
+  public void settings() {  size( 1420, 420 ); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "LAMP_BRAIN_VIZ" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
