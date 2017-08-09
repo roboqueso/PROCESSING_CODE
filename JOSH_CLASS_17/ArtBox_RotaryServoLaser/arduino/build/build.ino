@@ -91,7 +91,15 @@ void loop() {
     digitalWrite (laserPin, LOW); // Turn Laser Off
   }
 
+  //  BROADCAST TO SERIAL
   if( val != lastVal || digitalRead(swPin) == 0 ) {
+
+
+    //  NOTE: be safe, the SG90 TowerPro supports 0 - 180, but it actually freaks out with anything 10 and under
+    //  make sure val is safe within servoMin and servoMax before sending
+    val = ( val < servoMin ) ? servoMin : val;
+    val = ( val > servoMax ) ? servoMax : val;
+    
     Serial.println( String(val) + '|' + String(digitalRead(swPin)) );
   }
 
