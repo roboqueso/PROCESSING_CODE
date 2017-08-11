@@ -10,7 +10,6 @@
  */
 
 #include <Servo.h>
-//  TODO: checkout SoftwareServo library?
 
 
 //  ROTARY ENCODER
