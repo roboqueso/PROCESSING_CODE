@@ -19,6 +19,14 @@ can = createCan(100, 200, (int)angle);
 
   shape(can);  
   angle += 0.01;
+  
+  if( frameCount >= width ){
+  
+    save(this+".png");
+    noLoop();
+    super.exit();
+  
+  }
 }
 
 PShape createCan(float r, float h, int detail) {
