@@ -11,7 +11,8 @@ boolean useROI = true;
 void setup() {
   src = loadImage("test.jpg");
   opencv = new OpenCV(this, src);
-  size(640,480);
+  size(1080, 720);
+  println(opencv.width, opencv.height);
 }
 
 void draw() {
@@ -23,6 +24,13 @@ void draw() {
 
   opencv.findCannyEdges(20,75);
   image(opencv.getOutput(), 0, 0);
+  
+  // if an ROI is in-use then getSnapshot()
+  // will return an image with the dimensions
+  // and content of the ROI
+  if(useROI){
+    image(opencv.getSnapshot(), width-roiWidth,0);
+  }
 }
 
 // toggle ROI on and off

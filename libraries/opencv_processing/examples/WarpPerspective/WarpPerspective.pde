@@ -18,7 +18,7 @@ Contour contour;
 
 void setup() {
   src = loadImage("cards.png");
-  size(640, 480);
+  size(950, 749);
   opencv = new OpenCV(this, src);
 
   opencv.blur(1);

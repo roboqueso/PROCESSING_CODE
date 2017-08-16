@@ -1,5 +1,3 @@
-//  TODO: port to 64 LED strip
-
 /**
  * ColorPicker. 
  * 

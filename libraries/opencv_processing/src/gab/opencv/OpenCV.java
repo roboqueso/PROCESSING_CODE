@@ -21,8 +21,8 @@
  * Boston, MA  02111-1307  USA
  * 
  * @author      Greg Borenstein http://gregborenstein.com
- * @modified    12/08/2014
- * @version     0.5.2 (13)
+ * @modified    05/21/2017
+ * @version     0.5.4 (17)
  */
 
 
@@ -69,15 +69,19 @@ import org.opencv.imgproc.Imgproc;
 import processing.core.*;
 
 /**
- * This is a template class and can be used to start a new processing library or tool.
- * Make sure you rename this class as well as the name of the example package 'template' 
- * to your own library or tool naming convention.
+ * OpenCV is the main class for using OpenCV for Processing. Most of the documentation is found here.
  * 
- * @example Hello 
+ * OpenCV for Processing is a computer vision library for the Processing creative coding toolkit.
+ * It's based on OpenCV, which is widely used throughout industry and academic research. OpenCV for
+ * Processing provides friendly, Processing-style functions for doing all of the most common tasks
+ * in computer vision: loading images, filtering them, detecting faces, finding contours, background
+ * subtraction, optical flow, calculating histograms etc. OpenCV also provides access to all native
+ * OpenCV data types and functions. So advanced users can do anything described in the OpenCV java
+ * documentation: http://docs.opencv.org/java/ 
  * 
- * (the tag @example followed by the name of an example included in folder 'examples' will
- * automatically include the example in the javadoc.)
- *
+ * A text is also underway to provide a narrative introduction to computer vision for beginners using
+ * OpenCV for Processing: https://github.com/atduskgreg/opencv-processing-book/blob/master/book/toc.md
+ * 
  */
 
 public class OpenCV {
@@ -112,7 +116,7 @@ public class OpenCV {
 	BackgroundSubtractorMOG backgroundSubtractor;
 	public Flow flow;
 
-	public final static String VERSION = "0.5.2";
+	public final static String VERSION = "0.5.4";
 	public final static String CASCADE_FRONTALFACE = "haarcascade_frontalface_alt.xml";
 	public final static String CASCADE_PEDESTRIANS = "hogcascade_pedestrians.xml";
 	public final static String CASCADE_EYE = "haarcascade_eye.xml";
@@ -408,7 +412,9 @@ public class OpenCV {
 	    	if (PApplet.platform == PConstants.LINUX) { //platform Linux
 	    		// attempt to detect arm architecture - is it fair to assume linux for ARM devices?
 	    		isArm = osArch.contains("arm");
-    			path = isArm ? nativeLibPath + "arm7" : nativeLibPath + "linux" + bitsJVM;
+			// armv6hf as found on the Raspberry Pi is the lowest architecture supported by Processing
+			// in the future we'll have runtime-detection of armv7 systems, and use the optimized library on those
+    			path = isArm ? nativeLibPath + "linux-armv6hf" : nativeLibPath + "linux" + bitsJVM;
 	    	}
 	    	
 	    	// ensure the determined path exists
@@ -841,6 +847,17 @@ public class OpenCV {
 	}
 	
 	/**
+	 * Apply a global threshold to the image. The threshold is determined by Otsu's method, which
+	 * attempts to divide the image at a threshold which minimizes the variance of pixels in the black
+	 * and white regions.
+	 *
+	 * See: https://en.wikipedia.org/wiki/Otsu's_method
+	 */
+	public void threshold() {
+		Imgproc.threshold(getCurrentMat(), getCurrentMat(), 0, 255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU); 
+	}
+	
+	/**
 	 * Apply an adaptive threshold to an image. Produces a binary image
 	 * with white pixels where the original image was above the threshold
 	 * and black where it was below.
@@ -910,6 +927,55 @@ public class OpenCV {
 		Imgproc.erode(getCurrentMat(), getCurrentMat(), new Mat());
 	}
 	
+  /**
+   * Apply a morphological operation (e.g., opening, closing) to the image with a given kernel element.
+   *
+   * See:
+   * http://docs.opencv.org/doc/tutorials/imgproc/opening_closing_hats/opening_closing_hats.html
+   * 
+   * @param operation
+   *    The morphological operation to apply: Imgproc.MORPH_CLOSE, MORPH_OPEN,
+   *    MORPH_TOPHAT, MORPH_BLACKHAT, MORPH_GRADIENT.
+   * @param kernelElement
+   *    The shape to apply the operation with: Imgproc.MORPH_RECT, MORPH_CROSS, or MORPH_ELLIPSE.
+   * @param width
+   *    Width of the shape.
+   * @param height
+   *    Height of the shape.
+   */
+  public void morphX(int operation, int kernelElement, int width, int height) {
+    Mat kernel = Imgproc.getStructuringElement(kernelElement, new Size(width, height));
+    Imgproc.morphologyEx(getCurrentMat(), getCurrentMat(), operation, kernel);
+  }
+  
+  /**
+   * Close the image with a circle of a given size.
+   *
+   * See:
+   * http://docs.opencv.org/doc/tutorials/imgproc/opening_closing_hats/opening_closing_hats.html#closing
+   *
+   * @param size
+   *    Radius of the circle to close with.
+   */
+  public void close(int size) {
+    Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(size, size));
+    Imgproc.morphologyEx(getCurrentMat(), getCurrentMat(), Imgproc.MORPH_CLOSE, kernel);
+  }
+	
+  /**
+   * Open the image with a circle of a given size.
+   *
+   * See:
+   * http://docs.opencv.org/doc/tutorials/imgproc/opening_closing_hats/opening_closing_hats.html#opening
+   *
+   * @param size
+   *    Radius of the circle to open with.
+   */
+  public void open(int size) {
+    Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(size, size));
+    Imgproc.morphologyEx(getCurrentMat(), getCurrentMat(), Imgproc.MORPH_OPEN, kernel);
+  }
+  
 	/**
 	 * Blur an image symetrically by a given number of pixels.
 	 * 
@@ -1284,16 +1350,19 @@ public class OpenCV {
 	public PImage getSnapshot(){
 		PImage result;
 		
-		if(useColor){
-			if(colorSpace == PApplet.HSB){
-				result = getSnapshot(matHSV);
-			} else {
-				result = getSnapshot(matBGRA);
-			}
+		if(useROI){
+			result = getSnapshot(matROI);
 		} else {
-			result = getSnapshot(matGray);
+			if(useColor){
+				if(colorSpace == PApplet.HSB){
+					result = getSnapshot(matHSV);
+				} else {
+					result = getSnapshot(matBGRA);
+				}
+			} else {
+				result = getSnapshot(matGray);
+			}
 		}
-	
 		return result;
 	}
 	
@@ -1354,7 +1423,7 @@ public class OpenCV {
 	}
 
 	private void welcome() {
-		System.out.println("OpenCV for Processing 0.5.2 by Greg Borenstein http://gregborenstein.com");
+		System.out.println("OpenCV for Processing 0.5.4 by Greg Borenstein http://gregborenstein.com");
 		System.out.println("Using Java OpenCV " + Core.VERSION);
 	}
 	

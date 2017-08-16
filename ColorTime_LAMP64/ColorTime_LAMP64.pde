@@ -106,7 +106,7 @@ void draw()
   if(frameCount>3600)
   {
     LAMP_OFF();
-    text("done",0,random(height));
+    text("done", (width/2), (height/2)+(textAscent()+textDescent()) );
     noLoop();
   }
 
