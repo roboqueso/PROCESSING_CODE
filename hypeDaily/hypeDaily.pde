@@ -21,7 +21,8 @@ HYPE SCRATCH SKETCH
 
 HDrawablePool pool;
 
-final HColorPool colors = new HColorPool(#111111, #202020, #242424, #333333, #4D4D4D, #CCCCCC);
+final HColorPool colors = new HColorPool(#111111, #202020, #242424, #343434, #3D3D3D, #CCCCCC,
+                                        #EFEFEF, #EF1975, #422017, #EF4217, #2017EF, #42EF17);
 
 
 /*
@@ -81,8 +82,10 @@ try {
 
   pool.autoAddToStage()
     .add(
-      new HRect()
-      .rounding(1)
+      //new HRect()
+      //.rounding(1)
+      
+      new HPath().drawLissajous( random(width/2), height/2, random(42) )
     )
 
     .onCreate(
@@ -98,7 +101,7 @@ try {
             .strokeCap(ROUND)
             .strokeJoin(ROUND)
             .fill(colors.getColor())
-            .size( (int)random(4,10)  , (int)random(8,12) )
+            //.size( (int)random(4,10)  , (int)random(8,12) )
             .loc(  (int)random(width) , (int)random(height) )
             .anchorAt(H.CENTER)
 
@@ -201,4 +204,20 @@ void draw() {
   }
 
   H.drawStage();
+}
+
+
+
+
+
+void keyPressed(){
+
+  if( keyCode == ESC ){
+  
+    save(this+".png");
+    noLoop();
+    super.exit();
+  }
+
+
 }
