@@ -10,7 +10,6 @@ used QT Screen Record
 
 iMovie to drop music back on top then post to Vimeo
 
-
 */
 
 import ddf.minim.*;
