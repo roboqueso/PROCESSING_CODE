@@ -1,3 +1,15 @@
+/*
+Remember before running
+
+  1. Get LEAP drivers
+    https://www.leapmotion.com/setup/
+
+  2. Get LEAP P5 driver
+    Sketch > Import > Add Library
+    filter for LEAP
+*/
+
+
 import de.voidplus.leapmotion.*;
 
 LeapMotion leap;
