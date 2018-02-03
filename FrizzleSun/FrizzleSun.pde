@@ -1,6 +1,11 @@
 //  
 //  http://ericfickes.com
 //
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 37;
 float sz=0;
@@ -11,8 +16,6 @@ int cY;
 ArrayList p3;
 PImage img;
 
-FixLib fix = new FixLib();
-
 float xoff, x, y;
 float n,i = 0;
 /////////////////////////////////////////////////////////////////////////
@@ -22,7 +25,7 @@ void setup() {
   noFill();
   
   img = loadImage("indies.jpg");
-  p3 = fix.getImgColors(img);
+  p3 = fix.getImgColors(img, true);
 
   cX = width/2;
   cY = height/2;

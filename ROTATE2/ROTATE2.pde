@@ -1,6 +1,8 @@
 import processing.opengl.*;
+import fixlib.*;
 
-FixLib fix = new FixLib();
+Fixlib fix = Fixlib.init(this);
+
 
 /*
 Specifies vertex coordinates for curves. This function may only be used between beginShape() and 
@@ -16,7 +18,7 @@ Specifies vertex coordinates for curves. This function may only be used between 
 Boolean isFinal = true;
 String artDailyMsg = "ERICFICKES.COM";
 //  
-float alf = 37;
+float alf = 42; //37;
 
 //  circle vars
 float i, angle1 = 180, xx1, yy1, startX1, startY1, radius1 = 37;

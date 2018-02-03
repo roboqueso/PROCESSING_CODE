@@ -4,10 +4,11 @@
  **/
 
 import ddf.minim.*;
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 Minim minim;
 AudioInput in;
-FixLib fix = new FixLib();
 Boolean isFinal = true;
 int buf;
 float alf = 22, tX, tY, inLeft, inRight, wvStart,i;

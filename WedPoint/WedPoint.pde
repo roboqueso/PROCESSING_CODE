@@ -1,10 +1,12 @@
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 public int alf = 42;
 
 Boolean isFinal = true;
 int i = 0, sz = 75, cX, cY; 
-
-
-FixLib fix = new FixLib();
  
 void setup() {  // this is run once.   
  

@@ -1,3 +1,7 @@
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 /*
     //  float amp = 33;
     float x, y;
@@ -12,7 +16,6 @@
     }
 */
 Boolean isFinal = true;
-FixLib fix;
 float a, b, x, y, sz, amp;
 int angle;
 ////////////////////////////////////////////////////
@@ -24,8 +27,6 @@ void setup() {
   stroke(0);
   strokeWeight(2);
   smooth();
-
-  fix = new FixLib();
   
   amp = 2;
   sz = 42;

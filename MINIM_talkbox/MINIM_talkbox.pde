@@ -3,11 +3,11 @@
 **/
 
 import ddf.minim.*;
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 Minim minim;
 AudioInput in;
-
-FixLib fix = new FixLib();
 
 Boolean isFinal = true;
 

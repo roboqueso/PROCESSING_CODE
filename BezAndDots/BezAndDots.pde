@@ -3,7 +3,11 @@
 //  clone
 //  http://studio.sketchpad.cc/sp/pad/newsketch?clonePadId=ro.9ZdbPHUvjZkMn&cloneRevNum=5
 
-FixLib fix = new FixLib();
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 int buf;
 float alf = 37, tX, tY, inLeft, inRight, wvStart,i;

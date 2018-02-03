@@ -1,10 +1,12 @@
+import fixlib.*;
+
 Boolean isFinal = true;
 float alf = 100;
 
 ArrayList p3;
 PImage img;
 
-FixLib fix = new FixLib();
+Fixlib fix = Fixlib.init(this);
 
 float a, x, y, co, bri, i, sz, h;
 int cX, cY;
@@ -136,4 +138,3 @@ void artDaily( String dailyMsg ) {
   fill(0);
   text( " "+dailyMsg, 1024*.666, 37);
 }
-

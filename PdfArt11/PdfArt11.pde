@@ -1,3 +1,7 @@
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 String lines[];
 // color[] palette = { #013459, #CF1312, #EF6900, #E8DA83, #CBFB5C, #1A74E2, #061C3F };
 ArrayList palette;
@@ -5,8 +9,6 @@ PImage img;
 String txt;
 float cX, cY, xx,yy, tLen, txtSz;
 int colorIdx;
-
-FixLib fl = new FixLib();
 
 void setup()
 {
@@ -17,13 +19,13 @@ void setup()
   smooth();
 
   img = loadImage("make-kinect-like-this.jpg");
-  palette = fl.getImgColors(img);
+  palette = fix.getImgColors(img);
 
   lines = loadStrings("BlueNoiseThroughOptimalTransport.pdf");
   cX = width/2;
   cY = height/2;
 
-  fl.paletteGrid(palette);
+  fix.paletteGrid(palette);
 }
 
 
@@ -37,7 +39,7 @@ void draw()
 		txtSz = width/tLen;
 		colorIdx = frameCount % (palette.size()-1);
 // fun to watch
-frame.setTitle(txt);
+surface.setTitle(txt);
 
 
 try {
@@ -143,12 +145,12 @@ switch(key)
 {
   case 's':
     // save(pdeName() + getTimestamp() + ".png");
-    save( fl.pdeName() + "-" + fl.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   break;
 
   case ESC:
     // save(pdeName() + getTimestamp() + ".png");
-    save( fl.pdeName() + "-" + fl.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     exit();
   break;
 }

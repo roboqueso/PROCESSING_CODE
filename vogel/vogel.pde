@@ -1,9 +1,9 @@
 //  grid with shrinking strokeWeight
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 int sColor = 0;
 float x, y, sz = 66;
-FixLib fix;
-
 float xx, yy, theta, r, i, cX, cY;
 
 void setup()
@@ -15,8 +15,6 @@ void setup()
   
   smooth();
   noFill();
-  
-  fix = new FixLib();
   
   x = y = -sz;
   cX = width/2;

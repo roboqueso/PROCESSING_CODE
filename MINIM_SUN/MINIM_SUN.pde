@@ -1,15 +1,15 @@
-//import processing.opengl.*;
-
 /**
  Using MINIM AudioInput, get funky with live microphone data
  //  65535 is a frequently occurring number in the field of computing because it is the highest number which can be represented by an unsigned 16 bit binary number
  **/
 
 import ddf.minim.*;
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 
 Minim minim;
 AudioInput in;
-FixLib fix = new FixLib();
 Boolean isFinal = true;
 int buf;
 float alf = 37, tX, tY, inLeft, inRight, wvStart;

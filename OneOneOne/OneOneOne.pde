@@ -1,6 +1,8 @@
 //  IMPORTS ////////////////////////////////////////////////////
 import processing.opengl.*;
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 //
 //  This is a PRocessing sketch
 //
@@ -14,8 +16,6 @@ int txtSize, alf = 69, x = 0, y = 0;
 float cX, cY, i;
 
 int radius = 11, x2, y2;
-
-FixLib fix = new FixLib();
 
 ////////////////////////////////////////////////////
 //

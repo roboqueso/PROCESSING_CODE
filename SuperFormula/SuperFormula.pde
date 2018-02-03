@@ -1,16 +1,13 @@
 
-Boolean isFinal = true;
-int alf = 37;
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
+
+Boolean isFinal = true;
+int alf = 42; //37;
 int cX;
 int cY;
-
 color[] p3 = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
-
-FixLib fix = new FixLib();
-
-
-
 
 int a = 3;  //1;
 int b = 3;  //1;

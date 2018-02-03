@@ -21,13 +21,16 @@ strokeWeight( 2);
     
     
 */
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 37;
+float alf = 42; //37;
 
 ArrayList p3;
 PImage img;
 
-FixLib fix = new FixLib();
 
 float a, x, y, co, bri, i, sz;
 int cX, cY;

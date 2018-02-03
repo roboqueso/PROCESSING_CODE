@@ -1,6 +1,6 @@
-//
-//  This is a PRocessing sketch
-//
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 float alf = 22, varNum = 1;
 
@@ -14,7 +14,6 @@ ArrayList palette = new ArrayList();//{ #EF0000, #00EF00, #0000EF, #CECE00, #FA7
 ArrayList<PVector> _from = new ArrayList<PVector>();
 ArrayList<PVector> _to = new ArrayList<PVector>();
 
-FixLib fix = new FixLib();
 
 ////////////////////////////////////////////////////
 //
@@ -62,7 +61,7 @@ void draw()
     _to.add( new PVector( mouseX, mouseY ) );
   }
 
-  if( frameCount > width+height ) {
+  if( frameCount > width*height ) {
     
     //  HACKY : Dump vectors to text file
 //      String[] lines = new String[ _from.size() + 5]; // keep this number in sync with the EXTRA number of lines you're adding in addition to the DOTS

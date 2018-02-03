@@ -1,13 +1,14 @@
 //  
 //  http://ericfickes.com
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 float alf = 100;
 
 ArrayList p3;
 PImage img;
-
-FixLib fix = new FixLib();
 
 float a, x, y, co, bri, i, sz;
 int cX, cY;

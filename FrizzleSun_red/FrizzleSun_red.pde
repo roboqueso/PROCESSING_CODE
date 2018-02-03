@@ -1,6 +1,10 @@
 //  
 //  http://ericfickes.com
 //
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 360;
 float sz=0;
@@ -10,8 +14,6 @@ int cY;
 
 ArrayList p3;
 PImage img;
-
-FixLib fix = new FixLib();
 
 float xoff, x, y;
 float n,i = 0;

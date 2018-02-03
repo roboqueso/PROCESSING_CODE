@@ -1,4 +1,7 @@
-FixLib fix = new FixLib();
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
 

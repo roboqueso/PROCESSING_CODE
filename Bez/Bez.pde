@@ -1,8 +1,12 @@
 //  
 //  http://ericfickes.com
 //
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 37;
+float alf = 42; //37;
 float sz=0;
 
 int cX;
@@ -10,8 +14,6 @@ int cY;
 
 ArrayList p3;
 PImage img;
-
-FixLib fix = new FixLib();
 
 float x, y, co, bri, i, a;
 
@@ -84,14 +86,14 @@ fix.ranPalStroke(p3);
   sz = i/noise(frameCount);
   strokeWeight(PI);
 
-  fix.evenOddStroke(#EF2012, alf);
+  fix.evenOddStroke(#EF2012, (int)alf);
   x = map(sin(i)*sin(i*0.8), -1, 1, a*noise(frameCount), 1024);
   y = map(sin(a*i+1.5)*sin(a*3+i), -1, 1, a*noise(frameCount), 768);
   co = map(sin(a*0.03), -1, 1, 0, 100);
   sz = map(sin(a*1.7)*sin(a*2.3), -1, 1, 5, 30);
   bri = map(sin(a*1.3)*sin(a*4.1), -1, 1, 10, 60);
 
-  fix.evenOddStroke(255, alf);
+  fix.evenOddStroke(255, (int)alf);
   fix.ranPalFill(p3);
   rect(x, y, sz, sz);
   rect(y, x, sz, sz);
@@ -99,7 +101,7 @@ fix.ranPalStroke(p3);
   a = a + 0.03;
 
 
-  fix.evenOddStroke(#EF2012, alf*2);
+  fix.evenOddStroke(#EF2012, (int)alf*2);
   rect( 1024-frameCount, 1024-frameCount, i, i ); 
   rect( 1024-frameCount, 1024-frameCount, sz, sz ); 
 

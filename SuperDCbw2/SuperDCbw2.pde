@@ -1,9 +1,8 @@
 //  IMPORTS ////////////////////////////////////////////////////
 import processing.opengl.*;
+import fixlib.*;
 
-//
-//  This is a PRocessing sketch
-//
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int alf = 37;
 float angle, radius = alf, x, y, cX, cY, pad;
@@ -13,8 +12,6 @@ color[] p3 = { #005555, #555555, #5555AA, #55AAAA, #AAAAAA, #AAAAFF, #AAFFFF, #F
 
 //  keep track of the waves peaking
 float maxY1 = 0;
-
-FixLib fix = new FixLib();
 
 float rX, rY, r2X, r2Y;
 int i = 0; 

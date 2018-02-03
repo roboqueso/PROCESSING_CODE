@@ -4,7 +4,9 @@
 //  2. Duplicate that shape to come out of each corner
 //  3. Get rad
 
-FixLib fix = new FixLib();
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
 int i, cX, cY;

@@ -1,10 +1,13 @@
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 //  
 //  Use beginShape to create X based patterns
 //  1. Create a good looking shape
 //  2. Duplicate that shape to come out of each corner
 //  3. Get rad
 
-FixLib fix = new FixLib();
 Boolean isFinal = true;
 
 //  controls mashup

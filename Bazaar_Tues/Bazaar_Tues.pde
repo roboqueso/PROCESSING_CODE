@@ -1,7 +1,9 @@
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 float alf = 100;
-
-FixLib fix = new FixLib();
 PImage img;
 ArrayList p3;
 

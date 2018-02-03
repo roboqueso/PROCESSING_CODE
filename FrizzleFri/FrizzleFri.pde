@@ -1,6 +1,10 @@
 //  
 //  http://ericfickes.com
 //
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 float alf = 75;
 
@@ -9,7 +13,6 @@ int cY;
 
 color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
-FixLib fix = new FixLib();
 
 ////////////////////////////////////////////////////
 //

@@ -1,3 +1,48 @@
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+// TODO: THIS SKETCH IS NOT SAVING, FIX THE FATAL
+/*
+textSize(-0.30135608) ignored: the text size must be larger than zero
+Tessellation Error: a coordinate is too large
+textSize(-0.9124906) ignored: the text size must be larger than zero
+textSize(-0.25002646) ignored: the text size must be larger than zero
+textSize(-0.13532972) ignored: the text size must be larger than zero
+You are trying to draw outside OpenGL's animation thread.
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fff32900f90, pid=3393, tid=0x000000000000df03
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_144-b01) (build 1.8.0_144-b01)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.144-b01 mixed mode bsd-amd64 compressed oops)
+# Problematic frame:
+# Place all drawing commands in the draw() function, or inside
+your own functions as long as they are called from draw(),
+but not in event handling functions such as keyPressed()
+or mousePressed().
+C  [libGL.dylib+0x5f90]  glBindFramebuffer+0x12
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /Applications/Processing.app/Contents/Java/hs_err_pid3393.log
+Compiled method (nm)   75288 1985     n 0       jogamp.opengl.gl4.GL4bcImpl::dispatch_glBindFramebuffer1 (native)
+ total in heap  [0x0000000118547b10,0x0000000118547e40] = 816
+ relocation     [0x0000000118547c38,0x0000000118547c78] = 64
+ main code      [0x0000000118547c80,0x0000000118547e38] = 440
+ oops           [0x0000000118547e38,0x0000000118547e40] = 8
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+Finished.
+[Finished in 77.1s]
+*/
+
 String lines[];
 // color[] palette = { #013459, #CF1312, #EF6900, #E8DA83, #CBFB5C, #1A74E2, #061C3F };
 ArrayList palette;
@@ -6,7 +51,7 @@ String txt;
 float cX, cY, xx,yy, tLen, txtSz;
 int colorIdx;
 
-FixLib fl = new FixLib();
+
 
 void setup()
 {
@@ -17,13 +62,13 @@ void setup()
   smooth();
 
   img = loadImage("make-kinect-like-this.jpg");
-  palette = fl.getImgColors(img);
+  palette = fix.getImgColors(img);
 
   lines = loadStrings("VoronoiType.pdf");	//"BlueNoiseThroughOptimalTransport.pdf");
   cX = width/2;
   cY = height/2;
 
-  fl.paletteGrid(palette);
+  fix.paletteGrid(palette);
 }
 
 
@@ -37,7 +82,9 @@ void draw()
 		txtSz = width/tLen;
 		colorIdx = frameCount % (palette.size()-1);
 // fun to watch
-frame.setTitle(txt);
+//	Use surface.setTitle() instead of frame.setTitle in Processing 3
+// frame.setTitle(txt);
+surface.setTitle(txt);
 
 
 try {
@@ -167,12 +214,12 @@ switch(key)
 {
   case 's':
     // save(pdeName() + getTimestamp() + ".png");
-    save( fl.pdeName() + "-" + fl.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   break;
 
   case ESC:
     // save(pdeName() + getTimestamp() + ".png");
-    save( fl.pdeName() + "-" + fl.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     exit();
   break;
 }

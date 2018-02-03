@@ -1,6 +1,7 @@
-//
-//  This is a PRocessing sketch
-//
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 11, varNum = 1;
 
@@ -10,8 +11,6 @@ int cY;
 //color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 //ArrayList palette = new ArrayList();//{ #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
-
-FixLib fix = new FixLib();
 
 ////////////////////////////////////////////////////
 //
