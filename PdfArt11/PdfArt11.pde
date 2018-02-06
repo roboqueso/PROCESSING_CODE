@@ -1,7 +1,8 @@
-
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 String lines[];
 // color[] palette = { #013459, #CF1312, #EF6900, #E8DA83, #CBFB5C, #1A74E2, #061C3F };
 ArrayList palette;
@@ -49,9 +50,11 @@ try {
 
 	
 	fill( (Integer)palette.get( colorIdx ) , random(200,tLen) );
+	if(txtSz<1){txtSz+=PI;}
 	textSize(txtSz);
 	text(txt, xx, yy, width, txtSz);
 
+	if((txtSz-PI)<1){txtSz+=TWO_PI;}
 	fill( frameCount%255, frameCount%255, frameCount%255,  random(txtSz, tLen) );
 	textSize(txtSz-PI);
 	text(txt, xx-PI, yy+PI, width, txtSz);	
@@ -74,7 +77,7 @@ try {
 	textSize(42);
     text("CRASH::"+exc, 42, height/2);
     tint(255);
-    save("CRASH_"+pdeName() + getTimestamp() + ".png");
+    save("CRASH_"+ fix.pdeName() + fix.getTimestamp() + ".png");
   }
 
 
@@ -125,8 +128,9 @@ try {
 		PImage ss = get();
 		image(ss,0,0);
 
-
+println("DONE");
 		noLoop();
+		exit();
 	}
 
 
@@ -157,19 +161,3 @@ switch(key)
 
 
 } 
-
-
-
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-

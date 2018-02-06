@@ -2,10 +2,8 @@
 import processing.opengl.*;
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
-//
-//  This is a PRocessing sketch
-//
 Boolean isFinal = true;
 
 //  blues
@@ -72,7 +70,7 @@ void draw()
 
   if( frameCount > (height+width)*TWO_PI ){
 
-    exit();
+    doExit();
   }
 
 }
@@ -115,7 +113,7 @@ void gridLineP2( int x, int y ){
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -130,8 +128,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
