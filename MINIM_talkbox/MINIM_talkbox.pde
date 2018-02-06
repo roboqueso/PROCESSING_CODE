@@ -3,16 +3,20 @@
 **/
 
 import ddf.minim.*;
+
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Minim minim;
 AudioInput in;
 
 Boolean isFinal = true;
 
 int cX, cY, buf;
-float alf = 75, angle, x, y, tX, tY, szW, szH;
+int alf = 42; //75
+float angle, x, y, tX, tY, szW, szH;
 
 
 void setup()
@@ -25,7 +29,7 @@ void setup()
   cX = width/2;
   cY = height/2;
   
-  alf = 37;
+  fix.alpha(alf);
   y = cY;
   
   minim = new Minim(this);
@@ -115,7 +119,7 @@ void draw()
 //  END or DO SOMETHING at an interval
 //  Sketch prints, clears, resets
   if( frameCount > width+height) {
-    exit();
+    doExit();
   }
 }
 
@@ -124,7 +128,7 @@ void draw()
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -136,8 +140,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

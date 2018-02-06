@@ -1,18 +1,20 @@
 /**
  Using MINIM AudioInput, get funky with live microphone data
  **/
-
+//  TODO: revisit this one.  it has some hot noise drawing
 import ddf.minim.*;
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Minim minim;
 AudioInput in;
 
 Boolean isFinal = true;
 int buf;
-float alf = 37, tX, tY, szW, szH;
-
+int alf = 42;
+float tX, tY, szW, szH;
 
 ////  CIRCLEY THING
 float cX, cY, inc, m; 
@@ -35,7 +37,8 @@ void setup()
   rectMode(CENTER);  
   //  drawing font
   textFont( createFont( "AnonymousPro", 22 ) );
-  
+  fix.alpha(alf);
+
   cX = width/2;
   cY = height/2;
   sz = 11;
@@ -174,7 +177,7 @@ void draw()
 
   //BLINKY TO INDICATE ACTION
   m = random(height);
-  stroke(37,random(255),37, alf*PI);
+  stroke(37,random(255),37, alf*HALF_PI);
 //  fill(random(11),random(37),random(11), PI);
   ellipse( cX, cY, m, m );
 
@@ -298,8 +301,7 @@ void draw()
 
   ////  STOPPER
   if ( frameCount > width) {
-save(this+".png");
-    exit();
+    doExit();
   }
 }
 
@@ -308,7 +310,7 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -320,8 +322,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

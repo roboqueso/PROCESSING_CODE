@@ -3,8 +3,10 @@
  **/
 
 import ddf.minim.*;
+
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Minim minim;
@@ -12,7 +14,8 @@ AudioInput in;
 
 Boolean isFinal = true;
 int buf;
-float alf = 11, tX, tY, szW, szH;
+int alf = 42;
+float tX, tY, szW, szH;
 
 
 ////  CIRCLEY THING
@@ -36,7 +39,7 @@ void setup()
   rectMode(CENTER);  
   //  drawing font
   textFont( createFont( "AnonymousPro", 22 ) );
-  
+  fix.alpha(alf);
   cX = width/2;
   cY = height/2;
   sz = 11;
@@ -269,7 +272,7 @@ void draw()
 
   ////  STOPPER
   if ( frameCount > width) {
-    exit();
+    doExit();
   }
 }
 
@@ -278,7 +281,7 @@ void draw()
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -290,8 +293,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
