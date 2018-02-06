@@ -23,10 +23,12 @@ strokeWeight( 2);
 */
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
+
 Boolean isFinal = true;
-float alf = 42; //37;
+int alf = 42; //37;
 
 ArrayList p3;
 PImage img;
@@ -36,10 +38,13 @@ float a, x, y, co, bri, i, sz;
 int cX, cY;
  
 void setup() {
+
   size(1024, 768 );
   background(37);
   cX = width/2;
   cY = height/2;
+
+  fix.alpha(alf);
 
 
   fill(18);
@@ -105,7 +110,7 @@ noFill();
  
 
     if( frameCount > height*PI ) {
-    exit();
+    doExit();
   }
 }
 
@@ -114,7 +119,7 @@ noFill();
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -126,8 +131,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

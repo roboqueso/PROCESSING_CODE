@@ -1,9 +1,10 @@
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
-public int alf = 42;
+
+int alf = 42;
 
 Boolean isFinal = true;
 int i = 0, sz = 75, cX, cY; 
@@ -14,6 +15,7 @@ void setup() {  // this is run once.
     size(1024,768);
     smooth();
     noFill();
+    fix.alpha(alf);
 
     cX = width/2;
     cY = height/2;
@@ -51,13 +53,13 @@ void draw() {
 
 
     if( sz < PI ){
-        exit();
+        doExit();
     }
 }
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -72,8 +74,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

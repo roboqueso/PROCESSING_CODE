@@ -81,7 +81,7 @@ void draw()
  
     if(radius*PI > height){
 save(this+".png");
-      exit();
+      doExit();
     }
 
 
@@ -95,7 +95,7 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 	artDaily( "ERICFICKES.COM" );
 
@@ -107,8 +107,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -124,4 +123,3 @@ smooth();
   fill(#EF2012);
   text( " "+dailyMsg, 0, height-22 );
 }
-

@@ -1,6 +1,6 @@
-//	IMPORTS	////////////////////////////////////////////////////
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
@@ -33,11 +33,7 @@ void setup() {
   // setup core sketch settings items
   size(1024, 768);  //  P2D, P3D, OPENGL, PDF
   background(#000011);
-//  
-//  ellipseMode(CENTER);
-//  rectMode(CENTER);
-//  
-//  frameRate(100);
+  fix.alpha(alf);
   smooth();
 
   cX = width/2;
@@ -122,7 +118,7 @@ f+= 0.420;
 
   if( angle > (height+width)*4.2 )
   {
-      exit();
+      doExit();
       
   }
 }
@@ -132,7 +128,7 @@ f+= 0.420;
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -151,8 +147,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

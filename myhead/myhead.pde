@@ -1,12 +1,11 @@
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 int sColor = 0;
 float x, y;
 int sz = 1000;
-
-
 float xx, yy, theta, r, i, cX, cY;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,7 +91,8 @@ strokeWeight(sqrt(sz));
 
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     
-    stop();
+    noLoop();
+    exit();
   }
 
 }

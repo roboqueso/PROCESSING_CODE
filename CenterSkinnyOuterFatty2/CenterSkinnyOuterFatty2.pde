@@ -1,9 +1,11 @@
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
+
 Boolean isFinal = true;
-float alf = 11, varNum = 1;
+int alf = 11, varNum = 1;
 
 int cX;
 int cY;
@@ -19,7 +21,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(#110000);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -39,7 +41,7 @@ void draw()
   if( mousePressed ) {
     smooth();
 
-    varNum = constrain( (mouseX-mouseY)*noise(frameCount), 5, 300 );
+    varNum = (int)constrain( (mouseX-mouseY)*noise(frameCount), 5, 300 );
     strokeWeight( varNum );
 
 //debug
@@ -69,7 +71,7 @@ line( 0, pmouseY, width, mouseY );
   }
 
   if( frameCount > width+height ) {
-    exit();
+    doExit();
   }
 }
 
@@ -77,7 +79,7 @@ line( 0, pmouseY, width, mouseY );
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -89,8 +91,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -109,6 +110,7 @@ void artDaily( String dailyMsg ) {
 ////////////////////
 //  PASTE ZONE
 ////////////////////
+/*
 void  doit() { 
   stroke(random(255), alf); smooth();
 line( pmouseX-232.0, pmouseY-44.0, cX+232.0, cY+44.0 );
@@ -443,4 +445,4 @@ line( pmouseX-236.0, pmouseY-28.0, cX+236.0, cY+28.0 );
 line( pmouseX-236.0, pmouseY-28.0, cX+236.0, cY+29.0 );
 line( pmouseX-236.0, pmouseY-29.0, cX+236.0, cY+29.0 );
  }
-
+*/

@@ -4,9 +4,11 @@
 
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 42; //37;
+int alf = 88; //37;
 float sz=0;
 
 int cX;
@@ -22,7 +24,7 @@ void setup() {
   background(#003700);
   size(1024, 768 );
   noFill();
-  
+  fix.alpha(alf);
   img = loadImage("white-flower.jpg");
   p3 = fix.getImgColors(img);
 
@@ -61,7 +63,7 @@ void draw() {
   fix.paletteGridFull(p3);
 
 
-    exit();
+    doExit();
   }
 }
 
@@ -70,7 +72,7 @@ void draw() {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -82,8 +84,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

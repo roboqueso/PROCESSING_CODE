@@ -1,6 +1,6 @@
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 /*
     //  float amp = 33;
@@ -101,8 +101,7 @@ void draw()
 
 
     if( frameCount > 420 ) {
-save(this+".png");
-      exit();
+      doExit();
     }
 
 }
@@ -112,7 +111,7 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -127,8 +126,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
