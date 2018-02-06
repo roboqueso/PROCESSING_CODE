@@ -1,7 +1,8 @@
-//  grid with shrinking strokeWeight
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 int sColor = 0;
 float x, y, sz = 66;
 float xx, yy, theta, r, i, cX, cY;
@@ -69,8 +70,8 @@ point(xx,yy);
   if( sz < 7 ){
 
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-    
-    stop();
+    noLoop();
+    exit();
   }
 
 }

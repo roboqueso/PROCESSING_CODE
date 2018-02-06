@@ -3,14 +3,15 @@
 //  1. Create a good looking shape
 //  2. Duplicate that shape to come out of each corner
 //  3. Get rad
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
 int i, cX, cY;
-float alf = 96, x2, y2, angle2, sz2;
+int alf = 96;
+float x2, y2, angle2, sz2;
 
 //  CIRCLICIOUS
 float ii, shapeSize =10, ct=0, maxCt=768;
@@ -31,7 +32,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);  
   background(0);
-
+  fix.alpha(alf);
     cX = width/2;
     cY = height/2;
     sz2 = 75;//11;
@@ -130,7 +131,7 @@ if (shapeSize > width) {
 
 
     if( frameCount > width+height ){
-    exit();
+    doExit();
   }
 }
 
@@ -157,7 +158,7 @@ void makeShape( float v1, float v2, float v3, float v4, float v5, float v6, floa
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -169,8 +170,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

@@ -3,10 +3,11 @@
 //  http://www.openprocessing.org/sketch/78639
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 100;
+int alf = 100;
 
 ArrayList p3;
 PImage img;
@@ -22,7 +23,8 @@ void setup() {
 size(1024,768);  //  big:  1024x768
 
   background(alf);
-  
+  fix.alpha(alf);
+
   cX = width/2;
   cY = height/2;
 
@@ -104,7 +106,7 @@ if( frameCount > cX )  {
 
 
   if( frameCount > width) {
-    exit();
+    doExit();
   }
 }
 
@@ -113,7 +115,7 @@ if( frameCount > cX )  {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -125,8 +127,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

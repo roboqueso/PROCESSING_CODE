@@ -2,16 +2,17 @@
  Using MINIM AudioInput, get funky with live microphone data
  //  65535 is a frequently occurring number in the field of computing because it is the highest number which can be represented by an unsigned 16 bit binary number
  **/
-
 import ddf.minim.*;
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Minim minim;
 AudioInput in;
 Boolean isFinal = true;
 int buf;
-float alf = 22, tX, tY, inLeft, inRight, wvStart,i;
+int alf = 42;
+float tX, tY, inLeft, inRight, wvStart,i;
 
 
 
@@ -44,6 +45,8 @@ void setup()
   strokeJoin(ROUND);
   textFont( createFont( "AnonymousPro", 22 ) );
   
+  fix.alpha(alf);
+
   cX = width/2;
   cY = height/2;
   sz = 100;
@@ -105,7 +108,7 @@ cap();
     
   ////  STOPPER
   if ( frameCount > height*6) {
-    exit();
+    doExit();
   }
 }
 
@@ -140,7 +143,7 @@ void getFlowery(
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -152,8 +155,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
