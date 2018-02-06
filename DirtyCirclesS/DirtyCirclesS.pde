@@ -122,7 +122,7 @@ if( frameCount % 360 == 0 ){
  
     if(radius*PI > height){
     	save(this+".png");
-      exit();
+      doExit();
     }
 
 }
@@ -132,7 +132,7 @@ if( frameCount % 360 == 0 ){
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -149,8 +149,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

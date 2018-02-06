@@ -1,12 +1,13 @@
 //  
 //  http://ericfickes.com
 //
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 42; //37;
+int alf = 42; //37;
 float sz=0;
 
 int cX;
@@ -23,6 +24,7 @@ void setup() {
   background(#370000);
   noFill();
 
+  fix.alpha(alf);
   ellipseMode(CENTER);
   img = loadImage("indies-redblack.jpg");
   p3 = fix.getImgColors(img);
@@ -112,7 +114,7 @@ fix.ranPalStroke(p3);
 
     fix.circleGrid(768, 1024);
 
-    exit();
+    doExit();
   }
 }
 
@@ -121,7 +123,7 @@ fix.ranPalStroke(p3);
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -133,8 +135,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

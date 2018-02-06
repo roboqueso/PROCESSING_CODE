@@ -98,7 +98,7 @@ if( frameCount > height )  {
 
 
   if( frameCount > width +height) {
-    exit();
+    doExit();
   }
 }
 
@@ -107,7 +107,7 @@ if( frameCount > height )  {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -119,8 +119,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

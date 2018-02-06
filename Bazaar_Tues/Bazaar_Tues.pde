@@ -1,9 +1,9 @@
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 100;
+int alf = 100;
 PImage img;
 ArrayList p3;
 
@@ -15,16 +15,18 @@ float x2, y2;
 
 ////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1024,768);
+  size(1024,768, P3D);
 
   background(alf*TWO_PI);
   noFill();
+
+  fix.alpha(alf);
 
   cX = 1024/2;
   cY = 768/2;
 
   img = loadImage("apple-models.jpg");
-  p3 = fix.getImgColors(img);  
+  p3 = fix.getImgColors(img, false);  
 
 
   image( img, 1024-400, 768-400);
@@ -94,6 +96,7 @@ fix.ranPalStroke(p3);
   }
 
   //stroke( random(255), random(37), random(37) );
+  fix.ranPalStroke(p3);
   strokeWeight( random(i)/ TWO_PI*noise(frameCount) );
   point( cX-i* cos( radians(i) * i ), cY-i* sin( radians(i) * i ) );
   point( i*noise(i), i*cos(frameCount) );
@@ -111,7 +114,7 @@ fix.ranPalStroke(p3);
 
   if ( frameCount > 768 ) {
 
-    exit();
+    doExit();
   }
 }
 
@@ -120,7 +123,7 @@ fix.ranPalStroke(p3);
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -132,8 +135,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

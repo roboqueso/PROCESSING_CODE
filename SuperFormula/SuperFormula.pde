@@ -1,7 +1,8 @@
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
 int alf = 42; //37;
@@ -23,7 +24,7 @@ void setup() {
   // setup core sketch settings items
   size(1024, 768, P2D);  //  P2D, P3D, OPENGL, PDF
   background(#EFEFEF);
-
+  fix.alpha(alf);
   rectMode(CENTER);
 
   //  setup variables
@@ -76,8 +77,7 @@ ellipse(width-x, height-y, r*frameCount, r*frameCount);
   f += 1.5;  //0.0001;
 
   if( frameCount > width+height ){
-save(this+".png");
-    exit();
+    doExit();
   }
 
 }
@@ -100,7 +100,7 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -116,8 +116,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

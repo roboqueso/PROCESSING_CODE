@@ -1,10 +1,8 @@
-
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
-//
-//  This is a PRocessing sketch
-//
+
 Boolean isFinal = true;
 
 //  blues
@@ -24,7 +22,7 @@ color[] p3 = { #7F7F5F, #7F5F5F, #5F5F3F, #5F3F3F, #3F3F1F, #7F7F7F, #9F9F9F, #B
 
 
 
-int txtSize, alf = 42, x = 0, y = 0;
+int txtSize, alf = 88, x = 0, y = 0;
 float cX, cY, i;
 
 int radius = 11, x2, y2;
@@ -46,6 +44,7 @@ void setup() {
 frameRate(303);
   smooth();
   noFill();
+	fix.alpha(alf);
 
   ellipseMode(CENTER);
   rectMode(CENTER);
@@ -153,7 +152,7 @@ void draw()
 
   if( frameCount > (height+width)*11 ){
 save(this+".png");
-    exit();
+    doExit();
   }
 
 }
@@ -210,7 +209,7 @@ void gridLineBW2( int x, int y ){
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -222,9 +221,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-
-  super.stop();
+  exit();
 
 }
 

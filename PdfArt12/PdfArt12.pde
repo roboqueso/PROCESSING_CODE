@@ -1,46 +1,10 @@
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+PImage ss;
 
-// TODO: THIS SKETCH IS NOT SAVING, FIX THE FATAL
 /*
-textSize(-0.30135608) ignored: the text size must be larger than zero
 Tessellation Error: a coordinate is too large
-textSize(-0.9124906) ignored: the text size must be larger than zero
-textSize(-0.25002646) ignored: the text size must be larger than zero
-textSize(-0.13532972) ignored: the text size must be larger than zero
-You are trying to draw outside OpenGL's animation thread.
-#
-# A fatal error has been detected by the Java Runtime Environment:
-#
-#  SIGSEGV (0xb) at pc=0x00007fff32900f90, pid=3393, tid=0x000000000000df03
-#
-# JRE version: Java(TM) SE Runtime Environment (8.0_144-b01) (build 1.8.0_144-b01)
-# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.144-b01 mixed mode bsd-amd64 compressed oops)
-# Problematic frame:
-# Place all drawing commands in the draw() function, or inside
-your own functions as long as they are called from draw(),
-but not in event handling functions such as keyPressed()
-or mousePressed().
-C  [libGL.dylib+0x5f90]  glBindFramebuffer+0x12
-#
-# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
-#
-# An error report file with more information is saved as:
-# /Applications/Processing.app/Contents/Java/hs_err_pid3393.log
-Compiled method (nm)   75288 1985     n 0       jogamp.opengl.gl4.GL4bcImpl::dispatch_glBindFramebuffer1 (native)
- total in heap  [0x0000000118547b10,0x0000000118547e40] = 816
- relocation     [0x0000000118547c38,0x0000000118547c78] = 64
- main code      [0x0000000118547c80,0x0000000118547e38] = 440
- oops           [0x0000000118547e38,0x0000000118547e40] = 8
-#
-# If you would like to submit a bug report, please visit:
-#   http://bugreport.java.com/bugreport/crash.jsp
-# The crash happened outside the Java Virtual Machine in native code.
-# See problematic frame for where to report the bug.
-#
-Finished.
-[Finished in 77.1s]
 */
 
 String lines[];
@@ -94,10 +58,16 @@ try {
 
 	
 	fill( (Integer)palette.get( colorIdx ) , random(200,tLen) );
+	
+	// new BIG safety catch
+	if(txtSz<1){txtSz+=TWO_PI;}
 	textSize(txtSz);
 	text(txt, xx, yy, width, txtSz);
 
 	fill( frameCount%255, frameCount%255, frameCount%255,  random(txtSz, tLen) );
+	
+	// new BIG safety catch
+	if((txtSz-PI)<1){txtSz+=TWO_PI;}
 	textSize(txtSz-PI);
 	text(txt, xx-PI, yy+PI, width, txtSz);	
 
@@ -163,7 +133,7 @@ try {
 	textSize(42);
     text("CRASH::"+exc, 42, height/2);
     tint(255);
-    save("CRASH_"+pdeName() + getTimestamp() + ".png");
+    save("CRASH_"+ fix.pdeName() + fix.getTimestamp() + ".png");
   }
 
 
@@ -191,15 +161,15 @@ try {
 
 // P3D RENDER HACK = grab a screenshot of the sketch and drop it on the stage as an image
 // If you don't do this, P3D will *not* save any of the drawing in the PNG, just the background
-		PImage ss = get();
+		ss = get();
 		image(ss,0,0);
-
-
-		noLoop();
+		save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+		println("DONE!");
+		exit();
 	}
 
 
-		PImage ss = get();
+		ss = get();
 		image(ss,0,0);
 
 
@@ -219,7 +189,8 @@ switch(key)
 
   case ESC:
     // save(pdeName() + getTimestamp() + ".png");
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    // save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    //For Java programmers, this is not the same as System.exit(). Further, System.exit() should not be used because closing out an application while draw() is running may cause a crash (particularly with P3D).
     exit();
   break;
 }
@@ -228,17 +199,5 @@ switch(key)
 } 
 
 
-
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
 
 

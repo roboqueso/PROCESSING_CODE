@@ -1,10 +1,11 @@
 //  
 //  http://ericfickes.com
 //
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 75;
 
@@ -78,7 +79,7 @@ ellipse( cX, height-frameCount, frameCount/i, frameCount/PI  );
  
     //    stop
     if( frameCount > width ) {
-        exit();
+        doExit();
     }
 }
 
@@ -87,7 +88,7 @@ ellipse( cX, height-frameCount, frameCount/i, frameCount/PI  );
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -99,8 +100,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

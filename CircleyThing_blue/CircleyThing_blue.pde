@@ -1,11 +1,13 @@
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 
 
-float alf = 75, tX, tY, szW, szH, cX, cY, inc, m; 
+int alf = 75;
+float tX, tY, szW, szH, cX, cY, inc, m; 
 float r,g,b;
 int tmr_Interval = 10;  // seconds
 
@@ -18,6 +20,9 @@ float x4, y4, angle4, sz4;
 void setup() { 
   background(#000011);
   size(1024, 768);
+
+  fix.alpha(alf);
+
   frameRate(303);  
   noFill();
 
@@ -28,6 +33,8 @@ void setup() {
   sz3 = 75;
   sz4 = 185;
 } 
+
+
 //////////////////////////////////////////////
 void draw() {
   smooth();
@@ -116,7 +123,7 @@ if( frameCount % tmr_Interval == 0 ) {
   }
 
   if ( frameCount > (width*PI) ) {
-    exit();
+    doExit();
   }
 }
 
@@ -126,7 +133,7 @@ if( frameCount % tmr_Interval == 0 ) {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -138,8 +145,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

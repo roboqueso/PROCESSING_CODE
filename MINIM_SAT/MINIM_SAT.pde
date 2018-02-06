@@ -8,13 +8,14 @@
 import ddf.minim.*;
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Minim minim;
 AudioInput in;
 
 Boolean isFinal = true;
 int buf;
-float alf = 37, tX, tY, inLeft, inRight, wvStart;
+float alf = 42, tX, tY, inLeft, inRight, wvStart;
 
 int i, cX, cY;
 float sz;
@@ -134,7 +135,7 @@ y2 = cX + sin(radians(sz2)*angle2) * inRight;
     
   ////  STOPPER
   if ( frameCount > height) {
-    exit();
+    doExit();
   }
 }
 
@@ -169,7 +170,7 @@ void getFlowery(
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );

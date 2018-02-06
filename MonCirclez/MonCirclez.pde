@@ -1,8 +1,8 @@
 //	IMPORTS	////////////////////////////////////////////////////
 import processing.opengl.*;
-
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 //
 //  This is a PRocessing sketch
@@ -37,7 +37,7 @@ float r, f;
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  size(1024, 768, P3D);
   frameRate(303);  //  P2D, P3D, OPENGL, PDF
   background(11);
 
@@ -178,7 +178,7 @@ f+=.0037;
  
     if( frameCount > (width+height)*6 ) {
 
-      exit();
+      doExit();
     }
 
 
@@ -192,7 +192,7 @@ f+=.0037;
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -207,8 +207,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

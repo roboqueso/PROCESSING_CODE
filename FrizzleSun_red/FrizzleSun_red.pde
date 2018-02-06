@@ -3,6 +3,7 @@
 //
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
@@ -24,7 +25,7 @@ void setup() {
   noFill();
   
   
-  img = loadImage("indies-redblack.jpg");
+  img = loadImage("SWITCHES.jpg");
   p3 = fix.getImgColors(img);
 
   cX = width/2;
@@ -63,7 +64,7 @@ void draw() {
   fix.paletteGridFull(p3);
 
 
-    exit();
+    doExit();
   }
 }
 
@@ -72,7 +73,7 @@ void draw() {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -84,8 +85,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

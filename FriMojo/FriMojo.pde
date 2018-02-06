@@ -127,7 +127,7 @@ if( frameCount % 180 == 0 ) {
  
     if( frameCount > (width+height)*4.2 ) {
 
-        exit();
+        doExit();
         
     }
 }
@@ -137,7 +137,7 @@ if( frameCount % 180 == 0 ) {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -151,13 +151,12 @@ void exit()
   }
 
 //	debug
-// println("exit()");
-java.awt.Toolkit.getDefaultToolkit().beep();
+// println("doExit()");
+// java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

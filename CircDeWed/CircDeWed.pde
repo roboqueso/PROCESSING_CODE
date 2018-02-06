@@ -3,6 +3,7 @@ import processing.opengl.*;
 
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 //
 //  This is a PRocessing sketch
@@ -129,7 +130,7 @@ fix.ranPalStroke(p3);
  
     if( frameCount > (width+height)*4.2 ) {
 
-      exit();
+      doExit();
     }
 
 
@@ -143,7 +144,7 @@ fix.ranPalStroke(p3);
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -162,8 +163,7 @@ java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

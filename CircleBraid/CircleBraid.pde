@@ -1,7 +1,6 @@
-//  IMPORTS  ////////////////////////////////////////////////////
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 //
@@ -9,7 +8,7 @@ Fixlib fix = Fixlib.init(this);
 //
 Boolean isFinal = true, fwd = true;
 int alf = 42, sz = 30;
-float angle = 90, radius = 66, x, y, x2, y2, cX, cY, strokeSz = 2;
+float angle = 90, radius = 42, x, y, x2, y2, cX, cY, strokeSz = 2;
 
 
 ////////////////////////////////////////////////////
@@ -22,6 +21,7 @@ void setup() {
   background(#EFEFEF);
   strokeWeight(strokeSz);
   frameRate(303);
+  fix.alpha(alf);
 
   //  setup variables
   cX = width/2;
@@ -40,7 +40,7 @@ void draw()
     x2 = cX - int( cos(radians(-angle)) * radius );
     y2 = cY - int( sin(radians(-angle)) * radius );
 
-    stroke(random(sz));
+    stroke(angle*sz/radius%255);
     ellipse( x, y, sz, sz);
 
     stroke(random(sz));
@@ -65,7 +65,7 @@ void draw()
 
     // STOPPER
     if( frameCount > (width+height)*radius ){
-    	exit();
+    	doExit();
     }
 }
 
@@ -74,7 +74,7 @@ void draw()
 	
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -89,8 +89,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

@@ -2,6 +2,7 @@
 import processing.opengl.*;
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
@@ -100,7 +101,7 @@ void draw()
 
   if( angle > (height+width)*4 )
   {
-      exit();
+      doExit();
       
   }
 }
@@ -110,7 +111,7 @@ void draw()
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -129,8 +130,7 @@ java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

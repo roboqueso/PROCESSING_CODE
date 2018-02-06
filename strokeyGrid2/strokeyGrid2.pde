@@ -1,7 +1,10 @@
+//  NOTE: this looks a lot like the myhead sketches
+
 //  grid with shrinking strokeWeight
 
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 int sColor = 0;
@@ -83,7 +86,8 @@ if(frameCount%r==0)
 
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     
-    stop();
+    noLoop();
+    exit();
   }
 
 }

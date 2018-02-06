@@ -1,12 +1,14 @@
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 100;
 
 ArrayList p3;
 PImage img;
 
-Fixlib fix = Fixlib.init(this);
 
 float a, x, y, co, bri, i, sz, h;
 int cX, cY;
@@ -99,7 +101,7 @@ endShape();
 
   if ( frameCount > 768*1.22 ) {
     
-    exit();
+    doExit();
   }
 }
 
@@ -108,7 +110,7 @@ endShape();
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -120,8 +122,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

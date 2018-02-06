@@ -1,13 +1,13 @@
 //  
 //  http://ericfickes.com
 //
-
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 37;
+float alf = 42;
 float sz=0;
 
 int cX;
@@ -63,7 +63,7 @@ void draw() {
   fix.paletteGridFull(p3);
 
 
-    exit();
+    doExit();
   }
 }
 
@@ -72,7 +72,7 @@ void draw() {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -84,8 +84,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

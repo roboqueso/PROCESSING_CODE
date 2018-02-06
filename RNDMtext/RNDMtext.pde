@@ -1,5 +1,6 @@
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
@@ -54,7 +55,7 @@ void draw()
 
   if(txtSize < 21 ){
 
-    exit();
+    doExit();
   }
 
 }
@@ -64,7 +65,7 @@ void draw()
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
     fix.ranPalFill100(p3);
     text("ERICFICKES.COM", 5, height-5);
@@ -83,13 +84,8 @@ void exit()
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-
-
-  System.gc();
-
-  super.stop();
-  
   noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

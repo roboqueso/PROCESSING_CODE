@@ -1,6 +1,7 @@
 import processing.opengl.*;
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 
@@ -134,11 +135,9 @@ fix.hexagon( yy1, xx1, alf*noise(frameCount) );
   if ( frameCount > height )
   {    
 save(this+".png");
-    exit();
+    doExit();
   }
 
-
-  System.gc();
 }
 
 
@@ -147,7 +146,7 @@ save(this+".png");
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( artDailyMsg );//+ " : " + getTimestamp() );//+ "' " + getTimestamp() );
@@ -158,10 +157,8 @@ void exit()
 save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
   }
 
-  System.gc();
-
-
-  super.stop();
+  noLoop();
+  exit();
 }
 
 

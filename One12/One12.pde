@@ -1,6 +1,6 @@
-
 import fixlib.*;
 
+//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 //
@@ -159,7 +159,7 @@ if( y == cY ){
 
   if( frameCount > (height+width)*11 ){
 
-    exit();
+    doExit();
   }
 
 }
@@ -214,7 +214,7 @@ void gridLineBW2( int x, int y ){
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -229,8 +229,7 @@ void exit()
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

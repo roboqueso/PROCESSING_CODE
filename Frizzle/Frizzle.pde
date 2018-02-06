@@ -4,7 +4,9 @@
 
 import fixlib.*;
 
+//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 float alf = 75;
 
@@ -81,7 +83,7 @@ void draw() {
  
     //    stop
     if( frameCount > height ) {
-        exit();
+        doExit();
     }
 }
 
@@ -90,7 +92,7 @@ void draw() {
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -102,8 +104,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
