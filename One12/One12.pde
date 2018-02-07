@@ -4,7 +4,7 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 //
-//  This is a PRocessing sketch
+//  
 //
 Boolean isFinal = true;
 

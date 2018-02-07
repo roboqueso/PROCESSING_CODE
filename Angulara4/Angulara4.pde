@@ -78,6 +78,7 @@ fill(random(255), 100);
     save(this+".png");
 
     noLoop();
+    exit();
   }
 
 }

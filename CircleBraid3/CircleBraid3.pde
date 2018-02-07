@@ -2,7 +2,7 @@
 
 
 //
-//  This is a PRocessing sketch
+//  
 //
 Boolean isFinal = true, fwd = true;
 int alf = 37, sz = 30;

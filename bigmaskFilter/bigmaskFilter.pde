@@ -64,8 +64,13 @@ void draw() {
 
     //  https://processing.org/reference/filter_.html
     filter(THRESHOLD);
-//    filter(GRAY);
-    filter(INVERT);
+//    
+    if(xx%4==0){
+      filter(INVERT);
+    } else {
+      filter(GRAY);
+    }
+
     filter(OPAQUE);
     filter(POSTERIZE, (int)random(2,255) );
     //filter(BLUR, (int)random(7));

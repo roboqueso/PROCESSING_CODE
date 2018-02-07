@@ -1,4 +1,8 @@
 import processing.video.*;
+import fixlib.*;
+
+//	https://github.com/ericfickes/FIXLIB
+Fixlib fix = Fixlib.init(this);
 
 Capture cam;
 
@@ -136,10 +140,10 @@ void draw() {
     yy = (frameCount%height) - int( sin(radians(frameCount)) * sz ) % height;
 
 
-    a = GetRandVector( xx, yy, sz );
-    b = GetRandVector( xx, yy, sz );
-    c = GetRandVector( xx, yy, sz );
-    d = GetRandVector( xx, yy, sz );
+    a = fix.GetRandVector( xx, yy, sz );
+    b = fix.GetRandVector( xx, yy, sz );
+    c = fix.GetRandVector( xx, yy, sz );
+    d = fix.GetRandVector( xx, yy, sz );
 
 
 
@@ -227,27 +231,14 @@ strokeWeight(strokeWt);
 
 
  //	STOPPER
- if(frameCount>width*height){
-    save(pdeName() + getTimestamp() + ".png");
-    stop();
+ if(frameCount>width+height){
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
+    exit();
   }
 
   }
 }
-
-
-//  Return a random vector based on supplied x,y and sz
-PVector GetRandVector( float x, float y, float sz )
-{
-  return new PVector( 
-        x - int( cos(radians( random(360) )) * sz ),
-        y - int( sin(radians( random(360) )) * sz ),
-        random(-sz,sz)
-      );
-}
-
-
-
 
 
 ////// S SAVE HANDLER /////////
@@ -255,28 +246,14 @@ PVector GetRandVector( float x, float y, float sz )
 void keyPressed(){
 switch(key){
   case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
   break;
 
   case ESC:
 
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
     stop();
   break;
 }
 
 }
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

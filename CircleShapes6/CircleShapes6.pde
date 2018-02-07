@@ -1,5 +1,5 @@
 //
-//  This is a PRocessing sketch
+//  
 //
 // circles
 Boolean isFinal = true;

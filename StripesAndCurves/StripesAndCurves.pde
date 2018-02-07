@@ -1,5 +1,5 @@
 //
-//  This is a PRocessing sketch
+//  
 //
 Boolean isFinal = true;
 float alf = 42;

@@ -86,6 +86,7 @@ set(0,0,cam);
 		image( drawAutoStereogram( heightMap ), 0, 0 );
 		save(this+".png");
 		noLoop();
+    exit();
 	}
 }
 

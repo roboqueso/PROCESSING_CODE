@@ -5,7 +5,7 @@ import fixlib.*;
 //	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 //
-//  This is a PRocessing sketch
+//  
 //
 Boolean isFinal = true;
 int alf = 42;	//37;
