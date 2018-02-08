@@ -55,36 +55,17 @@ println( tmp );
 }
 
 
-PVector Eval(float m, float n1, float n2, float n3, float phi )
-{
-   float r;
-   float t1,t2;
-   float a=1,b=1;
-   float x=0, y=0;
+PVector sf2d(n, a)
+  
+  u = [0:.001:2 * pi];
+  
+  raux = abs(1 / a(1) .* abs(cos(n(1) * u / 4))) .^ n(3) + abs(1 / a(2) .* abs(sin(n(1) * u / 4))) .^ n(4);
+  
+  r = abs(raux) .^ (- 1 / n(2));
+  
+  x = r .* cos(u);
+  
+  y = r .* sin(u);
 
-   t1 = cos(m * phi / 4) / a;
-   t1 = abs(t1);
-   t1 = pow(t1,n2);
-
-   t2 = sin(m * phi / 4) / b;
-   t2 = abs(t2);
-   t2 = pow(t2,n3);
-
-   r = pow(t1+t2,1/n1);
-   
-   if (abs(r) == 0) {
-      x = 0;
-      y = 0;
-   } else {
-      r = (1 / r) * 10;
-      x = r * cos(phi) * 10;
-      y = r * sin(phi) * 10;
-   }
-
-   // make positive
-   if(x<0) x = -x;
-   if(y<0) y = -y;
-   //if(r<0) r = -r;
-
-  return new PVector( round(x), round(y), round(r) );
-}
+  return new PVector(x, y);
+end
