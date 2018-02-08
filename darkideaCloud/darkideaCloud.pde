@@ -1,14 +1,14 @@
 //
 Boolean isFinal = true;
-float alf = 13;
+float alf = 37;
 float shapeSize = 400;
 
 int cX;
 int cY;
 
-//  
+//  #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
 color[] palette = { 
-  #EF0000, #00EF00, #0000EF, #EFEFEF, #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
+#EF0000, #00EF00, #0000EF, #EFEFEF
 };
 
 int outerXX = 0;
@@ -16,16 +16,15 @@ int outerYY = 0;
 
 float angle = 0;
 float maxAngle;
-float radius = 10;
-float outerRadius = 40;
+float radius = 150;
+float outerRadius;
 
 int offsetX = 0;
 int offsetY = 0;
-float _lerp = 0.01;
+
 
 int ct = 0;
 int maxCt = 0;
-boolean flip = false;
 
 ////////////////////////////////////////////////////
 //
@@ -33,7 +32,7 @@ void setup() {
   // setup core sketch settings items
   size(1024, 768);
   frameRate(303);
-  background(9);
+  background(69);
 
   //  setup variables
   cX = width/2;
@@ -42,17 +41,17 @@ void setup() {
   offsetX = cX;
   offsetY = cY;
 
-  maxCt = 360 * 72;
-
+  maxCt = 360 * 36;
+  
   // white scan lines
-  stroke(255, 25 );
-  for ( int ll = 0; ll <= width; ll += 2 ) 
-  {  
-    strokeWeight( random(1.1) );
-
-    line( 0, ll, random(width), ll );
-    line( ll, 0, ll, random(height) );
-  }
+    stroke(255, alf );
+    for ( int ll = 0; ll <= width; ll += 2 ) 
+    {  
+      strokeWeight( random(alf) );
+  
+      line( 0, ll, width, ll );
+      line( ll, 0, ll, height );
+    }
 }
 
 
@@ -62,122 +61,150 @@ void setup() {
 void draw()
 {
   smooth();
-  strokeWeight( random(5.5) );
-  stroke( random(6), alf);
-  noFill();
-
+  strokeWeight( random(50) );
+  
   xx = ( offsetX - int( cos(radians(angle)) * radius ) );
   yy = ( offsetY - int( sin(radians(angle)) * radius ) );
 
   outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
   outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
 
-  strokeWeight(.5);
-  line(outerXX, outerYY, offsetX, offsetY);
-  point(xx, yy);
-  
-  strokeWeight( random(5) );
+stroke(random(255), alf*2);
+point(xx, yy);
 
-//  stroke( #90DEFA , alf*2);
-  
-  point( outerXX, outerYY );
-  point( random(xx, outerXX), random( yy, outerYY ) );
-  point( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ) );
+stroke(random(222), alf*2);
+point(outerXX, outerYY);
 
-  if( flip ) {
-    
-//    stroke( #75EF19 , alf*2);
-    stroke( random(9), alf );
-    ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), shapeSize, alf );
-    
-  } else {
-    stroke( #90DEFA , alf*2);
-    ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), alf, alf );
-  }
+stroke(random(199), alf);
+point( random(xx, outerXX), random( yy, outerYY ) );
 
-
-  point( random(lerp(xx, outerXX, _lerp )), random(lerp( yy, outerYY, _lerp )) );//, shapeSize, shapeSize );
-
-//  line( outerXX, outerYY, random(xx, outerXX), random( yy, outerYY ) );
-//  line( random(xx, outerXX), random( yy, outerYY ), shapeSize, shapeSize );
-
+stroke(random(69), alf);
+point( lerp(xx, outerXX, random(.9) ), lerp( yy, outerYY, random(.9) ) );
 
   
-  if ( angle >= maxCt ) {
-    exit();
-  }
+if( angle >= maxCt ) {
+  exit();
+}
 
-  if( _lerp < 1 ) {
-    _lerp += 0.05;
-  } else {
-    _lerp = 0.01;
-  }
+if( frameCount % 40 == 0 ) {
+  angle+= 10;
+  radius+=3;
+  offsetY = (int)random(cY);
+  offsetX = (int)random(cX);
+  
+  stroke(random(255));
+  line( xx, yy, outerXX, outerYY );
+  stroke(random(255));
+  line( outerXX, outerYY, offsetX, offsetY );
+  
+  
+} else {
+  angle += 5;
+}
 
-
-//  if ( angle % 1080 == 0 ) {
-if( frameCount % frameRate == 0 ) {
-    flip = !flip;
-    angle  += 6;
-    radius += 6;
-
-    offsetY = (int)random(height);
-    offsetX = (int)random(width);
-
-    strokeWeight(2);
-    stroke(#EF0000, alf*2);
-
-    line( outerXX, outerYY, offsetX, offsetY );
-    line( offsetX, offsetY, xx, yy );
-
-
-    strokeWeight( random(6.9) );
-  } 
-  else {
-    angle += 6;
-  }
 }
 
 
 void textLines() {
 
 
-  textFont( createFont( "Helvetica", 300 ) );
+textFont( createFont( "Helvetica", 300 ) );
 
-  fill(10, pow(alf, 1.5) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  //  & curve
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  //  & quad
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
+fill(10, pow(alf,1.5) );//, (alf*4) );
+// MAKE TEXT BIG
+fill(#210000, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.3 );
+fill(#000021, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.3 );
+//  & curve
+fill(#210000, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.49 );
+fill(#000021, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.49 );
+//  & quad
+fill(#210000, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.65 );
+fill(#000021, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.65 );
 
-  //  & triangle
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
+//  & triangle
+fill(#210000, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.85 );
+fill(#000021, pow(alf,1.5) );//, (alf*4) );
+text("lines.lines.lines.lines.lines", 0, height*.85 );
+
+
 }
 
 
 
 
-//void mousePressed() {
-//  println("mousePressed()");
-//}
-//
-//
-//void keyPressed() {
-//  println("keyPressed()");
-//}
+void mousePressed() {
+  println("mousePressed()");  
+}
+
+
+void keyPressed() {
+  println("keyPressed()");
+}
+
+
+//  interactive Zoog
+void zoog2() {
+
+  smooth();
+  noFill();
+  
+  ellipseMode(CENTER);
+  rectMode(CENTER);
+  /*
+  randStrokeUser();
+  randFillUser();
+  rect(mouseX, mouseY, alf, alf*5);
+  */  
+  randStrokeUser();
+//  randFillUser();
+  ellipse( mouseX, mouseY-30, 60, 60 );
+
+  
+  randStrokeUser();
+//  randFillUser();
+  ellipse( mouseX-19, mouseY-30, 16, 32 );
+  ellipse( mouseX+19, mouseY-30, 16, 32 );
+  
+  randStrokeUser();
+//  randFillUser();
+  line( mouseX-alf, mouseY+(alf*5), pmouseX-alf, pmouseY+(alf*5));
+  line( mouseX+alf, mouseY+(alf*5), pmouseX-alf, pmouseY+(alf*5));  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void zoog() {
+
+  ellipseMode(CENTER);
+  rectMode(CENTER);
+  stroke(0);
+  fill(150);
+  rect(100, 100, 20, 100 );
+  fill(255);
+  ellipse(100, 70, 60, 60);
+  fill(0);
+  ellipse(81, 70, 16, 32 );
+  ellipse(119, 70, 16, 32);
+  stroke(0);
+  line(90, 150, 80, 160);
+  line(110, 150, 120, 160);
+}
 
 
 

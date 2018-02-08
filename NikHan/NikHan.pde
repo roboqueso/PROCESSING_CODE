@@ -1,7 +1,4 @@
-//
-//  Learning Processing CH4
-//
-//  code from @nikhan
+////  code from @nikhan
 //  int a,b,i,c=600;void setup(){size(b=c,c);}void draw(){for(i=0;i++<c;){fill(a++%255);rect(sin(a)*c,c/2+cos(a*b/c)%c,a/c,sin(a)*c);}}
 
 int a,b,i,c=600;

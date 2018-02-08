@@ -1,9 +1,13 @@
-//
-Boolean isFinal = true;
-float alf = 37;
-float shapeSize = 400;
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
 
-int cX;
+Fixlib fix = Fixlib.init(this);
+
+Boolean isFinal = true;
+int alf = 42;
+float shapeSize = 420;
+
+int cX, xx, yy;
 int cY;
 
 //  
@@ -16,8 +20,8 @@ int outerYY = 0;
 
 float angle = 0;
 float maxAngle;
-float radius = 5;
-float outerRadius = 1;
+float radius = 10;
+float outerRadius = 100;
 
 int offsetX = 0;
 int offsetY = 0;
@@ -33,6 +37,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(9);
+  fix.alpha(alf);
 
   //  setup variables
   cX = width/2;
@@ -41,7 +46,7 @@ void setup() {
   offsetX = cX;
   offsetY = cY;
 
-  maxCt = 3600;// * 72;
+  maxCt = 4200;	//36000;// * 72;
 
 
 }
@@ -54,49 +59,50 @@ void draw()
 {
   smooth();
 
-  stroke( random(25, 255), alf);
-  noFill();
 
-  xx = ( offsetX - int( cos(radians(angle)) * radius ) );
-  yy = ( offsetY - int( sin(radians(angle)) * radius ) );
+  xx = ( offsetX - int( cos(radians(angle)) * radius ) ) ;
+  yy = ( offsetY - int( sin(radians(angle)) * radius ) ) %height;
 
-  outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
-  outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
+  outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) ) ;
+  outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) ) %height;
 
-randStrokeUser();
   strokeWeight( alf );
+  stroke( (frameCount*1.01)%255, alf*4 );
+  point( xx, yy );
+  point( outerXX, outerYY );
+
+  strokeWeight( alf/4 );
+  stroke( frameCount%255, alf*4 );
   point( xx, yy );
   point( outerXX, outerYY );
 
 
   strokeWeight( random(3, 36) );
+  stroke( random(alf, 255), alf );
   point( yy, xx );  
   point( outerYY, outerXX );
 
   if ( angle >= maxCt ) {
-    exit();
+    doExit();
   }
   
-  if ( angle < 720 ) {
-line( xx, yy, outerXX, outerYY );
+  if ( angle % 6 == 0 ) {
+    smooth();  
+    strokeWeight( 6);
+    point( xx, yy );
+//    stroke(#00EF00, alf);
+    fix.ranPalStroke100(palette);
+    line( xx, yy, outerXX, outerYY );
+    point( outerXX, outerYY );
   }
   
   if ( angle % 720 == 0 ) {
 
-        smooth();  
-    strokeWeight( 6);
-    point( xx, yy );
-//    stroke(#00EF00, alf);
-    randStrokeUser();
-    line( xx, yy, outerXX, outerYY );
-    point( outerXX, outerYY );
-    
-    
-    angle  += 2;//6;
-    radius += 2;//6;
+    angle  += 3;//6;
+    radius += 3;//6;
 
-    offsetY += (int)random(PI, PI+height);
-    offsetX = (int)random(PI, PI+width);
+    offsetY = (int)random(cY, height);
+    offsetX = (int)random(cX, width);
 
     strokeWeight(13);
     stroke(#EF1111, alf*2);
@@ -114,24 +120,10 @@ line( xx, yy, outerXX, outerYY );
     if( radius > width+height )
       radius = 36;
     else
-      radius = nextFib( int(radius) );
+      radius = fix.nextFib( int(radius) );
   }
 }
 
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-//   int result = f2;
-   f0 = f1;
-   f1 = f2;
-   f2 = f0 + f1;
-   
-   return f0 + f1;
-}
 
 void textLines() {
 
@@ -161,19 +153,6 @@ void textLines() {
   fill(#000021, pow(alf, 1.5) );//, (alf*4) );
   text("lines.lines.lines.lines.lines", 0, height*.85 );
 }
-
-
-
-
-void mousePressed() {
-  println("mousePressed()");
-}
-
-
-void keyPressed() {
-  println("keyPressed()");
-}
-
 
 
 ///////
@@ -222,47 +201,11 @@ void drawFrame() {
   rect( 122, 122, width-245, height-245 );
 }
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-
-  while ( angle < 360 ) {
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -273,33 +216,9 @@ void exit()
     save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
 
 
 

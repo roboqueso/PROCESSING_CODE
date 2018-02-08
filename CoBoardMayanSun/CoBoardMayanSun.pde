@@ -1,3 +1,4 @@
+
 // https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
@@ -5,7 +6,7 @@ Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 Boolean drawBoard = false;
-int alf = 42; //36;
+int alf = 50;
 float cX, cY;
 
 color[] p1 = { #EFEFEF, #FFFFFF, #EFEFEF,#3A3A3A,#4D4D4D,#606060,#737373,#868686,#9A9A9A,#ADADAD,#C0C0C0,#C6C6C6,#CDCDCD,#D3D3D3,#D9D9D9,#E0E0E0,#E6E6E6,#ECECEC,#F2F2F2,#F9F9F9, #FFFFFF};
@@ -22,7 +23,7 @@ ArrayList p3;
 float x;// = width/2;
 float y;// = height/2;
 float outerRad = 10;//min(width, height) * 0.4;
-float innerRad = outerRad * 0.9;
+float innerRad = outerRad * 0.6;
 float px = 0, py = 0, angle = 0;
 float pts = 60;//36;
 float rot = 360.0/pts;
@@ -36,8 +37,7 @@ float angle1, x1, y1, startX1, startY1, radius1;
 //
 void setup() {
   // setup core sketch settings items
-  // size(1024, 768);
-  size(1494,437);
+  size(1024, 768);
   frameRate(303);
   background(#EFEFEF);
   fix.alpha(alf);
@@ -50,9 +50,9 @@ void setup() {
    noFill();
 
 
-    img = loadImage( "colorado.jpg"); // Flag_of_Colorado.png
+    img = loadImage( "colorado.jpg");
     p3 = fix.getImgColors( img );
-    image(img, 0, 0 );
+    image(img, 0, 0 );//, width, height);
 
 
 //    filter(POSTERIZE, alf );
@@ -60,6 +60,9 @@ void setup() {
     fix.paletteGrid( p3 );
     noFill();
 
+
+//      iHeartCO();
+//      doExit();
 }
 
 
@@ -77,7 +80,7 @@ void draw()
   
     px = x + cos(radians(angle))*outerRad;
     py = y + sin(radians(angle))*outerRad;
-    angle += frameCount/rot;
+    angle += rot;
     
     fix.ranPalStroke(p1);
     fix.ranPalFill(p3);
@@ -91,28 +94,29 @@ void draw()
     fix.ranPalFill(p3);
     
     vertex(px, py); 
-        
-    angle += frameCount/rot;
+    
+    angle += rot;
 
   }
   endShape();
  
   //  make bigger
-  innerRad += frameCount/alf;  //30;
-  outerRad += rot+TWO_PI;  //60;
+  innerRad += 30;
+  outerRad += 60;
 
 
-  if( outerRad > height ) {
+  if( outerRad > width ) {
 
 //  line behind text
   strokeWeight(1);
+  stroke(#EFEFEF, alf );
 
-  for( float yy = cY-130; yy < cY+190; yy += 1.5 ) {
+    for( float yy = cY-130; yy < cY+190; yy += 1.5 ) {
+
+  fix.ranPalStroke(p3);
   
-    fix.ranPalStroke(p3);
-  
-    line( 0, yy, width, yy );
-  }  
+  line( 0, yy, width, yy );
+}  
 
       iHeartCO();
       doExit();
@@ -130,15 +134,15 @@ void iHeartCO() {
   float startX = 220; 
   float startY = 485;
 
-
+  textFont( createFont( "Silom", 350 ) );
   smooth();
   fill(0);
   stroke(0);
   strokeWeight( 5 );
 
 
-// tint( #EFEFEF, 100 );
-// image(img, 0, 0 );
+tint( #EFEFEF, 100 );
+image(img, 0, 0);//, width, height);
 
 
 ////////////////////////////////////////////////////////////////
@@ -200,15 +204,13 @@ if( drawBoard ) {
 ////////////////////////////////////////////////////////////////
 
 
-  textFont( createFont( "Silom", 420 ) );
+    
 
   fill(0);
-  text("I", 275, cY+170);
+  text("I", 310, cY+150);
   fix.bitHeart( 475, cY-90, false );
-  text("CO", 780, cY+170);
+  text("CO", 760, cY+150);
 }
-
-
 
 
 ///////////////////////////////////////////////////////////
@@ -226,7 +228,7 @@ void doExit()
   }
 
   noLoop();
-  exit(); 
+  exit();
 }
 
 
@@ -239,7 +241,7 @@ void artDaily( String dailyMsg ) {
   smooth();
 
   fill(#676800);
-  text( " "+dailyMsg, this.width-430, this.height-14);
+  text( " "+dailyMsg, 0, height-11);
   /*
 float y = 0;
    while( y <= height ) {

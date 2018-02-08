@@ -1,7 +1,7 @@
 //
 Boolean isFinal = true;
 float alf = 13;
-float shapeSize = 400;
+float shapeSize = 100;
 
 int cX;
 int cY;
@@ -17,7 +17,7 @@ int outerYY = 0;
 float angle = 0;
 float maxAngle;
 float radius = 10;
-float outerRadius = 40;
+float outerRadius = 100;
 
 int offsetX = 0;
 int offsetY = 0;
@@ -42,7 +42,7 @@ void setup() {
   offsetX = cX;
   offsetY = cY;
 
-  maxCt = 360 * 72;
+  maxCt = 360 * 30;
 
   // white scan lines
   stroke(255, 25 );
@@ -66,40 +66,36 @@ void draw()
   stroke( random(6), alf);
   noFill();
 
-  xx = ( offsetX - int( cos(radians(angle)) * radius ) );
-  yy = ( offsetY - int( sin(radians(angle)) * radius ) );
+  xx = ( offsetX - int( cos(radians(angle)) * random(radius) ) );
+  yy = ( offsetY - int( sin(radians(angle)) * random(radius) ) );
 
   outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
   outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
 
   strokeWeight(.5);
-  line(outerXX, outerYY, offsetX, offsetY);
-  point(xx, yy);
-  
-  strokeWeight( random(5) );
 
-//  stroke( #90DEFA , alf*2);
+  line(outerXX, outerYY, offsetX, offsetY);
+  line(offsetX, offsetY, xx, yy);
+//  point(xx, yy);
   
-  point( outerXX, outerYY );
+  strokeWeight( alf );
+
+  stroke( #90DEFA , alf);
+  
+//  point( outerXX, outerYY );
   point( random(xx, outerXX), random( yy, outerYY ) );
   point( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ) );
 
+randStrokeUser();
+
   if( flip ) {
-    
-//    stroke( #75EF19 , alf*2);
-    stroke( random(9), alf );
-    ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), shapeSize, alf );
-    
+    hexagon( lerp(offsetX, outerXX, _lerp ), lerp( offsetY, outerYY, _lerp ), random(shapeSize) );
   } else {
-    stroke( #90DEFA , alf*2);
-    ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), alf, alf );
+    ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), random(shapeSize), random(shapeSize) );
   }
 
 
-  point( random(lerp(xx, outerXX, _lerp )), random(lerp( yy, outerYY, _lerp )) );//, shapeSize, shapeSize );
-
-//  line( outerXX, outerYY, random(xx, outerXX), random( yy, outerYY ) );
-//  line( random(xx, outerXX), random( yy, outerYY ), shapeSize, shapeSize );
+//  point( random(lerp(xx, outerXX, _lerp )), random(lerp( yy, outerYY, _lerp )) );//, shapeSize, shapeSize );
 
 
   
@@ -114,8 +110,7 @@ void draw()
   }
 
 
-//  if ( angle % 1080 == 0 ) {
-if( frameCount % frameRate == 0 ) {
+if ( angle % 1080 == 0 ) {
     flip = !flip;
     angle  += 6;
     radius += 6;
@@ -123,8 +118,8 @@ if( frameCount % frameRate == 0 ) {
     offsetY = (int)random(height);
     offsetX = (int)random(width);
 
-    strokeWeight(2);
-    stroke(#EF0000, alf*2);
+    strokeWeight(4);
+    stroke(#FF0000, alf*2);
 
     line( outerXX, outerYY, offsetX, offsetY );
     line( offsetX, offsetY, xx, yy );
@@ -133,7 +128,7 @@ if( frameCount % frameRate == 0 ) {
     strokeWeight( random(6.9) );
   } 
   else {
-    angle += 6;
+    angle+=2;  //6;
   }
 }
 
@@ -305,9 +300,6 @@ void randFillUser()
   fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
 }
 
-
-
-
 ///////////////////////////////////////////////////////////
 //
 //  Spit out ART DAILY message
@@ -316,8 +308,7 @@ void artDaily( String dailyMsg ) {
   textFont( createFont( "Silom", 18 ) );
   smooth();
 
-  //  stroke(#EFEFEF);
-  fill(#EE0000);
+  fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
 

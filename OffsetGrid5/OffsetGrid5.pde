@@ -1,7 +1,4 @@
 //
-//  Learning Processing CH4
-//
-
 Boolean isFinal = true;
 float alf = 37;
 float shapeSize = 11;
