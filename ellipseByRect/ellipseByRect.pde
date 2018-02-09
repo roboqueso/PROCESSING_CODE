@@ -1,6 +1,6 @@
 //  
 //  http://ericfickes.com
-//
+//	circa: 2012
 import fixlib.*;
 
 //  https://github.com/ericfickes/FIXLIB
@@ -20,28 +20,36 @@ float x, y, co, bri, i, a;
 
 /////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1024, 768 );
-  background(#370000);
+  size(1024, 768);
+  background(#420000);
   noFill();
 
   fix.alpha(alf);
   ellipseMode(CENTER);
-  img = loadImage("indies-redblack.jpg");
-  p3 = fix.getImgColors(img, true);
+  // img = loadImage("indies-redblack.jpg");
+  img = loadImage("indies-cyansilver.jpg");
+  // img = loadImage("white-flower.jpg");
+
+  p3 = fix.getImgColors(img);
 
   cX = 1024/2;
   cY = 768/2;
 
   strokeWeight(TWO_PI);
-  stroke(#EF2012);
+  // stroke(#EF2012);
+  fix.ranPalStroke100(p3);
 
   fix.paletteGridFull(p3);
-  fix.circleGrid(1024, 768);
+
+  
+	fix.ranPalStroke100(p3);  
+  	fix.circleGrid(1024, 768);
 
   strokeWeight(PI);
-  stroke(#EF0000);
+  // stroke(#EF0000);
+  fix.ranPalStroke(p3);
   fix.circleGrid(1024, 768);
-  stroke(0);
+
 } 
 
 /////////////////////////////////////////////////////////////////////////
@@ -103,9 +111,10 @@ fix.ranPalStroke(p3);
   a = a + 0.03;
 
 
-  fix.evenOddStroke(#EF2012, (int)alf*2);
-  rect( 1024-frameCount, 1024-frameCount, i, i ); 
-  rect( 1024-frameCount, 1024-frameCount, sz, sz ); 
+
+fix.evenOddStroke(#EF2018, (int)alf*2);	//	2012
+rect( 1024-frameCount, 1024-frameCount, i, i ); 
+rect( 1024-frameCount, 1024-frameCount, sz, sz ); 
 
 
 
@@ -143,11 +152,11 @@ void doExit()
 //  Spit out ART DAILY message
 void artDaily( String dailyMsg ) {
 
-  textFont( createFont( "Silom", 37 ) );
+  textFont( createFont( "Silom", 42 ) );
   smooth();
 
-  fill(#370000);
-  text( " "+dailyMsg, -437, 768-7);
+  fill(#420000);
+  text( " "+dailyMsg, -442, 768-7);
 
   fill(#EF0000);
   text( " "+dailyMsg, 1024-439, 768-9);
