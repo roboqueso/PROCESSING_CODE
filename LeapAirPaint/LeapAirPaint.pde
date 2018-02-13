@@ -33,10 +33,10 @@ void setup()
   noFill();
   noStroke();
   
-  fire1 = loadImage("fire1.png");
-  fire2 = loadImage("fire2.png");
-  fire3 = loadImage("fire3.png");
-  fire4 = loadImage("fire4.png");
+  fire1 = loadImage("gold1.png");
+  fire2 = loadImage("gold2.png");
+  fire3 = loadImage("gold3.png");
+  fire4 = loadImage("gold4.png");
     
   leap = new LeapMotion(this);
 
