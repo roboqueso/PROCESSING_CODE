@@ -7,7 +7,7 @@ final int SKETCH_WIDTH   = 768;
 
 
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 
 int cX;
 int cY;

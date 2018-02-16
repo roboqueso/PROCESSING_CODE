@@ -8,7 +8,7 @@ float theta = 0;
 int cX = 0;
 int cY = 0;
 
-float alf = 42;
+int alf = 42;
 
 //color[] colors = { #EFEFEF, #1975EF, #19EF75, #EF1975 };
 

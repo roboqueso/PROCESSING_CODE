@@ -2,7 +2,7 @@
 //  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
 //
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 
 int cX;
 int cY;

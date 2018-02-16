@@ -2,7 +2,7 @@
 //  go smaller
 
 Boolean isFinal = true;
-float alf = 9;
+int alf = 9;
 
 int shapeSize = 100;
 float minShapeSize = 2;

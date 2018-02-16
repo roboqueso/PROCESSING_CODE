@@ -2,7 +2,7 @@
 //  SineWave borrowed from http://processing.org/learning/basics/sinewave.html
 //
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 
 int cX;
 int cY;

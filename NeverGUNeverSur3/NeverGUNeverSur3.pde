@@ -12,7 +12,7 @@ more information)
 Boolean isFinal = true;
 
 //  
-float alf = 111;  //69;
+int alf = 111;  //69;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;

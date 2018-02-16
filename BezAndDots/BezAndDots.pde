@@ -28,7 +28,8 @@ float x4, y4, angle4, sz4;
 /////////////////////////////////////////////////////////////////////////////////
 void setup()
 {
-  size(1024,768);  //  big:  1024x768
+	size(2048,1024);	//	 .hdr dimensions
+  // size(1024,768);  //  big:  1024x768
 //size(128,96);  //  thumb:  128x96
   
   background(#efefef); 
@@ -160,7 +161,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".hdr" );
   }
 
   noLoop();

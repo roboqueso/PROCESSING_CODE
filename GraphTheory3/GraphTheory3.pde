@@ -2,7 +2,7 @@
 //  Graphs are represented graphically by drawing a dot or circle for every vertex, and drawing an arc between two vertices if they are connected by an edge. If the graph is directed, the direction is indicated by drawing an arrow.
 
 Boolean isFinal = true;
-float alf = 15;
+int alf = 15;
 
 
 float shapeSize = 333;

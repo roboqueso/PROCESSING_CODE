@@ -1,9 +1,10 @@
-//
-//  Learning Processing CH6 EX 6-8 -> rand grid of squares
-//
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 37;
+int alf = 42;
 float shapeSize = 100;
 
 int cX;
@@ -27,7 +28,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(9);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -47,7 +48,7 @@ void draw()
 
     smooth();
 
-    randFill();
+    fix.randFill();
   
     rect( x, y, shapeSize, shapeSize );
     
@@ -61,7 +62,7 @@ void draw()
     ct++;
   }
 
-  exit();
+  doExit();
 }
 
 
@@ -194,7 +195,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -202,10 +203,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

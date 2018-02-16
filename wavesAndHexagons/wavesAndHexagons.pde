@@ -3,9 +3,7 @@ import processing.opengl.*;
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
-//
-//  
-//
+// https://github.com/ericfickes/FIXLIB	
 Boolean isFinal = true;
 int alf = 42; //37;
 float angle, radius = alf, x, y, cX, cY, pad;

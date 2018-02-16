@@ -2,7 +2,7 @@
 //  Recreate banner on ef.com
 //  Make 8 bit heart like I <3 internets on ef.com
 Boolean isFinal = true;
-float alf = 20;
+int alf = 20;
 
 int cX;
 int cY;

@@ -1,4 +1,4 @@
-float alf = 13;
+int alf = 13;
 PImage img;
 color[] p1;
 float ct, maxCt, xx;

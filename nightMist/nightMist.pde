@@ -3,7 +3,7 @@
 //
 
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 float shapeSize = alf;
 
 int cX;

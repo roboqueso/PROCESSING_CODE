@@ -4,7 +4,7 @@
 
 Boolean isFinal = true;
 Boolean drawBoard = false;
-float alf = 6;  // 36
+int alf = 6;  // 36
 float cX, cY;
 
 color[] p1 = { #EFEFEF, #FFFFFF, #EFEFEF,#3A3A3A,#4D4D4D,#606060,#737373,#868686,#9A9A9A,#ADADAD,#C0C0C0,#C6C6C6,#CDCDCD,#D3D3D3,#D9D9D9,#E0E0E0,#E6E6E6,#ECECEC,#F2F2F2,#F9F9F9, #FFFFFF};

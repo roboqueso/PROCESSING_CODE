@@ -1,6 +1,6 @@
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 15;
+int alf = 15;
 
 int cX;
 int cY;
@@ -144,7 +144,7 @@ void drawCore( int XX, int YY, int maxSize ) {
   float r = 1;  // 75;
   float theta = 0;
 
-  float alf = 20;
+  int alf = 20;
   float x;
   float y;
 

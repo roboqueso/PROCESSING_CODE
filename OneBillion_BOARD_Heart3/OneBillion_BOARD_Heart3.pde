@@ -12,7 +12,7 @@ BOARD CONCEPT
 
 */
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 float cX, cY;
 
 float ct = 0;

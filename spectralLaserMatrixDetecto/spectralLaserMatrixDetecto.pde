@@ -7,7 +7,7 @@ final int COLOR_RED = #FF0000;
 
 
 Boolean isFinal = true;
-float alf = 5;
+int alf = 5;
 
 int cX;
 int cY;

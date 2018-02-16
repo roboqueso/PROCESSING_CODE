@@ -1,6 +1,12 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 50;
+int alf = 50;
 
 //  art frame settings
 int outerRectX;
@@ -28,6 +34,7 @@ int yy;
 void setup(){
   size(1024, 768 );
   background (36);
+  fix.alpha(alf);
 }
 
 
@@ -75,7 +82,7 @@ void draw(){
       ellipse( yy+py, xx+px, radius, radius );
 
       //angle += frequency;
-      angle = nextFib( (int)angle );
+      angle = fix.nextFib( (int)angle );
       
     } 
   }
@@ -85,7 +92,7 @@ void draw(){
 
   angle -= frequency;
   radius += 0.75;
-  x = nextFib( (int)x );
+  x = fix.nextFib( (int)x );
 
   // when little ellipse reaches end of window
   // reinitialize some variables
@@ -99,7 +106,7 @@ void draw(){
 
   if( px >= 1080 )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -107,7 +114,7 @@ void draw(){
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ericfickes.com");
 
@@ -115,16 +122,15 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
 
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill()    {  fill( random(255), random(255), random(255), random(100) );  }
-void randStroke()  {  stroke( random(255), random(255), random(255), random(100) );  }
+
+
 
 ///////////////////////////////////////////////////////////
 //
@@ -136,21 +142,6 @@ void artDaily( String dailyMsg ) {
   textFont( font );
   
   text( " "+dailyMsg, 11, height-11);
-}
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-//   int result = f2;
-   f0 = f1;
-   f1 = f2;
-   f2 = f0 + f1;
-   
-   return f0 + f1;
 }
 
 

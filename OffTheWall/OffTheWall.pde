@@ -2,7 +2,7 @@
 
 //  SKETCH SETTINGS
 Boolean isFinal = true;
-float alf = 75;
+int alf = 75;
 
 //  GRID SETTINGS
 

@@ -4,7 +4,7 @@ I HEART CO
  - #EFEFEF & silver sun filling up the board
  */
 Boolean isFinal = true;
-float alf = 20;
+int alf = 20;
 float cX, cY;
 
 //  circle vars

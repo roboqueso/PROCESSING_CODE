@@ -1,6 +1,6 @@
 Boolean isFinal = true;
 Boolean drawBoard = false;
-float alf = 30;
+int alf = 30;
 float cX, cY;
 
 color[] p1 = { 

@@ -4,7 +4,7 @@ Mountain, w/snow cap
 TODO: take existing design and rotate it -90 degrees
  */
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 float cX, cY;
 
 float ct = 0;

@@ -5,7 +5,7 @@
 //  Get bigger flames with less noise
 //  get good flame colors
 Boolean isFinal = true;
-float alf = 5;
+int alf = 5;
 
 int cX;
 int cY;

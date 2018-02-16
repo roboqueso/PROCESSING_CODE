@@ -12,7 +12,7 @@ Specifies vertex coordinates for curves. This function may only be used between 
 Boolean isFinal = true;
 String artDailyMsg = "ERICFICKES.COM";  //"rotateX";  //"rotateY";  //"rotateZ";
 //  
-float alf = 69;
+int alf = 69;
 
 //  circle vars
 float i, angle1 = 180, xx1, yy1, startX1, startY1, radius1 = 37;

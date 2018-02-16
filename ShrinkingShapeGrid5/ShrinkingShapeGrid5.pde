@@ -3,7 +3,7 @@
 //  - start small, maxShapeSize, maxCt = fibonacci
 
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 
 int shapeSize = 2;  //10000;
 float minShapeSize = 2;

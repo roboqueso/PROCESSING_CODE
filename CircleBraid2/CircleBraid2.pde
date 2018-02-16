@@ -1,9 +1,10 @@
 //  IMPORTS  ////////////////////////////////////////////////////
 
 
-//
-//  
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true, fwd = true;
 int alf = 37, sz = 30;
 float angle = -90, radius = 66, x, y, x2, y2, cX, cY, strokeSz = 2;

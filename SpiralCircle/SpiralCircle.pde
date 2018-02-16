@@ -6,7 +6,7 @@
 
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 42;
+int alf = 42;
 
 //  art frame settings
 int outerRectX;

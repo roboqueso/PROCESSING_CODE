@@ -5,7 +5,7 @@ I HEART CO
  */
 Boolean isFinal = true;
 Boolean drawBoard = false;
-float alf = 20;
+int alf = 20;
 float cX, cY;
 
 //  circle vars

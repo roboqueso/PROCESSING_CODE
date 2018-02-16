@@ -1,8 +1,12 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 float cX, cY;
 float x, y;
 float a,b;
 float amp = 13;
-float alf = 42;
+int alf = 42;
 
 float r;
 float g;
@@ -14,12 +18,14 @@ Boolean isFinal = true;
 //////////////////////////////////////////////////////////////////////////////
 void setup() {  // this is run once.   
     
-    background(#EF2012);
+    background(#EF2018);
     size( 1024, 768, P3D ); 
  
     smooth();
     noFill();
  
+    fix.alpha(alf);
+
     cX = width/2;
     cY = height/2;
  
@@ -124,30 +130,15 @@ updatePixels();
     text("d00d", 3, height-5);
      
      if(isFinal){
-       save( pdeName() + getTimestamp() + ".png");
+       save( fix.pdeName() + fix.getTimestamp() + ".png");
      }
      
     noLoop();
+    exit();
   }
  
 }
 
 
-int fib(int n) {
-  if (n <= 1) return n;
-  return fib(n - 1) + fib(n - 2);
-}
 
 
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}

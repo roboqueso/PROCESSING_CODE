@@ -2,7 +2,7 @@
 weird currency-ish pattern?
  */
 Boolean isFinal = true;
-float alf = 75;
+int alf = 75;
 float cX, cY;
 
 float ct = 0;

@@ -3,7 +3,7 @@
 //
 Boolean isFinal = true;
 
-float alf = 42;
+int alf = 42;
 
 int cX;
 int cY;

@@ -3,7 +3,7 @@ import processing.opengl.*;
 //  Prozac color theme
 //
 Boolean isFinal = true;
-float alf = 50;  //69;
+int alf = 50;  //69;
 
 int cX;
 int cY;

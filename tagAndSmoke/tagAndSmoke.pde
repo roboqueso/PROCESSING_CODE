@@ -1,10 +1,11 @@
-//
-//  
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 11;
+int alf = 11;
 
 int cX;
 int cY;
@@ -33,7 +34,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(222);
-
+  fix.alpha(alf);
   //  -------------------------------------------
   smooth();
   noFill();
@@ -98,129 +99,11 @@ void draw()
 
   if ( angle1 >= maxAngle )
   {    
-    exit();
+    doExit();
   }
  
 }
 
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-  //   int result = f2;
-  f0 = f1;
-  f1 = f2;
-  f2 = f0 + f1;
-
-  return f0 + f1;
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-  noFill();
-  
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 3 == 0 ) {
-
-    xx = startX - int( cos(radians(angle)) * w );
-    yy = startY - int( sin(radians(angle)) * w );
-
-
-    ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void dotCircle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      point( xx, yy );
-    }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
 
 
 
@@ -228,7 +111,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit()
 {
   
   artDaily("ERICFICKES.COM");
@@ -236,26 +119,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf*2 );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf*2 );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-
-
 
 
 
@@ -287,7 +156,7 @@ void drawCore( int XX, int YY, int maxSize ) {
   float r = 1;  // 75;
   float theta = 2;
 
-  float alf = 10;
+  int alf = 10;
   float x;
   float y;
 
@@ -305,7 +174,7 @@ void drawCore( int XX, int YY, int maxSize ) {
 
     ellipse( int(XX+x), int(YY+y), x, x );
 
-    heart( int(YY+y), int(XX+x), int(y), int(y) );
+    fix.bitHeart( int(YY+y), int(XX+x), (int(y)>42));//, int(y) );
 
     theta+= 0.25;
 
@@ -319,31 +188,31 @@ void drawCore( int XX, int YY, int maxSize ) {
 
 
 
-///////////////////////////////////////////////////////////
-//  
-//  draw heart
-void heart( int x, int y, int w, int h ) 
-{
-  ellipseMode(RADIUS);
-  smooth();
+// ///////////////////////////////////////////////////////////
+// //  
+// //  draw heart
+// void heart( int x, int y, int w, int h ) 
+// {
+//   ellipseMode(RADIUS);
+//   smooth();
 
-  //  stroke(#EF7519, alf);  // 37
-  stroke(#EF1111, alf);  // 37
+//   //  stroke(#EF7519, alf);  // 37
+//   stroke(#EF1111, alf);  // 37
 
-  strokeWeight(2);
-  //  noFill();
+//   strokeWeight(2);
+//   //  noFill();
 
-  //  bubbles
-  ellipse( x-w, y, w, w);
-  ellipse( x+w, y, w, w);
-  //  ellipseMode(MODE)
-  //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
+//   //  bubbles
+//   ellipse( x-w, y, w, w);
+//   ellipse( x+w, y, w, w);
+//   //  ellipseMode(MODE)
+//   //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
 
 
-  //  lines	
-  line( x-(w*2), y, x, y + w*PI);
-  line( x+(w*2), y, x, y + w*PI);
-}
+//   //  lines	
+//   line( x-(w*2), y, x, y + w*PI);
+//   line( x+(w*2), y, x, y + w*PI);
+// }
 
 
 

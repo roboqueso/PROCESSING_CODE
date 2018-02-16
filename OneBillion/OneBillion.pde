@@ -2,7 +2,7 @@
 Facebook buy Instagram for $1000000000.00
 */
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float ii = 0;
 
 float cX, cY;

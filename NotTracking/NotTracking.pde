@@ -2,7 +2,7 @@
 //  and nextFib to adjust the radius / angle / shape?
 
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 float shapeSize = 333;
 
 int cX;

@@ -4,7 +4,7 @@
 
 Boolean isFinal = true;
 int ctMAIN = 0;
-// float alf = 255;
+// int alf = 255;
 
 int cX, cY;
 int xx = 0;

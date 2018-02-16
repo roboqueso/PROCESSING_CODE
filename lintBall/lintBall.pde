@@ -1,7 +1,7 @@
 //  Prozac color theme
 //
 Boolean isFinal = true;
-float alf = 18;
+int alf = 18;
 
 int cX;
 int cY;

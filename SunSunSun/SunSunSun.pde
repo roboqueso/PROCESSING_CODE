@@ -6,7 +6,7 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 42; //37;
+int alf = 42; //37;
 
 
 color[] p2 = { #000000, #000055, #005555, #555555, #5555AA, #55AAAA, #555500, #AAAAAA, #AA5500, #AA5555, #AAAA55, #FFAA00, #FFAA55, #AAAA00, #005500, #550000, #FFFFFF, #FFAAAA, #FFFFAA, #55AA55, #FFFF55, #AA55AA, #FFAAFF, #AAAAFF, #AAFFFF, #55AAFF, #550055, #FF5500, #AAFFAA, #0055AA, #FF5555, #AA0000, #AA0055, #FF55AA }; 
@@ -24,7 +24,8 @@ void setup() {
   size(1024, 768);
   frameRate(303);  //  P2D, P3D, OPENGL, PDF
   background(#000011);
-  
+  fix.alpha(alf);
+
   ellipseMode(CENTER);
   rectMode(CENTER);
   
@@ -123,11 +124,6 @@ void doExit()
   {
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
-
-//	debug
-// println("exit()");
-java.awt.Toolkit.getDefaultToolkit().beep();
-
 
   noLoop();
   exit();

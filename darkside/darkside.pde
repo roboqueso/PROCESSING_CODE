@@ -297,7 +297,7 @@ void drawCore( int XX, int YY, int maxSize ) {
   float r = 1;  // 75;
   float theta = 2;
 
-  float alf = 10;
+  int alf = 10;
   float x;
   float y;
 

@@ -1,7 +1,7 @@
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 11;
+int alf = 11;
 
 int cX;
 int cY;

@@ -2,7 +2,7 @@
 //  go smaller
 
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 
 
 int shapeSize = 10000;

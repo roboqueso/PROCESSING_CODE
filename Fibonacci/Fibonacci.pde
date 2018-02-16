@@ -1,6 +1,6 @@
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 37;
+int alf = 37;
 
 int cX;
 int cY;

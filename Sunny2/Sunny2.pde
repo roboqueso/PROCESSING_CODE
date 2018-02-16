@@ -1,8 +1,9 @@
-//
-//  go smaller
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 
 
 int shapeSize = 10000;
@@ -32,6 +33,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(#A1A1A1);  //#B4B4B4);  //#CBCBCB);
+  fix.alpha(alf);
   /*
   img = loadImage( "Weather-Report-Sunny.png");
   img.loadPixels();
@@ -203,56 +205,15 @@ line( xx2, yy2, xx3, yy3);
   
 
   
-  exit();
+  doExit();
 }
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  radius2 = w;
-
-  while ( angle < 360 ) {
-
-// make circle draw faster by skipping angles
-if( angle % 6 == 0 ) {
-    
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-}
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
 
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -260,45 +221,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName()+".png" );
   }
   
   noLoop();
-  System.gc();
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
-
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName(){
-    return split( this.toString(), "[")[0];
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

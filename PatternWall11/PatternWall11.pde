@@ -4,7 +4,7 @@
 
 
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float ii = 0;
 
 float cX, cY;

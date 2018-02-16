@@ -2,7 +2,7 @@
 //  Rotate the circles so the crown looking opening points up
 
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 
 /*
 float shapeSize = 333;

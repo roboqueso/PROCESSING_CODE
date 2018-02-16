@@ -7,7 +7,7 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float sz=0;
 
 int cX;

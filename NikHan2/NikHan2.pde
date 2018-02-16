@@ -4,7 +4,7 @@
 int a,b,i,c=600;
 
 Boolean isFinal = true;
-float alf = 11;
+int alf = 11;
 float shapeSize = 50;
 
 int cX;

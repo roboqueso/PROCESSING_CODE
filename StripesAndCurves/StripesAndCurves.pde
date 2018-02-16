@@ -1,8 +1,9 @@
-//
-//  
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 
 int cX;
 int cY;

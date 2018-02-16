@@ -4,7 +4,7 @@
 //  CourierNewPSMT
 //  
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;

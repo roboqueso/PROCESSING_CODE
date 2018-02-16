@@ -7,7 +7,7 @@ Boolean isFinal = true;
 //  
 //  B&W sunbeams slowly alpha out?
 //  
-float alf = 150;
+int alf = 150;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;

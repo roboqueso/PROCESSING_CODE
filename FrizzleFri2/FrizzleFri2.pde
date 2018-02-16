@@ -5,7 +5,7 @@ import fixlib.*;
 //  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 75;
+int alf = 75;
 float sz=0;
 int cX;
 int cY;

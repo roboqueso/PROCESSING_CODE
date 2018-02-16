@@ -1,7 +1,7 @@
 Boolean isFinal = true;
 
 //  
-float alf = 37;
+int alf = 37;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;

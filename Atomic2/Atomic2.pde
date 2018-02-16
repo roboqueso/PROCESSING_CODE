@@ -1,5 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float cX, cY;
 
 float ct = 0;
@@ -42,6 +47,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(255);
+  fix.alpha(alf);
   noFill();
   
   cX = width * .5;
@@ -99,7 +105,7 @@ void draw()
     xx5 = startX1 - int( cos(radians(angle5)) * radius5 );
     yy5 = startY1 - int( sin(radians(angle5)) * radius5 );
 
-ranPalStroke( palette );
+fix.ranPalStroke( palette );
 
 //  do stuff
 
@@ -114,8 +120,8 @@ ranPalStroke( palette );
 
 rnd = random(100);
 strokeWeight(rnd);
-ranPalStroke( boobColors );
-ranPalFill( palette );
+fix.ranPalStroke( boobColors );
+fix.ranPalFill( palette );
 ellipse( xx4, yy4, rnd, rnd ); 
 
 stroke(#EFEFEF);
@@ -135,285 +141,18 @@ point( xx4, yy4 );
 
 //    alf = 20;
 //    bitHeart( cX-180, cY-180, false );
-    exit();
+    doExit();
  
   }
   
 }
 
-/////////////////////////////////////////////////////////////////
-//  spit out an 8bit heart
-void bitHeart( float x, float y, boolean grid ) {
-
-  int blockSize = 30;
-  float htSize = 300;
-  strokeWeight(.5);
-
-  //  GRID
-  if(grid) {
-    stroke(#333333, 50);
-  
-    for( int xx = 0 ; xx <= 13; xx++ ) {
-      
-      line( x+(blockSize*xx), 0, x+(blockSize*xx), height );
-      line( 0, y+(blockSize*xx), width, y+(blockSize*xx) );
-      
-    }
-  }
-//  GRID
-
-  
-
-//  HEART
-  stroke(#333333);
-
-  //  white blocks
-  fill(255);
-  rect( x+(blockSize*2), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize), y+(blockSize*2), blockSize, blockSize );
-  
-  fill(0);
-// TODO: make this smarter
-  rect( x+(blockSize*2), y, blockSize, blockSize );
-  rect( x+(blockSize*3), y, blockSize, blockSize );
-  rect( x+(blockSize*4), y, blockSize, blockSize );
-  
-  rect( x+(blockSize*8), y, blockSize, blockSize );
-  rect( x+(blockSize*9), y, blockSize, blockSize );
-  rect( x+(blockSize*10), y, blockSize, blockSize );
-  
-  rect( x+(blockSize), y+blockSize, blockSize, blockSize );
-
-  fill(#EF0000);
-  rect( x+(blockSize*3), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*4), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*2), blockSize, blockSize );
-  
-  rect( x+(blockSize), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*3), blockSize, blockSize );
-  
-  rect( x+(blockSize), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*4), blockSize, blockSize );
-
-  rect( x+(blockSize*2), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*5), blockSize, blockSize );
-
-  rect( x+(blockSize*2), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*6), blockSize, blockSize );
-
-  rect( x+(blockSize*3), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*7), blockSize, blockSize );
-
-  rect( x+(blockSize*4), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*8), blockSize, blockSize );
-
-  rect( x+(blockSize*5), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*9), blockSize, blockSize );
-  
-  rect( x+(blockSize*6), y+(blockSize*10), blockSize, blockSize );
-
-  fill(0);
-
-
-
-  
-  rect( x+(blockSize*5), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize), blockSize, blockSize );
-
-
-  fill(#EF0000);  
-  rect( x+(blockSize*4), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*8), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*9), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*10), y+blockSize, blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*10), blockSize, blockSize );  
-  rect( x+(blockSize*6), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*5), blockSize, blockSize );
-
-  fill(0);
-  rect( x+(blockSize*11), y+blockSize, blockSize, blockSize );
-  rect( x, y+(blockSize*2), blockSize, blockSize );
-  rect( x, y+(blockSize*3), blockSize, blockSize );
-  rect( x, y+(blockSize*4), blockSize, blockSize );
-  rect( x, y+(blockSize*5), blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*6), blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*12), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*6), blockSize, blockSize );
-
-  rect( x+(blockSize*12), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*2), blockSize, blockSize );
-}
-
-
-
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-  noFill();
-  
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 3 == 0 ) {
-
-    xx = startX - int( cos(radians(angle)) * w );
-    yy = startY - int( sin(radians(angle)) * w );
-
-
-    ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ericfickes.com");
@@ -421,21 +160,13 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + month()+day()+year()+hour()+minute()+millis()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
 
 ///////////////////////////////////////////////////////////
 //

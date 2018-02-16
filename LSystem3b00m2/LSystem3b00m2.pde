@@ -1,7 +1,7 @@
 
 Boolean isFinal = true;
 
-float alf = 21;
+int alf = 21;
 
 int cX;
 int cY;

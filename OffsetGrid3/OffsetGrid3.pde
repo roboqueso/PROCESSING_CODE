@@ -1,6 +1,6 @@
 //
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float shapeSize = 75;
 
 int cX;

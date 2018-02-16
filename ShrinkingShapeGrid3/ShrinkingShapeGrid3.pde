@@ -3,7 +3,7 @@
 //  maxCt based on fibonacci numbers instead of w*h/shapeSize
 
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 
 float shapeSize = 10000;
 float minShapeSize = alf;

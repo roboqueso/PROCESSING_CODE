@@ -2,7 +2,7 @@
 //  Make pattern using distance formula and the cirlce coordinates
 
 Boolean isFinal = true;
-float alf = 75;
+int alf = 75;
 
 /*
 float shapeSize = 333;

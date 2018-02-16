@@ -18,7 +18,7 @@ int outerRectHeight = 28;
 //  grid settings
 int shapeSize = 10;
 float shapePadding = 1;
-float alf = 69;
+int alf = 69;
 
 //  image action
 PImage img;

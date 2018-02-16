@@ -1,8 +1,9 @@
-//
-//  
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 float strokeSize = 20;
 int cX;
 int cY;
