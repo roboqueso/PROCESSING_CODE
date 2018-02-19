@@ -3,6 +3,7 @@ import fixlib.*;
 //  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
+// TODO: revisit and make super shape generator
 
 Boolean isFinal = true;
 int alf = 42; //37;
@@ -84,20 +85,6 @@ ellipse(width-x, height-y, r*frameCount, r*frameCount);
 
 
 
-
-// void mouseMoved() {
-  
-//   stroke(random(255));
-//   ellipse( mouseX, mouseY, alf, alf );
-
-
-
-
-
-// }
-
-
-
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
 void doExit() 
@@ -108,11 +95,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
   //  BEEP!
-  java.awt.Toolkit.getDefaultToolkit().beep();
+  // java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();

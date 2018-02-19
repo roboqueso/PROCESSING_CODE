@@ -3,6 +3,8 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import fixlib.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -13,6 +15,12 @@ import java.io.OutputStream;
 import java.io.IOException; 
 
 public class burlapGrid extends PApplet {
+
+// https://github.com/ericfickes/FIXLIB 
+
+
+Fixlib fix = Fixlib.init(this);
+
 
 //
 //  Learning Processing CH6 EX 6-8 -> rand grid of squares
@@ -45,7 +53,7 @@ public void setup() {
   
   frameRate(303);
   background(9);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -66,15 +74,15 @@ public void draw()
   //  keep drawing smaller and smaller square grids
 
     x = y = ct = 0;
-    maxCt = getMaxCt( shapeSize );    
+    maxCt = fix.getMax( shapeSize );    
 
     //  square grid1
     while( ct < maxCt ) {
 
-      randStrokeUser();
+      fix.ranPalStroke(palette);
       rect( x, y, shapeSize, shapeSize );
 
-      randStrokeUser();
+      fix.ranPalStroke(palette);
       ellipse( x, y, shapeSize, shapeSize );
       
       if( x >= width ) {
@@ -93,54 +101,9 @@ public void draw()
     shapeSize -= minShapeSize;
 
 
-if( shapeSize <= minShapeSize ) {
-  exit();
-}
-}
-
-public float getMaxCt( float shapeSize ) {
-  return ( ( width * height ) / shapeSize );
-}
-
-public void textLines() {
-
-
-  textFont( createFont( "Helvetica", 300 ) );
-
-  fill(10, pow(alf, 1.5f) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(0xff210000, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3f );
-  fill(0xff000021, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3f );
-  //  & curve
-  fill(0xff210000, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49f );
-  fill(0xff000021, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49f );
-  //  & quad
-  fill(0xff210000, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65f );
-  fill(0xff000021, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65f );
-
-  //  & triangle
-  fill(0xff210000, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85f );
-  fill(0xff000021, pow(alf, 1.5f) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85f );
-}
-
-
-
-
-public void mousePressed() {
-  println("mousePressed()");
-}
-
-
-public void keyPressed() {
-  println("keyPressed()");
+  if( shapeSize <= minShapeSize ) {
+    doExit();
+  }
 }
 
 
@@ -191,47 +154,13 @@ public void drawFrame() {
   rect( 122, 122, width-245, height-245 );
 }
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-public void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-
-  while ( angle < 360 ) {
-    xx = startX - PApplet.parseInt( cos(radians(angle)) * radius2 );
-    yy = startY - PApplet.parseInt( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-public void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5f), startX+(shapeSize*.25f), startY );
-  line( startX+(shapeSize*.25f), startY, startX+(shapeSize*.75f), startY );
-  line( startX+(shapeSize*.75f), startY, startX+(shapeSize), startY+(shapeSize*.5f) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5f), startX+(shapeSize*.75f), startY+shapeSize );
-  line( startX+(shapeSize*.75f), startY+shapeSize, startX+(shapeSize*.25f), startY+shapeSize );
-  line( startX+(shapeSize*.25f), startY+shapeSize, startX, startY+(shapeSize*.5f) );
-}
-
 
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-public void exit() 
+public void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -239,34 +168,11 @@ public void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-public void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-public void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-public void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-public void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ PApplet.parseInt(random( palette.length-1 )) ], alf*.75f );
-}
-public void randFillUser()
-{
-  fill( palette[ PApplet.parseInt(random( palette.length-1 )) ], alf*.75f );
+  noLoop();
+  exit();
 }
 
 

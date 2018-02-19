@@ -195,7 +195,7 @@ float getMax( float shapeSize ) {
   return ( ( width * height ) / shapeSize );
 }
 
-void textLines() {
+void fix.textLines() {
 
 
   textFont( createFont( "Helvetica", 300 ) );
@@ -329,7 +329,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");

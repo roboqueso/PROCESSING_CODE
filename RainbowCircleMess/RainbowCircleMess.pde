@@ -72,7 +72,7 @@ void draw() {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   fill(#EFEFEF);
   text( "ERICFICKES.COM", 0, height-11 );

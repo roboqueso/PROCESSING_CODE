@@ -184,35 +184,3 @@ void drawCore( int XX, int YY, int maxSize ) {
     }
   }
 }
-
-
-
-
-// ///////////////////////////////////////////////////////////
-// //  
-// //  draw heart
-// void heart( int x, int y, int w, int h ) 
-// {
-//   ellipseMode(RADIUS);
-//   smooth();
-
-//   //  stroke(#EF7519, alf);  // 37
-//   stroke(#EF1111, alf);  // 37
-
-//   strokeWeight(2);
-//   //  noFill();
-
-//   //  bubbles
-//   ellipse( x-w, y, w, w);
-//   ellipse( x+w, y, w, w);
-//   //  ellipseMode(MODE)
-//   //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
-
-
-//   //  lines	
-//   line( x-(w*2), y, x, y + w*PI);
-//   line( x+(w*2), y, x, y + w*PI);
-// }
-
-
-

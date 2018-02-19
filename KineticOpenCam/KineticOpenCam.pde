@@ -234,7 +234,7 @@ strokeWeight(2);
 
   //  AUTO SAVER
   if(frameCount%780==0){
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
   }
 
 
@@ -251,7 +251,7 @@ void keyPressed(){
   switch(key){
   
     case 's':
-      save(pdeName() + getTimestamp() + ".png");
+      save( fix.pdeName() + fix.getTimestamp() + ".png");
     break;
   
     case ESC:
@@ -260,7 +260,7 @@ void keyPressed(){
      kinect.stopDepth();
      kinect.stopVideo();
      
-      save(pdeName() + getTimestamp() + ".png");
+      save( fix.pdeName() + fix.getTimestamp() + ".png");
   
       exit();
     break;
@@ -300,14 +300,3 @@ void keyPressed(){
 //void captureEvent(Capture c) {
 //  c.read();
 //}
-
-public String getTimestamp() {
-  return ""+month()+"-"+day()+"-"+year()+"-"+hour()+"-"+minute()+"-"+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}

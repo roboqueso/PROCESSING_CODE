@@ -66,7 +66,7 @@ void draw()
 }
 
 
-void textLines() {
+void fix.textLines() {
 
 
   textFont( createFont( "Helvetica", 300 ) );

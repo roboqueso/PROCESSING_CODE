@@ -1,3 +1,7 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 //
 //  SineWave borrowed from http://processing.org/learning/basics/sinewave.html
 //
@@ -26,7 +30,7 @@ void setup() {
   // setup core sketch settings items
   size(1024,768);
   background(66,111,66);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -48,7 +52,7 @@ void draw()
     sineWave( x );
     x += alf;
   }
-  exit();
+  doExit();
 }
 
 /////
@@ -76,37 +80,23 @@ void sineWave( float startY ) {
   }
 }
 
-void calcWave() {
-
-}
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
   //  if final, save output to png
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
+  noLoop();
+  exit();
 }
 
 

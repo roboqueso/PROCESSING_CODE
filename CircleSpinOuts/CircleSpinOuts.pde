@@ -125,7 +125,7 @@ void draw()
 }
 
 
-void textLines() {
+void fix.textLines() {
 
 
   textFont( createFont( "Helvetica", 300 ) );
@@ -213,7 +213,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   noLoop();

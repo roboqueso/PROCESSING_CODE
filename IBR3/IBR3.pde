@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  make rounded rect that match the app group
 //  http://en.wikipedia.org/wiki/Silver_(color)
 
@@ -83,29 +88,9 @@ void draw() {
 //      text("ERICFICKES.COM", -2, height-2 );
 
       if(isFinal){
-        save( pdeName() + getTimestamp() + ".png" );
+        save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
       noLoop();
+      exit();
   }
 }
-
-
-
-
-
-
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

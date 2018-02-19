@@ -1,3 +1,9 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 //  color collection examples
 
 final int SKETCH_HEIGHT  = 1024;
@@ -38,18 +44,6 @@ color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #00700
 //  ASSOCIATIVE ARRAY
 
 
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  stroke( palette[ int(random( palette.length-1 )) ] , alf );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ] , alf );
-}
-
 ////////////////////////////////////////////////////
 //
 void setup() {
@@ -62,7 +56,7 @@ size(1024,768);
 //  size(1024,768);, PDF );
 
   background(1);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -93,28 +87,28 @@ void draw()
     cirXX = startX - int( cos(radians(angle)) * radius );
     cirYY = startY - int( sin(radians(angle)) * radius );
     
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     strokeWeight( random(shapeSize) );  
-    hexagon( xx, yy, shapeSize );
+    fix.hexagon( xx, yy, shapeSize );
     
 
     strokeWeight( random(shapeSize) );
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     point( random(xx), random(yy) );//, shapeSize );
 
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     strokeWeight(1);
     point( xx, cirXX);
 
 
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     strokeWeight(2);
     line(cirYY-radius, xx, yy-radius, cirXX);
     strokeWeight(.25);
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     line(cirYY+cX, cirXX, yy+cX, xx);
 
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     strokeWeight(.75);
     line(cirYY-radius, cirXX, xx, yy);
 
@@ -126,7 +120,7 @@ void draw()
     if( cc % 5 == 0) {
       ellipse( cirXX, cirYY, shapeSize, shapeSize );  
     } else {
-      randStrokeUser();  
+      fix.ranPalStroke(palette)  ;
     }
 
       if( xx >= width )
@@ -148,55 +142,27 @@ void draw()
     cc++;
 
   if( cc >= maxCC ) {
-    exit();  
+    doExit();  
   }
 }
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
 
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-
 
 
 

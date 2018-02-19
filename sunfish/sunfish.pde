@@ -52,7 +52,7 @@ void draw()
 
 
   	if(rad>width){
- 		save( pdeName() + "-" + getTimestamp()+".png" );
+ 		save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   		stop();
   	}
 

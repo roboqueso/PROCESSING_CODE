@@ -162,14 +162,4 @@ void artDaily( String dailyMsg ) {
 
   fill(#EF2012);
   text( " "+dailyMsg, 0, height);
-  /*
-float yy = 0;
-   while( yy <= height ) {
-   
-   fill(#EFEFEF, yy*.15);
-   text( " "+dailyMsg, 5, yy);
-   yy += 18; 
-   }
-   */
 }
-

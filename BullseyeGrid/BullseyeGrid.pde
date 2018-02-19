@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 // make the vert system shakier
 public float xx=0, yy=0;
 
@@ -52,9 +57,9 @@ void draw() {
     
     
   if(frameCount%2==0)
-    bullsEye( xx, yy, shapeSize );  
+    fix.bullsEye( xx, yy, shapeSize );  
   else
-    rectEye( xx, yy, shapeSize );
+    fix.rectEye( xx, yy, shapeSize );
 
     
     
@@ -64,9 +69,10 @@ void draw() {
         fill(255);
         text("ERICFICKES.COM", 11, height-11);
         if(isFinal){
-          save( pdeName() + getTimestamp() + ".png");
+          save( fix.pdeName() + fix.getTimestamp() + ".png");
         }
         noLoop();
+        exit();
     }
 
 }
@@ -85,56 +91,4 @@ void vertSys( float a, float b ){
     }
     //    XX safety check
     if( a < -11 ) xx = random(width);
-}
-
-
-///////////////////////////////////////////////////////////////////////
-void bullsEye( float a, float b, float shapeSize ){
-
-  int tmp = (int)shapeSize;
-  
-  while(  tmp >= 0 ) {
-
-    strokeWeight(tmp/24);
-    fill(0);
-    stroke(255);
-
-    ellipse( a, b, tmp, tmp);
-    tmp -= int(shapeSize/6);
-  }
-
-  
-}
-
-///////////////////////////////////////////////////////////////////////
-void rectEye( float a, float b, float shapeSize ){
-
-  int tmp = (int)shapeSize;
-  
-  while(  tmp >= 0 ) {
-
-    strokeWeight(tmp/24);
-    fill(0);
-    stroke(255);
-
-    rect( a, b, tmp, tmp, random(tmp) );
-    
-    tmp -= int(shapeSize/6);
-  }
-
-  
-}
-
-
-
-///////////////////////////////////////////////////////////
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
 }

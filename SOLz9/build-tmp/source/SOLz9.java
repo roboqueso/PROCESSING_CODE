@@ -1,0 +1,233 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import fixlib.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class SOLz9 extends PApplet {
+
+// https://github.com/ericfickes/FIXLIB 
+
+
+Fixlib fix = Fixlib.init(this);
+
+
+Boolean isFinal = true;
+int ctMAIN = 0;
+int alf = 13;
+
+int cX;
+int cY;
+int xx = 0;
+int yy = 0;
+
+int outerXX = 0;
+int outerYY = 0;
+
+int pad = 69;
+int cubeSize = 50;
+
+float angle = 0;
+float maxAngle;
+float radius = 9;
+float outerRadius;
+
+int offsetX = 0;
+int offsetY = 0;
+
+int[] p1 = { 
+ 0xff131213, 0xff3c3b3c, 0xff3d3c3d, 0xff494849, 0xff3f3c3e, 0xff383637, 0xff706e6f, 0xff333132, 0xff3d3b3c, 0xff161616, 0xff201f1f, 0xff222222, 0xff2a2828, 0xff2e2d2d, 0xff2f2e2e,
+  0xff2C0E0F,0xffC98599,0xffF6EDF9,0xff6C2C2A,0xff50262B,0xff966576,0xff926E89,0xffBB8595,0xffCD91AB,0xff905869,0xffBC7B95,0xff8F4D52,0xffEB774C,0xffAD4932,0xffAA6878,0xffBA7379,0xffB76A79,0xffAF534D,0xffCA8589,0xff734650,0xffC87477,0xffEB8969,0xffD68674,0xffB28DAE,0xffC67B94,0xff613540,0xffD3B6D8,0xffF28753,0xffB46751,0xffCE562E,0xffDC7457,0xffC96769,0xffDA7865,0xff745268,0xff481411,0xffAB7388,0xffD96535,0xff8C3428,0xffDA6946,0xffAB6B85,0xffEA6B36,0xffAB5965,0xffBA6767,0xffCB7568,0xffB66B84,0xffCB6856,0xffD86A55,0xffA86667,0xffD88789,0xffD7A4B3,0xffB69DC7,0xffA67895,0xffC96A74,0xffD8979A,0xff76678B,0xffC55845,0xff6A221B,0xffF8A674,0xffA97579,0xff9988B0,0xffD38A95,0xffCA6545,0xffB78576,0xffF0AB8E,0xffD77B87,0xffD98757,0xffD87976,0xffE87B60,0xffBA7466,0xff7E6377,0xffDC7445,0xff946456,0xffCB9699,0xffE8B3B8,0xff9278A1,0xffEC9783,0xff9B8595,0xff3F191E,0xffCA7557,0xff55211F,0xff5B404E,0xffD8A796,0xffDB9683,0xffA97DA6,0xffCA491D,0xff5F1712,0xffA67565,0xff753D3A,0xffF4823C,0xffC79588,0xffC67544,0xffBBA6BC,0xffD26B65,0xff5E4A63,0xffE35C29,0xff8A3F40,0xffF8A55C,0xff865E82,0xffF0C5BB,0xffC0595F,0xff7D6059,0xffE2A076,0xffE19CA9,0xffD27B99,0xffE2531D,0xffBA3B15,0xffA26B90,0xffBB9F9B,0xff7F80A2,0xff442E3B,0xffC67B8C,0xffBD7384,0xffBD738C,0xffBD7B8C,0xffB57384,0xffB5738C,0xffC67B82,0xffC67384,0xffCE7B8E,0xffBD7C82,0xffCE7B81,0xffC6738C,0xffB47B8C,0xffB47C82,0xffCE7380,0xffCE738C,0xffC66B84,0xffF18B6E,0xffBA7489,0xffB189A9,0xff532527,0xff714A57,0xffCC8CA9,0xffDA94A9,0xff4B1513,0xff2E0D0C,0xffED7052,0xffD9B5D6,0xffF2E6F4,0xffD78CA6,0xffDA848B,0xff8B342B,0xff8B4B51,0xff662725,0xffE997A8,0xff9C4237,0xffCA7B95,0xffE88C99,0xffBA6979,0xffEB959A,0xff956573,0xffD96A51,0xffD77B8A,0xff8D5766,0xff773534,0xff966F8E,0xff6A2118,0xffB04E47,0xffD88674,0xffEC7A62,0xff673233,0xffDA99B5,0xffCA7479,0xffE78988,0xff5D3843,0xffC86A78,0xffB3A1CB,0xffCD848B,0xffA96778,0xffCB95B7,0xffF0A9B2,0xffD97778,0xffC8584A,0xff763128,0xffDC7663,0xff67150C,0xffBA7578,0xff772821,0xffAD5968,0xffF8AA90,0xff4B1821,0xffDD949B,0xffCA6766,0xffF1845F,0xffD77B95,0xffCC94AC,0xffA86669,0xffF9979C,0xffB96769,0xff59211D,0xffCC5236,0xffD9A6C1,0xff927DA7,0xff32171D,0xffA8757D,0xff683129,0xff1C0707,0xff3B2327,0xffEC9683,0xffB66556,0xffCB7566,0xff662932,0xff7C688B,0xffFBA174,0xff7C423D,0xffD86864,0xffBA7568,0xffC16B84,0xffAB799B,0xffFA987C,0xffC98CB5,0xffBD857E,0xff873C3D,0xffDB9683,0xffD76B76,0xff96605D,0xffC35960,0xffF78C96,0xffAA7469,0xffC89598,0xffE27B82,0xffDA845D,0xff752931,0xffDAA79B,0xffF0C4CE,0xff825D7D,0xffF08C8C,0xffCB8E85,0xff5B1819,0xffC47BA5,0xff381A12,0xffD98CB5,0xffE56146,0xff412C3C,0xffD68494,0xffCE7B8C,0xffCE8494,0xffD68C9C,0xffCE849D,0xffC67384,0xffDE8C9C,0xffC47B8D,0xffD6849D,0xffDF8494,0xffDE8C93,0xffCF7386,0xffC4849F,0xffCE7B83,0xffC6738D,0xffD68C93,0xffCD8C9B,0xffDF849D,0xffC48493,0xffC57B83,0xffFFFFFF
+  };
+int[] p2 = { 
+ 
+  0xff524a52, 0xff645c64, 0xff6e656e, 0xff988d98, 0xff938b93, 0xff918a91, 0xff938793, 0xff887f88, 0xff978e96, 0xff5e555d, 0xff7a7279, 0xff7c6f7a, 0xff6e686d, 0xff685d66, 0xff867c84, 0xff92848f, 0xff8b8289, 0xff756872, 0xff3e363c, 0xff6a6268, 0xff8b8088, 0xff4e434b, 0xff867b83, 0xff756771, 0xff645a61, 0xff786e75, 0xff978a93, 0xff8b7f87, 0xff564d53, 0xff665d63, 0xff7b7077, 0xff756a71, 0xff6d6369, 0xff6e676b, 0xff4f444a, 0xff42383d, 0xff655b60, 0xff61545a, 0xffa39199, 0xff5e5559, 0xff94888d, 0xff706266, 0xff73676a, 0xff78676b, 0xff685559, 0xff9f858a, 0xff908587, 0xffa3868b, 0xff6e5c5f, 0xff684f53, 0xff765c5e, 0xff988586, 0xff887475, 0xffc6aeaf, 0xff977c7d, 0xff937475, 0xfffefdfd, 0xfffbf8f8, 0xff6e5a5a, 0xff9e8787, 0xff766e6e, 0xff8a8181, 0xff867777, 0xff847c7c, 0xff705857, 0xff6a5251, 0xff7c6867, 0xff907c7b, 0xffbda2a0, 0xffae9593, 0xff8d7775, 0xff79605d, 0xffdfcfcd, 0xfff4edec, 0xff6f6867, 0xffb29692, 0xff987772, 0xff8e7470, 0xff8e6c65, 0xffaf958f, 0xff8a6c65, 0xffceb6b0, 0xff887c79, 0xff5a5655, 0xff9c7970, 0xff9f7e74, 0xff816b64, 0xff544641, 0xff755c52, 0xff8e6e5f, 0xff605a57, 0xff89827d, 0xff7f766f, 0xffa49a91, 0xff55504b, 0xff685f56, 0xff78726a, 0xff625d55, 0xff7b7568, 0xff78766e, 0xff716e5f, 0xff416e24, 0xff365a28, 0xffc9d950, 0xff4c6c30, 0xff659443, 0xff729741, 0xff698338, 0xff587e3a, 0xff385529, 0xff5b7f3b, 0xff89b552, 0xff87a347, 0xff4c7036, 0xff5b7436, 0xff446735, 0xff689048, 0xff87a24c, 0xff56763b, 0xff688c46, 0xff849948, 0xff84ab55, 0xff70964c, 0xff638c49, 0xff8a9b49, 0xff5b733a, 0xff5f7f42, 0xff82a756, 0xff759750, 0xff7e924a, 0xff476639, 0xff8e9e50, 0xff425e35, 0xff405a33, 0xff92b362, 0xffb3cd6f, 0xff4b653a, 0xffc0d472, 0xff819b57, 0xff4f6d40, 0xff65854f, 0xffc8d878, 0xff8ca15c, 0xff899c59, 0xffa5be6d, 0xff8aa965, 0xff768c54, 0xff84a464, 0xff7d9a5e, 0xff5a7549, 0xff718753, 0xff5a7449, 0xffa6ca7e, 0xff57754b, 0xff435637, 0xff405336, 0xff8ca66b, 0xff707a4d, 0xff526542, 0xff95a76b, 0xff3f4a30, 0xffa8bb78, 0xff89ae74, 0xff6c8c5e, 0xff31422d, 0xff96b176, 0xff6f895d, 0xff2b3b29, 0xff87a06c, 0xff7d9466, 0xff8aa673, 0xff8baf7b, 0xff75855d, 0xff849d70, 0xff555f43, 0xff8b9e71, 0xff46543d, 0xff5c694d, 0xff5a6e52, 0xff95ae81, 0xff879f77, 0xff748463, 0xff7b9271, 0xff718468, 0xff606450, 0xff91a082, 0xff5c604e, 0xff40483b, 0xff505647, 0xff545c4d, 0xff2d2831, 0xff514f5e, 0xff797d6b, 0xff5e5869, 0xff656a5b, 0xff4e4f44, 0xff6d6e5f, 0xff736b7e, 0xff879582, 0xff545360, 0xff53515d, 0xff707a6c, 0xff706d7d, 0xff504853, 0xff888093, 0xffa8b19d, 0xff443d46, 0xff585460, 0xff786e7e, 0xff484852, 0xff51525c, 0xff716775, 0xff7c707f, 0xff7a7281, 0xff979787, 0xff504f59, 0xff625d69, 0xff6b6471, 0xff939c8c, 0xff5b6359, 0xff645c68, 0xff625e6a, 0xff7b7280, 0xff474149, 0xff46424a, 0xff59525c, 0xff837f8e, 0xff655c67, 0xff938797, 0xff706773, 0xff615963, 0xff85808e, 0xff6b6671, 0xff706772, 0xff787480, 0xff636960, 0xff616a65, 0xff746f7a, 0xffa396a5, 0xff625b64, 0xff817e8a, 0xff6d7067, 0xff8c818d, 0xff7a7781, 0xffbeb6c5, 0xff827c86, 0xff5d575e, 0xff96909b, 0xff8d848e, 0xff676168, 0xff86838c, 0xff99959f, 0xff6a656b, 0xffd7d4de, 0xff7c7b80, 0xff4e4d4f
+ 
+  };
+////////////////////////////////////////////////////
+//
+public void setup() {
+  
+  
+  //  ---------------------
+  background (0);
+  fix.alpha(alf);
+  
+  noFill();
+
+  cX = PApplet.parseInt( this.width / 2 );
+  cY = PApplet.parseInt( this.height / 2 );
+
+  xx = -cubeSize;
+  yy = xx;  
+
+  strokeWeight( .5f );
+
+  offsetX = 400;
+  offsetY = 400;
+  
+  //  max angle = where does the circle stop?
+  maxAngle = 10000;
+
+  outerRadius = width*height;
+
+}
+
+
+////////////////////////////////////////////////////
+//
+public void draw()
+{
+  smooth();
+  noFill();
+  
+  xx = ( offsetX - PApplet.parseInt( cos(radians(angle)) * radius ) );
+  yy = ( offsetY - PApplet.parseInt( sin(radians(angle)) * radius ) );
+  
+  outerXX = ( offsetX - PApplet.parseInt( cos(radians(angle)) * outerRadius ) );
+  outerYY = ( offsetY - PApplet.parseInt( sin(radians(angle)) * outerRadius ) );
+
+
+  smooth();
+  noFill();
+  
+  xx = ( offsetX - PApplet.parseInt( cos(radians(angle)) * radius ) );
+  yy = ( offsetY - PApplet.parseInt( sin(radians(angle)) * radius ) );
+  
+  outerXX = ( offsetX - PApplet.parseInt( cos(radians(angle)) * outerRadius ) );
+  outerYY = ( offsetY - PApplet.parseInt( sin(radians(angle)) * outerRadius ) );
+
+
+if( frameCount % 12 == 0 ) {
+  
+      fix.ranPalStroke(p2);
+      strokeWeight( alf );
+      ellipse( xx, yy, random(outerXX), random(outerYY) );
+
+      fix.ranPalStroke(p2);
+      strokeWeight( alf*2 );
+      line( xx, yy, outerXX+angle, outerYY+angle);
+
+      strokeWeight( 55 );
+      fix.ranPalStroke(p1);
+    line( xx, yy, outerXX, outerYY);
+    
+    fix.ranPalStroke(p1);
+    line( yy, xx, outerYY, outerXX);
+}
+
+if( angle % 360 == 0 ) {
+      radius += fix.nextFib( PApplet.parseInt(alf) );
+      outerRadius += alf;
+}
+
+
+
+  if( angle < 768 ) {
+    angle++;
+  } else if ( angle < 1200 )
+    angle+=2;
+  else
+    angle += 3;
+
+
+if( frameCount % 3 == 0 ) {
+  
+      strokeWeight( random(alf) );
+      fix.ranPalStroke(p2);
+      ellipse( xx, yy, random(outerXX), random(outerYY) );
+
+      fix.ranPalStroke(p2);
+      strokeWeight( 1.1f); 
+      ellipse( xx, yy, outerXX+angle, outerYY+angle);
+
+      fix.ranPalStroke(p2);
+      strokeWeight( .25f );
+    line( xx, yy, outerXX, outerYY);
+
+      fix.ranPalStroke(p1);
+    strokeWeight(.25f);
+    ellipse( xx, yy, alf, alf );
+
+      fix.ranPalStroke(p1);
+    strokeWeight( .25f );          
+    ellipse( xx, yy, outerYY, sin(outerXX) );
+    line( xx, yy, outerYY, sin(outerXX) );
+}
+
+if( floor(angle) % 360 == 0 ) {
+      radius *= 2;
+      
+      
+      if(radius>height){
+        radius= random( 50, 100 );
+      }
+      outerRadius += alf;
+}
+
+  angle += random(alf);
+
+  if ( angle >= maxAngle )
+  {
+    doExit();
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////
+//  
+//  End handler, saves png to ../OUTPUT
+public void doExit() 
+{   
+  artDaily("ERICFICKES.COM");
+
+
+  //  if final, save output to png
+  if ( isFinal )
+  {
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+  }
+
+  noLoop();
+  exit();
+}
+
+
+
+///////////////////////////////////////////////////////////
+//
+//  Spit out ART DAILY message
+public void artDaily( String dailyMsg ) {
+
+  PFont font = createFont( "Silom", 15 );
+  textFont( font );
+  strokeWeight(1);
+
+  stroke( 0xff75EF19, 666 );
+  text( " "+dailyMsg, this.width-175, this.height-15);
+}
+
+
+
+  public void settings() {  size(1024, 768 );  smooth(); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "SOLz9" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
+}

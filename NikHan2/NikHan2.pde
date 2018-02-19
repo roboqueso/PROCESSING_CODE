@@ -154,7 +154,7 @@ if ( angle % 1800 == 0 ) {
 }
 
 
-void textLines() {
+void fix.textLines() {
 
 
   textFont( createFont( "Helvetica", 300 ) );
@@ -283,7 +283,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -291,7 +291,7 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

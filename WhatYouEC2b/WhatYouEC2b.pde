@@ -83,21 +83,21 @@ void draw()
 
     strokeWeight(HALF_PI);  
     stroke(0, 99);
-    systems( yy, xx );
+    fix.systems( yy, xx );
 
-    systems( rad, frameCount );
-    systems( frameCount, rad );
+    fix.systems( rad, frameCount );
+    fix.systems( frameCount, rad );
     
     strokeWeight( random(TWO_PI) );
     stroke(random(25,75) );
-    systems( xx, yy );
+    fix.systems( xx, yy );
     
     strokeWeight(QUARTER_PI);
     stroke( #003700,100 );
-    systems( xx, yy ); 
-    systems( yy, xx );
-    systems( rad, frameCount );
-    systems( frameCount, rad );
+    fix.systems( xx, yy ); 
+    fix.systems( yy, xx );
+    fix.systems( rad, frameCount );
+    fix.systems( frameCount, rad );
     
   //  circles
   
@@ -126,9 +126,9 @@ void draw()
     strokeWeight(random(TWO_PI));
     
     stroke( random(rad), random(rad), random(rad), alf*PI );
-    systems( x+rad, y+rad );//, rad, rad );
+    fix.systems( x+rad, y+rad );//, rad, rad );
     stroke( random(rad), random(rad), random(alf), alf*PI );
-    systems( y-rad, x-rad);//, rad, rad );
+    fix.systems( y-rad, x-rad);//, rad, rad );
 
 
  
@@ -158,59 +158,6 @@ void draw()
   }
 
 }
-
-
-///////////////////////////////////////////////////////////////////
-//    Create a SWITCH based drawing system that accepts X, Y, and
-//    randomly choose which movement system to fire
-void systems( float x, float y )
-{
-    int pick = floor(random(0,3));
- 
- fill(random(11,42));
- text( x + " " + y + " " + pick, 1024-x*cos(x), 768-y*sin(y) );
- noFill();
- 
-    switch( pick ){
-        
-        case 0:
-        {
-            x = floor( (width/2)+cos(radians(frameCount))*(x-y) );
-            y = floor( (height/2)+sin(radians(frameCount))*(y-x) );
-            point( x-PI, y+PI );
-            point( y+PI, X-PI );
-        }
-        break;
-        
-        case 1:
-        {
-            ellipse( x*cos(frameCount)*radians(TWO_PI), y*sin(frameCount)*radians(TWO_PI), alf, alf );
-            ellipse( y*cos(frameCount)*radians(TWO_PI), x*sin(frameCount)*radians(TWO_PI), alf, alf );
-        }
-        break;
-        
-        case 2:
-        {
-            strokeWeight(.75);
-            rect( x, y, TWO_PI+x*noise(frameCount), TWO_PI+x*noise(frameCount) );
-            rect( y, x, TWO_PI+y*noise(frameCount), TWO_PI+y*noise(frameCount) );
-        }
-        break;
-        
-        case 3:
-        {
-            point( x * cos(x)*frameCount, y*sin(y)*frameCount );
-            point( y * cos(x)*frameCount, x*sin(y)*frameCount );
-            
-            ellipse( x * cos(x)*frameCount, y*sin(y)*frameCount, frameCount, frameCount );
-            ellipse( y * cos(x)*frameCount, x*sin(y)*frameCount, frameCount, frameCount );
-        }
-        break;
-        
-    }
-}
-
-
 
 
 

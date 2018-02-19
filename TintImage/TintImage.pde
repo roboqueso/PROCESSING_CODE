@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 int alf = 13;
 PImage img;
 color[] p1;
@@ -12,7 +17,7 @@ void setup() {
   
   img = loadImage("wrestlefaces.jpg");
   p1 = getImgColors( img );
-
+  fix.alpha(alf);
   image(img,0,0 );
   filter(GRAY);  //  THRESHOLD, GRAY, INVERT, POSTERIZE, BLUR, OPAQUE, ERODE, or DILATE
 
@@ -48,7 +53,7 @@ void draw() {
     point( random(xx), random(xx) );
 
   } else {
-    exit();  
+    doExit();  
   }
   
 
@@ -118,15 +123,16 @@ for (int x = 0; x < img.width; x++) {
 }
 
 
-void exit() {
+void doExit() {
   fill(#EFEFEF);
   text("ERICFICKES.COM", 0, height-11 );
   
   
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }

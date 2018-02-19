@@ -41,7 +41,7 @@ void draw() {
 
         if ( isFinal )
         {
-          save( pdeName() + "-" + getTimestamp()+".png" );
+          save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
         }
       
         System.gc();

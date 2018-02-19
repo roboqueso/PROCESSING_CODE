@@ -145,7 +145,7 @@ void getFlowery(
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -770,7 +770,7 @@ class FixLib {
 
     //////////////////////////////////////////////////////
     //  Returns the file name that is calling this function ( minus the .pde )
-    public String pdeName() {
+    
       return split( this.toString(), "$")[0];
     }
   }

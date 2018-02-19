@@ -29,7 +29,7 @@ void setup() {
   // setup core sketch settings items
   size(1024, 768, OPENGL );  //  P2D, P3D, OPENGL, PDF
   background(#161616);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -140,8 +140,7 @@ if( frameCount % 360 == 0 ){
     }
  
     if(radius*3 > height){
-save(this+".png");
-      exit();
+      doExit();
     }
 
 }
@@ -151,22 +150,21 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
   artDaily( "ERICFICKES.COM" );
 
   //  if final, save output to png
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
 
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

@@ -143,7 +143,7 @@ void heart( int x, int y, int w, int h )
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   stroke( 255, 0,0,100);
   heart( (this.width/2), (this.height/2), 69, 69);
@@ -155,7 +155,7 @@ artDaily("ERICFICKES.COM");
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

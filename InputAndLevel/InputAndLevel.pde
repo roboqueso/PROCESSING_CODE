@@ -1,3 +1,9 @@
+//  HOT
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 
 import ddf.minim.*;
@@ -101,7 +107,10 @@ void draw()
 
   //  AUTO SAVER
   if(frameCount%1800==0){
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    minim = null;
+    noLoop();
+    exit();
   }
 
 }
@@ -112,25 +121,10 @@ void keyPressed()
   switch(key)
   {
     case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
     break;
   }
   
   
   
-}
-
-////////////////////////////////////////////////////////////////
-
-
-
-public String getTimestamp() {
-  return ""+month()+"-"+day()+"-"+year()+"-"+hour()+"-"+minute()+"-"+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
 }

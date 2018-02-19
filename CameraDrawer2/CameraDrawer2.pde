@@ -1,4 +1,9 @@
 import processing.video.*;
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 Capture cam;
 
@@ -16,7 +21,6 @@ void setup()
   size(1280, 720, P3D);
   background(255);
   smooth();
-
   cam = new Capture(this, Capture.list()[0]);
   cam.start();     
   xx = yy = 0;
@@ -91,8 +95,9 @@ void draw() {
 
  //	STOPPER
  if(frameCount>width*10){
-    save(pdeName() + getTimestamp() + ".png");
-    stop();
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
+    exit();
 }
 
 
@@ -119,27 +124,14 @@ PVector GetRandVector( float x, float y, float sz )
 void keyPressed(){
 switch(key){
   case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
   break;
 
   case ESC:
-    save(pdeName() + getTimestamp() + ".png");
-    stop();
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
+    exit();
   break;
 }
 
 }
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

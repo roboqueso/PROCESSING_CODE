@@ -1,6 +1,9 @@
-
-
 import ddf.minim.*;
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 Minim minim;
 AudioInput in;
@@ -61,7 +64,7 @@ void draw()
         x, (cy + (in.right.level()*height))%height );
 */
 
-drawLissajous( x, y, ( radSz + in.left.level() + in.right.level()) );
+fix.drawLissajous( x, y, ( radSz + in.left.level() + in.right.level()) );
 
   //  WAVEFORMS
   // the values returned by left.get() and right.get() will be between -1 and 1,
@@ -130,7 +133,10 @@ if(radSz >= 16 && i % 4 == 0 ) {
   //if(frameCount%1800==0){
 //  5 minutes?
     if(frameCount%9000==0){
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    minim = null;
+    noLoop();
+    exit();
   }
 
 }
@@ -144,55 +150,9 @@ void keyPressed()
   switch(key)
   {
     case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
     break;
   }
   
   
-}
-
-////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////
-//  
-void drawLissajous( float a, float b, float amp )
-{
-//  float amp = 33;
-  float x, y;
-  float sz = amp / PI;  //TWO_PI;
-  
-  for( float t = 0; t <= 360; t += .1)
-  {
-    x = a - amp * sin(a * t * PI/180);
-    y = b - amp * sin(b * t * PI/180);
-
-//    point(x,y);
-    evenOddStroke(255);  //  #2012EF
-
-    ellipse(x,y,sz,sz);
-    
-  }
-}
-
-//////////////////////////////////////////////////////
-//  Pass in a color, and this will fill even frames with 255,
-//  odd frames with clr
-//  * INVERTED for evenOddFill() pleasure
-void evenOddStroke( color clr ) {
-  if( frameCount % 2 == 0 ) {
-    stroke(clr);
-  } else {
-    stroke(0);
-  } 
-}
-
-public String getTimestamp() {
-  return ""+month()+"-"+day()+"-"+year()+"-"+hour()+"-"+minute()+"-"+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
 }

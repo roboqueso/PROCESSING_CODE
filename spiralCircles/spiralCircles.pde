@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  draw circles and stuff, save on exit
 
 Boolean isFinal = true;
@@ -81,31 +86,25 @@ else if( second() % 9 == 0 )
   //
   if( theta >= 10000 )
   {
-    exit();
+    doExit();
   }
 
 
 
-}
-
-//  
-//  Helper to random(255) stroke
-void randStroke()
-{
-    stroke( random(255), random(255), random(255), 100 );
 }
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   //  if final, save output to png
   if( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }

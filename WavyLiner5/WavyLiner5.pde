@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 /*
 liner
 
@@ -39,7 +44,7 @@ void setup() {
 	pStart = new PVector( 0, random(pStep));
 	pEnd = new PVector( width, random(height));
 	//	get path between points
-	fullPath = GeneratePath( pStart, pEnd, pStep);
+	fullPath = fix.GeneratePath( pStart, pEnd, pStep);
 
 }
 
@@ -89,7 +94,7 @@ void draw() {
 	pStart = new PVector( random(width), pStart.y+pStep );
 	pEnd = new PVector( random(width), random(height));
 	//	get path between points
-	fullPath = GeneratePath( pStart, pEnd, pStep );
+	fullPath = fix.GeneratePath( pStart, pEnd, pStep );
 
 
 	//	STOPPER
@@ -97,46 +102,9 @@ void draw() {
 	{
 		fill(#EFEFEF);
 		text("ericfickes.com", width-100, height-11);
-		save( pdeName() + getTimestamp() + ".png");
+		save( fix.pdeName() + fix.getTimestamp() + ".png");
 		noLoop();
+		exit();
 	}
 
 }
-
-///////////////////////////////////////////////////////
-// Generate a path between supplied points
-ArrayList<PVector> GeneratePath( PVector startPt, PVector endPt, Integer step )
-{
-	ArrayList<PVector>	path = new ArrayList<PVector>();
-
-	PVector thisPt;
-	PVector lastPt = new PVector(startPt.x, startPt.y);
-
-	while( lastPt.x < endPt.x )
-	{
-// TODO: need better path generation logic
-		thisPt = new PVector(
-				lerp(lastPt.x, lastPt.x+step, random(.1,.9) ),
-				random(step,height-step) );
-
-		path.add(thisPt);
-
-		lastPt = thisPt;
-	}
-
-	return path;
-}
-
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-

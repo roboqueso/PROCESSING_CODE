@@ -160,7 +160,7 @@ void doExit()
 
 //	debug
 // println("exit()");
-java.awt.Toolkit.getDefaultToolkit().beep();
+// java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();

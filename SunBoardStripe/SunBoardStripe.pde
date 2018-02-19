@@ -240,14 +240,5 @@ void artDaily( String dailyMsg ) {
 
   fill(#676800);
   text( " "+dailyMsg, this.width-430, this.height-14);
-  /*
-float y = 0;
-   while( y <= height ) {
-   
-   fill(#EFEFEF, y*.15);
-   text( " "+dailyMsg, 5, y);
-   y += 18; 
-   }
-   */
 }
 

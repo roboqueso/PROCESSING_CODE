@@ -1,4 +1,9 @@
-float x, y, alf = 18;
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+int alf = 42;
+float x, y;
 float a, b, x2, y2;
 Boolean isFinal = true;
 ///////////////////////////////////////////////////////////////////////////////
@@ -8,6 +13,7 @@ void setup() {  // this is run once.
     frameRate(666);
     rectMode(CENTER);
     ellipseMode(CENTER);
+    fix.alpha(alf);
 } 
  
 ///////////////////////////////////////////////////////////////////////////////
@@ -75,10 +81,11 @@ stroke(#EF1975);
 
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 
     }
 }

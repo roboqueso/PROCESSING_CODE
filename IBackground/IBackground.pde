@@ -62,7 +62,7 @@ void draw() {
     {
       fill(0);
       text("ericfickes.com", 0, height-3);
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
 
       noLoop();
     }

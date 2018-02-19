@@ -127,7 +127,7 @@ save(this+".png");
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 

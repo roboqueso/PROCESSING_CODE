@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 public float x, y;
 public int alf = 75, gridSize = 11, colWidth, rowHeight, maxCt;
@@ -12,7 +17,7 @@ void setup() {
   size(1024, 768 );
   noFill();
   smooth();
-  
+  fix.alpha(alf);
   strokeWeight(11);
   
   colWidth = floor( width / gridSize );
@@ -21,7 +26,7 @@ void setup() {
   
   
   b = loadImage("OrangishFletchFlying.jpg");  //"WhiteFlower.jpg");  //"fluoxetine.jpg");
-  p4 = getImgColors(b);
+  p4 = fix.getImgColors(b);
   
 } 
 /////////////////////////////////////////////////////////
@@ -50,9 +55,10 @@ void draw() {
     text("ERICFICKES.COM", width-100, height-11);
 
     if(isFinal){
-      save( pdeName() + getTimestamp() + ".png");
+      save( fix.pdeName() + fix.getTimestamp() + ".png");
     }
     noLoop();
+    exit();
   }
 }
 /////////////////////////////////////////////////////////
@@ -91,13 +97,13 @@ void xySystem( float a, float b)
   //    ensure x & y are in screen
   if ( a > width || a < 0 ) {
 //    stroke(random(255), alf*PI);
-    ranPalStroke100(p4);
+    fix.ranPalStroke100(p4);
     x = random(PI, width-x);
   }
   
   if ( b > height || b < 0 ) {
 //    stroke(42,100);
-    ranPalStroke100(p4);
+    fix.ranPalStroke100(p4);
     y = random(PI, height-y);
   }
   
@@ -126,106 +132,4 @@ void xySystem( float a, float b)
 }
 
 
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  pull colors out of image and return color[]
-//  http://forum.processing.org/topic/extract-colors-from-images
-ArrayList getImgColors( PImage img ) 
-{
-  ArrayList alColors = new ArrayList();
-
-  img.loadPixels();
-
-  int color1, color2;
-  // TODO: what's a good way to pull DISTINCT colors with a color[]?
-  for ( int c = 0; c < img.pixels.length; c++ ) 
-  {
-    if ( alColors.size() == 0 ) { 
-      alColors.add( (color)img.pixels[ c ] );
-    } 
-    else 
-    {
-
-      if ( ! alColors.contains( (color)img.pixels[ c ] ) ) 
-      {
-        color1 = (Integer) alColors.get( alColors.size()-1 );
-        color2 = img.pixels[c];
-        // filter out colors    
-        if ( color2 < color1 )
-        {
-
-          alColors.add( (color)img.pixels[ c ] );
-        }
-      }
-    }
-  }
-
-  return alColors;
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke(ArrayList palette)
-{
-  // pallete
-  stroke( (Integer)palette.get( (int)random( palette.size()-1 ) ), alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-void ranPalStroke100(ArrayList palette)
-{
-  // pallete
-  stroke( (Integer)palette.get( (int)random( palette.size()-1 ) ), 100 );
-}
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalFill(ArrayList palette)
-{
-  // pallete
-  fill( (Integer)palette.get( (int)random( palette.size()-1 ) ), alf );
-}
-void ranPalFill100(color[] palette)
-{
-  // pallete
-  fill( palette[ int(random( palette.length-1 )) ], 100 );
-}
-void ranPalFill100(ArrayList palette)
-{
-  // pallete
-  fill( (Integer)palette.get( (int)random( palette.size()-1 ) ), 100 );
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
 
