@@ -175,7 +175,7 @@ image(deskTop, width/2, 0, width/2, height);
   //  stopper
   if(frameCount>width ){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }

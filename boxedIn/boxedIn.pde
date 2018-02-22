@@ -33,7 +33,7 @@ void draw() {
   
   
   if( (rot*PI)>width){
-  	save(this+".png");
+  	save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
   }
 }

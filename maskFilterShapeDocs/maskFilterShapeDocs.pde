@@ -184,7 +184,7 @@ rect(width/2, 0, deskTop.width, deskTop.height);
   //  stopper
   if(frameCount>width ){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }

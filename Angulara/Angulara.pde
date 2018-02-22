@@ -52,7 +52,7 @@ void draw()
 
   if( rad < 9 ){
     
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     noLoop();
   }

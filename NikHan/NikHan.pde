@@ -1,3 +1,8 @@
+
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 ////  code from @nikhan
 //  int a,b,i,c=600;void setup(){size(b=c,c);}void draw(){for(i=0;i++<c;){fill(a++%255);rect(sin(a)*c,c/2+cos(a*b/c)%c,a/c,sin(a)*c);}}
 
@@ -9,10 +14,11 @@ float shapeSize = 100;
 
 int cX;
 int cY;
+float xx, yy;
 
 //  
 color[] palette = { 
-  #EF0000, #00EF00, #0000EF, #EFEFEF, #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
+  #EF0000, #00EF00, #0000EF, #EFEFEF, #A59DA1, #D96D55, #F42613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
 };
 
 int outerXX = 0;
@@ -38,7 +44,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(9);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -46,7 +52,7 @@ void setup() {
   offsetX = cX;
   offsetY = cY;
 
-  maxCt = 360 * 30;
+  maxCt = 420 * 30;
 
   // white scan lines
   stroke(255, 25 );
@@ -111,7 +117,7 @@ stroke( #90DEFA );
   point( random(xx, outerXX), random( yy, outerYY ) );
   point( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ) );
 
-randStroke();  //User();
+fix.ranPalStroke(palette);  //User();
 
   if( flip ) {
     ellipse( lerp(xx, outerXX, _lerp ), lerp( yy, outerYY, _lerp ), angle, angle );
@@ -123,7 +129,7 @@ randStroke();  //User();
 
   
   if ( angle >= maxCt ) {
-    exit();
+    doExit();
   }
 
   if( _lerp < 1 ) {
@@ -154,49 +160,6 @@ if ( angle % 1080 == 0 ) {
     angle+=2;  //6;
   }
 }
-
-
-void fix.textLines() {
-
-
-  textFont( createFont( "Helvetica", 300 ) );
-
-  fill(10, pow(alf, 1.5) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  //  & curve
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  //  & quad
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-
-  //  & triangle
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-}
-
-
-
-
-void mousePressed() {
-  println("mousePressed()");
-}
-
-
-void keyPressed() {
-  println("keyPressed()");
-}
-
 
 
 ///////
@@ -245,41 +208,6 @@ void drawFrame() {
   rect( 122, 122, width-245, height-245 );
 }
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-
-  while ( angle < 360 ) {
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
 
 
 ///////////////////////////////////////////////////////////
@@ -296,33 +224,9 @@ void doExit()
     save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
 
 
 

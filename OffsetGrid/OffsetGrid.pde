@@ -206,8 +206,7 @@ void doExit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 

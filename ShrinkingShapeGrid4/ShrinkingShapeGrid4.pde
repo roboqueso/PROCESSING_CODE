@@ -1,3 +1,8 @@
+
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 //
 //  Taking the concept behind shrinking shape grid and invert it, and use fibonacci
 //  - start small, maxShapeSize, maxCt = fibonacci
@@ -14,7 +19,7 @@ int cY;
 
 
 color[] palette = { 
-#69EF19, #00EE00, #00EF00, #003600, #001768, #007500,
+#69EF19, #00EE00, #00EF00, #004200, #001768, #007500,
 #B00B13, #EFADED
 };
 
@@ -33,7 +38,7 @@ void setup() {
   background(alf);
   ellipseMode(CENTER);
   rectMode(CENTER);
-
+  fix.alpha(alf);
   noFill();
   strokeWeight(.5);
   smooth();
@@ -52,15 +57,15 @@ void draw()
     x = y = 13;
     ct = 0;
 
-    maxCt = nextFib( (int)shapeSize );    
+    maxCt = fix.nextFib( (int)shapeSize );    
 
     //  square grid1
     while( ct < maxCt ) {
 
-      randStrokeUser();
-      circle( x, y, shapeSize, shapeSize );
+      fix.ranPalStroke(palette);
+      fix.circle( x, y, shapeSize, shapeSize );
 
-//      randStrokeUser();
+//      fix.ranPalStroke(palette);
 //      hexagon( x, y, shapeSize );
       
       
@@ -72,7 +77,7 @@ void draw()
         x += shapeSize;
       }
       
-      ct+= 37;
+      ct+= 42;
     }
 
   // shrink the shape
@@ -82,71 +87,9 @@ void draw()
     stroke(0);
     drawFrame();
   
-    exit();
+    doExit();
   }
 }
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-   int result = f2;
-   f0 = f1;
-   f1 = f2;
-   f2 = f0 + f1;
-   return result;
-}
-
-//////////////////////////
-//  Calculate max loop count
-float getMax( float shapeSize ) {
-  return ( ( width * height ) / shapeSize );
-}
-
-void fix.textLines() {
-
-
-  textFont( createFont( "Helvetica", 300 ) );
-
-  fill(10, pow(alf, 1.5) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  //  & curve
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  //  & quad
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-
-  //  & triangle
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-}
-
-
-
-/*
-void mousePressed() {
-  println("mousePressed()");
-}
-
-
-void keyPressed() {
-  println("keyPressed()");
-}
-*/
 
 
 ///////
@@ -195,41 +138,6 @@ void drawFrame() {
   rect( 122, 122, width-245, height-245 );
 }
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-
-  while ( angle < 360 ) {
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
 
 
 ///////////////////////////////////////////////////////////
@@ -246,34 +154,9 @@ void doExit()
     save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
-
 
 
 ///////////////////////////////////////////////////////////

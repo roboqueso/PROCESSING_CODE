@@ -132,7 +132,7 @@ beginShape();
  
     //    STOP
     if( frameCount > height*alf ) {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
       exit();
     }
 }
@@ -459,8 +459,7 @@ void doExit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 

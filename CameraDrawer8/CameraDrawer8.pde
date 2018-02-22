@@ -173,7 +173,7 @@ strokeWeight(PI);
  //	STOPPER
  if(frameCount>width*height)
  {
- 	save(this+".png");
+ 	save(fix.pdeName()+fix.getTimestamp()+".png");
  	cam.stop();
     save( fix.pdeName() + fix.getTimestamp() + ".png");
 

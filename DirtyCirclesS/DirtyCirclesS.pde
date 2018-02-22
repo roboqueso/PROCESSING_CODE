@@ -121,7 +121,7 @@ if( frameCount % 360 == 0 ){
     }
  
     if(radius*PI > height){
-    	save(this+".png");
+    	save(fix.pdeName()+fix.getTimestamp()+".png");
       doExit();
     }
 

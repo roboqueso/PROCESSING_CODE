@@ -152,13 +152,11 @@ if( xx1 < width+alf ) {
   //  
   if ( xx1 > width && yy1 > height )
   {    
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }
  
-  
-  System.gc();
   
 }
 
@@ -401,10 +399,7 @@ void doExit()
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-  System.gc();
 
-
-  super.stop();
 }
 
 //////////////////////////

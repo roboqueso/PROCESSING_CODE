@@ -61,7 +61,7 @@ void draw() {
   //
   if( theta == 1000 )
   {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
     exit();
   }
 

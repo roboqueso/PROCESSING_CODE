@@ -117,7 +117,7 @@ void draw()
 
     if( angle > (height+width)*TWO_PI )
     {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
         exit();
     }
 }
@@ -142,12 +142,11 @@ void doExit()
 
 //	debug
 // println("exit()");
-java.awt.Toolkit.getDefaultToolkit().beep();
+// java.awt.Toolkit.getDefaultToolkit().beep();
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

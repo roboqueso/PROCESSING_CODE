@@ -1,3 +1,7 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int ctMAIN = 0;
 int alf = 13;
@@ -27,7 +31,7 @@ int offsetY = 0;
 void setup() {
   size(1024, 768 );
   
-  //  ---------------------
+  fix.alpha(alf);
   background (18);
 
   smooth();
@@ -99,7 +103,7 @@ if( angle % 360 == 0 ) {
 
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -118,16 +122,8 @@ void doExit()
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
+  noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -142,20 +138,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-175, this.height-15);
 }
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

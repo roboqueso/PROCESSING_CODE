@@ -164,7 +164,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
 
   //  if final, save output to png
   if ( isFinal )

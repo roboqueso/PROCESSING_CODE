@@ -1,5 +1,8 @@
-//
-//  go smaller
+
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 int alf = 13;
@@ -30,6 +33,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(3);
+  fix.alpha(alf);
 
   cX = width / 2;
   cY = height / 2;
@@ -53,7 +57,7 @@ void draw()
     //  re-init loop vars
     x = y = ct = (int)-alf;
 
-    maxCt = getMax( shapeSize );
+    maxCt = fix.getMax( shapeSize );
           
     while( ct < maxCt ) {
 
@@ -61,10 +65,10 @@ void draw()
 
       smooth();
 
-      randStrokeUser();
+      fix.ranPalStroke(palette);
       ellipse( x, y, shapeSize, shapeSize );
       
-      randStrokeUser();
+      fix.ranPalStroke(palette);
       ellipse( y, x, shapeSize, shapeSize );
 
       if( x >= width ) {
@@ -96,70 +100,8 @@ void draw()
     alf++;
   }
   */
-  exit();
+  doExit();
 }
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-   int result = f2;
-   f0 = f1;
-   f1 = f2;
-   f2 = f0 + f1;
-   return result;
-}
-
-//////////////////////////
-//  Calculate max loop count
-float getMax( float shapeSize ) {
-  return ( ( width * height ) / shapeSize );
-}
-
-void fix.textLines() {
-
-
-  textFont( createFont( "Helvetica", 300 ) );
-
-  fill(10, pow(alf, 1.5) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  //  & curve
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  //  & quad
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-
-  //  & triangle
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-}
-
-
-
-/*
-void mousePressed() {
-  println("mousePressed()");
-}
-
-
-void keyPressed() {
-  println("keyPressed()");
-}
-*/
 
 
 ///////
@@ -208,47 +150,6 @@ void drawFrame() {
   rect( 122, 122, width-245, height-245 );
 }
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  radius2 = w;
-
-  while ( angle < 360 ) {
-
-// make circle draw faster by skipping angles
-if( angle % 6 == 0 ) {
-    
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-}
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-
 
 ///////////////////////////////////////////////////////////
 //  
@@ -265,35 +166,8 @@ void doExit()
   }
   
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
-
 
 
 ///////////////////////////////////////////////////////////

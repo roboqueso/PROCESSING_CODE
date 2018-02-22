@@ -194,7 +194,6 @@ switch(key)
     save( fix.pdeName() + fix.getTimestamp() + ".png");
     // save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     noLoop();
-    //For Java programmers, this is not the same as System.exit(). Further, System.exit() should not be used because closing out an application while draw() is running may cause a crash (particularly with P3D).
     exit();
   break;
 }

@@ -93,7 +93,7 @@ void draw() {
   //  stopper
   if(yy>=height){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }
@@ -131,7 +131,7 @@ void draw() {
   
 //  //background(255);
 //  image(deskTop,0,0);
-//  save(this+".png");
+//  save(fix.pdeName()+fix.getTimestamp()+".png");
 //  //saveFrame(this+".tiff");
 //}
 

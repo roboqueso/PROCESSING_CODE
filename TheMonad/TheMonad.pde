@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 float cX, cY, xx, yy, xx2, yy2, rad, angle, sw = 11;
 
 void setup()
@@ -52,9 +57,10 @@ void draw()
     textSize(sqrt(width));
     text("one can only be understood by itself", cX, cY );
     
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     noLoop();
+    exit();
   }
 
 }

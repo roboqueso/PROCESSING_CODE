@@ -198,12 +198,9 @@ void draw() {
 
   if ( frameCount >= height+width ) {
 
-    exit();
+    doExit();
   }
-  
-  // HACK : this sketch keeps running out of memory?!?!
-    System.gc();
-  
+
 }
 
 
@@ -460,8 +457,7 @@ void doExit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 

@@ -125,7 +125,7 @@ void draw() {
   //  stopper
   if(frameCount>width ){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }

@@ -1,3 +1,7 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int ctMAIN = 0;
 int alf = 13;
@@ -27,7 +31,7 @@ int offsetY = 0;
 void setup() {
   size(1024, 768 );
   
-  //  ---------------------
+  fix.alpha(alf);
   background (18);
 
   smooth();
@@ -111,7 +115,7 @@ if( frameCount % 3 == 0 ) {
 
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -127,19 +131,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
+  noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -154,6 +150,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-150, this.height-cubeSize*2.75);
 }
-
-
-

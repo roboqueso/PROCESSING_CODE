@@ -45,7 +45,7 @@ void draw ()
 		tmp.mask(bg);
 		background(tmp);
 
-		save(this+".png");
+		save(fix.pdeName()+fix.getTimestamp()+".png");
 		noLoop();
 		exit();
 	}

@@ -311,8 +311,7 @@ save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ////////////////////////////////////////////////////

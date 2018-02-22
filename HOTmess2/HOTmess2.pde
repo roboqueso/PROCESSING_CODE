@@ -103,7 +103,7 @@ void draw() {
  
     //    STOP
     if( frameCount > width*TWO_PI ) {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
       
       exit();
     }
@@ -417,7 +417,7 @@ void doExit()
 {
 
   artDaily("ERICFICKES.COM");
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
 
   //  if final, save output to png
   if ( isFinal )
@@ -426,8 +426,7 @@ save(this+".png");
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 

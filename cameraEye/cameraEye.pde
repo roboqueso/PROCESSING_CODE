@@ -84,7 +84,7 @@ set(0,0,cam);
 		cam.stop();
 
 		image( drawAutoStereogram( heightMap ), 0, 0 );
-		save(this+".png");
+		save(fix.pdeName()+fix.getTimestamp()+".png");
 		noLoop();
     exit();
 	}
@@ -113,7 +113,7 @@ void keyPressed(){
     loop();
   }
   if( key == 'c' ) for(int i = 0; i < width; i++) for(int j = 0; j < height; j++) heightMap[i][j] = color(0);
-  if( key == 'p' || key == 'P' )save(this+".png");
+  if( key == 'p' || key == 'P' )save(fix.pdeName()+fix.getTimestamp()+".png");
 }
 
 PGraphics drawAutoStereogram( float[][] Z ){

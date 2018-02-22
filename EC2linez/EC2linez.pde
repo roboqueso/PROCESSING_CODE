@@ -101,7 +101,7 @@ void draw() {
         rect( 111,111, 42, 41, frameCount);
         if(isFinal)
         {
-          save(this+".png");
+          save(fix.pdeName()+fix.getTimestamp()+".png");
         }
     exit();
   }
@@ -406,8 +406,7 @@ ec2Stamp( cX, cY );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

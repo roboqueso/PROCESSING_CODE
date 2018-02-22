@@ -391,8 +391,7 @@ artDaily("ERICFICKES.COM");
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

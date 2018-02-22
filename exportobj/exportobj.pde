@@ -25,7 +25,7 @@ void setup() {
 void draw() {
 
 	smooth();
-	// noFill();
+	noFill();
 
 	if( frameCount == 1 ){
 	  beginRaw( DXF, fix.pdeName() +".dxf" );
@@ -35,13 +35,16 @@ void draw() {
 	pushMatrix();
 		translate(width/2, height/2);
 
+		rotateX(frameCount);
+		rotateY(frameCount);
 		rotateZ(frameCount);
 		
 		beginShape(POLYGON);
 			// shape(s, 0, 0);
 
-			box(40);
-
+			// box(200);
+			sphereDetail(frameCount*2);
+			sphere(frameCount*24);
 
 // loop through kids
 for( int cc = 0; cc < childCt; cc++){
