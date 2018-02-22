@@ -123,17 +123,17 @@ void draw()
   }
 
 
-fix.drawSuns( (width/2), (height/2));
+drawSuns2( (width/2), (height/2));
 
 //stroke( #EF1975, alf );
-//drawFrame();
+//fix.drawFrame();
 
   doExit();
 }
 ///////////////////////////////
 //  draw a center line core
 //  draw the wirey outer shine
-void drawSuns2() {
+void drawSuns2(float xx, float yy) {
  
 float radius1, radius2, radius3, radius4;
 float xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4;
@@ -148,8 +148,8 @@ radius3 = 175;
 radius4 = 300;
 
 //  TODO: compare to fix.drawSuns()
-startX1 = startX2 = startX3 = startX4 = (width/2);
-startY1 = startY2 = startY3 = startY4 = (height/2);
+startX1 = startX2 = startX3 = startX4 = xx;//(width/2);
+startY1 = startY2 = startY3 = startY4 = yy;//(height/2);
 angle1 = angle2 = 0;
 
 angle3 = 103;
@@ -217,53 +217,6 @@ angle4 = 110;
   
 }
 
-
-
-///////
-//  draw frame
-void drawFrame() {
-
-  rectMode(CORNER);
-
-  strokeWeight( 100 );
-  rect( 0, 0, width, height);
-
-  strokeWeight( 5 );
-  rect( 64, 65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84, 85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for ( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if ( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-    } 
-    else if ( y <= 780 ) {
-
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
-    }
-  }
-
-  strokeWeight( 5 );
-  rect( 122, 122, width-245, height-245 );
-}
 
 
 

@@ -1,3 +1,8 @@
+
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 public int x = 0, y = 0, alf = 21, gridSize = 2, colWidth, rowHeight, maxCt;
 public int[] nums = { 37, 11, 2, 4, 13, 8 };
@@ -8,6 +13,7 @@ void setup() {  // this is run once.
     background(#001100);
     size( 1024, 768 ); 
     smooth();
+    fix.alpha(alf);
     colWidth = floor( width / gridSize );
     rowHeight = floor( height / gridSize );
      
@@ -44,28 +50,14 @@ void draw() {
           save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
         }
       
-        System.gc();
-      
-        super.stop();
+        noLoop();
+        exit();
       }
 
     maxCt-=3;
 }
 
 
-///////////
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
 
 //////////////////////////////////////////////////////////////////////
 void mSystem( float xx, float yy )

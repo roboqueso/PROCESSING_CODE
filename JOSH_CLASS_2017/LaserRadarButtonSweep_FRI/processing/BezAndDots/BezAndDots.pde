@@ -1,3 +1,9 @@
+
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 int    stageW   = 1280;
 int    stageH   = 928;
 color  clrBG    = #424242;
@@ -50,7 +56,7 @@ void setup() {
 	strokeCap(ROUND); 
 	strokeJoin(ROUND);
 	smooth();
-
+	fix.alpha(rad);
 	cX = width/2;
 	cY = height-95;
 	rad = 42;	//	this gets set again
@@ -199,12 +205,9 @@ void stampIt( int txtSz )
 void doExit()
 {
 	stampIt( 240 );
-	save(fileStamp()+".png");
-	exit();
-  
+	save(fix.pdeName()+".png");
 	noLoop();
-	System.gc();
-	super.stop();
+	exit();
 }
 
 
@@ -244,7 +247,7 @@ void keyPressed() {
 		case 's':
 		{
 			//	just
-			save(fileStamp()+".png");
+			save(fix.pdeName()+".png");
 		}
 		break;
 
@@ -254,17 +257,6 @@ void keyPressed() {
 		}
 		break;
 	}
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-PVector circleXY( float centerX, float centerY, float radius, float angle )
-{
-  return new PVector(
-                centerX - int( cos(radians(angle)) * radius ),
-                centerY - int( sin(radians(angle)) * radius )
-                );
 }
 
 
@@ -312,10 +304,3 @@ println("_____serialEvent : " + serialString );
 		println("XXX EXCEPTION: serialEvent : " + exc ); 
 	}
 } 
-
-
-//  return unique filename_timestamp string
-public String fileStamp(){
-  return split( this.toString(), "[")[0] + "_" +month()+day()+year()+hour()+minute()+millis();
-}
-

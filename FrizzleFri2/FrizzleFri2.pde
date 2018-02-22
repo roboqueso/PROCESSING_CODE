@@ -20,7 +20,7 @@ float i = 0;
 void setup() {
   background(37);
   size(1024, 768);//);  // P2D
-
+  fix.alpha(alf);
   img = loadImage("indies.jpg");
   p3 = fix.getImgColors(img);
 
@@ -112,8 +112,6 @@ void doExit()
   }
 
   noLoop();
-  // System.gc();
-  // super.stop();
   exit();
 }
 

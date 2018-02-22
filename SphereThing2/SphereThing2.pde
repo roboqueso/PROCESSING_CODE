@@ -75,7 +75,7 @@ void draw()
 
     //  re-init loop vars
     x = y = ct = (int)-alf;
-    maxCt = getMax( shapeSize );
+    maxCt = fix.getMax( shapeSize );
     
     
     
@@ -96,12 +96,12 @@ void draw()
 
       } else {
         strokeWeight( random(3.33) );
-        randStrokeUser();
+        fix.ranPalStroke(palette);
 
         //circle( x, y, shapeSize, shapeSize );
-        hexagon( x, y, shapeSize );
+        fix.hexagon( x, y, shapeSize );
         
-        randStrokeUser();
+        fix.ranPalStroke(palette);
         rect( x, y, shapeSize, shapeSize );
         ellipse( x, y, shapeSize, shapeSize );
         
@@ -125,63 +125,100 @@ void draw()
 
 
 // drawSuns();
-fix.drawSuns( (width/2), (height/2) );
+drawSuns( (width/2), (height/2) );
 
 //stroke( #EF1975, alf );
-//drawFrame();
+//fix.drawFrame();
 
   doExit();
 }
 
+///////////////////////////////
+//  draw a center line core
+//  draw the wirey outer shine
+void drawSuns(int xx, int yy) {
+ 
+float radius1, radius2, radius3, radius4;
+float xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4;
+float angle1, angle2, angle3, angle4;
+float startX1, startY1, startX2, startY2, startX3, startY3, startX4, startY4;
+
+// init 
+radius1 = 50;  //75;
+radius2 = 130;  //200;
+
+radius3 = 175;
+radius4 = 300;
+
+startX1 = startX2 = startX3 = startX4 = xx; //(width/2);
+startY1 = startY2 = startY3 = startY4 = yy; //(height/2);
+angle1 = angle2 = 0;
+
+angle3 = 103;
+angle4 = 110;
+
+// draw circles
+  while ( angle1 < 1080 ) {
+    
+    smooth();
+    
+    xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
+    yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
+
+    xx2 = startX2 - int( cos(radians(angle2)) * radius2 );
+    yy2 = startY2 - int( sin(radians(angle2)) * radius2 );
+
+    xx3 = startX3 - int( cos(radians(angle3)) * radius3 );
+    yy3 = startY3 - int( sin(radians(angle3)) * radius3 );
+
+    xx4 = startX4 - int( cos(radians(angle4)) * radius4 );
+    yy4 = startY4 - int( sin(radians(angle4)) * radius4 );
+
+
+    // inner
+    
 
 
 
 
-///////
-//  draw frame
-void drawFrame() {
+fix.ranPalStroke(palette);
+//    stroke( #ACE511, alf*4);  // 19EF75  EFAA36
+    strokeWeight( random(1.5) );
+    line( xx1, yy1, xx2, lerp(yy1, yy2, random(.88) ) );
 
-  rectMode(CORNER);
-
-  strokeWeight( 100 );
-  rect( 0, 0, width, height);
-
-  strokeWeight( 5 );
-  rect( 64, 65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84, 85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for ( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if ( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-    } 
-    else if ( y <= 780 ) {
-
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
+    if( xx1 % 2 == 0 ) {
+//      strokeCap(SQUARE);
+      stroke( #EFEF36, (alf*4));  // random(111)
+    } else {
+//      strokeCap(PROJECT);
+      stroke( #EF1111, (alf*2));  // random(111)
     }
-  }
+    
+    strokeWeight( random(4.99) );
+    line( xx1, yy1, xx2, yy2);
+    
+    stroke( #EFEF36, alf*4);  // random(111)
+    strokeWeight( random(alf/1.5) );
+    point( xx1, yy1 );
 
-  strokeWeight( 5 );
-  rect( 122, 122, width-245, height-245 );
+
+    // outer
+    stroke( #ACE511, alf*3);  //  #EFEFEF  #ACE511
+//  #ACE511
+    strokeWeight( random(1.9) );
+    line( xx3, yy3, xx4, yy4 );
+
+    angle1 += 6;
+    angle2 += 6;
+
+    angle3 += 2;//8;
+    angle4 += 12;
+  }
+ 
+  
 }
+
+
 
 ///////////////////////////////////////////////////////////
 //  

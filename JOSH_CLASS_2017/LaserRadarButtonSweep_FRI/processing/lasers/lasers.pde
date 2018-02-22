@@ -1,3 +1,8 @@
+
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 int    stageW   = 1280;
 int    stageH   = 928;
 color  clrBG    = #424242;
@@ -65,8 +70,8 @@ void draw() {
 
 	if( servoAngle > 0 ){
 
-		pv1 = circleXY( cX, cY, radarMS%height, servoAngle );
-		pv2 = circleXY( cX-radarIN, cY-radarIN, radarIN%height, servoAngle );
+		pv1 = fix.circleXY( cX, cY, radarMS%height, servoAngle );
+		pv2 = fix.circleXY( cX-radarIN, cY-radarIN, radarIN%height, servoAngle );
 
 		if(servoAngle%15==0)
 		{
@@ -200,7 +205,7 @@ void keyPressed() {
 		case 's':
 		{
 			//	just
-			save(fileStamp()+".png");
+			save(fix.pdeName()+fix.getTimestamp()+".png");
 		}
 		break;
 
@@ -212,16 +217,6 @@ void keyPressed() {
 	}
 }
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-PVector circleXY( float centerX, float centerY, float radius, float angle )
-{
-  return new PVector(
-                centerX - int( cos(radians(angle)) * radius ),
-                centerY - int( sin(radians(angle)) * radius )
-                );
-}
 
 
 // *************************************************************************************************************
@@ -275,12 +270,10 @@ println("_____serialEvent : " + serialString );
 void doExit()
 {
 	stampIt( 240 );
-	save(fileStamp()+".png");
-	exit();
+	save(fix.pdeName()+fix.getTimestamp()+".png");
   
 	noLoop();
-	System.gc();
-	super.stop();
+	exit();
 }
 
 
@@ -314,65 +307,3 @@ void lasers()
     text("LASERS", cX, cY );
 
 }
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  strokeCap(PROJECT);
-  strokeJoin(BEVEL);
-
-  startX -= ( shapeSize/2 );
-  startY -= ( shapeSize/2 );
-
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-
-void star(int n, float cx, float cy, float w, float h, float startAngle, float proportion)
-{
-  strokeCap(PROJECT);
-  strokeJoin(MITER);
-
-  if (n > 2)
-  {
-    float angle = TWO_PI/ (2 *n);  // twice as many sides
-    float dw; // draw width
-    float dh; // draw height
-
-    w = w / 2.0;
-    h = h / 2.0;
-
-//fill( random(255), n*r*proportion );
-
-    beginShape();
-    for (int i = 0; i < 2 * n; i++)
-    {
-      dw = w;
-      dh = h;
-      if (i % 2 == 1) // for odd vertices, use short radius
-      {
-        dw = w * proportion;
-        dh = h * proportion;
-      }
-      vertex(cx + dw * cos(startAngle + angle * i), 
-      cy + dh * sin(startAngle + angle * i));
-    }
-    endShape(CLOSE);
-  }
-}
-
-
-
-//  return unique filename_timestamp string
-public String fileStamp(){
-  return split( this.toString(), "[")[0] + "_" +month()+day()+year()+hour()+minute()+millis();
-}
-
