@@ -14,9 +14,9 @@ void setup() {
   size(640, 480, P3D);
   // The file "bot.obj" must be in the data folder
   // of the current sketch to load successfully
-  s = loadShape("export.obj");
+  // s = loadShape("export.obj");
 
-  childCt = s.getChildCount();
+  // childCt = s.getChildCount();
 
   strokeWeight(PI);
 }
@@ -25,7 +25,7 @@ void setup() {
 void draw() {
 
 	smooth();
-	noFill();
+	lights();
 
 	if( frameCount == 1 ){
 	  beginRaw( DXF, fix.pdeName() +".dxf" );
@@ -33,7 +33,7 @@ void draw() {
 
 
 	pushMatrix();
-		translate(width/2, height/2);
+		translate(width/2, height/2, frameCount);
 
 		rotateX(frameCount);
 		rotateY(frameCount);
@@ -43,9 +43,9 @@ void draw() {
 			// shape(s, 0, 0);
 
 			// box(200);
-			sphereDetail(frameCount*2);
+			sphereDetail(frameCount*3,frameCount*3);
 			sphere(frameCount*24);
-
+/*
 // loop through kids
 for( int cc = 0; cc < childCt; cc++){
 
@@ -60,7 +60,7 @@ for( int cc = 0; cc < childCt; cc++){
   
     }
 }
-
+*/
 		endShape(CLOSE);
 
 	popMatrix();
