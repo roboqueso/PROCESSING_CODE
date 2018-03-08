@@ -89,6 +89,7 @@ void setup()
 
 void draw()
 {
+  lights();
 
 	// update the cam
 	context.update();
@@ -246,8 +247,10 @@ image(imgRgb, 0, frameCount%height, width, imgRgb.height);
 }	// end frameCount checker
 
   //  AUTO SAVER
-  if(frameCount%780==0){
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+  if(frameCount%width==0){
+    save( this + ".png");
+    noLoop();
+    exit();
   }
 
 
@@ -418,8 +421,11 @@ switch(key){
 
 
   case 's':
-    // image(hirez,0,0);
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    imgTexture = get();
+    imgTexture.filter(INVERT);
+    imgTexture.mask(get());
+    image(imgTexture,0,0);
+    save( this + ".png");
     // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
   break;
 
@@ -428,7 +434,7 @@ switch(key){
    if(context!=null){
      context.close();
    }
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    save( this + ".png");
     // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
     exit();
   break;

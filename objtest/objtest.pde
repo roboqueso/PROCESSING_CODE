@@ -1,4 +1,13 @@
-// NOTE: NO LONGER RUNS??
+/**
+NOTE: large OBJs cause this sketch to choke
+** local machine problem perhaps?
+*/
+
+
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
@@ -18,8 +27,8 @@ void setup() {
   shapes.add( loadShape("Scan_20150106_202334.obj"));
   shapes.add( loadShape("Scan_20150106_202923.obj"));
   shapes.add( loadShape("Scan_20150106_203046.obj"));
-  shapes.add( loadShape("Scan_20150106_203343.obj"));
-
+  //  THIS LAST OBJ IS 7.2 MB, causes sketch to choke
+  // shapes.add( loadShape("Scan_20150106_203343.obj"));
 }
 
 
@@ -46,6 +55,7 @@ void draw()
   {
     save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
+    exit();
   }
   
 }

@@ -1,4 +1,19 @@
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 /**
+
+Camera to object experimentation
+
+opencv
+webcam
+faces / contours / brightest point / ( any other ocv magic )
+DXF / STL ( hemesh )
+Fusion360
+
+HISTORY:::::
+
  * WhichFace
  * Daniel Shiffman
  * http://shiffman.net/2011/04/26/opencv-matching-faces-over-time/
