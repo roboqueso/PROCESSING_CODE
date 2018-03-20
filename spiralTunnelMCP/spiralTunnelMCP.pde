@@ -1,7 +1,11 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 11;
+int alf = 11;
 
 int cX;
 int cY;
@@ -29,7 +33,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(0,0,18);
-
+  fix.alpha(alf);
   //  -------------------------------------------
 
 
@@ -124,7 +128,7 @@ void draw()
 
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 
   angle += 12;
@@ -137,7 +141,7 @@ void draw()
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
 
@@ -145,26 +149,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-
-
 
 
 ///////////////////////////////////////////////////////////
@@ -179,85 +169,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-185, this.height-18);
 }
-
-
-
-///////////////////////////////////////////////////////////
-//  
-//  draw heart
-void heart( int x, int y, int w, int h ) 
-{
-  ellipseMode(RADIUS);
-  smooth();
-
-  //  stroke(#EF7519, alf);  // 37
-  stroke(#EF1111, alf);  // 37
-
-  strokeWeight(2);
-  //  noFill();
-
-  //  bubbles
-  ellipse( x-w, y, w, w);
-  ellipse( x+w, y, w, w);
-  //  ellipseMode(MODE)
-  //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
-
-
-  //  lines	
-  line( x-(w*2), y, x, y + w*PI);
-  line( x+(w*2), y, x, y + w*PI);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-///////////////////////////////////////////////////////////
- //  
- //  Spits the installed list of fonts out in a grid
- void fontGrid() 
- {
- fill(255);
- stroke(255);
- String[] fontList = PFont.list();
- int x = 10;
- int y = 10;
- PFont font;
- 
- for( int ct = 0; ct <= fontList.length-1; ct++ ){   
- 
- 
- // load it & show it
- font = createFont( fontList[ct], 18);
- textFont( font );
- 
- text(fontList[ct], x, y);
- 
- if( ct % 55 == 0)
- {
- x += 330;
- y = 0;
- }
- else
- {
- y += 20;
- }
- 
- }
- 
- }
- */

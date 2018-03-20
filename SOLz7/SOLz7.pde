@@ -1,6 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -37,7 +41,7 @@ void setup() {
   
   //  ---------------------
   background (0);
-
+  fix.alpha(alf);
   smooth();
   noFill();
 
@@ -86,24 +90,24 @@ void draw()
 
 if( frameCount % 6 == 0 ) {
   
-      ranPalStroke(p1);
+fix.      ranPalStroke(p1);
       strokeWeight( random(alf) );
       ellipse( xx, yy, random(outerXX), random(outerYY) );
 
-      ranPalStroke(p1);
+      fix.ranPalStroke(p1);
       strokeWeight( alf*2 );
       line( xx, yy, outerXX+angle, outerYY+angle);
 
       strokeWeight( 30 );
-      ranPalStroke(p1);
+      fix.ranPalStroke(p1);
     line( xx, yy, outerXX, outerYY);
     
-    ranPalStroke(p1);
+    fix.ranPalStroke(p1);
     line( yy, xx, outerYY, outerXX);
 }
 
 if( angle % 360 == 0 ) {
-      radius += nextFib( int(alf) );
+      radius += fix.nextFib( int(alf) );
       outerRadius += alf;
 }
 
@@ -121,22 +125,22 @@ if( frameCount % 3 == 0 ) {
   
       strokeWeight( random(alf) );
       //stroke( #1975EF, alf );
-      randStroke();
+      fix.randStroke();
       ellipse( xx, yy, random(outerXX), random(outerYY) );
 
       strokeWeight( 5); 
-      ranPalStroke(p1);
+      fix.ranPalStroke(p1);
       ellipse( xx, yy, outerXX+angle, outerYY+angle);
 
-      ranPalStroke(p1);
+      fix.ranPalStroke(p1);
       strokeWeight( 30 );
     line( xx, yy, outerXX, outerYY);
 
-    ranPalStroke(p2);
+    fix.ranPalStroke(p2);
     strokeWeight(.9);
     ellipse( xx, yy, alf, alf );
     
-      ranPalStroke(p2);
+      fix.ranPalStroke(p2);
       strokeWeight( random(.50) );    
       
     ellipse( xx, yy, outerYY, sin(outerXX) );
@@ -158,7 +162,7 @@ angle += random(alf);
 
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -168,7 +172,7 @@ angle += random(alf);
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
@@ -176,58 +180,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-  //   int result = f2;
-  f0 = f1;
-  f1 = f2;
-  f2 = f0 + f1;
-
-  return f0 + f1;
-}
-
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-
 
 ///////////////////////////////////////////////////////////
 //
@@ -241,20 +199,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-175, this.height-15);
 }
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

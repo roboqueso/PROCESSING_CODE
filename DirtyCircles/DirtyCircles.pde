@@ -3,9 +3,10 @@ import processing.opengl.*;
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int alf = 42;	//37;
 float angle, radius = 13, x, y, cX, cY, strokeSz = 1;
@@ -80,7 +81,7 @@ void draw()
     }
  
     if(radius*PI > height){
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
       doExit();
     }
 

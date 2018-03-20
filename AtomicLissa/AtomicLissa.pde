@@ -1,5 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float cX, cY;
 
 float ct = 1;
@@ -37,8 +42,9 @@ float startX1, startY1, startX2, startY2, startX3, startY3, startX4, startY4, st
 void setup() {
   // setup core sketch settings items
   size(1024,768);
-  background(255)
-;  noFill();
+  background(255);
+  noFill();
+  fix.alpha(alf);
   
   cX = width * .5;
   cY = height * .5;
@@ -62,7 +68,7 @@ void setup() {
   angle3 = 0;  //150;
   angle4 = 180;  //200;
 
-  maxCt = 1000000000;
+  maxCt = 420;  //1000000000;
   
   // white scan lines
   stroke(111, alf ); // 255
@@ -118,22 +124,22 @@ void draw()
 //  drawLissajous( xx5, yy5, ct );
 
 
-ranPalStroke( boobColors );
-drawLissajous( xx1, yy2, alf );
+fix.ranPalStroke( boobColors );
+fix.drawLissajous( xx1, yy2, alf );
 
-ranPalStroke( palette );
+fix.ranPalStroke( palette );
 //   SWEET HELIX-ISH THING
-drawLissajous( xx2, yy3, alf );
+fix.drawLissajous( xx2, yy3, alf );
   
 stroke(0, alf);
 // oblong circle
-drawLissajous( xx3, yy4, ct );
+fix.drawLissajous( xx3, yy4, ct );
 
 //  tall oval
-drawLissajous( xx4, yy5, ct );
+fix.drawLissajous( xx4, yy5, ct );
 
 // wide oval
-drawLissajous( xx5, yy1, ct );
+fix.drawLissajous( xx5, yy1, ct );
 
     angle1 += 2;
     angle5 += 2;
@@ -142,215 +148,16 @@ drawLissajous( xx5, yy1, ct );
     angle4 += 2;
 
   
-  ct += nextFib(int(ct)) / alf;
+  ct += fix.nextFib(int(ct)) / alf;
 
+//  TODO: fix this from not running forever
   if( ct > maxCt ) {
 
 //    bitHeart( cX-180, cY-180, false );
-    exit();
+    doExit();
  
   }
   
-}
-
-
-//////////////////////////////////////////////////////
-//  
-void drawLissajous( float a, float b, float amp )
-{
-  //  float amp = 33;
-  float x, y, sw;
-  smooth();
-  strokeWeight(.75);
-  
-
-  for ( float t = 0; t <= 360; t+=.2 )
-  {
-    x = a - amp * sin(a * t * PI/180);
-    y = b - amp * sin(b * t * PI/180);
-
-    point(x, y);
-    point(y, x);
-
-  }
-
-}
-
-
-
-
-
-/////////////////////////////////////////////////////////////////
-//  spit out an 8bit heart
-void bitHeart( float x, float y, boolean grid ) {
-
-  int blockSize = 30;
-  float htSize = 300;
-  strokeWeight(.5);
-
-  //  GRID
-  if(grid) {
-    stroke(#333333, 50);
-  
-    for( int xx = 0 ; xx <= 13; xx++ ) {
-      
-      line( x+(blockSize*xx), 0, x+(blockSize*xx), height );
-      line( 0, y+(blockSize*xx), width, y+(blockSize*xx) );
-      
-    }
-  }
-//  GRID
-
-  
-
-//  HEART
-  stroke(#333333);
-
-  //  white blocks
-  fill(255);
-  rect( x+(blockSize*2), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize), y+(blockSize*2), blockSize, blockSize );
-  
-  fill(0);
-// TODO: make this smarter
-  rect( x+(blockSize*2), y, blockSize, blockSize );
-  rect( x+(blockSize*3), y, blockSize, blockSize );
-  rect( x+(blockSize*4), y, blockSize, blockSize );
-  
-  rect( x+(blockSize*8), y, blockSize, blockSize );
-  rect( x+(blockSize*9), y, blockSize, blockSize );
-  rect( x+(blockSize*10), y, blockSize, blockSize );
-  
-  rect( x+(blockSize), y+blockSize, blockSize, blockSize );
-
-  fill(#EF0000);
-  rect( x+(blockSize*3), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*4), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*2), blockSize, blockSize );
-  
-  rect( x+(blockSize), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*3), blockSize, blockSize );
-  
-  rect( x+(blockSize), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*4), blockSize, blockSize );
-
-  rect( x+(blockSize*2), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*5), blockSize, blockSize );
-
-  rect( x+(blockSize*2), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*6), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*6), blockSize, blockSize );
-
-  rect( x+(blockSize*3), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*7), blockSize, blockSize );
-
-  rect( x+(blockSize*4), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*8), blockSize, blockSize );
-
-  rect( x+(blockSize*5), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*9), blockSize, blockSize );
-  
-  rect( x+(blockSize*6), y+(blockSize*10), blockSize, blockSize );
-
-  fill(0);
-
-
-
-  
-  rect( x+(blockSize*5), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*2), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize), blockSize, blockSize );
-
-
-  fill(#EF0000);  
-  rect( x+(blockSize*4), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*8), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*9), y+blockSize, blockSize, blockSize );
-  rect( x+(blockSize*10), y+blockSize, blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*10), blockSize, blockSize );  
-  rect( x+(blockSize*6), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*5), blockSize, blockSize );
-
-  fill(0);
-  rect( x+(blockSize*11), y+blockSize, blockSize, blockSize );
-  rect( x, y+(blockSize*2), blockSize, blockSize );
-  rect( x, y+(blockSize*3), blockSize, blockSize );
-  rect( x, y+(blockSize*4), blockSize, blockSize );
-  rect( x, y+(blockSize*5), blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*6), blockSize, blockSize );
-  rect( x+blockSize, y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*2), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*3), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*4), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*5), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*6), y+(blockSize*12), blockSize, blockSize );
-  rect( x+(blockSize*7), y+(blockSize*11), blockSize, blockSize );
-  rect( x+(blockSize*8), y+(blockSize*10), blockSize, blockSize );
-  rect( x+(blockSize*9), y+(blockSize*9), blockSize, blockSize );
-  rect( x+(blockSize*10), y+(blockSize*8), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*7), blockSize, blockSize );
-  rect( x+(blockSize*11), y+(blockSize*6), blockSize, blockSize );
-
-  rect( x+(blockSize*12), y+(blockSize*5), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*4), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*3), blockSize, blockSize );
-  rect( x+(blockSize*12), y+(blockSize*2), blockSize, blockSize );
 }
 
 
@@ -359,7 +166,7 @@ void bitHeart( float x, float y, boolean grid ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -367,141 +174,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
-}
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-  int result = f2;
-  f0 = f1;
-  f1 = f2;
-  f2 = f0 + f1;
-  return result;
-}
-
-//////////////////////////
-//  Calculate max loop count
-float getMax( float shapeSize ) {
-  return ( ( width * height ) / shapeSize );
-}
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 10 == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-///////////////////////////////////////////////////////////////////////////
-//  draw a circle of circles
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

@@ -110,7 +110,7 @@ line(width/2,height/2, loc.y, loc.x );
 }
  
   
-  if(frameCount%240==0)save(this+".png");
+  if(frameCount%240==0)save(fix.pdeName()+fix.getTimestamp()+".png");
   
   
 }

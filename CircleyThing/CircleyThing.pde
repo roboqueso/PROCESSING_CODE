@@ -6,7 +6,7 @@ Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
 
-float alf = 75, tX, tY, szW, szH, cX, cY, inc, m; 
+int alf = 75, tX, tY, szW, szH, cX, cY, inc, m; 
 float r,g,b, maxCt;
 
 int tmr_Interval = 10;  // seconds

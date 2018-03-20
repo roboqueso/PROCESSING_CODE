@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  Grow horizontally ( L to R )
 //  OnSplit - use fibonacci sequence for SplitBy
 //
@@ -79,9 +84,10 @@ void draw(){
       textFont(createFont("Silom",11));
       text("ERICFICKES.COM", 11, height-11 );
       if(isFinal){
-        save( pdeName() + getTimestamp() + ".png" );
+        save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
       noLoop();
+      exit();
     }  
 }
 
@@ -142,22 +148,6 @@ void drawSys( PVector pv ) {
 //
   }
   
-}
-
-
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
 }
 
 

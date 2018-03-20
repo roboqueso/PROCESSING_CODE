@@ -1,3 +1,9 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 boolean gotNoise = false, isFinal = true;
 
 float x2=0, y2=0, cX, cY;
@@ -11,8 +17,7 @@ void setup() {
   background(210);
   frameRate(303);
   noFill();
-//  ellipseMode(CENTER);
-//  rectMode(CENTER);
+  fix.alpha(42);
   cX = width/2;
   cY = height/2;
   nz = new int[967];
@@ -103,44 +108,9 @@ void draw() {
     text("ERICFICKES.COM", 3, height-11 );  // 28
 
     if (isFinal) {
-      save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+      save( fix.pdeName() + fix.getTimestamp()+".png" );
     }
     noLoop();
+    exit();
   }
 }
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+second()+millis()+"";
-}
-
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-///////////////////////////////////////////////////////////////////////
-void bullsEye( float a, float b, float shapeSize ) {
-
-  int tmp = (int)shapeSize;
-
-  while (  tmp >= 0 ) {
-
-    strokeWeight(tmp/24);
-    fill(0);
-    stroke(255);
-
-    ellipse( a, b, tmp, tmp);
-    tmp -= int(shapeSize/6);
-  }
-}
-

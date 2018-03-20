@@ -6,7 +6,7 @@
 FixLib fix = new FixLib();
 Boolean isFinal = true;
 int buf;
-float alf = 37, tX, tY, inLeft, inRight, wvStart,i;
+int alf = 37, tX, tY, inLeft, inRight, wvStart,i;
 
 
 ////  CIRCLEY THING
@@ -145,7 +145,7 @@ void getFlowery(
 
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily( "ERICFICKES.COM" );
@@ -265,7 +265,7 @@ class FixLib {
   //  Pass in a color, and this will fill even frames with 255,
   //  odd frames with clr
   //  * INVERTED for evenOddFill() pleasure
-  public void evenOddStroke( color clr, float alf ) {
+  public void evenOddStroke( color clr, int alf ) {
 
     if ( frameCount % 2 == 0 ) {
       stroke(clr, alf);
@@ -770,7 +770,7 @@ class FixLib {
 
     //////////////////////////////////////////////////////
     //  Returns the file name that is calling this function ( minus the .pde )
-    public String pdeName() {
+    
       return split( this.toString(), "$")[0];
     }
   }

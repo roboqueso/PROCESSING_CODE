@@ -19,7 +19,7 @@ Specifies vertex coordinates for curves. This function may only be used between 
 Boolean isFinal = true;
 String artDailyMsg = "ERICFICKES.COM";
 //  
-float alf = 42; //37;
+int alf = 42; //37;
 
 //  circle vars
 float i, angle1 = 180, xx1, yy1, startX1, startY1, radius1 = 37;
@@ -154,7 +154,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   noLoop();

@@ -1,8 +1,9 @@
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 37;
+int alf = 42; //37;
 
 int cX;
 int cY;
@@ -20,7 +21,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(6);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -28,7 +29,7 @@ void setup() {
   // RED
   stroke( #B00B13, alf );
   maxCt = 36;  //360;
-  drawFrame();
+  fix.drawFrame();
 }
 
 
@@ -42,7 +43,7 @@ PVector thisPt,lastPt, pv1, pv2, pv3, pv4 = new PVector();
 void draw()
 {
   smooth();
-  randStrokeUser();
+  fix.ranPalStroke(palette);
   
   _x = lerp( 666, random(width), .8 );
   _y = lerp( 666, random(height-100), .8 );
@@ -116,83 +117,18 @@ void draw()
   
 
   if( ct >= maxCt ) {
-    exit();
+    doExit();
   }
   
   ct++;
 }
-
-///////
-//  draw frame
-void drawFrame() {
-
-  noFill();  
-  rectMode(CORNER);
-  
-  strokeWeight( 100 );
-  rect( 0,0, width, height);
-  
-  strokeWeight( 5 );
-  rect( 64,65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84,85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-
-    } else if ( y <= 780 ) {
-      
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
-    }
-    
-  }
-
-  strokeWeight( 5 );
-  rect( 122,122, width-245, height-245 );
-
-  }
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
 
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   
   artDaily("ERICFICKES.COM");
@@ -200,39 +136,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() +".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ] , alf );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ] , alf );
-}
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
+  noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

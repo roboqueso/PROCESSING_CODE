@@ -133,7 +133,7 @@ void draw() {
 //  End handler, saves png
 void doExit() 
 {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
   artDaily( "ERICFICKES.COM" );
 
   //  if final, save output to png

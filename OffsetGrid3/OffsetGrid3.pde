@@ -1,9 +1,6 @@
 //
-//  Learning Processing CH4
-//
-
 Boolean isFinal = true;
-float alf = 42;
+int alf = 42;
 float shapeSize = 75;
 
 int cX;
@@ -195,7 +192,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -203,12 +200,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 
@@ -242,50 +238,3 @@ while( yy <= height ) {
 */
 
 }
-
-///////
-//  draw frame
-void drawFrame() {
-
-  rectMode(CORNER);
-
-  strokeWeight( 100 );
-  rect( 0, 0, width, height);
-
-  strokeWeight( 5 );
-  rect( 64, 65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84, 85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for ( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if ( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-    } 
-    else if ( y <= 780 ) {
-
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
-    }
-  }
-
-  strokeWeight( 5 );
-  rect( 122, 122, width-245, height-245 );
-}
-

@@ -356,8 +356,8 @@ switch(key){
 
 
   case 's':
-    container.save(pdeName() + getTimestamp() + ".png");
-    // container.save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    container.save( fix.pdeName() + fix.getTimestamp() + ".png");
+    // container.save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
   break;
 
   case ESC:
@@ -366,8 +366,8 @@ switch(key){
   		context.close();
   	}
   
-    container.save(pdeName() + getTimestamp() + ".png");
-    // container.save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    container.save( fix.pdeName() + fix.getTimestamp() + ".png");
+    // container.save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
     exit();
   break;
 
@@ -375,15 +375,3 @@ switch(key){
 }
 
 }  
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

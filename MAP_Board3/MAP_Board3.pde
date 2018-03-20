@@ -4,7 +4,7 @@
 
 Boolean isFinal = true;
 Boolean drawBoard = false;
-float alf = 11;
+int alf = 11;
 float cX, cY;
 
 color[] p1 = { #EFEFEF, #FFFFFF, #EFEFEF,#3A3A3A,#4D4D4D,#606060,#737373,#868686,#9A9A9A,#ADADAD,#C0C0C0,#C6C6C6,#CDCDCD,#D3D3D3,#D9D9D9,#E0E0E0,#E6E6E6,#ECECEC,#F2F2F2,#F9F9F9, #FFFFFF};
@@ -427,7 +427,7 @@ void bitHeart( float x, float y, boolean grid ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -435,12 +435,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 //////////////////////////
 int f0 = 0;

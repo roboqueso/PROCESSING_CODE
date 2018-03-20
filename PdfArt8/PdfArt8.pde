@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 String lines[];
 String txt;
 float xx,yy, tLen, txtSz;
@@ -29,7 +34,7 @@ void draw()
 		txtSz = width/tLen;
 
 // fun to watch
-frame.setTitle(txt);
+surface.setTitle(txt);
 
 
 	fill( random(txtSz), txtSz );
@@ -108,8 +113,9 @@ frame.setTitle(txt);
 		PImage ss = get();
 		image(ss,0,0);
 
-
+		save(fix.pdeName()+fix.getTimestamp()+".png");
 		noLoop();
+		exit();
 	}
 
 
@@ -124,30 +130,15 @@ void keyPressed(){
 switch(key)
 {
   case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
   break;
 
   case ESC:
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
     exit();
   break;
 }
 
 
 } 
-
-
-
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-

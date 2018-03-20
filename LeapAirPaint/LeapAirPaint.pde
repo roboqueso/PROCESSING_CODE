@@ -33,10 +33,10 @@ void setup()
   noFill();
   noStroke();
   
-  fire1 = loadImage("fire1.png");
-  fire2 = loadImage("fire2.png");
-  fire3 = loadImage("fire3.png");
-  fire4 = loadImage("fire4.png");
+  fire1 = loadImage("gold1.png");
+  fire2 = loadImage("gold2.png");
+  fire3 = loadImage("gold3.png");
+  fire4 = loadImage("gold4.png");
     
   leap = new LeapMotion(this);
 
@@ -170,12 +170,12 @@ switch(key)
   break;
 
   case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
 
   break;
 
   case ESC:
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
 
     exit();
   break;
@@ -185,15 +185,3 @@ switch(key)
 } 
 
 
-
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}

@@ -2,7 +2,7 @@
 Facebook buy Instagram for $1000000000.00
 */
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float ii = 0;
 
 float cX, cY;
@@ -73,7 +73,7 @@ noFill();
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -81,12 +81,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 //////////////////////////
 int f0 = 0;

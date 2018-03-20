@@ -1,12 +1,11 @@
-  //  http://processing.org/learning/trig/
-//import processing.opengl.*;
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
 
-//  inspired by http://processing.org/learning/transform2d/
-//  Spinning color
+Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 42;
+int alf = 42;
 
 //  art frame settings
 int outerRectX;
@@ -41,9 +40,9 @@ int circleSize   = 100;
 
 void setup()
 {
-  size( 1024,768 );
-  background(37);
-    
+  size( 1024,768,P3D );
+  background(42);
+  fix.alpha(alf);
     noFill();
     smooth();
 }    
@@ -76,7 +75,7 @@ void draw()
         */
 //        stroke( #1975EF );      
       //}
-randStroke();
+      fix.randStroke();
       strokeWeight( 0.1 );
   
       ellipse( xx, yy, circleSize, circleSize );
@@ -92,7 +91,7 @@ randStroke();
     } 
 
 
-exit();
+  doExit();
 
 }
 
@@ -100,7 +99,7 @@ exit();
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   stroke( 255, 0,0,100);
 
@@ -111,16 +110,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill()    {  fill( random(255), random(255), random(255), random(100) );  }
-void randStroke()  {  stroke( random(255), random(255), random(255), random(100) );  }
 
 ///////////////////////////////////////////////////////////
 //

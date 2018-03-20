@@ -75,9 +75,10 @@ fill(random(255), 100);
   	endShape();
 
     
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     noLoop();
+    exit();
   }
 
 }

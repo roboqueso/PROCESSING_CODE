@@ -1,9 +1,10 @@
 //  IMPORTS  ////////////////////////////////////////////////////
 
 
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true, fwd = true;
 int alf = 37, sz = 30;
 float angle = -90, radius = 66, x, y, x2, y2, cX, cY, strokeSz = 2;
@@ -74,7 +75,7 @@ void draw()
 
     // STOPPER
     if( frameCount > (width+height)*radius ){
-    	exit();
+    	doExit();
     }
 }
 
@@ -83,7 +84,7 @@ void draw()
 	
 ///////////////////////////////////////////////////////////
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
 
@@ -91,13 +92,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 
@@ -107,25 +107,13 @@ void exit()
 void keyPressed(){
 switch(key){
 	case 's':
-		save(pdeName() + getTimestamp() + ".png");
+		save( fix.pdeName() + fix.getTimestamp() + ".png");
 	break;
 
 	case ESC:
-		save(pdeName() + getTimestamp() + ".png");
+		save( fix.pdeName() + fix.getTimestamp() + ".png");
 		stop();
 	break;
 }
 
 }
-
-public String getTimestamp() {
-	return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-	return split( this.toString(), "[")[0];
-}
-

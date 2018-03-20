@@ -1,8 +1,12 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //
 //  go smaller
-
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 
 
 float shapeSize = 20000;
@@ -47,13 +51,13 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(alf);
-
+  fix.alpha(alf);
   noFill();
   strokeWeight(.5);
   smooth();
 
 // DEBUG
-//  drawSuns(); 
+//  drawSuns2(); 
 //  exit();
 
 }
@@ -70,7 +74,7 @@ void draw()
 
     //  re-init loop vars
     x = y = ct = (int)-alf;
-    maxCt = getMax( shapeSize );
+    maxCt = fix.getMax( shapeSize );
     
     
     
@@ -91,12 +95,12 @@ void draw()
 
       } else {
         strokeWeight( random(3.33) );
-        randStrokeUser();
+        fix.ranPalStroke(palette);
 
         //circle( x, y, shapeSize, shapeSize );
-        hexagon( x, y, shapeSize );
+        fix.hexagon( x, y, shapeSize );
         
-        randStrokeUser();
+        fix.ranPalStroke(palette);
         rect( x, y, shapeSize, shapeSize );
         ellipse( x, y, shapeSize, shapeSize );
         
@@ -119,17 +123,17 @@ void draw()
   }
 
 
-drawSuns();
+drawSuns2( (width/2), (height/2));
 
 //stroke( #EF1975, alf );
-//drawFrame();
+//fix.drawFrame();
 
-  exit();
+  doExit();
 }
 ///////////////////////////////
 //  draw a center line core
 //  draw the wirey outer shine
-void drawSuns() {
+void drawSuns2(float xx, float yy) {
  
 float radius1, radius2, radius3, radius4;
 float xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4;
@@ -143,8 +147,9 @@ radius2 = 130;  //200;
 radius3 = 175;
 radius4 = 300;
 
-startX1 = startX2 = startX3 = startX4 = (width/2);
-startY1 = startY2 = startY3 = startY4 = (height/2);
+//  TODO: compare to fix.drawSuns()
+startX1 = startX2 = startX3 = startX4 = xx;//(width/2);
+startY1 = startY2 = startY3 = startY4 = yy;//(height/2);
 angle1 = angle2 = 0;
 
 angle3 = 103;
@@ -215,161 +220,10 @@ angle4 = 110;
 
 
 
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-   int result = f2;
-   f0 = f1;
-   f1 = f2;
-   f2 = f0 + f1;
-   return result;
-}
-
-//////////////////////////
-//  Calculate max loop count
-float getMax( float shapeSize ) {
-  return ( ( width * height ) / shapeSize );
-}
-
-void textLines() {
-
-
-  textFont( createFont( "Helvetica", 300 ) );
-
-  fill(10, pow(alf, 1.5) );//, (alf*4) );
-  // MAKE TEXT BIG
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.3 );
-  //  & curve
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.49 );
-  //  & quad
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.65 );
-
-  //  & triangle
-  fill(#210000, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-  fill(#000021, pow(alf, 1.5) );//, (alf*4) );
-  text("lines.lines.lines.lines.lines", 0, height*.85 );
-}
-
-
-
-/*
-void mousePressed() {
-  println("mousePressed()");
-}
-
-
-void keyPressed() {
-  println("keyPressed()");
-}
-*/
-
-
-///////
-//  draw frame
-void drawFrame() {
-
-  rectMode(CORNER);
-
-  strokeWeight( 100 );
-  rect( 0, 0, width, height);
-
-  strokeWeight( 5 );
-  rect( 64, 65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84, 85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for ( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if ( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-    } 
-    else if ( y <= 780 ) {
-
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
-    }
-  }
-
-  strokeWeight( 5 );
-  rect( 122, 122, width-245, height-245 );
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius2 = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  radius2 = w;
-
-  while ( angle < 360 ) {
-
-// make circle draw faster by skipping angles
-if( angle % 3 == 0 ) {
-    
-    xx = startX - int( cos(radians(angle)) * radius2 );
-    yy = startY - int( sin(radians(angle)) * radius2 );
-
-
-    ellipse( xx, yy, w, h );
-}
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-
-
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -377,46 +231,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
   
   noLoop();
-  System.gc();
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf*.75 );
-}
-
-
-
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName(){
-    return split( this.toString(), "[")[0];
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -427,9 +246,6 @@ void artDaily( String dailyMsg ) {
   textFont( createFont( "Silom", 18 ) );
   smooth();
 
-  //  stroke(#EFEFEF);
-//  fill(#EE0000);
-  //fill(#00EE00);
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }

@@ -89,6 +89,7 @@ void setup()
 
 void draw()
 {
+  lights();
 
 	// update the cam
 	context.update();
@@ -246,8 +247,10 @@ image(imgRgb, 0, frameCount%height, width, imgRgb.height);
 }	// end frameCount checker
 
   //  AUTO SAVER
-  if(frameCount%780==0){
-    save(pdeName() + getTimestamp() + ".png");
+  if(frameCount%width==0){
+    save( this + ".png");
+    noLoop();
+    exit();
   }
 
 
@@ -418,9 +421,12 @@ switch(key){
 
 
   case 's':
-    // image(hirez,0,0);
-    save(pdeName() + getTimestamp() + ".png");
-    // save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    imgTexture = get();
+    imgTexture.filter(INVERT);
+    imgTexture.mask(get());
+    image(imgTexture,0,0);
+    save( this + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
   break;
 
   case ESC:
@@ -428,8 +434,8 @@ switch(key){
    if(context!=null){
      context.close();
    }
-    save(pdeName() + getTimestamp() + ".png");
-    // save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    save( this + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
     exit();
   break;
 
@@ -464,15 +470,3 @@ switch(key){
 }
 
 }  
-
-public String getTimestamp() {
-  return ""+month()+"-"+day()+"-"+year()+"-"+hour()+"-"+minute()+"-"+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

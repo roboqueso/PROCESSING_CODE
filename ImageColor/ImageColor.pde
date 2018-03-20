@@ -18,7 +18,7 @@ int outerRectHeight = 28;
 //  grid settings
 int shapeSize = 10;
 float shapePadding = 1;
-float alf = 69;
+int alf = 69;
 
 //  image action
 PImage img;
@@ -190,14 +190,14 @@ float rectangleHeight)
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
 
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   super.stop();

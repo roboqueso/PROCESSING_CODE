@@ -45,7 +45,7 @@ void draw() {
     artDaily("ERICFICKES.COM");
     
     if(isFinal){
-      save(this+".png");
+      save(fix.pdeName()+fix.getTimestamp()+".png");
     }
     
     noLoop();

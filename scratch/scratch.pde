@@ -1,43 +1,71 @@
+/*
+inspiration from http://paulbourke.net/geometry/supershape/
+*/
+
 PShape can;
 float angle;
 PShader colorShader;
 
 void setup() {
-  size(1024, 768, P3D);
   
+  size(1024, 768, P3D);
+  rectMode(CENTER);
+  
+  strokeWeight(PI);
 }
+
+int numPts = 40;
+int x, y;
+float m, n1, n2, n3, phi;
+
+PVector tmp;
+
+
 
 void draw() {    
-  //background(0);
-  translate(frameCount%width, frameCount%(height/2));
+  
+  beginShape();
+    
+    for (int i=0; i <= numPts; i++) {
+        phi = i * TWO_PI / numPts;
+        
+        tmp = Eval( numPts, 2, 1.7, 1.7, phi );
+        
+        vertex( tmp.x, tmp.y, tmp.z );
+        
+println( tmp );
+     }
 
-can = createCan(100, 200, (int)angle);
-
-  rotateY(angle);  
-  rotateX(frameCount%360);
-  rotateZ(frameCount%180);
-
-  shape(can);  
-  angle += 0.01;
+  endShape();
+  
+  noLoop();
+  
+  /*
+  pushMatrix();
+    
+    translate((width/2), (height/2), frameCount );
+    rotate(frameCount);
+    //fill(frameCount%255, 50);
+    noFill();
+    stroke(frameCount%255, 100);
+    rect( 0,0, (frameCount%(width/2)) , (frameCount % ( height/2) ), -frameCount%-8 );
+    
+  popMatrix();
+  */
 }
 
-PShape createCan(float r, float h, int detail) {
-  textureMode(NORMAL);
-  PShape sh = createShape();
-  sh.beginShape(QUAD_STRIP);
-  sh.stroke(255);
-  sh.fill(frameCount%255,frameCount%255,frameCount%255);
-  for (int i = 0; i <= detail; i++) {
-    float angle = TWO_PI / detail;
-    float x = sin(i * angle);
-    float z = cos(i * angle);
-    float u = float(i) / detail;
 
-    sh.normal(x, 0, z);
-    sh.vertex(x * r, -h/2, z * r, u, 0);
-    sh.vertex(x * r, +h/2, z * r, u, 1);
+PVector sf2d(n, a)
+  
+  u = [0:.001:2 * pi];
+  
+  raux = abs(1 / a(1) .* abs(cos(n(1) * u / 4))) .^ n(3) + abs(1 / a(2) .* abs(sin(n(1) * u / 4))) .^ n(4);
+  
+  r = abs(raux) .^ (- 1 / n(2));
+  
+  x = r .* cos(u);
+  
+  y = r .* sin(u);
 
-  }
-  sh.endShape(); 
-  return sh;
-}
+  return new PVector(x, y);
+end

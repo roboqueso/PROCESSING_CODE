@@ -1,6 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -28,7 +32,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(3);
-  //  ---------------------
+  fix.alpha(alf);
 
 
   smooth();
@@ -58,7 +62,7 @@ void setup() {
     line( 0, ll, this.width, ll );
   }
 
-  drawCore( offsetX, offsetY, int(radius*1.25) );
+  fix.drawCore( offsetX, offsetY, int(radius*1.25) );
 
 
   //exit();
@@ -130,55 +134,17 @@ void draw()
 
   if ( angle >= maxAngle )
   {    
-    exit();
+    doExit();
   }
 }
 
-
-
-///////////////////////////////////////////////////////////
-//  draws circle from supplied x, y
-void drawCore( int XX, int YY, int maxSize ) {
-
-  float r = 1;  // 75;
-  float theta = 0;
-
-  float alf = 20;
-  float x;
-  float y;
-
-  smooth();
-  strokeWeight(.13);
-
-  while ( theta <= maxSize )
-  {    
-    x = (PI*r) * cos(theta);
-    y = (PI*r) * sin(theta);
-
-    if (x%2==0)stroke(255, alf);
-    else if (x%3==0) stroke(255, 0, 0, alf);
-    else stroke( 109, 109, 109, alf);
-
-    // "dots"
-    ellipse( int(XX+x), int(YY+y), x, x );
-
-    heart( int(YY+y), int(XX+x), int(y), int(y) );
-
-    theta+= 0.25;
-
-    if ( frameCount%2==0) {
-      r++;
-      theta+=.5;
-    }
-  }
-}
 
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
@@ -186,22 +152,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
-}
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
+  noLoop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -216,68 +171,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-165, this.height-30);
 }
-
-
-
-///////////////////////////////////////////////////////////
-//  
-//  draw heart
-void heart( int x, int y, int w, int h ) 
-{
-  ellipseMode(RADIUS);
-  smooth();
-
-  //  stroke(#EF7519, alf);  // 37
-  stroke(#EF1111, alf);  // 37
-
-  strokeWeight(2);
-  //  noFill();
-
-  //  bubbles
-  ellipse( x-w, y, w, w);
-  ellipse( x+w, y, w, w);
-  //  ellipseMode(MODE)
-  //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
-
-
-  //  lines	
-  line( x-(w*2), y, x, y + w*PI);
-  line( x+(w*2), y, x, y + w*PI);
-}
-
-/*
-///////////////////////////////////////////////////////////
- //  
- //  Spits the installed list of fonts out in a grid
- void fontGrid() 
- {
- fill(255);
- stroke(255);
- String[] fontList = PFont.list();
- int x = 10;
- int y = 10;
- PFont font;
- 
- for( int ct = 0; ct <= fontList.length-1; ct++ ){   
- 
- 
- // load it & show it
- font = createFont( fontList[ct], 18);
- textFont( font );
- 
- text(fontList[ct], x, y);
- 
- if( ct % 55 == 0)
- {
- x += 330;
- y = 0;
- }
- else
- {
- y += 20;
- }
- 
- }
- 
- }
- */

@@ -141,10 +141,6 @@ void doExit()
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-//	debug
-// println("exit()");
-//fix.beep();
-
 
   noLoop();
   exit();

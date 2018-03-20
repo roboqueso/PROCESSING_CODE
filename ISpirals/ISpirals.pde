@@ -1,3 +1,9 @@
+// HOT : P5 TRIANGLE
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  ISpirals - figure out the iPhone desktop app layout dimensions for sweet background patterns
 //iPhone5
 //- 1136-by-640-pixel resolution at 326 ppi
@@ -90,29 +96,8 @@ void draw(){
 //      text("ERICFICKES.COM", -2, height-2 );
 
       if(isFinal){
-        save( pdeName() + getTimestamp() + ".png" );
+        save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
       noLoop();
   }
 }
-
-
-
-
-
-
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

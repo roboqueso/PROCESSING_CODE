@@ -2,7 +2,7 @@
 //  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
 //
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 
 int cX;
 int cY;
@@ -82,14 +82,14 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
 
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

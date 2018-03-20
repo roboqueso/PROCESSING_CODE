@@ -46,8 +46,8 @@ void draw()
 		txtSz = width/tLen;
 		colorIdx = frameCount % (palette.size()-1);
 // fun to watch
-//	Use surface.setTitle() instead of frame.setTitle in Processing 3
-// frame.setTitle(txt);
+//	Use surface.setTitle() instead of surface.setTitle in Processing 3
+// surface.setTitle(txt);
 surface.setTitle(txt);
 
 
@@ -134,6 +134,8 @@ try {
     text("CRASH::"+exc, 42, height/2);
     tint(255);
     save("CRASH_"+ fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
+    exit();
   }
 
 
@@ -165,6 +167,7 @@ try {
 		image(ss,0,0);
 		save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
 		println("DONE!");
+		noLoop();
 		exit();
 	}
 
@@ -183,21 +186,17 @@ void keyPressed(){
 switch(key)
 {
   case 's':
-    // save(pdeName() + getTimestamp() + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + ".png");
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   break;
 
   case ESC:
-    // save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
     // save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-    //For Java programmers, this is not the same as System.exit(). Further, System.exit() should not be used because closing out an application while draw() is running may cause a crash (particularly with P3D).
+    noLoop();
     exit();
   break;
 }
 
 
 } 
-
-
-
-

@@ -240,7 +240,7 @@ image(imgRgb, 0, frameCount%height, width, imgRgb.height);
 
 	//	AUTO SAVER
 	if(frameCount%720==0){
-		save(pdeName() + getTimestamp() + ".png");
+		save( fix.pdeName() + fix.getTimestamp() + ".png");
 	}
 	 
 }
@@ -411,8 +411,8 @@ switch(key){
 
   case 's':
     // image(hirez,0,0);
-    save(pdeName() + getTimestamp() + ".png");
-    // save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
   break;
 
   case ESC:
@@ -420,8 +420,8 @@ switch(key){
    if(context!=null){
      context.close();
    }
-    save(pdeName() + getTimestamp() + ".png");
-    // save( pdeName() + getTimestamp() + "_BIG2.tiff");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
     exit();
   break;
 
@@ -456,15 +456,3 @@ switch(key){
 }
 
 }  
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

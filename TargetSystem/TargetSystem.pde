@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 
 int gridSize = 4;    // grid will always be gridSize X gridSize
@@ -13,7 +18,7 @@ int[] nums = {
 void setup() {
   background(alf);
   size(1024, 768); 
-
+  fix.alpha(alf);
   smooth();
   noFill();
 
@@ -34,9 +39,9 @@ void draw() {
   stroke(random(222), 42);
   drawSystem( y, x );
   
-  bullsEye( x, y, gridSize*TWO_PI );
-  rectEye( x, y, gridSize*noise(frameCount) );
-  rectEye( y, x, gridSize);
+  fix.bullsEye( x, y, gridSize*TWO_PI );
+  fix.rectEye( x, y, gridSize*noise(frameCount) );
+  fix.rectEye( y, x, gridSize);
 
   //  adjust grid size
   if ( frameCount % width == 0 ) {
@@ -50,10 +55,11 @@ void draw() {
     artDaily("ERICFICKES.COM");
     
     if(isFinal){
-     save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+     save( fix.pdeName()+fix.getTimestamp()+".png" );
     }
     
     noLoop();
+    exit();
   }
 }
 
@@ -197,9 +203,9 @@ void drawSystem( float x, float y )
 
   case 3:
     {
-      bullsEye( y, y, gridSize*PI);
+      fix.bullsEye( y, y, gridSize*PI);
       line( y, y, x, x );
-      bullsEye( x, x, gridSize);
+      fix.bullsEye( x, x, gridSize);
     }
     break;
 
@@ -232,15 +238,15 @@ void drawSystem( float x, float y )
 
   case 10:
     {
-      bullsEye( x, y, gridSize * PI);
-      bullsEye( y, x, gridSize/TWO_PI);
+      fix.bullsEye( x, y, gridSize * PI);
+      fix.bullsEye( y, x, gridSize/TWO_PI);
       
 //      noFill();
       stroke(#1975EF,x-y);
       curve( width*noise(frameCount), height, height-x, y, x, width-y, width-x, height-y*noise(frameCount) );
 
-      rectEye( x, y, gridSize);
-      rectEye( y, x, gridSize);
+      fix.rectEye( x, y, gridSize);
+      fix.rectEye( y, x, gridSize);
             
     }
     break;
@@ -255,57 +261,20 @@ void drawSystem( float x, float y )
     break;
     
     case 12 :{
-      bullsEye( x, y, gridSize);
-      bullsEye( y, x, gridSize);
+      fix.bullsEye( x, y, gridSize);
+      fix.bullsEye( y, x, gridSize);
     }
     break;
     
     case 13 :{
-      rectEye( x, y, gridSize);
-      rectEye( y, x, gridSize);
+      fix.rectEye( x, y, gridSize);
+      fix.rectEye( y, x, gridSize);
     }
     break;
   }
 }
 
 
-
-///////////////////////////////////////////////////////////////////////
-void bullsEye( float a, float b, float shapeSize ){
-    
-    int tmp = int(shapeSize);
-    
-    while( tmp > 0 ) {
-        //  put in loop in case main drawing calls noFill()
-        stroke(255);
-        fill(0);
-    
-        strokeWeight( tmp );
-        ellipse( a, b, tmp, tmp );
-        
-        tmp -= ( shapeSize/6 );
-    }
-
-  
-}
-
-///////////////////////////////////////////////////////////////////////
-void rectEye( float a, float b, float shapeSize ){
-
-    int tmp = int(shapeSize);
-    stroke(255);
-    fill(0);
-    
-    while( tmp > 0 ) {
-        
-        strokeWeight( shapeSize/tmp/tmp );
-        rect( a, b, tmp, tmp, random(tmp) );
-        
-        tmp -= ( shapeSize/6 );
-    }
-
-  
-}
 
 
 

@@ -4,7 +4,7 @@ color  clrBG    = #424242;
 int cX, cY;
 
 //	sketch data
-float alf = 11;
+int alf = 11;
 
 
 //  color[] palette = {0xFF0000, 0x00FF00, 0x0000FF };

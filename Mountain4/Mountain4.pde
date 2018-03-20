@@ -2,7 +2,7 @@
 weird currency-ish pattern?
  */
 Boolean isFinal = true;
-float alf = 75;
+int alf = 75;
 float cX, cY;
 
 float ct = 0;
@@ -303,7 +303,7 @@ void bitHeart( float x, float y, boolean grid ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM" );
@@ -311,12 +311,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 //////////////////////////
 int f0 = 0;

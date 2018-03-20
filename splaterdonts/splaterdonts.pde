@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 public float x = 0, y = 0;
 Boolean isFinal = true;
 /////////////////////////////////////////////////////////
@@ -32,9 +37,10 @@ void draw() {
     text("ERICFICKES.COM", width-100, height-11);
 
     if(isFinal){
-      save( pdeName() + getTimestamp() + ".png");
+      save( fix.pdeName() + fix.getTimestamp() + ".png");
     }
     noLoop();
+    exit();
   }
 }
 /////////////////////////////////////////////////////////
@@ -165,18 +171,3 @@ void xySystem( float a, float b)
     y = random(PI, height-y);
   }
 }
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-

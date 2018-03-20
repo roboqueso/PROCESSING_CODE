@@ -1,10 +1,11 @@
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -53,8 +54,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(9);
-
-  //  -------------------------------------------
+  fix.alpha(alf);
 
   smooth();
   noFill();
@@ -99,7 +99,7 @@ void draw()
     outerYY = ( int(offsetY+alf) - int( sin(radians(angle)) * outerRadius ) );
 
 
-    randStroke();
+    fix.randStroke();
     
     strokeWeight(.25);
     line( random(xx), random(yy), width-random(outerXX), height-random(outerYY) );
@@ -109,24 +109,24 @@ void draw()
     point( xx, yy);
     point( outerXX, outerYY);
     
-    randStrokeUser();
+    fix.ranPalStroke(palette);
     sineWave( xx, yy );
     sineWave( outerXX, outerYY );
     
     stroke( #EFEFEF, alf );
-    hexagon( xx, yy, alf );
-    randStrokeUser();
-    hexagon( outerXX, outerYY, alf );
+    fix.hexagon( xx, yy, alf );
+    fix.ranPalStroke(palette);
+    fix.hexagon( outerXX, outerYY, alf );
 
 if( angle % 180 == 0 ) {
   outerRadius+=alf;
   radius+=alf;
 //  stroke(#75EF91, alf*4);
 alf*=3;
-  randStroke();
-  hexagon( xx, yy, radius );
+  fix.randStroke();
+  fix.hexagon( xx, yy, radius );
 //  stroke(#EF7519, alf*4);
-  hexagon( outerXX, outerYY, outerRadius );
+  fix.hexagon( outerXX, outerYY, outerRadius );
 alf/=3;
 }
 
@@ -139,25 +139,10 @@ alf/=3;
 
   if ( angle >= maxAngle )
   {    
-    exit();
+    doExit();
   }
 }
 
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
 
 
 
@@ -165,7 +150,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   
   artDaily("ERICFICKES.COM");
@@ -173,36 +158,12 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf*2 );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf*2 );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ] , alf*2 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ] , alf*2 );
-}
-
 
 
 
@@ -227,72 +188,11 @@ void artDaily( String dailyMsg ) {
 }
 
 
-///////////////////////////////////////////////////////////
-//  draws circle from supplied x, y
-void drawCore( int XX, int YY, int maxSize ) {
-
-  float r = 1;  // 75;
-  float theta = 2;
-
-  float alf = 10;
-  float x;
-  float y;
-
-  smooth();
-  strokeWeight(.13);
-
-  while ( theta <= maxSize )
-  {    
-    x = (PI*r) * cos(theta);
-    y = (PI*r) * sin(theta);
-
-    if (x%2==0)stroke(255, alf);
-    else if (x%3==0) stroke(255, 0, 0, alf);
-    else stroke( 109, 109, 109, alf);
-
-    ellipse( int(XX+x), int(YY+y), x, x );
-
-    heart( int(YY+y), int(XX+x), int(y), int(y) );
-
-    theta+= 0.25;
-
-    if ( frameCount%2==0) {
-      r++;
-      theta+=.5;
-    }
-  }
-}
-
-
-
-
-///////////////////////////////////////////////////////////
-//  
-//  draw heart
-void heart( int x, int y, int w, int h ) 
-{
-  ellipseMode(RADIUS);
-  smooth();
-
-  //  stroke(#EF7519, alf);  // 37
-  stroke(#EF1111, alf);  // 37
-
-  strokeWeight(2);
-  //  noFill();
-
-  //  bubbles
-  ellipse( x-w, y, w, w);
-  ellipse( x+w, y, w, w);
-  //  ellipseMode(MODE)
-  //  MODE	Either CENTER, RADIUS, CORNER, or CORNERS
-
-
-  //  lines	
-  line( x-(w*2), y, x, y + w*PI);
-  line( x+(w*2), y, x, y + w*PI);
-}
 
 /////
+
+// NOTE : this function can NOT be moved because of the usage of xvalues and yvalues
+
 //  Sine Wave grid, axii starting and supplied x and y
 void sineWave( float startX, float startY ) {
 
@@ -322,7 +222,7 @@ void sineWave( float startX, float startY ) {
     smooth();    
     strokeWeight(2);
     alpha(111);
-    randStrokeUser();
+    fix.ranPalStroke(palette);
 
 
     //  HORIZONTAL

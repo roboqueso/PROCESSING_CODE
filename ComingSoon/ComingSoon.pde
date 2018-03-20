@@ -39,7 +39,7 @@ void draw() {  // this is run repeatedlyy.
         textFont(createFont("Monospace", 11));
         text("ERICFICKES.COM", 111, height-11);
         if(isFinal){
-          save(this+".png");
+          save(fix.pdeName()+fix.getTimestamp()+".png");
         }
         noLoop();
     }

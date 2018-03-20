@@ -33,7 +33,7 @@ void draw()
 		// fill(255,0,0);
 		// text("DONE", width/2, height/2);
 
-	    save(this+".png");
+	    save(fix.pdeName()+fix.getTimestamp()+".png");
 	    noLoop();
   	}
   	else

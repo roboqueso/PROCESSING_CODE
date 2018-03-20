@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  Grow horizontally ( L to R )
 //  OnSplit - use fibonacci sequence for SplitBy
 //
@@ -65,9 +70,10 @@ void draw(){
       
       
       if(isFinal){
-        save( pdeName() + getTimestamp() + ".png" );
+        save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
       noLoop();
+      exit();
     }  
 }
 
@@ -90,15 +96,6 @@ void moveSys( PVector pv ) {
         pv.x = random(width);
       }
 
-//      horizontal
-//      if( pv.x < width ) {
-//        pv.x += TWO_PI;
-//        pv.y += random( -1,1 );
-//      } else {
-//        pv.y = random(height);
-//        pv.x = random(width);
-//      } 
-
     } 
     break;
   }
@@ -108,46 +105,12 @@ void moveSys( PVector pv ) {
 //////////////////////////////////////////////////////////////////////////
 //  draw stuff using supplied PVector
 void drawSys( PVector pv ) {
-  
-//  switch( int( random(2) ) ) {
-//    case 0:{
-      
-//      point( pv.x, pv.y );
-//      stroke(random(144, 233), 89);
       rect( pv.x, pv.y, br.BranchWidth, br.BranchWidth, random(-42, 42) );
 
-//    } 
-//    break;
-//
-//    case 1:{
-//      point( pv.y, pv.x );
-//      ellipse( pv.y, pv.x, br.SplitBy, br.SplitBy );
-//      
-//      strokeWeight(1);
-//      rect( pv.y, pv.x, br.SplitBy, br.SplitBy, frameCount );
-//
-//    } 
-//    break;
-//
-//  }
-  
 }
 
 
 
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
 
 
 

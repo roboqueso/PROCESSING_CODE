@@ -1,3 +1,9 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 size(1024, 768 );
 background(204);
 smooth();
@@ -37,7 +43,8 @@ text("ERICFICKES.COM", 0, height-11);
 
   if ( isFinal )
   {
-    save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();

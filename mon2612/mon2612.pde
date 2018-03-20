@@ -137,7 +137,7 @@ boolean isCollidingCircleRectangle(
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   

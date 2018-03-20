@@ -1,8 +1,9 @@
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-float alf = 9;
+int alf = 9;
 
 int cX;
 int cY;
@@ -244,7 +245,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -252,12 +253,11 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 

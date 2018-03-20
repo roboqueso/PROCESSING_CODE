@@ -148,12 +148,12 @@ void keyPressed(){
 switch(key)
 {
   case 's':
-    // save(pdeName() + getTimestamp() + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + ".png");
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   break;
 
   case ESC:
-    // save(pdeName() + getTimestamp() + ".png");
+    // save( fix.pdeName() + fix.getTimestamp() + ".png");
     save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
     exit();
   break;

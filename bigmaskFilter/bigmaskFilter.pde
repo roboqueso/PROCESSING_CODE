@@ -64,8 +64,13 @@ void draw() {
 
     //  https://processing.org/reference/filter_.html
     filter(THRESHOLD);
-//    filter(GRAY);
-    filter(INVERT);
+//    
+    if(xx%4==0){
+      filter(INVERT);
+    } else {
+      filter(GRAY);
+    }
+
     filter(OPAQUE);
     filter(POSTERIZE, (int)random(2,255) );
     //filter(BLUR, (int)random(7));
@@ -84,7 +89,7 @@ void draw() {
   //  stopper
   if(yy>=height){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }
@@ -122,7 +127,7 @@ void draw() {
   
 //  //background(255);
 //  image(deskTop,0,0);
-//  save(this+".png");
+//  save(fix.pdeName()+fix.getTimestamp()+".png");
 //  //saveFrame(this+".tiff");
 //}
 

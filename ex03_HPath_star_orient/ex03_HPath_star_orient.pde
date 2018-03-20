@@ -62,7 +62,7 @@ void keyPressed(){
 
   if( keyCode == ESC ){
   
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
     super.exit();
   }

@@ -12,7 +12,7 @@ more information)
 Boolean isFinal = true;
 
 //  
-float alf = 111;  //69;
+int alf = 111;  //69;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;
@@ -152,13 +152,11 @@ if( xx1 < width+alf ) {
   //  
   if ( xx1 > width && yy1 > height )
   {    
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }
  
-  
-  System.gc();
   
 }
 
@@ -390,7 +388,7 @@ void bitHeart( float x, float y, boolean grid ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -398,13 +396,10 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-  System.gc();
 
-
-  super.stop();
 }
 
 //////////////////////////

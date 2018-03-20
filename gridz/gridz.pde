@@ -88,7 +88,7 @@ void draw()
   if( sz == -1 )
   {
     
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     noLoop();
   }

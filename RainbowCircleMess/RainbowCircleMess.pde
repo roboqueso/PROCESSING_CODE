@@ -8,7 +8,7 @@ float theta = 0;
 int cX = 0;
 int cY = 0;
 
-float alf = 100.00;
+int alf = 100.00;
 
 ///////////////////////////////////////////////////////////
 //  
@@ -72,7 +72,7 @@ void draw() {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   fill(#EFEFEF);
   text( "ERICFICKES.COM", 0, height-11 );

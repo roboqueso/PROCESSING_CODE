@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //  RECT GRID playing with rounded rectangle radiuss
 
 public Boolean isFinal = true;
@@ -56,9 +61,10 @@ void draw(){
       text("ERICFICKES.COM", 11, height-11 );
       
       if(isFinal){
-        save( pdeName() + getTimestamp() + ".png" );
+        save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
       noLoop();
+      exit();
     }  
 }
 
@@ -76,19 +82,6 @@ void moveSys( PVector pv ) {
         pv.y += rectSz;
         pv.x = 0;
       }
-      
-//   } else {
-//
-//     // vertical
-//      if( pv.y < height ) {
-//          pv.y += rectSz+PI;
-//      } else {
-//        pv.y = 0;
-//        pv.x += rectSz+PI;
-//      }
-//   
-//   }
-
 
   if( pv.x > width && pv.y > height ){
   
@@ -110,42 +103,7 @@ void drawSys( PVector pv ) {
 
   rect( pv.x, pv.y, rectSz, rectSz, pv.y/rectSz );
 
-//  switch( int( random(2) ) ) {
-//    case 0:{
-//
-//      rect( pv.x, pv.y, br.BranchWidth, br.BranchWidth, random(-br.BranchWidth, br.BranchWidth) );
-//
-//    } 
-//    break;
-//
-//    case 1:{100
-//
-//      stroke(random(br.SplitBy),random(br.SplitBy),random(br.SplitBy), 100);
-//      rect( pv.y, pv.x, br.SplitBy, br.SplitBy, random(-br.SplitBy, br.SplitBy) );
-//
-//    } 
-//    break;
-//
-//  }
-  
 }
-
-
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
 
 
 /***********************************************************************/ 

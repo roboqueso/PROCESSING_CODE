@@ -1,6 +1,6 @@
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -103,7 +103,7 @@ if( frameCount % 3 == 0 ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
@@ -111,7 +111,7 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

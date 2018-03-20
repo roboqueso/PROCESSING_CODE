@@ -4,7 +4,7 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-float alf = 100;
+int alf = 100;
 
 ArrayList p3;
 PImage img;
@@ -22,7 +22,7 @@ void setup() {
   frameRate(303);
   background(alf);
   noFill();
-
+  fix.alpha(alf);
   cX = 1024/2;
   cY = 768/2;
 

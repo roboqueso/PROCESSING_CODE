@@ -15,7 +15,7 @@ AudioInput in;
 
 Boolean isFinal = true;
 int buf;
-float alf = 42, tX, tY, inLeft, inRight, wvStart;
+int alf = 42, tX, tY, inLeft, inRight, wvStart;
 
 int i, cX, cY;
 float sz;
@@ -182,8 +182,7 @@ void doExit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

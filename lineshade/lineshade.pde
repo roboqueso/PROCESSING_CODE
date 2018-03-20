@@ -63,7 +63,7 @@ void draw() {
 
   if( boxY> height ){
   
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
     super.exit();
   }

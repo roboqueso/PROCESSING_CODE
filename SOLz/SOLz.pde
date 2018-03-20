@@ -1,6 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -99,7 +103,7 @@ if( angle % 360 == 0 ) {
 
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -107,7 +111,7 @@ if( angle % 360 == 0 ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
@@ -115,20 +119,13 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
 
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
 
 ///////////////////////////////////////////////////////////
 //
@@ -142,20 +139,3 @@ void artDaily( String dailyMsg ) {
   stroke( #75EF19, 666 );
   text( " "+dailyMsg, this.width-175, this.height-15);
 }
-
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

@@ -8,7 +8,7 @@ float theta = 0;
 int cX = 0;
 int cY = 0;
 
-float alf = 100.00;
+int alf = 100.00;
 
 ///////////////////////////////////////////////////////////
 //  
@@ -63,7 +63,7 @@ void randStroke()
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   fill(0, 255, 0, 100 );
 
@@ -74,7 +74,7 @@ void exit()
   //  if final, save output to png
   if( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   super.stop();

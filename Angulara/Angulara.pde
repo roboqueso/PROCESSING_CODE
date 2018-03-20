@@ -28,13 +28,14 @@ void draw()
   stroke(pv1.x%255, pv1.y%255 ,angle%255);
   if( isFibonacci(pv1.x) )
   {
-
-    ellipse( pv1.x, pv1.y, sw, sw );
+    circle( pv1.x, pv1.y, sw);
+  	// ellipse( pv1.x, pv1.y, sw, sw );
   }
 
   if( isFibonacci(pv1.y) )
   {
-    ellipse( pv1.x, pv1.y, sw*PI, sw*PI );
+    circle( pv1.x, pv1.y, sw*PI );
+  	// ellipse( pv1.x, pv1.y, sw*PI, sw*PI );
   }
 
 
@@ -51,7 +52,7 @@ void draw()
 
   if( rad < 9 ){
     
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     noLoop();
   }
@@ -96,12 +97,13 @@ boolean isFibonacci(float n)
     while ( angle < 360 ) {
   
       // make circle draw faster by skipping angles
-      if ( angle % 4 == 0 ) {
+      // if ( angle % 4 == 0 ) {
+      if( isFibonacci(angle)) {
   
         x = startX - int( cos(radians(angle)) * radius );
         y = startY - int( sin(radians(angle)) * radius );
   
-        rect( x, y, radius, radius, angle );
+        ellipse( x, y, radius, radius );
       }
       angle++;
     }

@@ -5,7 +5,7 @@
 //  Get bigger flames with less noise
 //  get good flame colors
 Boolean isFinal = true;
-float alf = 5;
+int alf = 5;
 
 int cX;
 int cY;
@@ -156,14 +156,14 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
 
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

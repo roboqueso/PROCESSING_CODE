@@ -4,7 +4,7 @@
 //  CourierNewPSMT
 //  
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
@@ -383,7 +383,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   //  artDaily("The difference between who you are and who you want to be is WHAT YOU DO");
@@ -404,12 +404,11 @@ noLoop();
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

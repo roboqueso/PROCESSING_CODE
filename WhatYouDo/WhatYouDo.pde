@@ -1,5 +1,10 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
@@ -19,6 +24,7 @@ void setup() {
   // setup core sketch settings items
   size( 1024, 768);
   background(9);
+  fix.alpha(alf);
   noFill();
   smooth();
   ellipseMode(CENTER);
@@ -29,19 +35,12 @@ void setup() {
 
   img = loadImage("THEDIFFERENCEBETWEENWHO.JPG");  //  
 
-p3 = getImgColors( img );
+p3 = fix.getImgColors( img );
     
   // right justify stump
   image(img, (width-672), 0 );
-//  filter(INVERT);
 
-//  img = loadImage("THEDIFFERENCEBETWEENWHO.JPG");
-
-//  image(img, (width-672)-542, cY-(275/2) );
-//  filter(GRAY);
-
-  
-   xx = yy = -(w/2); 
+  xx = yy = -(w/2); 
 
 }
 
@@ -52,13 +51,13 @@ void draw()
 {
     strokeWeight(1);  
     if( yy < height ) {
-      ranPalStroke( p3 );
-      drawLissajous( xx, yy, alf/HALF_PI );
+      fix.ranPalStroke( p3 );
+      fix.drawLissajous( xx, yy, alf/HALF_PI );
     }
     
     if( xx < height ) {
-      ranPalStroke( p3 );
-      drawLissajous( yy, xx, alf/HALF_PI );
+      fix.ranPalStroke( p3 );
+      fix.drawLissajous( yy, xx, alf/HALF_PI );
     }
 
     stroke(#EF1975, alf);
@@ -73,21 +72,21 @@ void draw()
 
     strokeWeight(HALF_PI);  
     stroke(0, 99);
-    systems( yy, xx );
+    fix.systems( yy, xx );
 
-    systems( rad, frameCount );
-    systems( frameCount, rad );
+    fix.systems( rad, frameCount );
+    fix.systems( frameCount, rad );
     
     strokeWeight( random(TWO_PI) );
     stroke(random(25,75) );
-    systems( xx, yy );
+    fix.systems( xx, yy );
     
     strokeWeight(QUARTER_PI);
     stroke( #003700,100 );
-    systems( xx, yy ); 
-    systems( yy, xx );
-    systems( rad, frameCount );
-    systems( frameCount, rad );
+    fix.systems( xx, yy ); 
+    fix.systems( yy, xx );
+    fix.systems( rad, frameCount );
+    fix.systems( frameCount, rad );
     
   //  circles
   
@@ -108,7 +107,7 @@ void draw()
         y = floor( cY+sin(radians(frameCount))*rad );
     }
 
-    ranPalStroke(p3);
+    fix.ranPalStroke(p3);
     strokeWeight(random(11));
     point( x, y );
     point( y, x );
@@ -116,9 +115,9 @@ void draw()
     strokeWeight(random(TWO_PI));
     
     stroke( random(rad), random(rad), random(rad), alf*PI );
-    systems( x+rad, y+rad );//, rad, rad );
+    fix.systems( x+rad, y+rad );//, rad, rad );
     stroke( random(rad), random(rad), random(alf), alf*PI );
-    systems( y-rad, x-rad);//, rad, rad );
+    fix.systems( y-rad, x-rad);//, rad, rad );
 
 
  
@@ -143,244 +142,16 @@ void draw()
 
 
   if( yy > height ) {
-    exit();
+    doExit();
   }
 
-}
-
-///////////////////////////////////////////////////////////////////
-//    Create a SWITCH based drawing system that accepts X, Y, and
-//    randomly choose which movement system to fire
-void systems( float x, float y )
-{
-    int pick = floor(random(0,3));
- 
- fill(random(21,37),75);
- text( x + " " + y + " " + pick, width-x, height-y );
- noFill();
- 
-    switch( pick ){
-        
-        case 0:
-        {
-            x = floor( (width/2)+cos(radians(frameCount))*(x-y) );
-            y = floor( (height/2)+sin(radians(frameCount))*(y-x) );
-            point( x-PI, y+PI );
-            point( y+PI, X-PI );
-        }
-        break;
-        
-        case 1:
-        {
-            ellipse( x*cos(frameCount)*radians(TWO_PI), y*sin(frameCount)*radians(TWO_PI), alf, alf );
-            ellipse( y*cos(frameCount)*radians(TWO_PI), x*sin(frameCount)*radians(TWO_PI), alf, alf );
-        }
-        break;
-        
-        case 2:
-        {
-            strokeWeight(.75);
-            rect( x, y, TWO_PI+x*noise(frameCount), TWO_PI+x*noise(frameCount) );
-            rect( y, x, TWO_PI+y*noise(frameCount), TWO_PI+y*noise(frameCount) );
-        }
-        break;
-        
-        case 3:
-        {
-            point( x * cos(x)*frameCount, y*sin(y)*frameCount );
-            point( y * cos(x)*frameCount, x*sin(y)*frameCount );
-            
-            ellipse( x * cos(x)*frameCount, y*sin(y)*frameCount, frameCount, frameCount );
-            ellipse( y * cos(x)*frameCount, x*sin(y)*frameCount, frameCount, frameCount );
-        }
-        break;
-        
-    }
-}
-
-void radialLine(float r1, float a1, float r2, float a2){
-    
-    float x1 = width/2  + cos(a1)*r1;
-    float y1 = height/2 + sin(a1)*r1;
-    float x2 = width/2  + cos(a2)*r2;
-    float y2 = height/2 + sin(a2)*r2;
-    
-    line(x1, y1, x2, y2);
-//    fill(255);
-noFill();
-    ellipse(x1,y1, TWO_PI, TWO_PI);
-    ellipse(x2,y2, TWO_PI, TWO_PI);
-    
-    //println([r1,a1,r2,a2]);
-}
-
-
-//////////////////////////////////////////////////////
-//  
-void drawLissajous( float a, float b, float amp )
-{
-//  float amp = 33;
-  float x, y;
-  
-  for( float t = 0; t <= 360; t += .1)
-  {
-    x = a - amp * sin(a * t * PI/180);
-    y = b - amp * sin(b * t * PI/180);
-    
-//  strokeWeight( 2 );
-
-    point(x,y);
-  }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  pull colors out of image and return color[]
-//  http://forum.processing.org/topic/extract-colors-from-images
-ArrayList getImgColors( PImage img ) 
-{
-  ArrayList alColors = new ArrayList();
-  
-  img.loadPixels();
-  
-  int color1, color2;
-  // TODO: what's a good way to pull DISTINCT colors with a color[]?
-  for( int c = 0; c < img.pixels.length; c++ ) 
-  {
-      if( alColors.size() == 0 ) { 
-        alColors.add( (color)img.pixels[ c ] );
-      } else 
-      {
-         
-        if( ! alColors.contains( (color)img.pixels[ c ] ) ) 
-        {
-          color1 = (Integer) alColors.get( alColors.size()-1 );
-          color2 = img.pixels[c];
-          // filter out colors    
-//          if( color2 > color1 )
-          if( color2 < color1 )
-          {
-        
-            alColors.add( (color)img.pixels[ c ] );
-        
-          }
-        }
-      }
-
-  }
-  
-  return alColors;
-
-}
-
-
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void ranPalStroke(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalStroke(ArrayList palette)
-{
-  // pallete
-  stroke( (Integer)palette.get( (int)random( palette.size()-1 ) ), alf );
-}
-void ranPalStroke100(color[] palette)
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ], 100 );
-}
-
-void ranPalFill(color[] palette)
-{
-  fill( palette[ int(random( palette.length-1 )) ], alf );
-}
-void ranPalFill(ArrayList palette)
-{
-  // pallete
-  fill( (Integer)palette.get( (int)random( palette.size()-1 ) ), alf );
-}
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-  noFill();
-  
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 3 == 0 ) {
-
-    xx = startX - int( cos(radians(angle)) * w );
-    yy = startY - int( sin(radians(angle)) * w );
-
-
-    ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
 }
 
 
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
 //  artDaily("The difference between who you are and who you want to be is WHAT YOU DO");
@@ -388,42 +159,13 @@ artDaily("ERICFICKES.COM");
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
-
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+second()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-  //   int result = f2;
-  f0 = f1;
-  f1 = f2;
-  f2 = f0 + f1;
-
-  return f0 + f1;
-}
 
 ///////////////////////////////////////////////////////////
 //
@@ -441,15 +183,5 @@ void artDaily( String dailyMsg ) {
   
   fill(#EFEFEF);
   text( " "+dailyMsg, width-222, this.height-8);
-/*
-float yy = 0;
-while( yy <= height ) {
-
-  fill(#EFEFEF, yy*.15);
- text( " "+dailyMsg, 5, yy);
- yy += 18; 
-}
-*/
-
 }
 

@@ -3,9 +3,6 @@ import fixlib.*;
 //  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
-//
-//  This is a PRocessing sketch
-//
 Boolean isFinal = true, fwd = true;
 int alf = 42, sz = 30;
 float angle = 90, radius = 42, x, y, x2, y2, cX, cY, strokeSz = 2;

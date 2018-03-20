@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 /*
 Use mouseX,mouseY as the center point for 5 random points ( simulated hand )
 */
@@ -63,27 +68,14 @@ PVector GetRandVector( float x, float y, float sz )
 void keyPressed(){
 switch(key){
   case 's':
-    save(pdeName() + getTimestamp() + ".png");
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
   break;
 
   case ESC:
-    save(pdeName() + getTimestamp() + ".png");
-    stop();
+    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    noLoop();
+    exit();
   break;
 }
 
 }
-
-public String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
-
-
-/////////////
-//  TODO: Is there a better way to get the current sketch name?
-public String pdeName() {
-  return split( this.toString(), "[")[0];
-}
-
-
-

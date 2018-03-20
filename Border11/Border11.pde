@@ -1,9 +1,11 @@
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
-float alf = 37;
+int alf = 37;
 float shapeSize = alf;
 
 int cX;
@@ -30,7 +32,7 @@ void setup() {
   size(1024, 768);
   frameRate(303);
   background(0);
-
+  fix.alpha(alf);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -42,7 +44,7 @@ void setup() {
 noFill();
   
   maxCt = int(360*4);
-  drawFrame();
+  fix.drawFrame();
 //  ellipseMode(CENTER);
   
       //  scan lines
@@ -69,7 +71,7 @@ void draw()
 {
   smooth();
   noFill();
-  randStrokeUser();
+  fix.randStroke();
   
   _x = lerp( 200, random(width*1.7), .5 );
   _y = lerp( 404, random(height), .69 );
@@ -99,7 +101,7 @@ if( frameCount % 60 == 0 ) {
   ellipse( _x, _y, shapeSize*2, alf*2 ); 
 
   //  reset
-  randStrokeUser();
+  fix.randStroke();
   strokeWeight( random( alf) );
 }
 
@@ -111,7 +113,7 @@ if( frameCount % 60 == 0 ) {
       pv3 = (PVector)_pvectors.get( _pvectors.size()-3 );
       pv4 = (PVector)_pvectors.get( _pvectors.size()-4 );
 
-      randStrokeUser();
+      fix.randStroke();
       strokeWeight(2.5);
       curve( pv1.x, pv1.y, pv2.x, pv2.y, pv3.x, pv3.y, pv4.x, pv4.y );
 
@@ -126,7 +128,7 @@ if( frameCount % 60 == 0 ) {
     } else {
 
       strokeWeight( random( 9.9) );
-      randStrokeUser();
+      fix.randStroke();
       
 //      line( lastPt.x, lastPt.y, _x, _y );
 
@@ -134,13 +136,13 @@ if( frameCount % 60 == 0 ) {
     }
 
 
-  randStrokeUser();
+  fix.randStroke();
   strokeWeight( random(alf) );  // 2
   point( _x, _y );
   
   strokeWeight( random(alf) );  // .9
   stroke(#00000E, alf);  //  000000
-  hexagon( _x, _y, shapeSize );
+  fix.hexagon( _x, _y, shapeSize );
 
        
   }
@@ -150,93 +152,10 @@ if( frameCount % 60 == 0 ) {
 
 
         
-    exit();
+    doExit();
   }
   
   ct++;
-}
-
-///////
-//  draw frame
-void drawFrame() {
-
-  noFill();  
-  rectMode(CORNER);
-  
-  strokeWeight( 100 );
-  rect( 0,0, width, height);
-  
-  strokeWeight( 5 );
-  rect( 64,65, width-128, height-129 );
-
-  strokeWeight( 15 );
-  rect( 84,85, width-168, height-168 );
-
-  //  dashed line
-  strokeWeight(6);
-  int x = 110;
-  int y = 110;
-
-  strokeCap(PROJECT);
-
-  for( int pp = 0; pp <= (width*height); pp++ ) { 
-
-    if( x <= (width-110) ) {
-      // top row    
-      point( x, y );
-      //  bottom row
-      point( x, 790 );
-
-      x += 10;
-
-    } else if ( y <= 780 ) {
-      
-      // left row    
-      point( (width-110), y );
-      //  right row
-      point( 110, y );
-      y += 10;
-    }
-    
-  }
-
-  strokeWeight( 5 );
-  rect( 122,122, width-245, height-245 );
-
-  }
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  ellipse(x, y, width, height)
-
-float radius = 18, xx, yy;
-
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-
-  while( angle < 360 ) {
-    xx = startX - int( cos(radians(angle)) * radius );
-    yy = startY - int( sin(radians(angle)) * radius );
-
-
-    ellipse( xx, yy, w, h );
- 
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
 }
 
 
@@ -245,7 +164,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   
   artDaily("ERICFICKES.COM");
@@ -253,40 +172,13 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( this + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+    save( fix.pdeName()+".png" );
   }
 
-  super.stop();
+  noLoop();
+  exit();
 }
 
-///////////////////////////////////////////////////////////
-//  Helper to random(255) stroke
-void randFill() {  
-  fill( random(255), random(255), random(255), alf );
-}
-void randStroke() {  
-  stroke( random(255), random(255), random(255), alf );
-}
-void randStroke100() {  
-  stroke( random(255), random(255), random(255), 100 );
-}
-
-////////////////////////////////////////////////////
-//  Randomly stroke using image from color list
-void randStrokeUser()
-{
-  // pallete
-  stroke( palette[ int(random( palette.length-1 )) ] , alf*.5 );
-}
-void randFillUser()
-{
-  fill( palette[ int(random( palette.length-1 )) ] , alf*.5 );
-}
-
-
-String getTimestamp() {
-  return ""+month()+day()+year()+hour()+minute()+millis();
-}
 
 ///////////////////////////////////////////////////////////
 //

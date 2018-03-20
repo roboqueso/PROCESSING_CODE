@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 PShape can;
 float angle;
 PShader colorShader;
@@ -8,23 +13,25 @@ void setup() {
 }
 
 void draw() {    
-  //background(0);
-  translate(frameCount%width, frameCount%(height/2));
+  pushMatrix();
+    translate(frameCount%width, frameCount%(height/2));
 
-can = createCan(100, 200, (int)angle);
+    can = createCan(100, 200, (int)angle);
 
-  rotateY(angle);  
-  rotateX(frameCount%360);
-  rotateZ(frameCount%180);
+    rotateY(angle);  
+    rotateX(frameCount%360);
+    rotateZ(frameCount%180);
 
-  shape(can);  
+    shape(can);  
+  popMatrix();
+
   angle += 0.01;
   
   if( frameCount >= width ){
   
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
-    super.exit();
+    exit();
   
   }
 }

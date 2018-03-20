@@ -184,7 +184,7 @@ rect(0, 0, width, height);
   //  stopper
   if(frameCount>width ){
 
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
 
     exit();
   }

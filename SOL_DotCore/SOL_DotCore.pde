@@ -2,7 +2,7 @@
     
 Boolean isFinal = true;
 int ctMAIN = 0;
-float alf = 13;
+int alf = 13;
 
 int cX;
 int cY;
@@ -146,7 +146,7 @@ void drawCore( int XX, int YY, int maxSize ) {
   float r = 1;  // 75;
   float theta = 0;
 
-  float alf = 99;
+  int alf = 99;
   float x;
   float y;
 
@@ -183,7 +183,7 @@ void drawCore( int XX, int YY, int maxSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {   
   artDaily("ERICFICKES.COM");
 
@@ -191,7 +191,7 @@ void exit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

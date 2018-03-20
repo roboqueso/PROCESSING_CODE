@@ -1,3 +1,8 @@
+// https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 float x, y, cX, cY, rad, angle, sw;
 
 void setup()
@@ -28,18 +33,19 @@ void draw()
   	if(frameCount%(int)Math.sqrt(rad)==0 || frameCount%(int)sw==0)
   	{
 	  	strokeWeight(angle%sw);
-		translate(x, y);
-		rotate(angle);
+      pushMatrix();
+    		translate(x, y);
+    		rotate(angle);
 
-		// stroke(random(rad,255));
-		// stroke(rad%255);
-		stroke(x,y,angle);
-		rect(0, 0, rad, rad);
+    		// stroke(random(rad,255));
+    		// stroke(rad%255);
+    		stroke(x,y,angle);
+    		rect(0, 0, rad, rad);
 
-		stroke(0);
-		rect(0, 0, rad-HALF_PI, rad-HALF_PI, sw);
-
-		resetMatrix();
+    		stroke(0);
+    		rect(0, 0, rad-HALF_PI, rad-HALF_PI, sw);
+      popMatrix();
+		// resetMatrix();
 	}
 
 
@@ -52,19 +58,9 @@ void draw()
 
 
   	if(rad>width){
- 		save( pdeName() + "-" + getTimestamp()+".png" );
-  		stop();
+ 		 save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+  		noLoop();
+      exit();
   	}
 
 }
-
-String getTimestamp() {
-   return ""+month()+day()+year()+hour()+minute()+millis();
- }
- 
- 
- /////////////
- //  TODO: Is there a better way to get the current sketch name?
-String pdeName() {
-   return split( this.toString(), "[")[0];
- }

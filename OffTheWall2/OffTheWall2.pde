@@ -2,7 +2,7 @@
 
 //  SKETCH SETTINGS
 Boolean isFinal = true;
-float alf = 100;
+int alf = 100;
 
 //  GRID SETTINGS
 
@@ -121,14 +121,14 @@ text( "REWRITE THIS TO DRAW DIAMONDS IN A GRID, NOT SEPARATE LOOPS", 30,30);
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
   artDaily("ERICFICKES.COM");
 
   //  if final, save output to png
   if ( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis() + ".png" );
+save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
   super.stop();

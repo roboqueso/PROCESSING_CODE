@@ -2,7 +2,7 @@
 //  Rotate the circles so the crown looking opening points up
 
 Boolean isFinal = true;
-float alf = 13;
+int alf = 13;
 float ii = 0;
 
 float cX, cY;
@@ -132,7 +132,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   artDaily("ERICFICKES.COM");
@@ -144,8 +144,7 @@ void exit()
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ////////////////////////////////////////////////////

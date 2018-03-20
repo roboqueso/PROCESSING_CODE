@@ -3,9 +3,10 @@ import fixlib.*;
 //	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
-//
-//  This is a PRocessing sketch
-//
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
 //  blues

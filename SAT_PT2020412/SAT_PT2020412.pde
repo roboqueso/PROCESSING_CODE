@@ -8,7 +8,7 @@ float theta = 0;
 int cX = 0;
 int cY = 0;
 
-float alf = 100.00;
+int alf = 100.00;
 
 //color[] colors = { #EFEFEF, #1975EF, #19EF75, #EF1975 };
 
@@ -61,7 +61,7 @@ void draw() {
   //
   if( theta == 1000 )
   {
-save(this+".png");
+save(fix.pdeName()+fix.getTimestamp()+".png");
     exit();
   }
 
@@ -77,13 +77,13 @@ void randStroke()
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   //  if final, save output to png
   if( isFinal )
   {
-save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+save( fix.pdeName() + fix.getTimestamp()+".png" );
   }
 
   super.stop();

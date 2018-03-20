@@ -51,7 +51,7 @@ void draw()
 //      text("ERICFICKES.COM", -2, height-2 );
 
       if(isFinal){
-        save( split( this.toString(), "[")[0] + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
+        save( fix.pdeName() + fix.getTimestamp()+".png" );
       }
       noLoop();
   }

@@ -12,11 +12,11 @@ import hype.extended.colorist.*;
 import hype.extended.layout.*;
 import hype.interfaces.*;
 
+// TODO: make this work with HMetal in forks > HYPE_PROCESSING 
+
 /*
 
 HYPE SCRATCH SKETCH
-
-
 */
 
 HDrawablePool pool;
@@ -47,7 +47,7 @@ int daysLeft;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1024,768);
+  size(1024,768, P3D);
   H.init(this);
   H.background(#000000);
   smooth();
@@ -85,7 +85,8 @@ try {
       //new HRect()
       //.rounding(1)
       
-      new HPath().drawLissajous( random(width/2), height/2, random(42) )
+      // new HPath().drawLissajous( random(width/2), height/2, random(42) )
+      new HMetal().kiln( random(width/2), height/2, random(42), 16 )
     )
 
     .onCreate(
@@ -214,7 +215,7 @@ void keyPressed(){
 
   if( keyCode == ESC ){
   
-    save(this+".png");
+    save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
     super.exit();
   }

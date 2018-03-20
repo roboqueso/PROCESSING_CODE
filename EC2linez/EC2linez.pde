@@ -101,7 +101,7 @@ void draw() {
         rect( 111,111, 42, 41, frameCount);
         if(isFinal)
         {
-          save(this+".png");
+          save(fix.pdeName()+fix.getTimestamp()+".png");
         }
     exit();
   }
@@ -390,7 +390,7 @@ void ec2Stamp( int x, int y ){
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
-void exit() 
+void doExit() 
 {
 
   //  artDaily("The difference between who you are and who you want to be is WHAT YOU DO");
@@ -402,12 +402,11 @@ ec2Stamp( cX, cY );
   //  if final, save output to png
   if ( isFinal )
   {
-    save( pdeName() + "-" + getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   }
 
   noLoop();
-  System.gc();
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

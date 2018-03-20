@@ -62,7 +62,7 @@ void draw()
   //  STOPPER
   if(frameCount>width)
   {
-    if(save){  save(this+".png"); }
+    if(save){  save(fix.pdeName()+fix.getTimestamp()+".png"); }
     exit();
   }
 }
