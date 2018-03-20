@@ -1,7 +1,14 @@
+// https://github.com/ericfickes/FIXLIB	
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 //	JAVA
 import java.util.*;
-//	//
-import drop.*;
+
+//	TODO: figure out how to tap into native drag n drop
+//
+// import drop.*;
 
 
 //  image action
@@ -12,26 +19,29 @@ int imgPixCt;
 // see: http://docs.oracle.com/javase/1.4.2/docs/api/java/util/ArrayList.html
 
 
-SDrop drop;
+// SDrop drop;
 
 void setup() {
-  size(666,666);
-  background(255);
-  drop = new SDrop(this);
+  size(displayWidth,displayHeight);
+  background(-1);
+  // drop = new SDrop(this);
+  fix.alpha(100);
+  img = loadImage("black_blue_pink.png");
 }
 
 void draw() {
 
   if(img!=null)
   {
-    background(255);
 
-//  NOTE: this shit is wack
+//  NOTE: this needs to be smartened up
 
-    //  LOWER COLOR COUNT
-    img.filter(ERODE);
-    suck(img);
+
     image(img,10,10);
+
+    suck(img);
+    
+
     noLoop();
 
   } else {
@@ -47,59 +57,51 @@ void draw() {
 
 
 void suck(PImage img){
-  String tmpHx;
-  println("suck " + img);
-  /*
-  delay(1000);
 
-  // ArrayList _colors = new ArrayList();
-  StringList _colors = new StringList();
+	//	get unique colors from image
+	ArrayList<Integer> result = fix.getImgColors(img);
 
-   // #AAAAAA, #BBBBBB, #CCCCCC, #DDDDDD, #EEEEEE, #FFFFFF, #666000, #066600, #006660, #000666 
-  for( int cc = 0; cc <= img.pixels.length-1; cc++)
-  {
-    // if( cc % 666 == 0 )
-    // {
-      //  cast to String as haxor technique for tracking UNIQUE HEX colors
-      tmpHx = hex(img.pixels[ cc ], 6);
-
-      if( ! _colors.hasValue( tmpHx ) )
-      {        
-          //  track the colors
-          _colors.append( tmpHx );
-      }
-    // }
-  }
-*/
-
-// Store unique items in result.
-	ArrayList<Integer> result = new ArrayList<Integer>();
-	HashSet<Integer> set = new HashSet<Integer>();
-
-	
-	for (Integer item : img.pixels) {
-	    if (!set.contains(item)) {
-		result.add(item);
-		set.add(item);
-	    }
+//  SPIT OUT ARRAY
+	// for (String ii : _colors) {
+	for (Integer ii : result) {
+		println( "#" + hex(ii, 6) + ", " );
 	}
 
+fix.paletteGrid(result);
+
+// println("suck " + img + "\n color ct: " + result.size() );
+
 //	Replace ALL image pixesl with de-duped set?
-// img.pixels.clear();
-// img.pixels.addAll(hs);
-img.pixels = result.toArray();
+// img.pixels = convertIntegers( result );
+// img.updatePixels();
 
-img.updatePixels();
-
-delay(1000);
+// delay(1000);
 
 
-      //  SPIT OUT ARRAY
-      // for (String ii : _colors) {
-      for (Integer ii : result) {
-        println( "#" + hex(ii, 6) + ", " );
-      }
+	
 }
+
+public static int[] convertIntegers(ArrayList<Integer> ints)
+{
+    int[] ret = new int[ints.size()];
+
+	// for (Integer ii : ints) {
+	for ( int c = 0; c < ints.size(); c++ )
+	{
+		// ret[ii] = ints.get(ii);
+		ret[c] = ints.get(c);
+    }
+    return ret;
+}
+
+
+
+/**
+
+Drop library doesn't loadImage like standard loadImage does
+find replacement
+
+	NOTE: dropEvent doesn't seem to load image correctly
 
 void dropEvent(DropEvent theDropEvent) 
 {
@@ -111,6 +113,8 @@ void dropEvent(DropEvent theDropEvent)
     img = theDropEvent.loadImage();
     img.loadPixels();
     img.resize(width/2,height/2);
-    // loop();
+    loop();
   }
 }
+
+*/
