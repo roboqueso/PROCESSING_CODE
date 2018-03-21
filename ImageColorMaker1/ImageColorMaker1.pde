@@ -8,7 +8,7 @@ import java.util.*;
 
 //	TODO: figure out how to tap into native drag n drop
 //
-// import drop.*;
+import drop.*;
 
 
 //  image action
@@ -25,8 +25,8 @@ void setup() {
   size(displayWidth,displayHeight);
   background(-1);
   // drop = new SDrop(this);
-  fix.alpha(100);
   img = loadImage("black_blue_pink.png");
+  // img = loadImage("build10152014233834428.png");
 }
 
 void draw() {
@@ -59,6 +59,8 @@ void draw() {
 void suck(PImage img){
 
 	//	get unique colors from image
+
+	// ArrayList<Integer> result = fix.getImgColorsAll(img);
 	ArrayList<Integer> result = fix.getImgColors(img);
 
 //  SPIT OUT ARRAY
@@ -68,15 +70,6 @@ void suck(PImage img){
 	}
 
 fix.paletteGrid(result);
-
-// println("suck " + img + "\n color ct: " + result.size() );
-
-//	Replace ALL image pixesl with de-duped set?
-// img.pixels = convertIntegers( result );
-// img.updatePixels();
-
-// delay(1000);
-
 
 	
 }
