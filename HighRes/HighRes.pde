@@ -35,8 +35,8 @@ void setup() {
   textAlign(CENTER);
   textSize(42);
 	// create Font makes .vlw loadFont is for VLW
-	//        textFont(loadFont("BebasNeueBold-48.vlw"), 42);
-	textFont(createFont("Bebas Neue Bold", 42));
+	textFont(loadFont("BebasNeueBold-42.vlw"), 42);
+	//textFont(createFont("Bebas Neue Bold", 42));
 
   fill(0);
   
