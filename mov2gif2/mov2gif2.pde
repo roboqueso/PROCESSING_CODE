@@ -25,21 +25,31 @@ import ddf.minim.*;
 Minim minim;
 AudioInput in;
 Movie myMovie;
-int MODE = 2;	// 2
+int MODE = 1;
+  //  1 = vert
+  //  2 = horizontal
+  
 float cX, cY;
 /*
 1 = vertical
 2 = horizontal
 */
-String MOV_FILE = "66881522.mov";	//	960, 720
+
+
+String MOV_FILE = "star.mp4";
+//String MOV_FILE = "star2.mp4";
+//String MOV_FILE = "star3.mp4";
+
+
 
 
 void setup() 
 {
-size(960, 720, P3D);
-// size(960, 720, P3D);
-// size(640, 360);
-// size(1280,720,P3D);
+size(960,540, P3D);
+
+  background(-1);
+  smooth(8);
+  frameRate(420);
 
   minim = new Minim(this);
   // use the getLineIn method of the Minim object to get an AudioInput
@@ -54,16 +64,22 @@ size(960, 720, P3D);
 
 void draw() {
 
-// alpha((int)random(255));
+//alpha((int)random(255));
 
 myMovie.filter(DILATE);
 myMovie.filter(POSTERIZE,11);
-tint(255,20);
+
+if(frameCount%8==0){
+  myMovie.filter(INVERT);
+}
+
+
+tint(255, 8 );
 
 	switch(MODE)
 	{
 		case 1:	//"vert":
-			image(myMovie, 0, frameCount);
+			image(myMovie, 0, frameCount%height);
 
 			if(frameCount>=height){
 				bail();
@@ -71,7 +87,7 @@ tint(255,20);
 		break;
 
 		case 2:	//"horizontal":
-			image(myMovie, frameCount,0);
+			image(myMovie, frameCount%width,0);
 
 			if(frameCount>=width){
 				bail();
@@ -85,7 +101,7 @@ tint(255);
 beginShape(TRIANGLES);
 noStroke();
 noFill();
-smooth();
+
   	beginShape(POLYGON);
 texture(myMovie);
   // draw the waveforms so we can see what we are monitoring
