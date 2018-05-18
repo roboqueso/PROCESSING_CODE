@@ -25,7 +25,7 @@ import ddf.minim.*;
 Minim minim;
 AudioInput in;
 Movie myMovie;
-int MODE = 1;
+int MODE = 2;
   //  1 = vert
   //  2 = horizontal
   
@@ -36,7 +36,7 @@ float cX, cY;
 */
 
 
-String MOV_FILE = "star.mp4";
+String MOV_FILE = "FletchDoesntCareBOTH.mp4";
 //String MOV_FILE = "star2.mp4";
 //String MOV_FILE = "star3.mp4";
 
@@ -45,7 +45,8 @@ String MOV_FILE = "star.mp4";
 
 void setup() 
 {
-size(960,540, P3D);
+
+size(960, 540, P3D);
 
   background(-1);
   smooth(8);
@@ -79,7 +80,7 @@ tint(255, 8 );
 	switch(MODE)
 	{
 		case 1:	//"vert":
-			image(myMovie, 0, frameCount%height);
+			image(myMovie, 0, frameCount);
 
 			if(frameCount>=height){
 				bail();
@@ -87,7 +88,7 @@ tint(255, 8 );
 		break;
 
 		case 2:	//"horizontal":
-			image(myMovie, frameCount%width,0);
+			image(myMovie, frameCount,0);
 
 			if(frameCount>=width){
 				bail();
@@ -98,12 +99,11 @@ tint(255, 8 );
 //strokeWeight(HALF_PI);
 // fill(frameCount%255);
 tint(255);
-beginShape(TRIANGLES);
-noStroke();
-noFill();
 
-  	beginShape(POLYGON);
-texture(myMovie);
+beginShape(POLYGON);	//	TRIANGLES
+	noStroke();
+	noFill();
+	texture(myMovie);
   // draw the waveforms so we can see what we are monitoring
   for(int i = 0; i < in.bufferSize() - 1; i++)
   {
