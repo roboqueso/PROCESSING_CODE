@@ -81,6 +81,7 @@ void draw() {
 
 
 
+/**************************************************************/
 /*  NON - P5 BELOW  */
 
 
@@ -92,7 +93,12 @@ void doExit(){
   
   //  TODO: fix this line of code to save in same folder as PDE on PC & MAC
   save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
- 
+  
+  //  cleanup
+  fix = null;
+  
   noLoop();
   exit();
+  System.gc();
+  System.exit(1);
 }
