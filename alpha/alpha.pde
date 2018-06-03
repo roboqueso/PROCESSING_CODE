@@ -10,10 +10,15 @@ SECTIONS:
 
 - TOP
     native P5
+
 - BOTTOM 
     non system P5 code
 
+* BLOOD-DRAGON : 1920 x 1071
+* size(displayWidth, displayHeight, P3D)
+* HDR w, h is 2x1 EX: 2048, 1024
 */
+
 
 import hype.*;
 import hype.extended.behavior.*;
@@ -30,9 +35,10 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 void setup() {
-  // size(2048,1024);  //   .hdr dimensions
-  size(1024,768, P3D);  //  big:  1024x768
+
+  size(1024,768, P3D);  // 3D
   
+  // TODO: enable 3D in HYPE?
   H.init(this).background(#202020);
   smooth();
 
