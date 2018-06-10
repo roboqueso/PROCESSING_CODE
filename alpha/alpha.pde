@@ -28,44 +28,60 @@ import hype.interfaces.*;
 import fixlib.*;
 
 //  https://github.com/ericfickes/FIXLIB
+/* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
-
-
-
 HDrawablePool pool;
+
+int gridX,gridY;
+int colCt = 10;
+int rowCt = colCt;
+int colSpacing = 10;
+int drawW, drawH; //  HDrawable Width / Height
+
+/* ------------------------------------------------------------------------- */
 
 void setup() {
 
-  size(1024,768, P3D);  // 3D
-  
-  // TODO: enable 3D in HYPE?
-  H.init(this).background(#202020);
-  smooth();
+  //  init PROCESSING
+  size(1024,768, P3D);
+  smooth(8);  
 
-  pool = new HDrawablePool(576);
+
+  //  init VARIABLES
+//TODO: get scale and fit logic dialed in with squares
+  drawW = (int)( (width-(colSpacing*2))/colCt)-colSpacing;
+  drawH = (int)( (height-(colSpacing*2))/rowCt)-colSpacing;
+  gridX = (int)(drawW*.75);
+  gridY = (int)(drawH*.75);
+
+  //  init HYPE
+  H.init(this).background(-1).use3D(true);
+
+  pool = new HDrawablePool(colCt*colCt);
   pool.autoAddToStage()
     .add (
       new HRect()
-      .rounding(4)
     )
 
     .layout (
       new HGridLayout()
-      .startX(21)
-      .startY(21)
-      .spacing(26,26)
-      .cols(24)
+      .startX(gridX)
+      .startY(gridY)
+      .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
+      .cols(colCt)
+      .rows(rowCt)
     )
 
     .onCreate (
        new HCallback() {
         public void run(Object obj) {
+
           HDrawable d = (HDrawable) obj;
           d
-            .noStroke()
-            .fill( #ECECEC )
+            .size( drawW, drawH )
+            .stroke((int)random(255))
+            .fill( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
             .anchorAt(H.CENTER)
-            .size( 25 )
           ;
         }
       }
@@ -78,7 +94,23 @@ void setup() {
 
 }
 
+
+
+
+
+/* ------------------------------------------------------------------------- */
 void draw() {
+
+  /*
+  // 3D code
+  hint(DISABLE_DEPTH_TEST);
+  camera();
+  lights(); //    because P3D
+
+  ambientLight(ct,ct,ct);
+  emissive(ct,ct,ct);
+  specular(ct,ct,ct);
+  */
 
   if(frameCount>43)doExit();
 
@@ -87,9 +119,12 @@ void draw() {
 
 
 
-/**************************************************************/
-/*  NON - P5 BELOW  */
 
+
+
+/* ------------------------------------------------------------------------- */
+/*  NON - P5 BELOW  */
+/* ------------------------------------------------------------------------- */
 
 void doExit(){
   
