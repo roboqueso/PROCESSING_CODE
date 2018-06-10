@@ -1,24 +1,9 @@
 /*
 ALPHA  : square one starting point P5/HYPE template sketch
-
-SECTIONS:
-
-- LIBS / INIT
-  * HYPE
-  * FIXLIB
-
-
-- TOP
-    native P5
-
-- BOTTOM 
-    non system P5 code
-
 * BLOOD-DRAGON : 1920 x 1071
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
 */
-
 
 import hype.*;
 import hype.extended.behavior.*;
@@ -27,46 +12,49 @@ import hype.extended.layout.*;
 import hype.interfaces.*;
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 10;
+int colCt = 8;
 int rowCt = colCt;
-int colSpacing = 10;
+int colSpacing = 8;
 int drawW, drawH; //  HDrawable Width / Height
+
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(1280, 720, P3D); //"processing.opengl.PGraphics3D");
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
 
 /* ------------------------------------------------------------------------- */
 
 void setup() {
 
-  //  init PROCESSING
-  size(1024,768, P3D);
-  smooth(8);  
-
-
   //  init VARIABLES
-//TODO: get scale and fit logic dialed in with squares
-  drawW = (int)( (width-(colSpacing*2))/colCt)-colSpacing;
-  drawH = (int)( (height-(colSpacing*2))/rowCt)-colSpacing;
-  gridX = (int)(drawW*.75);
-  gridY = (int)(drawH*.75);
+  drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
+  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+  gridX = (drawW/2)+colSpacing;
+  gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
   H.init(this).background(-1).use3D(true);
 
   pool = new HDrawablePool(colCt*colCt);
   pool.autoAddToStage()
+    
     .add (
+
+      // swap this out with something else
       new HRect()
     )
 
     .layout (
       new HGridLayout()
-      .startX(gridX)
-      .startY(gridY)
+      .startLoc(gridX, gridY)
       .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
       .cols(colCt)
       .rows(rowCt)
@@ -76,13 +64,17 @@ void setup() {
        new HCallback() {
         public void run(Object obj) {
 
+          //  DO STUFF HERE
           HDrawable d = (HDrawable) obj;
           d
             .size( drawW, drawH )
-            .stroke((int)random(255))
-            .fill( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
+            .noFill()
+            .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
             .anchorAt(H.CENTER)
           ;
+        
+
+
         }
       }
     )
@@ -91,7 +83,6 @@ void setup() {
   ;
 
   H.drawStage();
-
 }
 
 
@@ -126,13 +117,16 @@ void draw() {
 /*  NON - P5 BELOW  */
 /* ------------------------------------------------------------------------- */
 
+/**
+  End of sketch closer
+*/
 void doExit(){
-  
-  fill(0xEF2018);
-  textSize(11);
-  text("ericfickes.com", 0, height-11);
-  
-  //  TODO: fix this line of code to save in same folder as PDE on PC & MAC
+  String msg = "ericfickes.com";
+  //  stamp bottom right based on textSize
+  fill(0);
+  textSize(16);
+  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+
   save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   
   //  cleanup
