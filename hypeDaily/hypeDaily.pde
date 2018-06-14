@@ -11,6 +11,10 @@ import hype.extended.behavior.*;
 import hype.extended.colorist.*;
 import hype.extended.layout.*;
 import hype.interfaces.*;
+import fixlib.*;
+
+/* ------------------------------------------------------------------------- */
+Fixlib fix = Fixlib.init(this);
 
 // TODO: make this work with HMetal in forks > HYPE_PROCESSING 
 

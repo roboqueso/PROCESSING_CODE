@@ -43,7 +43,7 @@ void setup() {
   //  init HYPE
   H.init(this).background(-1).use3D(true);
 
-  pool = new HDrawablePool(colCt*colCt);
+  pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
     
     .add (
