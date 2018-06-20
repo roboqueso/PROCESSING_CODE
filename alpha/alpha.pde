@@ -18,7 +18,7 @@ HDrawablePool pool;
 
 int gridX,gridY;
 int colCt = 8;
-int rowCt = colCt;
+int rowCt = colCt;  //  NOTE: remember to update this value
 int colSpacing = 8;
 int drawW, drawH; //  HDrawable Width / Height
 
