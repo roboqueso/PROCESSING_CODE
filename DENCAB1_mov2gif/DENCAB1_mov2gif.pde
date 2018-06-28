@@ -24,12 +24,12 @@ Movie myMovie;
 */
 int MODE = 1;
 String PDE;  //  1280, 720
-String MOV_FILE = "bulldog.mp4";  //  1280, 720
+String MOV_FILE = "Themeaningoflife.mp4";  //  1280, 720
 
 
 void setup() 
 {
-  size(1080, 1920, P3D);
+  size(1920, 1080, P3D);
 
   background(-1);
   smooth(8);
@@ -84,7 +84,7 @@ tint(random(88,240), random(100,200));
 	}
 
 //  SAVE FRAMES FOR GIFing
-saveFrame("frames/DENCAB1_"+PDE+"-"+MOV_FILE+"-"+MODE+"-frame#####.png");
+// saveFrame("frames/DENCAB1_"+PDE+"-"+MOV_FILE+"-"+MODE+"-frame#####.png");
 
 
 
