@@ -52,7 +52,7 @@ int iScale = -1;	//	-1 inverts slices
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1024, 768, P3D); // matching dimensions of pImg for best results
+    size(1920, 1080, P3D); // matching dimensions of pImg for best results
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -68,7 +68,7 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
 
-  pImg = loadImage("rabbithead2_merged.png");
+  pImg = loadImage("three.png");
 
 
   //  init HYPE
@@ -161,8 +161,7 @@ void setup() {
    .requestAll()
   ;
 
-
-  H.drawStage();
+  
 }
 
 
@@ -183,7 +182,11 @@ void draw() {
   specular(ct,ct,ct);
   */
 
-  if(frameCount>43)doExit();
+  // if(frameCount>43)doExit();
+  
+  H.drawStage();
+
+  doExit();
 
 }
 
