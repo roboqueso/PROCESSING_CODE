@@ -53,8 +53,8 @@ int iScale = -1;	//	-1 inverts slices
 
 void  settings ()  {
     size(1920, 1080, P3D); // matching dimensions of pImg for best results
-    smooth(8);  //  smooth() can only be used in settings();
-    pixelDensity(displayDensity());
+	    smooth(8);  //  smooth() can only be used in settings();
+	    pixelDensity(displayDensity());
 }
 
 /* ------------------------------------------------------------------------- */
