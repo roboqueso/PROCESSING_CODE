@@ -8,16 +8,18 @@ Loop through each
     * Start
     * read
     * set()
-    * stop()
-
+    * stop()  
 */
 
+// TODO: Why does BisonCam light up, but not actually work?
+
 import processing.video.*;
+
 
 Capture cam;
 String[] cameras;
 int cc = 0;  //  currect camera index
-int MODE = 1;	//1;	//	2
+int MODE = 2;	//1;	//	2
 //	1 : horizontal
 //	2 : vertical
 int colW, rowH;
@@ -31,7 +33,7 @@ int colW, rowH;
 /******************************************************************************/
 void setup() {
   
-  size(displayWidth, displayHeight );  //  P2D, P3D
+  size(displayWidth, displayHeight, P3D );  //  P2D, P3D
   smooth(8);  //  smooth() can only be used in settings();
   pixelDensity(displayDensity());
   
@@ -130,14 +132,14 @@ void draw() {
   if(cam==null){
 
 	// debug
-	println("MAKE NEXT CAMERA: " + cc );
+	println("MAKE NEXT CAMERA: " + cc + " : " + cameras[cc].toString() );
 
     //  startup the first camera!
     cam = new Capture(this, cameras[cc]);
     cam.start();
 
     fill(random(255));
-    text( cameras[cc].toString(), width/2, (height-((cc+1)*cameras.length))%height );
+    text( cameras[cc].toString(), width/2, (frameCount*((cc+1)*cameras.length))%height );
 
     delay(1000);
   }
@@ -149,8 +151,6 @@ void draw() {
 /***********************************************************************************************************/
 void captureEvent(Capture c) {
   c.read();
-  //  debug
-  //println(cc + " captureEvent( " + c + " ) ");
 }
 
 /***********************************************************************************************************/
