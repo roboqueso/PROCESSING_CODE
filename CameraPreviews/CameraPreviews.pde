@@ -114,7 +114,7 @@ void draw() {
   delay(1000);
 
   //  DEBUG
-  println("DESTROY CAM " + cc );
+  println("DESTROY CAM " + cc + " of " + cameras.length );
   cam.stop();
   cam = null;
 
@@ -132,14 +132,14 @@ void draw() {
   if(cam==null){
 
 	// debug
-	println("MAKE NEXT CAMERA: " + cc + " : " + cameras[cc].toString() );
+	println("MAKE NEXT CAMERA: " + cc + " of " + cameras.length + " : " + cameras[cc].toString() );
 
     //  startup the first camera!
     cam = new Capture(this, cameras[cc]);
     cam.start();
 
     fill(random(255));
-    text( cameras[cc].toString(), width/2, (frameCount*((cc+1)*cameras.length))%height );
+    text( cc + "." + cameras[cc].toString(), width/2, (frameCount*((cc+1)*cameras.length))%height );
 
     delay(1000);
   }
