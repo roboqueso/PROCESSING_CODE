@@ -19,7 +19,7 @@ HDrawablePool pool;
 int gridX,gridY;
 int colCt = 3;
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 0;
+int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
@@ -41,7 +41,7 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).use3D(true).autoClear(false);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
@@ -49,7 +49,7 @@ void setup() {
     .add (
 
       // swap this out with something else
-      new HSphere()
+      new HSphere().size(drawW, drawH)
     )
 
     .layout (
@@ -78,31 +78,27 @@ void setup() {
 */  
 	
 
-sphereDetail(3*pool.currentIndex());
+// TODO: remove?
+//sphereDetail(3*pool.currentIndex());
 
 // println("typeof: "+typeof);
 HSphere hs = (HSphere)obj;
 hs
-.size( drawW, drawH, 0)
-            .noFill()
-            .stroke( (int) hs.x()%255, (int) hs.y()%255, (int) hs.z()%255 )
-            .anchorAt(H.CENTER);
-
-println("obj: "+obj);
-//	debug
-println("sphereDetails: "+ (3*pool.currentIndex()) );
- 
-
+	.scale(.25)
+	.strokeWeight( 1*noise(frameCount) )
+    //.anchorAt(H.CENTER)
+ 	.noFill()
+ 	.stroke( (int) hs.x()%255, (int) hs.y()%255, (int) hs.z()%255, 160-frameCount );
         }
       }
     )
 
-    .requestAll()
+    // .requestAll()
   ;
 
-H.drawStage();
+// H.drawStage();
 
-doExit();
+// doExit();
   
 }
 
@@ -113,19 +109,28 @@ doExit();
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-	
-  
   // 3D code
-  // hint(DISABLE_DEPTH_TEST);
-  // camera();
-  // lights(); //    because P3D
+  hint(DISABLE_DEPTH_TEST);
+  camera();
+  lights(); //    because P3D
 
-  // ambientLight(ct,ct,ct);
-  // emissive(ct,ct,ct);
-  // specular(ct,ct,ct);
+  ambientLight(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  emissive(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  specular(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+
+//	TODO: is this how to adjust spehereDetail
+
+
+  	sphereDetail(3*(pool.currentIndex()+1));
+	pool.request();
+  	H.drawStage();
+
   
 
-  // if(frameCount>43)doExit();
+// save(this+".png");
+
+  if(frameCount>9)doExit();
+  // doExit();
 
 }
 
