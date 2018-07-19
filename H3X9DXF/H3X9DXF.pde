@@ -4,11 +4,11 @@ H3X9OBJ : 3x9 HYPE sphereDetails to OBJ concept 9 see the board )
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
 
-
-GO TIFF
-
-TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
-
+if(color)
+  GO TIFF
+  TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
+else
+  PNG
 
 */
 
@@ -142,7 +142,7 @@ endRaw();
 
     //  save frame
     if(save_frame){
-      saveFrame( fix.pdeName() + "-" + fix.getTimestamp()+"-"+ sDetail + "_##.tiff");
+      saveFrame( fix.pdeName() + "-" + fix.getTimestamp()+"-"+ sDetail + "_##.png");  //  USE .TIF IF COLOR
     }
   }
 
@@ -168,7 +168,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.tiff" );
+  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR
   
   //  cleanup
   fix = null;

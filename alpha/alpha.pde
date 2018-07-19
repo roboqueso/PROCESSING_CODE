@@ -3,6 +3,14 @@ ALPHA  : square one starting point P5/HYPE template sketch
 * BLOOD-DRAGON : 1920 x 1071
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
+
+if(color)
+  GO TIFF
+  TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
+else
+  PNG
+
+
 */
 
 import hype.*;
@@ -102,6 +110,13 @@ void draw() {
   emissive(ct,ct,ct);
   specular(ct,ct,ct);
   */
+  
+  /*
+  //  save frame
+  if(save_frame){
+    saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##.png");  //  USE .TIF IF COLOR
+  }
+  */
 
   if(frameCount>43)doExit();
 
@@ -127,7 +142,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;
