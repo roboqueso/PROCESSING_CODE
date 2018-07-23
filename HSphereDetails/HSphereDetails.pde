@@ -1,16 +1,8 @@
 /*
-ALPHA  : square one starting point P5/HYPE template sketch
+HSphereDetails : lay down a 3x3 grid of spheres and increment sphereDetail each items
 * BLOOD-DRAGON : 1920 x 1071
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
-
-if(color)
-  GO TIFF
-  TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
-else
-  PNG
-
-
 */
 
 import hype.*;
@@ -25,15 +17,15 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 8;
+int colCt = 3;
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 8;
+int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1280, 720, P3D); //"processing.opengl.PGraphics3D");
+    size(displayWidth, displayHeight, P3D); //"processing.opengl.PGraphics3D");
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -49,7 +41,7 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).use3D(true).autoClear(false);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
@@ -57,7 +49,7 @@ void setup() {
     .add (
 
       // swap this out with something else
-      new HRect()
+      new HSphere().size(drawW, drawH)
     )
 
     .layout (
@@ -73,24 +65,41 @@ void setup() {
         public void run(Object obj) {
 
           //  DO STUFF HERE
+
+//	TODO: lay down an HSPHERE? changing sphereDetail( pool.currentIndex*3 )
+/*
           HDrawable d = (HDrawable) obj;
           d
-            .size( drawW, drawH )
+            .size( drawW, drawH)
             .noFill()
             .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
             .anchorAt(H.CENTER)
           ;
-        
+*/  
+	
 
+// TODO: remove?
+//sphereDetail(3*pool.currentIndex());
 
+// println("typeof: "+typeof);
+HSphere hs = (HSphere)obj;
+hs
+	.scale(.25)
+	.strokeWeight( 1*noise(frameCount) )
+    //.anchorAt(H.CENTER)
+ 	.noFill()
+ 	.stroke( (int) hs.x()%255, (int) hs.y()%255, (int) hs.z()%255, 160-frameCount );
         }
       }
     )
 
-    .requestAll()
+    // .requestAll()
   ;
 
-  H.drawStage();
+// H.drawStage();
+
+// doExit();
+  
 }
 
 
@@ -100,25 +109,28 @@ void setup() {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  /*
   // 3D code
   hint(DISABLE_DEPTH_TEST);
   camera();
   lights(); //    because P3D
 
-  ambientLight(ct,ct,ct);
-  emissive(ct,ct,ct);
-  specular(ct,ct,ct);
-  */
-  
-  /*
-  //  save frame
-  if(save_frame){
-    saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##.png");  //  USE .TIF IF COLOR
-  }
-  */
+  ambientLight(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  emissive(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  specular(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
 
-  if(frameCount>43)doExit();
+//	TODO: is this how to adjust spehereDetail
+
+
+  	sphereDetail(3*(pool.currentIndex()+1));
+	pool.request();
+  	H.drawStage();
+
+  
+
+// save(this+".png");
+
+  if(frameCount>9)doExit();
+  // doExit();
 
 }
 
@@ -142,7 +154,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
   
   //  cleanup
   fix = null;

@@ -1,5 +1,5 @@
 /*
-ALPHA  : square one starting point P5/HYPE template sketch
+H3X9OBJ : 3x9 HYPE sphereDetails to OBJ concept 9 see the board )
 * BLOOD-DRAGON : 1920 x 1071
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
@@ -10,7 +10,6 @@ if(color)
 else
   PNG
 
-
 */
 
 import hype.*;
@@ -20,20 +19,24 @@ import hype.extended.layout.*;
 import hype.interfaces.*;
 import fixlib.*;
 
+import processing.dxf.*;
+
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 8;
-int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 8;
+int colCt = 3;
+int rowCt = 1;  //  NOTE: remember to update this value
+int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
+int sDetail = 3;  //  temp sphereDetail
+Boolean save_frame = true;
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1280, 720, P3D); //"processing.opengl.PGraphics3D");
+    size(displayWidth, displayHeight, P3D); //"processing.opengl.PGraphics3D");
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -49,16 +52,12 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).use3D(true).autoClear(false);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
     
-    .add (
-
-      // swap this out with something else
-      new HRect()
-    )
+    .add ( new HSphere().size(drawW, drawH) )
 
     .layout (
       new HGridLayout()
@@ -73,24 +72,24 @@ void setup() {
         public void run(Object obj) {
 
           //  DO STUFF HERE
-          HDrawable d = (HDrawable) obj;
-          d
-            .size( drawW, drawH )
-            .noFill()
-            .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
-            .anchorAt(H.CENTER)
-          ;
-        
+	
 
+// TODO: remove?
+sphereDetail(3*pool.currentIndex());
+
+        // println("typeof: "+typeof);
+        HSphere hs = (HSphere)obj;
+        hs
+        .scale(.25)
+        .strokeWeight( 1*noise(frameCount) )
+        .anchorAt(H.CENTER)
+        .noFill();
 
         }
       }
     )
-
-    .requestAll()
   ;
 
-  H.drawStage();
 }
 
 
@@ -100,25 +99,52 @@ void setup() {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  /*
-  // 3D code
-  hint(DISABLE_DEPTH_TEST);
-  camera();
-  lights(); //    because P3D
+//  calculate this frame's sphereDetail
+sDetail = 3*(pool.currentIndex()+1);
 
-  ambientLight(ct,ct,ct);
-  emissive(ct,ct,ct);
-  specular(ct,ct,ct);
-  */
+if(frameCount>colCt)
+  doExit();
+else{
+
+
+
+//  MULTI DXF OUTPUT
+  println(frameCount + " > " + sDetail + " BEGIN RAW!!!!");
+  beginRaw(DXF,  fix.pdeName() + "-" + fix.getTimestamp()+"-"+ sDetail + ".dxf" );
+
   
-  /*
-  //  save frame
-  if(save_frame){
-    saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##.png");  //  USE .TIF IF COLOR
-  }
-  */
 
-  if(frameCount>43)doExit();
+  // // 3D code
+  // hint(DISABLE_DEPTH_TEST);
+  // camera();
+  // lights(); //    because P3D
+
+  // ambientLight(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  // emissive(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+  // specular(pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI,pool.currentIndex()*TWO_PI);
+
+
+  	sphereDetail(sDetail);
+    pool.request();
+  	H.drawStage();
+
+    //  One big fatty in the middle to house the smaller HSpheres in the HGrid
+    pushMatrix();
+      translate(width/2, height/2, 0);
+      stroke(#4D4D4D);
+      noFill();
+      sphereDetail(sDetail);
+      sphere(height/2);
+    popMatrix();
+
+//  save DXF
+endRaw();
+
+    //  save frame
+    if(save_frame){
+      saveFrame( fix.pdeName() + "-" + fix.getTimestamp()+"-"+ sDetail + "_##.png");  //  USE .TIF IF COLOR
+    }
+  }
 
 }
 
@@ -142,7 +168,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
+  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR
   
   //  cleanup
   fix = null;
