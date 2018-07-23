@@ -25,7 +25,7 @@ float cX, cY;
 */
 int MODE = 2;
 String PDE;  //  1280, 720
-String MOV_FILE = "bulldog.mp4";  //  1280, 720
+String MOV_FILE = "1.mp4";  //  1280, 720
 
 color mc;
 
@@ -34,7 +34,7 @@ color mc;
 void setup() 
 {
 
-  size(1080, 1920, P3D);
+  size(1920,1080,P3D);
 
   background(-1);
   smooth(8);

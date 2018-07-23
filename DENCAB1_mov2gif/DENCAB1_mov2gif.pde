@@ -22,14 +22,14 @@ Movie myMovie;
 1 = vertical
 2 = horizontal
 */
-int MODE = 1;
+int MODE = 2;
 String PDE;  //  1280, 720
-String MOV_FILE = "Themeaningoflife.mp4";  //  1280, 720
+String MOV_FILE = "3.mp4";  //  1280, 720
 
 
 void setup() 
 {
-  size(1920, 1080, P3D);
+  size(2160, 1080, P3D);
 
   background(-1);
   smooth(8);
@@ -106,7 +106,7 @@ void bail(){
   //image( myMovie,cX-cX, cY-cY, cX, cY );
   
   
-	save(fix.pdeName()+fix.getTimestamp()+".png");
+	save(fix.pdeName()+"_"+MOV_FILE+"_"+MODE+"_"+fix.getTimestamp()+".TIF");  //  if color, got .tiff
 	myMovie.stop();
 	stop();
 	exit();
