@@ -30,7 +30,7 @@ int colCt = 3;
 int rowCt = 1;  //  NOTE: remember to update this value
 int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
-int sDetail = 3;  //  temp sphereDetail
+int sDetail = 8;  //  temp sphereDetail
 Boolean save_frame = true;
 
 /* ------------------------------------------------------------------------- */

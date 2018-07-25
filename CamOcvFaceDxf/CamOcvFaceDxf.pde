@@ -16,34 +16,37 @@ ArrayList<Line> lines;
 PVector maxPt;
 // single face support
 int i = 0;
-Boolean recording = false;
+Boolean recording = true;
+
+
 
 void setup() {
-  size(1024, 800, P3D);
-  //video = new Capture(this, 640/2, 480/2);
-  //opencv = new OpenCV(this, 640/2, 480/2);
-  
-  
-  video = new Capture(this, width/2, height/2);
-  opencv = new OpenCV(this, width/2, height/2);
-
-  
-  opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
-
+  size(1280, 1060, P3D);
+  video = new Capture(this, 640/2, 480/2);
   video.start();
-  noFill();
+  delay(666);
+  opencv = new OpenCV(this, 640/2, 480/2);
+  opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
+  delay(666);
+  println("end setup()");
 }
+
+
 
 void draw() {
   
-  scale(2);
-  opencv.loadImage(video);
-  maxPt = opencv.max();
-  faces = opencv.detect();
 
-  //tint(80,80);
-  //image(video, 0, 0 );
-  //noTint();
+	scale(2);
+	opencv.loadImage(video);
+
+	  maxPt = opencv.max();
+
+	  // opencv.dilate();
+	  faces = opencv.detect();
+
+tint(255,80);
+image(video, 0, 0 );
+noTint();
 
 // NOTE: single face detection currently
 
@@ -53,7 +56,7 @@ if( faces.length > i ){
     recording=true;
   }
   
-  lights();
+  // lights();
 
   //for (int i = 0; i < faces.length; i++) {
     //println(faces[i].x + "," + faces[i].y);
@@ -61,16 +64,15 @@ if( faces.length > i ){
     imgFace = video.get( faces[i].x, faces[i].y, faces[i].width, faces[i].height);
         
     //  get FACE contours
-    opencv.loadImage(imgFace);
-
-    opencv.gray();    
-    //  try getting better face via adaptiveThreshold
-    opencv.threshold(75);
-    
+    // opencv.loadImage(imgFace);
+    // opencv.gray();    
+    // //  try getting better face via adaptiveThreshold
+    // opencv.threshold(75);
     opencv.findCannyEdges( imgFace.width, imgFace.height);
-  // Find lines with Hough line detection
-  // Arguments are: threshold, minLengthLength, maxLineGap
-  lines = opencv.findLines(75, 32, 16);
+
+	// Find lines with Hough line detection
+	// Arguments are: threshold, minLengthLength, maxLineGap
+	lines = opencv.findLines(75, 32, 16);
     
     //imgFace.filter(INVERT);
     //image( imgFace, faces[i].x, faces[i].y );          
@@ -87,7 +89,7 @@ if( faces.length > i ){
       pushMatrix();
       translate( faces[i].x, faces[i].y, frameCount );
       
-      beginShape(POLYGON);
+      beginShape(TRIANGLE);
         
         texture(imgFace);
         
@@ -97,7 +99,7 @@ if( faces.length > i ){
         
         //bezierVertex(maxPt.x, maxPt.y, maxPt.z, faces[i].x, faces[i].y, faces[i].width-faces[i].height);
         
-        bezierVertex( line.start.x, line.start.y, frameCount, line.end.x, line.end.y, frameCount );
+        // bezierVertex( line.start.x, line.start.y, frameCount, line.end.x, line.end.y, frameCount );
 
 
       endShape(CLOSE);
@@ -105,20 +107,28 @@ if( faces.length > i ){
       popMatrix();
     }
   
-    
-  if(frameCount > 8 )
+}else{
+
+	stroke(random(255));
+	point(frameCount%width, height/2+noise(frameCount));
+
+}
+
+
+  if(frameCount > 420 )
   {
+  	video.stop();
+  	video = null;
+
+
     if(recording){
      endRaw();
     }
      save(fix.pdeName()+fix.getTimestamp()+".png");
      noLoop();
      exit();
-  }
-    
-  }
-  
 }
+    }
 
 void captureEvent(Capture c) {
   c.read();

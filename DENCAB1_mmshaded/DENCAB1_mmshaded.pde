@@ -8,7 +8,7 @@ Movie myMovie;
 String PDE;  //  1280, 720
 int MODE = 0;  // doesn't matter as long as all frames have the same MODE
 
-String MOV_FILE = "Big_an_sad_news.mp4";
+String MOV_FILE = "2.mov";
 // String MOV_FILE = "Dog.mp4";
 // String MOV_FILE = "Hello_blog.mp4";
 // String MOV_FILE = "I_finally_fand_him.mp4";
@@ -71,7 +71,7 @@ size(2000, 1000, P3D);  //  2x1 so f360 honors as .hdr
   myMovie.loop();
 
   //  SHADER BIZNESS
-  shade = loadShader("brcosa.glsl");
+  shade = loadShader("channels.glsl");
 }
 
 void draw() {
@@ -80,9 +80,19 @@ void draw() {
 
 
 //  SHADER BIZNESS
-    shade.set("brightness", 1.0);
-    shade.set("contrast", map(mouseX, 0, width, -5, 5));
-    shade.set("saturation", map(mouseY, 0, height, -5, 5));
+    //shade.set("brightness", 1.0);
+    //shade.set("contrast", map(mouseX, 0, width, -5, 5));
+    //shade.set("saturation", map(mouseY, 0, height, -5, 5));
+
+  
+  // channels
+    shade.set("rbias", 0.0, 0.0);
+    shade.set("gbias", map(mouseY, 0, height, -0.2, 0.2), 0.0);
+    shade.set("bbias", 0.0, 0.0);
+    shade.set("rmult", map(mouseX, 0, width, 0.8, 1.5), 1.0);
+    shade.set("gmult", 1.0, 1.0);
+    shade.set("bmult", 1.0, 1.0);
+
 
   // turn on shader and display source
   shader(shade);
@@ -93,17 +103,15 @@ void draw() {
   // tint(255,43);
   // image(iSlice, 8, (frameCount%height));
 
-
+  tint(255, 43);
 
 // HORIZONTAL
   iSlice = myMovie.get( (int)random(myMovie.width),  (int)random(myMovie.height),  (int)random(43),  height);
-  tint(255, 50);
   image(iSlice, frameCount%width, random(iSlice.height) );
 
 //  VERTICAL
   iSlice = myMovie.get( 0,0, width-iSlice.width,  (int)random(TWO_PI) );
-  tint(255, 50);
-  image(iSlice, 0, frameCount%height );
+  image(iSlice, random(iSlice.width), frameCount%height );
 
   // turn off shader before displaying filename
   // resetShader();
@@ -111,7 +119,7 @@ void draw() {
 //  SAVE FRAMES FOR GIFing
 // saveFrame("frames/DENCAB1_"+PDE+"-"+MOV_FILE+"-"+MODE+"-frame#####.png");
 
-if(frameCount>=width){
+if(frameCount>=height){
   // stop the movie
   myMovie.stop();
   // cleanup

@@ -22,9 +22,9 @@ Movie myMovie;
 1 = vertical
 2 = horizontal
 */
-int MODE = 2;
+int MODE = 1;
 String PDE;  //  1280, 720
-String MOV_FILE = "3.mp4";  //  1280, 720
+String MOV_FILE = "1.mov";  //  1280, 720
 
 
 void setup() 
