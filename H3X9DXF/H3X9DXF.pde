@@ -26,12 +26,40 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 3;
+int colCt = 3;	//	7 - ROYGBIV
 int rowCt = 1;  //  NOTE: remember to update this value
 int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
-int sDetail = 8;  //  temp sphereDetail
-Boolean save_frame = true;
+int sDetail = 1;  //  holder for dynamic sphereDetail value ( this gets set in code )
+int sdInc = 34;	// sphereDetail( frameCount * sdInc )
+// first 8 fibonacchis:	1,2,3,5,8,13,21,34
+//	RENDER DARK RAINBOW ( ( 1-> diamond? ) ROYGBIV each of the numbers )
+Boolean save_frame = false;
+
+
+	 // * - `HConstants.LEFT`
+	 // * - `HConstants.RIGHT`
+	 // * - `HConstants.CENTER_X`
+	 // * - `HConstants.TOP`
+	 // * - `HConstants.BOTTOM`
+	 // * - `HConstants.CENTER_Y`
+	 // * - `HConstants.CENTER`
+	 // * - `HConstants.TOP_LEFT`
+	 // * - `HConstants.TOP_RIGHT`
+	 // * - `HConstants.BOTTOM_LEFT`
+	 // * - `HConstants.BOTTOM_RIGHT`
+	 // * - `HConstants.CENTER_LEFT`
+	 // * - `HConstants.CENTER_RIGHT`
+	 // * - `HConstants.CENTER_TOP`
+	 // * - `HConstants.CENTER_BOTTOM`
+
+// int[] pos = { 
+// 	HConstants.LEFT,
+// 	HConstants.RIGHT,
+// 	HConstants.TOP,
+// 	HConstants.BOTTOM,
+// };
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -75,15 +103,18 @@ void setup() {
 	
 
 // TODO: remove?
-sphereDetail(3*pool.currentIndex());
+sphereDetail(sdInc*pool.currentIndex());
 
         // println("typeof: "+typeof);
         HSphere hs = (HSphere)obj;
         hs
         .scale(.25)
         .strokeWeight( 1*noise(frameCount) )
-        .anchorAt(H.CENTER)
-        .noFill();
+        .noFill()
+        .anchorAt( H.CENTER );
+        //	adjust anchor
+
+
 
         }
       }
@@ -100,7 +131,7 @@ sphereDetail(3*pool.currentIndex());
 void draw() {
 
 //  calculate this frame's sphereDetail
-sDetail = 3*(pool.currentIndex()+1);
+sDetail = sdInc*(pool.currentIndex()+1);
 
 if(frameCount>colCt)
   doExit();
@@ -128,14 +159,20 @@ else{
     pool.request();
   	H.drawStage();
 
+// if(frameCount<((int)colCt/2) ){
     //  One big fatty in the middle to house the smaller HSpheres in the HGrid
-    pushMatrix();
-      translate(width/2, height/2, 0);
-      stroke(#4D4D4D);
-      noFill();
-      sphereDetail(sDetail);
-      sphere(height/2);
-    popMatrix();
+	pushMatrix();
+		translate(width/2, height/2, frameCount);
+		stroke(#4D4D4D);
+		noFill();
+		sphereDetail( (int)(sDetail/PI) );
+		scale(0.75);
+
+		sphere( drawW+(frameCount*sdInc) );
+		box( drawW+(frameCount*sdInc) );
+
+	popMatrix();
+// }
 
 //  save DXF
 endRaw();
