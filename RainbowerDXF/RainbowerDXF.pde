@@ -4,6 +4,10 @@
   
  //  TODO: FIX RAINBOW LOGIC TO MAKE CLEAN SLICE SHAPE 
   
+fix.circleXY() doens't seem to draw a perfect half circle as expected
+
+//  TODO: create a debug circle sketch for fix.circleXY() and tighten up that logic
+
 */
 import fixlib.*;
 import processing.dxf.*;
@@ -11,7 +15,7 @@ import processing.dxf.*;
 Fixlib fix = Fixlib.init(this);
 PVector vect = new PVector();
 float cX, cY, radius, angle, sliceWidth;
-
+boolean saveDXF = true;
 
 
 void  settings ()  {
@@ -28,74 +32,106 @@ void setup() {
     background(255);
 
     //  can improve the appearance of 3D geometry drawn to 2D file formats.  
-    hint(ENABLE_DEPTH_SORT);
-
+    // hint(ENABLE_DEPTH_SORT);
+    strokeWeight(HALF_PI);
 
     fill(#EF4300);
     text( fix.pdeName(), 11, height-100 );
-    noFill();
-    strokeWeight(11); 
-    stroke(0);
+
 
     cX = width/2;
-    cY = height/2;
+    cY = height*.75;
     radius = 420;
     sliceWidth = 43;
-    
- //rect(0, 0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
-
-
-    
-
 }
 
 /***/
 void draw() {
 
-    beginRaw( DXF, fix.pdeName()+fix.getTimestamp() +".dxf" );
+
+    // rect(0, 0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
+    if(saveDXF){
+      beginRaw( DXF, fix.pdeName()+fix.getTimestamp() +".dxf" );
+    }
+
+
+// //  DEBUG CIRCLE
+// if(!saveDXF){
+//   for(int fc = 0; fc >= 360; fc++)
+//   {
+
+//     angle = fc;
+//     vect = fix.circleXY( cX, cY, radius, angle );
+//     stroke(#EF4300);
+//     point(vect.x, vect.y, angle );
+//   }
+// }
+
+
+
+
     //  START SHAPE HERE
     beginShape(); 
     
  
     
-    
-    for(int fc = 1; fc <361; fc++)
+    //  FIRST OUTER SLICE /////////////////////////////////////////////////////
+    for(int fc = 0; fc <= 180; fc++)
     {
-      angle = fc%181;
-      
-      //  SKIP THE FIRST POINT THAT LOOPS PAST 180
-      if( angle==0.0)
-      {
-        radius -= sliceWidth;
-      }
-      else
-      {
-      
+      angle = fc;
+
       vect = fix.circleXY( cX, cY, radius, angle );
   
       //  DEBUG
       //println("vect.x " + vect.x + ", vect.y " + vect.y +", angle " + angle );
-      //point(vect.x, vect.y, angle );
-      vertex(vect.x, vect.y, angle );
+if(!saveDXF)point(vect.x, vect.y, angle );
 
-    pushMatrix();
-      translate(vect.x, vect.y, angle);
-      stroke(#4D4D4D);
-      noFill();
-      //sphereDetail( (int)(sDetail/PI) );
-      scale(0.75);
-  
-      //sphere( drawW+(frameCount*sdInc) );
-      //box( drawW+(frameCount*sdInc) );
-      //vertex( 0,0,0 );
-    popMatrix();
-    
-  
-      
-      }
-    }      
-      endShape(); 
+// if(fc==0){
+//   line(vect.x, vect.y, radius, vect.y);
+// }
+
+
+
+    vertex(vect.x, vect.y, angle );
+    }
+
+
+    //  BACK LINE /////////////////////////////////////////////////////////////
+    vect = fix.circleXY( cX, cY, radius, angle );
+    vertex(vect.x, vect.y, 180 );
+
+if(!saveDXF)point(vect.x, vect.y, 180 );
+
+    radius -= sliceWidth;
+    vect = fix.circleXY( cX, cY, radius, angle );
+    vertex(vect.x, vect.y, 180 );
+
+if(!saveDXF)point(vect.x, vect.y, 180 );
+
+
+    //  SECOND SMALLER SLICE //////////////////////////////////////////////////
+    for(int fc = 180; fc >= 0; fc--)
+    {
+
+      angle = fc;
+      vect = fix.circleXY( cX, cY, radius, angle );
+
+// if(fc==180){
+//   line(vect.x, vect.y, radius, vect.y);
+// }
+
+if(!saveDXF)point(vect.x, vect.y, angle );
+
+      vertex(vect.x, vect.y, angle );
+    }
+
+
+      endShape();
+
+    // rect(0,  0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
+    if(saveDXF){
       endRaw();
+    }
         
       save(fix.pdeName()+"_"+fix.getTimestamp()+".png");
     
