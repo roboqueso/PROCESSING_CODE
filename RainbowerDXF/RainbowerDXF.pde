@@ -1,12 +1,10 @@
 /*
-  RAINBOWER - Part of the "SPACE RAINBOWS" themeds
+  RAINBOWER - Part of the "SPACE RAINBOWS" theme
   * Draw half a circle, move back sliceWidth, draw another half circle, close shape
   
- //  TODO: FIX RAINBOW LOGIC TO MAKE CLEAN SLICE SHAPE 
-  
-fix.circleXY() doens't seem to draw a perfect half circle as expected
-
-//  TODO: create a debug circle sketch for fix.circleXY() and tighten up that logic
+NOTE: Z is causing a slight shift making slice not look like a flat semi-circl
+* fix.circleXY() doens't seem to draw a perfect half circle as expected
+* TODO: create a debug circle sketch for fix.circleXY() and tighten up that logic
 
 */
 import fixlib.*;
@@ -14,7 +12,10 @@ import processing.dxf.*;
 
 Fixlib fix = Fixlib.init(this);
 PVector vect = new PVector();
-float cX, cY, radius, angle, sliceWidth;
+float cX, cY, angle;
+float radius = 420;
+int sliceWidth = 43;  // size of sphere and box when not using behinShape and vertex
+int spDetails = 2;    // sphereDetails value DON'T GO UNDER 2
 boolean saveDXF = true;
 
 
@@ -32,18 +33,19 @@ void setup() {
     background(255);
 
     //  can improve the appearance of 3D geometry drawn to 2D file formats.  
-    // hint(ENABLE_DEPTH_SORT);
-    strokeWeight(HALF_PI);
+    hint(ENABLE_DEPTH_SORT);
+    strokeWeight(.8);
 
     fill(#EF4300);
     text( fix.pdeName(), 11, height-100 );
 
+    sphereDetail(spDetails);
 
     cX = width/2;
     cY = height*.75;
-    radius = 420;
-    sliceWidth = 43;
 }
+
+
 
 /***/
 void draw() {
@@ -51,27 +53,12 @@ void draw() {
 
     // rect(0, 0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
     if(saveDXF){
-      beginRaw( DXF, fix.pdeName()+fix.getTimestamp() +".dxf" );
+      beginRaw( DXF, fix.pdeName()+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp() +".dxf" );
     }
 
 
-// //  DEBUG CIRCLE
-// if(!saveDXF){
-//   for(int fc = 0; fc >= 360; fc++)
-//   {
-
-//     angle = fc;
-//     vect = fix.circleXY( cX, cY, radius, angle );
-//     stroke(#EF4300);
-//     point(vect.x, vect.y, angle );
-//   }
-// }
-
-
-
-
     //  START SHAPE HERE
-    beginShape(); 
+//    beginShape(); 
     
  
     
@@ -79,23 +66,30 @@ void draw() {
     for(int fc = 0; fc <= 180; fc++)
     {
       angle = fc;
-
+      //  get the point
       vect = fix.circleXY( cX, cY, radius, angle );
   
-      //  DEBUG
-      //println("vect.x " + vect.x + ", vect.y " + vect.y +", angle " + angle );
+//  DEBUG
 if(!saveDXF)point(vect.x, vect.y, angle );
 
-// if(fc==0){
-//   line(vect.x, vect.y, radius, vect.y);
-// }
 
+      // vertex(vect.x, vect.y, angle );
 
+      pushMatrix();
+        translate( vect.x, vect.y, angle );
+        stroke(#EF4300);
+        noFill();
+        scale(0.75);
 
-    vertex(vect.x, vect.y, angle );
+        sphere( sliceWidth );
+        // box( sliceWidth );
+
+      popMatrix();
     }
 
+//  NOTE: Bottom half only needed when using beginShape and vertex above
 
+/*
     //  BACK LINE /////////////////////////////////////////////////////////////
     vect = fix.circleXY( cX, cY, radius, angle );
     vertex(vect.x, vect.y, 180 );
@@ -127,13 +121,14 @@ if(!saveDXF)point(vect.x, vect.y, angle );
 
 
       endShape();
+*/
 
     // rect(0,  0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
     if(saveDXF){
       endRaw();
     }
         
-      save(fix.pdeName()+"_"+fix.getTimestamp()+".png");
+      save( fix.pdeName()+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp()+".png");
     
 
     
