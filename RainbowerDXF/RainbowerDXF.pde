@@ -13,10 +13,23 @@ import processing.dxf.*;
 Fixlib fix = Fixlib.init(this);
 PVector vect = new PVector();
 float cX, cY, angle;
-float radius = 420;
-int sliceWidth = 43;  // size of sphere and box when not using behinShape and vertex
-int spDetails = 2;    // sphereDetails value DON'T GO UNDER 2
+int radius = 388;
+int sliceWidth = 20;  // size of sphere and box when not using behinShape and vertex
+int spDetails = 3;   // sphereDetails value DON'T GO UNDER 2
 boolean saveDXF = true;
+
+
+/*
+8 SLICES ( 40 )
+R 598 
+O 568
+Y 538
+G 508
+B 478
+I 448
+V 418
+* 388
+*/
 
 
 void  settings ()  {
@@ -33,16 +46,16 @@ void setup() {
     background(255);
 
     //  can improve the appearance of 3D geometry drawn to 2D file formats.  
-    hint(ENABLE_DEPTH_SORT);
-    strokeWeight(.8);
+    // hint(ENABLE_DEPTH_SORT);
+    // strokeWeight(.8);
 
     fill(#EF4300);
-    text( fix.pdeName(), 11, height-100 );
+    text( fix.pdeName(), sliceWidth, sliceWidth );
 
-    sphereDetail(spDetails);
+    sphereDetail(spDetails, spDetails);
 
-    cX = width/2;
-    cY = height*.75;
+    cX = width*.444;
+    cY = height*.8;
 }
 
 
@@ -53,7 +66,7 @@ void draw() {
 
     // rect(0, 0, width, height) after setting the fill() to the background color. Otherwise the background will not be rendered to the file because the background is not shape. 
     if(saveDXF){
-      beginRaw( DXF, fix.pdeName()+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp() +".dxf" );
+      beginRaw( DXF, fix.pdeName()+"_"+radius+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp() +".dxf" );
     }
 
 
@@ -77,10 +90,9 @@ if(!saveDXF)point(vect.x, vect.y, angle );
 
       pushMatrix();
         translate( vect.x, vect.y, angle );
-        stroke(#EF4300);
-        noFill();
+        // stroke(#EF4300);
+        // noFill();
         scale(0.75);
-
         sphere( sliceWidth );
         // box( sliceWidth );
 
@@ -128,7 +140,7 @@ if(!saveDXF)point(vect.x, vect.y, angle );
       endRaw();
     }
         
-      save( fix.pdeName()+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp()+".png");
+      save( fix.pdeName()+"_"+radius+"_"+sliceWidth+"_"+spDetails+"_"+fix.getTimestamp()+".png");
     
 
     

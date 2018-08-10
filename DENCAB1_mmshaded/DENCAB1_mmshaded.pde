@@ -1,6 +1,7 @@
 import processing.video.*;
 import fixlib.*;
 
+// TODO: CHANNELS shader is throwing COLOR error
 
 Fixlib fix = Fixlib.init(this);
 Movie myMovie;
@@ -8,7 +9,7 @@ Movie myMovie;
 String PDE;  //  1280, 720
 int MODE = 0;  // doesn't matter as long as all frames have the same MODE
 
-String MOV_FILE = "2.mov";
+String MOV_FILE = "bad_kevin.mp4";
 // String MOV_FILE = "Dog.mp4";
 // String MOV_FILE = "Hello_blog.mp4";
 // String MOV_FILE = "I_finally_fand_him.mp4";
@@ -19,6 +20,10 @@ String MOV_FILE = "2.mov";
 // String MOV_FILE = "the_wise_owl.mp4";
 
 PImage iSlice;
+
+Boolean saveFrames = true;
+
+
 //  SHADER BIZNESS
 PShader shade;
 
@@ -55,8 +60,13 @@ PShader shade;
 // waterNoise.glsl
 // wrap.glsl
 
+
+
+
+
+
 void setup() {
-size(2000, 1000, P3D);  //  2x1 so f360 honors as .hdr
+  size(1920, 1080, P3D);  //  2x1 so f360 honors as .hdr
 
   background(-1);
   smooth(8);
@@ -98,28 +108,27 @@ void draw() {
   shader(shade);
 
 
-  // iSlice = myMovie.get(0, 0, (int)random(frameCount), (int)(sqrt(frameCount)*noise(frameCount)) );
-
-  // tint(255,43);
-  // image(iSlice, 8, (frameCount%height));
-
-  tint(255, 43);
+  tint(255, random(43,240) );
 
 // HORIZONTAL
   iSlice = myMovie.get( (int)random(myMovie.width),  (int)random(myMovie.height),  (int)random(43),  height);
+  // iSlice.filter(INVERT);
+
   image(iSlice, frameCount%width, random(iSlice.height) );
 
 //  VERTICAL
   iSlice = myMovie.get( 0,0, width-iSlice.width,  (int)random(TWO_PI) );
+  // iSlice.filter(DILATE);
+
   image(iSlice, random(iSlice.width), frameCount%height );
 
-  // turn off shader before displaying filename
-  // resetShader();
 
 //  SAVE FRAMES FOR GIFing
-// saveFrame("frames/DENCAB1_"+PDE+"-"+MOV_FILE+"-"+MODE+"-frame#####.png");
+if(saveFrames){
+  saveFrame("frames/DENCAB1_"+PDE+"-"+MOV_FILE+"-"+MODE+"-frame#####.png");
+}
 
-if(frameCount>=height){
+if(frameCount>=width){
   // stop the movie
   myMovie.stop();
   // cleanup
@@ -141,6 +150,3 @@ void movieEvent(Movie myMovie) {
   myMovie.read();
 }
 
-void mousePressed() {
-  myMovie.jump(random(myMovie.duration()));
-}

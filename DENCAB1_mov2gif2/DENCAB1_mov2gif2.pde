@@ -23,9 +23,9 @@ float cX, cY;
 1 = vertical
 2 = horizontal
 */
-int MODE = 2;
+int MODE = 1;
 String PDE;  //  1280, 720
-String MOV_FILE = "1.mp4";  //  1280, 720
+String MOV_FILE = "bad_kevin.mp4";  //  1280, 720
 
 color mc;
 
@@ -34,7 +34,7 @@ color mc;
 void setup() 
 {
 
-  size(1920,1080,P3D);
+  size(2000, 1000, P3D);  //  2x1 so f360 honors as .hdr
 
   background(-1);
   smooth(8);
