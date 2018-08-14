@@ -1,5 +1,3 @@
-
-
 /*
 HLisaSize  : square one starting point P5/HYPE template sketch
 *
@@ -10,7 +8,7 @@ HRect      | P5 rect()     | HPath.lisa() | P5 lisa()
 ------------------------------------------------------
 HEllipse    | P5 ellipse() | HPath.lisa() | P5 lisa()
 ------------------------------------------------------
-HBox       | P5 box()     | HPath.lisa() | P5 lisa()
+HBox?      | P5 box()     | HPath.lisa() | P5 lisa()
 ------------------------------------------------------
 HSphere? | P5 sphere() | HPath.lisa() | P5 lisa()
 ------------------------------------------------------
@@ -31,13 +29,10 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
-PShape pp;
-HShape sh;
-
 int gridX,gridY;
 int colCt = 4;
 int rowCt = colCt;
-int colSpacing = 10;
+int colSpacing = 24;
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
@@ -55,22 +50,19 @@ void setup() {
   //  init VARIABLES
   drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
   drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
-  // TODO: grid layout start will fluctuate?
-  gridX = drawW/2+colSpacing;  //drawW/2-colSpacing;
-  gridY = drawH/2+colSpacing;
+  gridX = (drawW/2)+colSpacing;
+  gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1);  //.use3D(true);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
-
-    //.add ( new HBox() )    
-    .add ( new HPath() )    
+//TODO: figure out how to convert PShape to HShape before bringing HPath back into the mix
+    //.add ( new HPath() )    
     //.add ( new HRect() )
-    
-    //  TODO: why is this the only way that HSHape( PShape ) works???
-    //.add ( new HShape( fix.shapeJous( drawW, drawH, 43, 8 )  ) )
+    .add ( new HShape("scribble.svg") )
+
 
     .layout (
       new HGridLayout()
@@ -80,123 +72,50 @@ void setup() {
       .rows(rowCt)
     )
 
-//.spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
-
     .onCreate (
        new HCallback() {
         public void run(Object obj) {
 
           //  DO STUFF HERE
+
           //  OBJ TYPE CHECK
           //TODO: is there a smarter way to detect which child we're on?
-          
-          //  HBox
-          if(obj instanceof HBox) 
-          {
-            println(obj + " == HBox");  
-            HBox d = (HBox) obj;
-              d
-              .depth(random(drawH))
-              .width(drawW)
-              .height(drawH)
-              .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
-              .fill((int)random(255),43)
-              .strokeWeight(2)
-              .anchorAt(H.CENTER);
-
-          }
-
-          //  HPath
-          else if(obj instanceof HPath)  {
-            
-            println(obj + " == HPath");  
-            HPath p = (HPath)obj;
-// TODO: figure out modulo to use HPath.lisa() or HPath + vertices from PShape
-if( p.x() % 2 == 0 ) {
-
- // debug
- println("FIX.SHAPEJOUS");
-  
-          //  Generate PShape then convert to HPath
-          pp = fix.shapeJous( p.x(), p.y(), drawH, (int)random(8,16) );
-            
-          PVector vv;  // used in loop and style
-          for (int i = 0; i < pp.getVertexCount(); i++) {
-            vv = pp.getVertex(i);
-            p.vertex( vv.x, vv.y );
-          }
-
-          // style it differently
-          vv = pp.getVertex( (int)(pp.getVertexCount()/2) );
-          p
-            .strokeWeight(2)
-            .fill((int)random(255),43)
-            .stroke( (int)vv.x%255, (int) vv.y%255, (int) vv.z%255 )
-            .anchorAt(H.CENTER)
-            ;
-}
-else
-{
-  // debug
- println("HPath.lisa"); 
-  
-  
-            p.lisa( p.x(), p.y(), drawH, (int)random(8,16) )
-              .strokeWeight(2)
-              .noFill()
-              .stroke( (int)random(11,69) )
-              .anchorAt(H.CENTER)
-            ;
-}              
-
-
-          }
-          
-          //  HRect
-           else if(obj instanceof HRect) {
+          if(obj instanceof HRect) {
             println(obj + " == HRect");  
             HRect r = (HRect)obj;
             r
               .size( drawW, drawH )
-              .fill((int)random(255),43)
-              .strokeWeight(2)
+              .noFill()
               .stroke( (int) r.x()%255, (int) r.y()%255, (int) r.z()%255 )
               .anchorAt(H.CENTER)
             ;
 
           }
 
-
-
           //  HShape
           else if(obj instanceof HShape)  {
             println(obj + " == HShape");
             
             //  get incoming HShape
-            sh = (HShape) obj;
-
-
+            //HShape sh = (HShape) obj;
+/*
 // debug
 println("sh.x(), sh.y(), drawH = " + sh.x() + " ," +  sh.y() + ", " + drawH );
 
             //  get PShape from FIXLIB
-            //pp = fix.shapeJous( sh.x(), sh.y(), drawH, 8 );
-            
-// debug
-println( "vt ct : " + sh.shape().getVertexCount() );
-            
-            sh.shape( fix.shapeJous( sh.x(), sh.y(), drawH, 8 ) );
+            PShape p = fix.shapeJous( sh.x(), sh.y(), drawH, 8 );
 
-// debug
-println( "vt ct2 : " + sh.shape().getVertexCount() );
+            //  reuse 
+            sh = new HShape("scribble.svg");
 
             sh
+              .scale(.5)
               .strokeWeight(2)
-              .fill((int)random(255),43)
+              .noFill()
               .stroke( (int)random(255) )
               .anchorAt(H.CENTER);
 
-          obj = sh;
+            obj = sh;
 
 // DEBUG
 //println("p vt ct : " + p.getVertexCount() );
@@ -206,7 +125,20 @@ println( "vt ct2 : " + sh.shape().getVertexCount() );
             //  cleanup
             sh = null;
             //p = null;
-
+ */          
+          }
+          //  HPath
+          else if(obj instanceof HPath)  {
+            
+            println(obj + " == HPath");  
+            HPath p = (HPath)obj;
+            p
+              .lisa( p.x(), p.y(), drawH, (int)random(3,35) )
+              .strokeWeight(2)
+              .noFill()
+              .stroke( (int)random(255) )
+              .anchorAt(H.CENTER)
+            ;
           }
           else{
             println("UNKNOWN type: " + obj);
@@ -245,7 +177,6 @@ void draw() {
   emissive(ct,ct,ct);
   specular(ct,ct,ct);
   */
-
 
   if(frameCount>43)doExit();
 
