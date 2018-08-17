@@ -36,23 +36,30 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
-int gridX,gridY;
-int colCt = 8;
-int rowCt = 1;	//	NOTE: remember to update this value
-int colSpacing = 1;
-int drawW, drawH; //  HDrawable Width / Height
 
+/*
+1 = vertical ( slices go top down )
+2 = horizontal -> OG filter8, slices go left to right
+*/
+int MODE = 2;
+
+int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
+int colSpacing = 1;
 
 
 PImage pImg, imgSlice;
+
+//	TODO: fix SCALE
+
 int iScale = -1;	//	-1 inverts slices
 					//	1 keeps normal
+
 
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1920, 1080, P3D); // matching dimensions of pImg for best results
+    size(displayWidth, displayHeight, P3D); // matching dimensions of pImg for best results
 	    smooth(8);  //  smooth() can only be used in settings();
 	    pixelDensity(displayDensity());
 }
@@ -61,14 +68,42 @@ void  settings ()  {
 
 void setup() {
 
-  //  init VARIABLES
-  drawW = (int)( (width-(colSpacing))/colCt)+colSpacing;
-  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
-  gridX = (drawW/2)+colSpacing;
-  gridY = (drawH/2)+colSpacing;
 
 
-  pImg = loadImage("three.png");
+  //	load source image
+  pImg = loadImage("rabbithead2_merged.png");
+
+
+  //	pre-HYPE MODE specific calculations
+	switch(MODE)
+	{
+		case 1:	//"vert":
+		{
+			colCt = 1;
+			rowCt = 8;	//	NOTE: remember to update this value
+
+			drawW = width-colSpacing;
+			drawH = (int)(height/rowCt)-colSpacing;	//( (height-(colSpacing))/rowCt)-colSpacing;
+//	TODO: does this need to be tweaked?
+//	BECAUSE H.CENTER?
+			// gridX = 0;	//(drawW/2)+colSpacing;
+			// gridY = height/2;	//(drawH/2)+colSpacing;
+		}
+
+		break;
+
+		case 2:	//"horizontal":
+		{
+			colCt = 8;
+			rowCt = 1;	//	NOTE: remember to update this value
+			drawW = (int)( (width-(colSpacing))/colCt)+colSpacing;
+			drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+			// gridX = (drawW/2)+colSpacing;
+			// gridY = (drawH/2)+colSpacing;
+		}
+		break;
+	}
+
 
 
   //  init HYPE
@@ -95,8 +130,26 @@ void setup() {
         public void run(Object obj) {
 
 
-		// get imgSlice pimg.get(x, y, w, h)
-		imgSlice = pImg.get( (pool.currentIndex()*drawW), 0, drawW, height );
+  //	pre-HYPE MODE specific calculations
+	switch(MODE)
+	{
+		case 1:	//"vert":
+		{
+			// get imgSlice pimg.get(x, y, w, h)
+			imgSlice = pImg.get( 0, (pool.currentIndex()*drawH), drawW, drawH );	//	NOT height
+		}
+
+		break;
+
+		case 2:	//"horizontal":
+		{
+			// get imgSlice pimg.get(x, y, w, h)
+			imgSlice = pImg.get( (pool.currentIndex()*drawW), 0, drawW, drawH );	//	NOT height
+		}
+		break;
+	}
+
+
 		//	apply 1 of 8 filters
 		switch(pool.currentIndex()){
 			//	THRESHOLD
@@ -153,7 +206,9 @@ void setup() {
 		ii
 			.image(imgSlice)
         	.scale(iScale)
-        	.anchorAt(H.CENTER);
+			.height(drawH)
+			.width(drawW);
+        	// .anchorAt(H.LEFT);
         }
       }
     )
