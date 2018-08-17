@@ -41,10 +41,11 @@ HDrawablePool pool;
 1 = vertical ( slices go top down )
 2 = horizontal -> OG filter8, slices go left to right
 */
-int MODE = 2;
-
+int MODE = 1;
+Boolean do_both_modes = true;	// run 1, then 2, then bounce
+String SRC_FILE = "10.png";
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
-int colSpacing = 1;
+int colSpacing = 4;
 
 
 PImage pImg, imgSlice;
@@ -60,19 +61,18 @@ int iScale = -1;	//	-1 inverts slices
 
 void  settings ()  {
     size(displayWidth, displayHeight, P3D); // matching dimensions of pImg for best results
-	    smooth(8);  //  smooth() can only be used in settings();
-	    pixelDensity(displayDensity());
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
 }
 
 /* ------------------------------------------------------------------------- */
 
 void setup() {
 
-
+	background(-1);
 
   //	load source image
-  pImg = loadImage("rabbithead2_merged.png");
-
+	if(null==pImg)	pImg = loadImage(SRC_FILE);
 
   //	pre-HYPE MODE specific calculations
 	switch(MODE)
@@ -82,7 +82,7 @@ void setup() {
 			colCt = 1;
 			rowCt = 8;	//	NOTE: remember to update this value
 
-			drawW = width-colSpacing;
+			drawW = width;
 			drawH = (int)(height/rowCt)-colSpacing;	//( (height-(colSpacing))/rowCt)-colSpacing;
 //	TODO: does this need to be tweaked?
 //	BECAUSE H.CENTER?
@@ -97,7 +97,7 @@ void setup() {
 			colCt = 8;
 			rowCt = 1;	//	NOTE: remember to update this value
 			drawW = (int)( (width-(colSpacing))/colCt)+colSpacing;
-			drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+			drawH = height;	//(int)( (height-(colSpacing))/rowCt)-colSpacing;
 			// gridX = (drawW/2)+colSpacing;
 			// gridY = (drawH/2)+colSpacing;
 		}
@@ -107,7 +107,7 @@ void setup() {
 
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).autoClears(true);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
@@ -216,7 +216,8 @@ void setup() {
    .requestAll()
   ;
 
-  
+	H.drawStage();
+	doExit();
 }
 
 
@@ -226,22 +227,12 @@ void setup() {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  /*
-  // 3D code
-  hint(DISABLE_DEPTH_TEST);
-  camera();
-  lights(); //    because P3D
-
-  ambientLight(ct,ct,ct);
-  emissive(ct,ct,ct);
-  specular(ct,ct,ct);
-  */
-
-  // if(frameCount>43)doExit();
   
-  H.drawStage();
-
-  doExit();
+  	H.clearStage();
+  	pImg = null;
+  	imgSlice = null;
+  	pool = null;
+  	MODE=2;
 
 }
 
@@ -259,19 +250,28 @@ void draw() {
   End of sketch closer
 */
 void doExit(){
+
   String msg = "ericfickes.com";
   //  stamp bottom right based on textSize
   fill(0);
   textSize(16);
   text(msg, (width-textWidth(msg))-(textAscent()/3), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  
-  //  cleanup
-  fix = null;
-  
-  noLoop();
-  exit();
-  System.gc();
-  System.exit(1);
+  save( fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_" + fix.getTimestamp()+".png" );
+
+  if(do_both_modes && MODE == 1){
+
+  	redraw();
+  	setup();
+  	
+
+  } else {
+	  //  cleanup
+	  fix = null;
+	  
+	  noLoop();
+	  exit();
+	  System.gc();
+	  System.exit(1);
+  }
 }

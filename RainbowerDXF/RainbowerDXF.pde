@@ -13,22 +13,18 @@ import processing.dxf.*;
 Fixlib fix = Fixlib.init(this);
 PVector vect = new PVector();
 float cX, cY, angle;
-int radius = 388;
-int sliceWidth = 20;  // size of sphere and box when not using behinShape and vertex
-int spDetails = 3;   // sphereDetails value DON'T GO UNDER 2
+int radius = 320;
+int sliceWidth = 100;  // size of sphere and box when not using beginShape and vertex
+int spDetails = 16;   // sphereDetails value DON'T GO UNDER 2
 boolean saveDXF = true;
 
 
 /*
-8 SLICES ( 40 )
-R 598 
-O 568
-Y 538
-G 508
-B 478
-I 448
-V 418
-* 388
+8 SLICES ( 100 )
+R 520
+G 420
+B 320
+
 */
 
 
@@ -43,16 +39,17 @@ void  settings ()  {
 /***/
 void setup() {
 
-    background(255);
+    background(-1);
 
     //  can improve the appearance of 3D geometry drawn to 2D file formats.  
-    // hint(ENABLE_DEPTH_SORT);
-    // strokeWeight(.8);
+    hint(ENABLE_DEPTH_SORT);
+    strokeWeight(.8);
 
     fill(#EF4300);
     text( fix.pdeName(), sliceWidth, sliceWidth );
 
-    sphereDetail(spDetails, spDetails);
+    fill(0);
+    noFill();
 
     cX = width*.444;
     cY = height*.8;
@@ -93,8 +90,14 @@ if(!saveDXF)point(vect.x, vect.y, angle );
         // stroke(#EF4300);
         // noFill();
         scale(0.75);
-        sphere( sliceWidth );
-        // box( sliceWidth );
+        
+        //  sphere or box?
+        if(angle%spDetails==0){
+          sphereDetail( (int)random(PI,spDetails), (int)random(PI,spDetails));
+          sphere( (int)random(PI,sliceWidth) );
+        } else {
+          box( sliceWidth, random(PI,sliceWidth), random(PI,sliceWidth) );
+        }
 
       popMatrix();
     }
