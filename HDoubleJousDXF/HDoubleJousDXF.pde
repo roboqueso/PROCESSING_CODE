@@ -151,10 +151,10 @@ if( p.x() % 2 == 0 ) {
 else
 {
   // debug
- println("HPath.drawLissajous"); 
+ println("HPath.list"); 
   
   
-            p.drawLissajous( p.x(), p.y(), drawH )//, (int)random(8,16) )
+            p.lisa( p.x(), p.y(), drawH, (int)random(8,16) )
               .strokeWeight(2)
               .noFill()
               .stroke( (int)random(11,69) )

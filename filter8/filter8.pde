@@ -43,9 +43,11 @@ HDrawablePool pool;
 */
 int MODE = 1;
 Boolean do_both_modes = true;	// run 1, then 2, then bounce
-String SRC_FILE = "10.png";
+String SRC_FILE = "f8_FXinP5.png";
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
-int colSpacing = 4;
+
+// TODO: fix clearStage
+int colSpacing = 43;
 
 
 PImage pImg, imgSlice;
@@ -233,6 +235,7 @@ void draw() {
   	imgSlice = null;
   	pool = null;
   	MODE=2;
+  	setup();
 
 }
 
@@ -262,8 +265,7 @@ void doExit(){
   if(do_both_modes && MODE == 1){
 
   	redraw();
-  	setup();
-  	
+ 	
 
   } else {
 	  //  cleanup
