@@ -44,7 +44,10 @@ Lighting lighting = new Lighting();
 
 float cX, cY;
 
-BlendMode bMode = BlendMode.SRC_ATOP;
+//	NOTE: some of these BlendModes cause the sketch to only show a blank white screen
+//	ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
+//	HARD_LIGHT, LIGHTEN, MULTIPLY, OVERLAY, RED, SCREEN, SOFT_LIGHT, SRC_ATOP, SRC_OVER
+BlendMode bMode = BlendMode.SRC_OVER;
 
 /* ------------------------------------------------------------------------- */
 
@@ -57,7 +60,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-	background(255);//#242424);
+	background(#242424);
 
 	ellipseMode(CENTER);
 	rectMode(CENTER);
@@ -67,7 +70,6 @@ void setup()
 
 	// JAVAFX!
 	fxColorAdjust = new ColorAdjust();
-
 	fxGlow = new Glow();
 	fxBloom = new Bloom();
 	fxInnerShadow = new InnerShadow();
@@ -90,10 +92,9 @@ void setup()
 /*****************************************************************************/
 void draw() {
 
-
 	//  1 = MAX
-	fxBloom.setThreshold(.9);	//	frameCount/10 % 1.0);
-	fxGlow.setLevel(.9);	//	frameCount/10 % 1.0);
+	fxBloom.setThreshold(frameCount/10 % 1.0);
+	fxGlow.setLevel(1.0);	//frameCount/10 % 1.0);
 
 	fxDropShadow.setOffsetX(frameCount%8f);
 	fxDropShadow.setOffsetY(frameCount%8f);
@@ -127,39 +128,36 @@ void draw() {
 		fxInnerShadow.setColor(Color.rgb(frameCount%8, frameCount%8, frameCount%8));
 	}
 
-	fxColorAdjust.setInput(fxBloom);
+	fxColorAdjust.setSaturation(1.0);	//frameCount/10 % 1.0);
+	fxColorAdjust.setHue(1.0);	//frameCount/10 % 1.0);
+	fxColorAdjust.setBrightness(1.0);	//frameCount/10 % 1.0);
+
+	//	NOTE: Light works differently depending on how you set Inputs and combinations of when and where
+	// light = new Light.Point(cX, cY, frameCount%69, Color.rgb( 255, 255, 255 )  );
+	// lighting.setLight(light);
+//	TODO: Add a Blur here?
+	// lighting.setBumpInput(fxBloom);
+	// lighting.setContentInput(fxBloom);
+	// lighting.setDiffuseConstant(frameCount/10%2.0f);  //  2.0
+	// lighting.setSurfaceScale(frameCount/10%10.0f);	//	10.0
+	// lighting.setSpecularConstant(frameCount/10% 2.0f);  //  2.0
+	// lighting.setSpecularExponent(frameCount% 40.0f);	//	40.0
 	
-	fxColorAdjust.setSaturation(0.9);	//	frameCount/10 % 
-	fxColorAdjust.setHue(0.9);	//	frameCount/10 % 
-	fxColorAdjust.setBrightness(0.9);	//	frameCount/10 % 
 
-//	NOTE: Light doesn't seem to make any difference
-  //  Light
-
-	light = new Light.Point(frameCount, cY, frameCount%13, Color.rgb( (int)random(43,255), (int)random(16,255), (int)random(8,255) )  );
-	lighting.setLight(light);
-
-	// // //	can't tell how to utilize these
-	lighting.setBumpInput(fxBloom);
-	lighting.setContentInput(fxGlow);
-
-	lighting.setDiffuseConstant(frameCount/10%2.0f);  //  2.0
-	lighting.setSurfaceScale(frameCount/10%10.0f);	//	10.0
-	lighting.setSpecularConstant(frameCount/10% 2.0f);  //  2.0
-	lighting.setSpecularExponent(frameCount/10% 40.0f);	//	40.0
+	//	TODO: work with BlendMode
+	ctx.setGlobalBlendMode(bMode);
+	//	TODO: does this ever make a difference?
+	// ctx.setFillRule(FillRule.NON_ZERO);
 
 
-	//	APPLY EFFECTS
-	ctx.setEffect(lighting);
+
+	//	APPLY EFFECTS - order matters
 	ctx.setEffect(fxColorAdjust);
 	ctx.setEffect(fxBloom);
 	ctx.setEffect(fxGlow);
 	ctx.setEffect(fxInnerShadow);
 	ctx.setEffect(fxDropShadow);
-	
-	//	TODO: work with BlendMode
-	ctx.setGlobalBlendMode(bMode);
-	ctx.setFillRule(FillRule.NON_ZERO);
+	// ctx.setEffect(lighting);
 
 // ctx.setEffect(displacementMap)	
 	//	STROKE
@@ -200,13 +198,6 @@ void draw() {
 
 	}
 
-
-//	TODO: does cycling effects improve output?  seems like each frame is just duplicating
-// does this help?
-ctx.clearRect(0,0, width, height);
-ctx.setEffect(null);
-ctx.setFill(null);
-ctx.setStroke(null);
 
 
   if(frameCount>width){
