@@ -1,33 +1,30 @@
 /**
+	InnerShadow
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
 
-Inspired by https://discourse.processing.org/t/a-way-to-add-fancy-effects-to-your-sketches/2073
+	DropShadow
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DropShadow.html
 
-InnerShadow
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
+	JavaFX GLOW
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Glow.html
 
-DropShadow
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DropShadow.html
+	JavaFX LinearGradient
+	https://docs.oracle.com/javafx/2/api/javafx/scene/paint/LinearGradient.html
 
-JavaFX GLOW
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Glow.html
+	Bloom
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Bloom.html
 
-JavaFX LinearGradient
-https://docs.oracle.com/javafx/2/api/javafx/scene/paint/LinearGradient.html
+	BlendMode
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/BlendMode.html
 
-Bloom
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Bloom.html
-
-BlendMode
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/BlendMode.html
-
-DisplacementMap
-https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DisplacementMap.html
+	DisplacementMap
+	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DisplacementMap.html
 
 */
 import javafx.scene.canvas.*;
 import javafx.scene.effect.*;
-//import javafx.scene.paint.Color; // JavaFX uses different colors than Processing
 import javafx.scene.paint.*;
+import javafx.scene.shape.*;
 
 import fixlib.*;
 
@@ -36,23 +33,18 @@ Fixlib fix = Fixlib.init(this);
 GraphicsContext ctx;
 
 LinearGradient gradient, gradStroke;
-
-//GaussianBlur fxGaussianBlur = new GaussianBlur(20d); // the 'd' stands for 'double'
 DropShadow fxDropShadow;
-
 Glow fxGlow;
 Bloom fxBloom;
 InnerShadow fxInnerShadow;
 ColorAdjust fxColorAdjust;
-FloatMap floatMap;
-DisplacementMap displacementMap;
 
-Light.Distant light = new Light.Distant();
+Light.Point light;
 Lighting lighting = new Lighting();
 
 float cX, cY;
 
-BlendMode bMode = BlendMode.ADD;
+BlendMode bMode = BlendMode.SRC_ATOP;
 
 /* ------------------------------------------------------------------------- */
 
@@ -65,7 +57,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-	background(#242424);
+	background(255);//#242424);
 
 	ellipseMode(CENTER);
 	rectMode(CENTER);
@@ -84,11 +76,12 @@ void setup()
 
 	// in order to apply effects we need to get the 'native' graphics context of our canvas
 	ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
-  
+
 	//	fill
-	gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px "+height+"px, #EF0000 33%, 0x00EF00 55%, 0x0000EF 88%)");
+	gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF1975 20%, #13EF13 50%, #8833EF 80% )");
+
 	//	stroke
-	gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px "+height+"px, #EF2018 24%, 18EF20 43%, 0x2018EF 75%)");
+	gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF8833 30%, #18ef20 50%, #1975EF 80%)");
 
 }
 
@@ -97,102 +90,85 @@ void setup()
 /*****************************************************************************/
 void draw() {
 
-// does this help?
-
-
 
 	//  1 = MAX
-	fxBloom.setThreshold(frameCount/10 % 0.9);
+	fxBloom.setThreshold(.9);	//	frameCount/10 % 1.0);
+	fxGlow.setLevel(.9);	//	frameCount/10 % 1.0);
 
-	fxGlow.setLevel(frameCount/10 % 1.0);
-
-	fxDropShadow.setOffsetX(-frameCount%-8f);
+	fxDropShadow.setOffsetX(frameCount%8f);
 	fxDropShadow.setOffsetY(frameCount%8f);
-	fxDropShadow.setInput(fxBloom);
+	fxDropShadow.setInput(fxGlow);
 
 	fxInnerShadow.setOffsetX(frameCount%8f);
 	fxInnerShadow.setOffsetY(frameCount%8f);
-	fxInnerShadow.setInput(fxGlow);
+	fxInnerShadow.setInput(fxBloom);
 	
-	fxColorAdjust.setSaturation(1.0);	//frameCount/10 % 1.0);
-	fxColorAdjust.setHue(1.0);	//frameCount/10 % 1.0);
-	fxColorAdjust.setBrightness(1.0);	//frameCount/10 % 1.0);
-
-  //  Light
-	light.setAzimuth(-frameCount%-175.0);  //  -135.0
-	lighting.setLight(light);
-
-	//	can't tell how to utilize these
-	lighting.setBumpInput(fxBloom);
-	lighting.setContentInput(fxGlow);
-	lighting.setDiffuseConstant(frameCount/10%.69);  //  2.0
-	lighting.setSurfaceScale(frameCount/10%9.9);	//	10.0
-	lighting.setSpecularConstant(frameCount/10%.69);  //  2.0
-	lighting.setSpecularExponent(frameCount/10%.69);	//	40.0
-
-	// to disable the effect, just set it to `null`
-	//ctx.setEffect(null);
-
-
-
-
 	//	mix up inner shadow color
-	if(frameCount%7==0){
-
-		fxDropShadow.setInput(fxBloom);
-		fxInnerShadow.setInput(fxGlow);
-
+	if(frameCount%7==0)
+	{
 		fxDropShadow.setColor(Color.rgb(frameCount%242, (int)random(frameCount%242), frameCount%242) );
+		fxDropShadow.setInput(fxBloom);
 		fxInnerShadow.setColor(Color.rgb(frameCount%242, (int)random(frameCount%242), frameCount%242) );
-
-
-
+		fxInnerShadow.setInput(fxGlow);
 	}
 	else if(frameCount%13==0)
 	{
 		fxDropShadow.setColor(Color.rgb(frameCount%255, (int)random(frameCount%255), frameCount%255) );
 		fxInnerShadow.setColor(Color.rgb(frameCount%255, (int)random(frameCount%255), frameCount%255) );
-
 	}
 	else if(frameCount%24==0)
 	{
 		fxDropShadow.setColor(Color.rgb((int)random(frameCount%255), (int)random(frameCount%255), (int)random(frameCount%255) ) );
 		fxInnerShadow.setColor(Color.rgb((int)random(frameCount%255), (int)random(frameCount%255), (int)random(frameCount%255) ) );
-
-
 	}
 	else
 	{
-		fxDropShadow.setColor(Color.rgb(frameCount%69,frameCount%69,frameCount%69));
-		fxInnerShadow.setColor(Color.rgb(frameCount%255, frameCount%255, frameCount%255));
-
+		fxDropShadow.setColor(Color.rgb(frameCount%8,frameCount%8,frameCount%8));
+		fxInnerShadow.setColor(Color.rgb(frameCount%8, frameCount%8, frameCount%8));
 	}
+
+	fxColorAdjust.setInput(fxBloom);
 	
-	//	TODO: work with BlendMode
-	ctx.setGlobalBlendMode(bMode);
+	fxColorAdjust.setSaturation(0.9);	//	frameCount/10 % 
+	fxColorAdjust.setHue(0.9);	//	frameCount/10 % 
+	fxColorAdjust.setBrightness(0.9);	//	frameCount/10 % 
 
+//	NOTE: Light doesn't seem to make any difference
+  //  Light
 
-// TODO: look into chaining effects via setInput( effect )
-//	this might prove more effective than special positioning
+	light = new Light.Point(frameCount, cY, frameCount%13, Color.rgb( (int)random(43,255), (int)random(16,255), (int)random(8,255) )  );
+	lighting.setLight(light);
+
+	// // //	can't tell how to utilize these
+	lighting.setBumpInput(fxBloom);
+	lighting.setContentInput(fxGlow);
+
+	lighting.setDiffuseConstant(frameCount/10%2.0f);  //  2.0
+	lighting.setSurfaceScale(frameCount/10%10.0f);	//	10.0
+	lighting.setSpecularConstant(frameCount/10% 2.0f);  //  2.0
+	lighting.setSpecularExponent(frameCount/10% 40.0f);	//	40.0
+
 
 	//	APPLY EFFECTS
 	ctx.setEffect(lighting);
+	ctx.setEffect(fxColorAdjust);
 	ctx.setEffect(fxBloom);
 	ctx.setEffect(fxGlow);
-	ctx.setEffect(fxColorAdjust);
 	ctx.setEffect(fxInnerShadow);
 	ctx.setEffect(fxDropShadow);
-
 	
-	//	STROKE
-	if(frameCount%8==0)
-		ctx.setStroke(gradient);
-	else
-		ctx.setStroke(gradStroke);
+	//	TODO: work with BlendMode
+	ctx.setGlobalBlendMode(bMode);
+	ctx.setFillRule(FillRule.NON_ZERO);
 
+// ctx.setEffect(displacementMap)	
+	//	STROKE
 	//	FILL
 	if(frameCount < cX)
+	{
+		ctx.setStroke(gradStroke);
 		ctx.setFill(gradient);
+	}
 	else
 	{
 		noFill();
@@ -200,33 +176,37 @@ void draw() {
 	}
 
   
-  if(frameCount%42==0){
-	strokeWeight(8);
-    ellipse(frameCount%width,random(43, cX), 24,24 );	//	height*.75
-    // ellipse(random(frameCount),random(frameCount)%height, 43,43 );
-  } 
-  else if(frameCount%24==0){
-  	strokeWeight(6);
-	rect(frameCount%width,random(height*.75), random(8,16), random(43,cX) );
-  }
-  else
- {
-  	strokeWeight(2);
-  //Y - random(frameCount%69, cX)
-    rect(	frameCount+(frameCount*noise(frameCount))%width, 
-    		random(cY-240, cY+240), 
-    		random(43,cY), 
-    		random(43,49), 
-    		frameCount/160%cX
-    		);
-  
- }
+
+	if(frameCount%42==0)
+	{
+		strokeWeight(8);
+		ellipse(frameCount%width,random(43, cX), 24,24 );	//	height*.75
+	} 
+	else if(frameCount%24==0)
+	{
+		strokeWeight(6);
+		rect(frameCount%width,random(height*.75), random(8,16), random(43,cX) );
+	}
+	else if(frameCount%5==0)
+	{
+		strokeWeight(2);
+		//Y - random(frameCount%69, cX)
+		rect(	frameCount+(frameCount*noise(frameCount))%width, 
+			random(cY-255, cY+255), 
+			random(43,cY), 
+			random(43,49), 
+			frameCount/100%cX
+		);
+
+	}
 
 
 //	TODO: does cycling effects improve output?  seems like each frame is just duplicating
-//ctx.setEffect(null);
-
-
+// does this help?
+ctx.clearRect(0,0, width, height);
+ctx.setEffect(null);
+ctx.setFill(null);
+ctx.setStroke(null);
 
 
   if(frameCount>width){
