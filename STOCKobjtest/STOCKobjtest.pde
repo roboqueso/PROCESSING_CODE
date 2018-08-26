@@ -56,7 +56,8 @@ void setup()
 void draw() 
 {
   // pick random shape
-  s = shapes.get( (int)random(shapes.size()-1) );
+  // s = shapes.get( (int)random(shapes.size()-1) );
+s = shapes.get( (frameCount-1)%(shapes.size()-1) );
 
   if(s!=null){
 
@@ -67,9 +68,9 @@ void draw()
 
 
 //  get the point
-	x = random(width);
-	y = random(height);
-	vect = fix.circleXY( x, y, width/2, frameCount%303 );
+	x = random(frameCount,width);
+	y = random(frameCount,height);
+	vect = fix.circleXY( x, y, frameCount%(width/2), frameCount%360 );
 
 
 	ambientLight(vect.x, vect.y,(frameCount%255));
@@ -77,16 +78,14 @@ void draw()
 	specular(vect.x, vect.y,(frameCount%255) );
 
 
-
-	  
-    rotateX( radians(frameCount) );
-    rotateY( radians(frameCount) );
-    rotateZ( radians(frameCount) );
-
+    rotate( radians(frameCount) );
+    // rotateY( radians(frameCount) );
+    // rotateZ( radians(frameCount) );
+    shape(s,y,x);   
 	s.disableStyle();
-    shape(s,y,x);
+
 	  
-	  translate(x,y,frameCount%y);
+	 translate(x,y,frameCount%y);
 	  
 	  pushMatrix();
 	  	fill(frameCount%255,x,y);
