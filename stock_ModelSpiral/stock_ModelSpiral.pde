@@ -1,6 +1,5 @@
 /**
-NOTE: large OBJs cause this sketch to choke
-** local machine problem perhaps?
+stock_ModelSpiral
 */
 
 
@@ -13,6 +12,7 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float x, y;
 PVector vect = new PVector();
+int radius = 100;
 
 /* ------------------------------------------------------------------------- */
 
@@ -26,6 +26,9 @@ void  settings ()  {
 void setup() 
 {
   background(-1);
+
+// TODO: get modesl into ROOT P5 folder on both machine
+//  NOT: in each sketch data
 
   shapes.add( loadShape( "../_allmodelsP5/172516642/stationary_003.obj" ) );
   // shapes.add( loadShape("keychain/key_chain_031.obj"));
@@ -57,52 +60,62 @@ void draw()
 {
   // pick random shape
   // s = shapes.get( (int)random(shapes.size()-1) );
-s = shapes.get( frameCount%shapes.size() );
+  s = shapes.get( frameCount%shapes.size() );
 
-  if(s!=null){
+  if(s!=null)
+  {
 
-	// 3D code
-	hint(DISABLE_DEPTH_TEST);
-	camera();
-	lights(); //    because P3D
-
+  // 3D code
+  hint(DISABLE_DEPTH_TEST);
+  camera();
+  lights(); //    because P3D
 
 //  get the point
-	x = random(frameCount,width);
-	y = random(frameCount,height);
-	vect = fix.circleXY( x, y, frameCount%(width/2), frameCount%360 );
+  x = width/2;  // random(frameCount,width);
+  y = height/2;  // random(frameCount,height);
+
+  vect = fix.circleXY( x, y, radius, frameCount%360 );
+
+  ambientLight(vect.x, vect.y,(frameCount%255));
+  emissive(vect.x, vect.y,(frameCount%255) );
+  specular(vect.x, vect.y,(frameCount%255) );
+
+// TODO: does rotate need to be in line w/angle?
+    rotateX( frameCount%360 );  // radians(frameCount) );
+
+   translate(x,y,frameCount%y);
+    
+    pushMatrix();
+      
+      s.disableStyle();
+      // fill(x%255, y%255, frameCount%255);
+
+      s.rotate(random(frameCount));      
+      shape(s, x, y);
+      // shape(s,-frameCount%width, -frameCount%height);
+    popMatrix();
+
+    //  increase radius every full circle
+    if( frameCount % 360==0 ){
+      radius += 420;
+    }
 
 
-	ambientLight(vect.x, vect.y,(frameCount%255));
-	emissive(vect.x, vect.y,(frameCount%255) );
-	specular(vect.x, vect.y,(frameCount%255) );
- 
-	s.disableStyle();
-
-	  
-	translate(x,y,frameCount%y);
-	  
-	pushMatrix();
-
-  		s.rotateX(frameCount%360);
-  		s.rotateY(frameCount%360);
-  		s.rotateZ(frameCount%360);
-	  	shape(s, x, y);
-
-	  popMatrix();
-
-	} 
+  } 
   else 
   {
-		delay(666); // maybe just chill for a bit
+    delay(666); // maybe just chill for a bit
     println("no S? " + shapes.size() );
-	}
+  }
 
-  if(frameCount >= width )
+  if( radius > height)
   {
     save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
     exit();
+  } else {
+    //  debug
+    println("radius: ["+frameCount+"]" + radius);
   }
   
 }
