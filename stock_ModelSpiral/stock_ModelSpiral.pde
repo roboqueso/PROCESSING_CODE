@@ -12,7 +12,10 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float x, y;
 PVector vect = new PVector();
-int radius = 100;
+Boolean fillStyle = true;	//	fill w/x,y or leave style as is
+int radius = 43;
+int frameMod = 8;	// % frameCount to control how many shapes get laid down
+int getRad = (int)(width/4);	//	Radius increaser
 
 /* ------------------------------------------------------------------------- */
 
@@ -31,24 +34,7 @@ void setup()
 //  NOT: in each sketch data
 
   shapes.add( loadShape( "../_allmodelsP5/172516642/stationary_003.obj" ) );
-  // shapes.add( loadShape("keychain/key_chain_031.obj"));
-  // shapes.add( loadShape("openfolder/open_folder_1582.obj"));
-  // shapes.add( loadShape("rolledupnewspaper/rolled_up_newspaper_1554.obj"));
-  // shapes.add( loadShape("smallcardboardtube/small_cardboard_tube_1555.obj"));
-  // shapes.add( loadShape("talljewelrydisplay/tall_jewelry_display_1427.obj"));
-  // shapes.add( loadShape("twoenvelopes/two_envelopes_1562.obj"));
-  // shapes.add( loadShape("blankpackaginghandles1518/blank_packaging_handles_1518.obj") );
-  // shapes.add( loadShape("boxtallClosed/box_tallClosed.obj") );
-  // shapes.add( loadShape("canvastotebag1488/canvas_tote_bag_1488.obj") );
-  // shapes.add( loadShape("cdSleevehalfOut/cdSleeve_halfOut.obj") );
-  // shapes.add( loadShape("compositionnotebook1529/composition_notebook_1529.obj") );
-  // shapes.add( loadShape("deskcalendar/desk_calendar_004.obj") );
-  // shapes.add( loadShape("keychain/key_chain_031.obj") );
-  // shapes.add( loadShape("openfolder/open_folder_1582.obj") );
-  // shapes.add( loadShape("rolledupnewspaper/rolled_up_newspaper_1554.obj") );
-  // shapes.add( loadShape("smallcardboardtube/small_cardboard_tube_1555.obj") );
-  // shapes.add( loadShape("talljewelrydisplay/tall_jewelry_display_1427.obj") );
-  // shapes.add( loadShape("twoenvelopes/two_envelopes_1562.obj") );
+
 
 
 
@@ -62,44 +48,59 @@ void draw()
   // s = shapes.get( (int)random(shapes.size()-1) );
   s = shapes.get( frameCount%shapes.size() );
 
-  if(s!=null)
+  if(s!=null )
   {
-
-  // 3D code
-  hint(DISABLE_DEPTH_TEST);
-  camera();
-  lights(); //    because P3D
-
 //  get the point
   x = width/2;  // random(frameCount,width);
   y = height/2;  // random(frameCount,height);
 
   vect = fix.circleXY( x, y, radius, frameCount%360 );
 
-  ambientLight(vect.x, vect.y,(frameCount%255));
-  emissive(vect.x, vect.y,(frameCount%255) );
-  specular(vect.x, vect.y,(frameCount%255) );
+ if(frameCount%frameMod==0){
+  // reset X/Y to circle coordinates
+  x = vect.x;
+  y = vect.y;
 
-// TODO: does rotate need to be in line w/angle?
-    rotateX( frameCount%360 );  // radians(frameCount) );
+  // SAVE THE SHINY STUFF FOR ONCE THE CONCEPT IS PROVEN
+  // hint(DISABLE_DEPTH_TEST);
+  // camera();
+  // lights(); //    because P3D
+  // ambientLight(x%255, y%255,(frameCount%255));
+  // emissive(x%255, y%255,(frameCount%255) );
+  // specular(x%255, y%255,(frameCount%255) );
 
-   translate(x,y,frameCount%y);
-    
+	translate(x,y,1);//frameCount%y);
+  
     pushMatrix();
-      
-      s.disableStyle();
-      // fill(x%255, y%255, frameCount%255);
 
-      s.rotate(random(frameCount));      
-      shape(s, x, y);
-      // shape(s,-frameCount%width, -frameCount%height);
+//	USING box(43) FOR DEBUG PURPOSES
+//	box(43);
+
+	s.rotateX(frameCount);
+	s.rotateY(frameCount);
+	s.rotateZ(frameCount);
+
+	if(fillStyle){
+		s.disableStyle();
+		//	TODO: you can't stroke shapes?
+		// s.setStroke( color(x%255,  y%255, (frameCount%255)) );
+		// fill(x%255, y%255,(frameCount%255) );
+fill(0, 102, 153);    // Set the SVG fill to blue
+stroke(255);
+	}
+
+	shape(s);
+
     popMatrix();
 
-    //  increase radius every full circle
-    if( frameCount % 360==0 ){
-      radius += 420;
-    }
 
+}	// end frameChecker
+
+    //  increase radius every full circle
+    if( frameCount % 360==0 )
+    {
+      radius += getRad;
+    }
 
   } 
   else 
