@@ -14,12 +14,12 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
-Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
-Boolean mouseCam = true;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
+Boolean lights =  false;  //  EXTRA lights
+Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 43;	//	circle radius
-int getRad = 43;  //105;	//	Radius increaser
-int frameMod = 3;//13;  //8;	// % frameCount to control how many shapes get laid down
+int getRad = 8;	//43;  //105;	//	Radius increaser
+int frameMod = 4;//13;  //8;	// % frameCount to control how many shapes get laid down
 int ss = 0;	//	shape index
 
 /* ------------------------------------------------------------------------- */
@@ -49,7 +49,7 @@ void setup()
   /184479727/business_cards_001.obj
   /201384220/thermos_289.obj
   /172516539/gift_box_192b.obj
-*/
+
 shapes.add( loadShape( "../_allmodelsP5/210882332/stationary_papers_1544.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/172516642/stationary_003.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
@@ -57,54 +57,62 @@ shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
+*/
 
-// shapes.add( loadShape( "../_allmodelsP5/124696601/outdoor_poleSign.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/213242244/rectangular_chalkboard_1349.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142479/tall_spray_can_1530.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/125101917/food_cartonPour.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214995074/tied_letter_bundle_1548.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124701338/twistJar_labeled.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209726949/canvas_tote_bag_1488.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727135/open_tied_envelope_1558.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124698794/recordCover_halfOut.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/213242160/open_magazine_back_1568.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124695116/led_singleSign2.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124693258/food_barStout.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209728101/tied_string_card_1546.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/125240735/box_handledClosed.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/210882235/rolled_up_newspaper_1554.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403607/button_030.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142389/portable_perfume_spray_1460.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209726892/blank_packaging_handles_1518.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/182469832/a_luggage_tag_231.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/125241092/phone_4_3.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124824860/dvdCase_closed.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/125101964/food_pouchZip.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124821335/bag_ropeHandled_square.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124701290/tube_flipTop.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779478/long_tied_envelope_1557.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727034/open_envelope_card_1572.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/178262537/lanyard_022.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727191/packet_stack_1560.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207432978/hanging_rope_poster_1499.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779386/clamp_top_bottle_1531.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431342/open_folder_1582.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779475/modern_jar_1473.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207432898/closed_wide_envelope_1566.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142303/neck_jewelry_display_1418.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
+
+//	ALL IN!
+
+//  rando group1
+shapes.add( loadShape( "../_allmodelsP5/124696601/outdoor_poleSign.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/213242244/rectangular_chalkboard_1349.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/208142479/tall_spray_can_1530.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/125101917/food_cartonPour.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/214995074/tied_letter_bundle_1548.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/124701338/twistJar_labeled.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/209726949/canvas_tote_bag_1488.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/209727135/open_tied_envelope_1558.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/124698794/recordCover_halfOut.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/213242160/open_magazine_back_1568.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/124695116/led_singleSign2.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/124693258/food_barStout.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/209728101/tied_string_card_1546.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/125240735/box_handledClosed.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/210882235/rolled_up_newspaper_1554.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/190403607/button_030.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/208142389/portable_perfume_spray_1460.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/209726892/blank_packaging_handles_1518.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/182469832/a_luggage_tag_231.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/125241092/phone_4_3.obj" ) );
+
+//  RANDO GROUP 2
+//shapes.add( loadShape( "../_allmodelsP5/124824860/dvdCase_closed.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/125101964/food_pouchZip.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/124821335/bag_ropeHandled_square.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/124701290/tube_flipTop.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/212779478/long_tied_envelope_1557.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/209727034/open_envelope_card_1572.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/178262537/lanyard_022.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/209727191/packet_stack_1560.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/207432978/hanging_rope_poster_1499.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/212779386/clamp_top_bottle_1531.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/207431342/open_folder_1582.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/212779475/modern_jar_1473.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/207432898/closed_wide_envelope_1566.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/208142303/neck_jewelry_display_1418.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
+//shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
+
 // shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/213242412/small_cardboard_tube_1555.obj" ) );
