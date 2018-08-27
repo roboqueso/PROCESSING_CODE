@@ -121,10 +121,10 @@ float cX, cY, x, y;
 PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
 Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
-Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
+Boolean mouseCam = true;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 43;	//	circle radius
-int getRad = 24;	//43;  //105;	//	Radius increaser
-int frameMod = 8;//13;  //8;	// % frameCount to control how many shapes get laid down
+int getRad = 35;	//43;  //105;	//	Radius increaser
+int frameMod = 4;//13;  //8;	// % frameCount to control how many shapes get laid down
 int ss = 0;	//	shape index
 
 /* ------------------------------------------------------------------------- */
@@ -155,6 +155,7 @@ void setup()
 // shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
 
 //  * LIQUIDS *
+//	these need to be scaled up
 // shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
@@ -165,6 +166,7 @@ void setup()
 // shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
 
 //  * FOR THE BUSINESS *
+//	these need to be scaled up
 shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
 shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
@@ -176,7 +178,7 @@ shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
 
 
 
-//  * DISPLAYS *
+// //  * DISPLAYS *
 // shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
@@ -215,13 +217,12 @@ void draw()
    {
     camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
    }
-  //  else{
-  //   camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
-  // }
+   else{
+    camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+  }
 
    
   lights(); //    because P3D
-
 
   if(lights){
     ambientLight((frameCount%111), x%111, y%111 );
@@ -239,6 +240,8 @@ void draw()
   	s.rotateY(frameCount);
   	s.rotateZ(frameCount);
 
+// s.rotate(frameCount%360);
+
   	if(fillStyle)
     {
   		s.disableStyle();
@@ -246,8 +249,10 @@ void draw()
   		s.setStroke( color((frameCount%255), x%255, y%255 ) );
   		stroke((frameCount%255), x%255, y%255  );
   		fill((frameCount%255),x%255, y%255 );
-      tint((frameCount%255), x%255, y%255  );
+      	tint((frameCount%255), x%255, y%255  );
   	}
+  	
+  	s.scale(1.04,1,1);
 
   	shape(s);
   popMatrix();
@@ -274,7 +279,7 @@ void draw()
   }
 
   //  ENDER
-  if( radius > (height*.9) )
+  if( radius > (height*.85) )
   {
     save(fix.pdeName()+fix.getTimestamp()+".png");
     noLoop();
