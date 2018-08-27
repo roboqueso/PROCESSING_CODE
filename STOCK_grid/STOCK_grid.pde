@@ -25,14 +25,14 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 5;
+int colCt = 8;
 int rowCt = colCt;  //  NOTE: remember to update this value
 int colSpacing = 8;
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
 Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
 // Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 
 int ss = 0; //  shape index
@@ -108,31 +108,31 @@ void setup()
 // .add( new HShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) )
 
 
-.add( new HShape( "../_allmodelsP5/212779386/clamp_top_bottle_1531.obj" ) )
-.add( new HShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) )
-.add( new HShape( "../_allmodelsP5/207431342/open_folder_1582.obj" ) )
-.add( new HShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) )
-.add( new HShape( "../_allmodelsP5/212779475/modern_jar_1473.obj" ) )
-.add( new HShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) )
-.add( new HShape( "../_allmodelsP5/207432898/closed_wide_envelope_1566.obj" ) )
-.add( new HShape( "../_allmodelsP5/208142303/neck_jewelry_display_1418.obj" ) )
-.add( new HShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) )
-.add( new HShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) )
-.add( new HShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) )
-.add( new HShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) )
-.add( new HShape( "../_allmodelsP5/213242412/small_cardboard_tube_1555.obj" ) )
-.add( new HShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) )
-.add( new HShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) )
-.add( new HShape( "../_allmodelsP5/213242116/matte_coffee_bag_1509.obj" ) )
-.add( new HShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) )
-.add( new HShape( "../_allmodelsP5/209727335/tied_string_box_1547.obj" ) )
-.add( new HShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) )
-.add( new HShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) )
-.add( new HShape( "../_allmodelsP5/134637986/tablet_4_3.obj" ) )
-.add( new HShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) )
-.add( new HShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) )
-.add( new HShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) )
-.add( new HShape( "../_allmodelsP5/207432882/closed_long_envelope_1565.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779386/clamp_top_bottle_1531.obj" ) )
+// .add( new HShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207431342/open_folder_1582.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779475/modern_jar_1473.obj" ) )
+// .add( new HShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207432898/closed_wide_envelope_1566.obj" ) )
+// .add( new HShape( "../_allmodelsP5/208142303/neck_jewelry_display_1418.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) )
+// .add( new HShape( "../_allmodelsP5/213242412/small_cardboard_tube_1555.obj" ) )
+// .add( new HShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) )
+// .add( new HShape( "../_allmodelsP5/213242116/matte_coffee_bag_1509.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209727335/tied_string_box_1547.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) )
+// .add( new HShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) )
+// .add( new HShape( "../_allmodelsP5/134637986/tablet_4_3.obj" ) )
+// .add( new HShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) )
+// .add( new HShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207432882/closed_long_envelope_1565.obj" ) )
 
 // .add( new HShape( "../_allmodelsP5/177154561/id_card_021.obj" ) )
 // .add( new HShape( "../_allmodelsP5/172516644/key_chain_031.obj" ) )
@@ -159,6 +159,62 @@ void setup()
 // .add( new HShape( "../_allmodelsP5/123690361/bag_cutoutHandled_wide.obj" ) )
 // .add( new HShape( "../_allmodelsP5/124822938/box_drawerOpened.obj" ) )
 // .add( new HShape( "../_allmodelsP5/209727039/open_envelope_letter_1571.obj" ) )
+
+
+
+//  GROUPS
+
+  //  * BOXES *
+  // .add( new HShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) )
+  // .add( new HShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) )
+
+//  * LIQUIDS *
+//  these need to be scaled up
+// .add( new HShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) )
+// .add( new HShape( "../_allmodelsP5/134633983/can_drink.obj" ) )
+// .add( new HShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) )
+// .add( new HShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) )
+// .add( new HShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) )
+// .add( new HShape( "../_allmodelsP5/201384220/thermos_289.obj" ) )
+// .add( new HShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) )
+// .add( new HShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) )
+
+//  * FOR THE BUSINESS *
+//  these need to be scaled up
+ .add( new HShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) )
+ .add( new HShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) )
+ .add( new HShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) )
+ .add( new HShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) )
+ .add( new HShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) )
+ .add( new HShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) )
+ .add( new HShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) )
+ .add( new HShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) )
+
+
+
+// //  * DISPLAYS *
+// .add( new HShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) )
+// .add( new HShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779556/pos_store_shelves_1441.obj" ) )
+// .add( new HShape( "../_allmodelsP5/207431428/pos_store_steps_1447.obj" ) )
+// .add( new HShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) )
+// .add( new HShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779653/slat_rack_display_1434.obj" ) )
+// .add( new HShape( "../_allmodelsP5/210882383/tall_jewelry_display_1427.obj" ) )
+// .add( new HShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) )
+// .add( new HShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) )
+
+
+
 
 
     .layout (

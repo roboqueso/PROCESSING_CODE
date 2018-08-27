@@ -121,11 +121,13 @@ float cX, cY, x, y;
 PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
 Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
-Boolean mouseCam = true;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
-int radius = 43;	//	circle radius
-int getRad = 35;	//43;  //105;	//	Radius increaser
-int frameMod = 4;//13;  //8;	// % frameCount to control how many shapes get laid down
+Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
+int radius = 69;	//24;	//	circle radius
+int getRad = 69;	//43;	//43;  //105;	//	Radius increaser
+int frameMod = 8;//13;  //8;	// % frameCount to control how many shapes get laid down
 int ss = 0;	//	shape index
+
+int preScale = 7;	//	pre-scale up shapes if needed
 
 /* ------------------------------------------------------------------------- */
 
@@ -154,29 +156,6 @@ void setup()
 // shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
 
-//  * LIQUIDS *
-//	these need to be scaled up
-// shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
-
-//  * FOR THE BUSINESS *
-//	these need to be scaled up
-shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
-
-
 
 // //  * DISPLAYS *
 // shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
@@ -193,6 +172,37 @@ shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
 // shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
 
+//  * LIQUIDS *
+//	these need to be scaled up
+shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
+
+//  * FOR THE BUSINESS *
+//	these need to be scaled up
+// shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+
+
+
+//	PRE-SCALE IF NEEDED
+for(PShape shp : shapes){
+	println("preScaling: " + shp);
+	shp.scale(preScale);
+}
+
+
 println("\n   Here we go! \n ");
 
 }
@@ -200,11 +210,13 @@ println("\n   Here we go! \n ");
 
 void draw() 
 {
+  
   // pick shape
   s = shapes.get( ss );
 
   if(s!=null )
   {
+
     //  get the point
     vect = fix.circleXY( cX, cY, radius, frameCount%360 );
     // reset X/Y to circle coordinates
@@ -212,14 +224,14 @@ void draw()
     y = vect.y;
 
  if(frameCount%frameMod==0){
- 
+
    if(mouseCam)
    {
-    camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
+	camera(mouseX, cY, (cY) / tan(PI/6), mouseX, cY, 0, 0, 1, 0);
    }
-   else{
-    camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
-  }
+  //  else{
+  //   camera(cX, cY, (cY) / tan(PI/6), cX, cY, 0, 0, 1, 0);
+  // }
 
    
   lights(); //    because P3D
@@ -230,17 +242,16 @@ void draw()
     specular(x%111, y%111,(frameCount%111));
   }
 
-	translate(x,y,1);//getRad);//frameCount%y);
+	translate(x,y,0);//getRad);//frameCount%y);
   
   pushMatrix();
 
   //	USING box(43) FOR DEBUG PURPOSES
   //	box(43);
-  	s.rotateX(frameCount);
-  	s.rotateY(frameCount);
-  	s.rotateZ(frameCount);
 
-// s.rotate(frameCount%360);
+  	s.rotateX(radians(frameCount));
+  	s.rotateY(radians(frameCount));
+  	// s.rotateZ(radians(frameCount));
 
   	if(fillStyle)
     {
@@ -251,10 +262,8 @@ void draw()
   		fill((frameCount%255),x%255, y%255 );
       	tint((frameCount%255), x%255, y%255  );
   	}
-  	
-  	s.scale(1.04,1,1);
-
   	shape(s);
+
   popMatrix();
 
 
