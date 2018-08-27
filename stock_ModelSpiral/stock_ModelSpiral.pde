@@ -122,12 +122,13 @@ PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
 Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
-int radius = 69;	//24;	//	circle radius
-int getRad = 69;	//43;	//43;  //105;	//	Radius increaser
-int frameMod = 8;//13;  //8;	// % frameCount to control how many shapes get laid down
+int radius = 42;	//24;	//	circle radius
+int getRad = 80;	//	Radius increaser
+int frameMod = 16;//13;  //8;	// % frameCount to control how many shapes get laid down
+int preScale = 8;	//	pre-scale up shapes if needed
 int ss = 0;	//	shape index
+String GROUP =  "LIQUIDS";	//"BUSINESS" "BOXES"	"DISPLAYS"	"LIQUIDS"
 
-int preScale = 7;	//	pre-scale up shapes if needed
 
 /* ------------------------------------------------------------------------- */
 
@@ -145,63 +146,89 @@ void setup()
   cY = height/2;
 //  NOTE: this sketch assumes all Adobe Stock modes live in P5 root/_allmodelsP5/
 
-//  ALL LIST
-//  * BOXES *
-// shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+switch(GROUP){
+
+	case "BOXES":
+	{
+		//  * BOXES *
+		shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+	}
+	break;
+	
+	case "BUSINESS":
+	{
+
+		//  * FOR THE BUSINESS *
+		//	these need to be scaled up
+		shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+
+	}
+	break;
+	
+	case "DISPLAYS":
+	{
+		// //  * DISPLAYS *
+		shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779556/pos_store_shelves_1441.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/207431428/pos_store_steps_1447.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779653/slat_rack_display_1434.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/210882383/tall_jewelry_display_1427.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
+	}
+	break;
+
+	case "LIQUIDS":
+	{
+		//  * LIQUIDS *
+		//	these need to be scaled up
+		shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
+		shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
+	}
+	break;
+}
 
 
-// //  * DISPLAYS *
-// shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779556/pos_store_shelves_1441.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431428/pos_store_steps_1447.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779653/slat_rack_display_1434.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/210882383/tall_jewelry_display_1427.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
 
-//  * LIQUIDS *
-//	these need to be scaled up
-shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
 
-//  * FOR THE BUSINESS *
-//	these need to be scaled up
-// shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+
+
 
 
 
 //	PRE-SCALE IF NEEDED
-for(PShape shp : shapes){
-	println("preScaling: " + shp);
-	shp.scale(preScale);
+if(preScale>1){
+	for(PShape shp : shapes){
+		println("preScaling: " + shp);
+		shp.scale(preScale);
+	}
 }
-
 
 println("\n   Here we go! \n ");
 
@@ -288,16 +315,33 @@ void draw()
   }
 
   //  ENDER
-  if( radius > (height*.85) )
+  if( radius > (height*.85) )  
   {
-    save(fix.pdeName()+fix.getTimestamp()+".png");
-    noLoop();
-
-    shapes = null;
-    System.gc();
-
-    exit();
-
+    doExit();
   }
   
+}
+
+/**
+  End of sketch closer
+*/
+void doExit(){
+  String msg = "ericfickes.com";
+  //  stamp bottom right based on textSize
+  fill(0);
+  textSize(16);
+  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+
+  //	SAVE W/META FOR RE-RUN HELP
+  //	NAME-GROUP-lights_fillStyle_radius_getRad_frameMod_preScale-TIMESTAMP
+  save( fix.pdeName() + "-"+ GROUP + "_" + lights + "_" + fillStyle + "_" + radius + "_" + getRad + "_" + frameMod + "_" + preScale + "-"+ fix.getTimestamp()+".png" );    //  USE .TIF IF COLOR  
+  
+  //  cleanup
+  fix = null;
+  shapes = null;
+
+  noLoop();
+  exit();
+  System.gc();
+  System.exit(1);
 }
