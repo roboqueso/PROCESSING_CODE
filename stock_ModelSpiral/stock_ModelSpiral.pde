@@ -1,5 +1,7 @@
 /**
-stock_ModelSpiral
+STOCK_ModelSpiral
+
+TODO: identify product groups, run through the spiral
 */
 
 
@@ -10,12 +12,14 @@ Fixlib fix = Fixlib.init(this);
 
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
-float x, y;
+float cX, cY, x, y;
 PVector vect = new PVector();
-Boolean fillStyle = false;	//	TRUE: fill w/x,y or FALSE: leave style as is
+Boolean lights =  true;  //  EXTRA lights
+Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean mouseCam = true;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 43;	//	circle radius
-int getRad = (int)(width/4);	//	Radius increaser
-int frameMod = getRad;	//8;	// % frameCount to control how many shapes get laid down
+int getRad = 43;  //105;	//	Radius increaser
+int frameMod = 3;//13;  //8;	// % frameCount to control how many shapes get laid down
 int ss = 0;	//	shape index
 
 /* ------------------------------------------------------------------------- */
@@ -30,7 +34,8 @@ void  settings ()  {
 void setup() 
 {
   background(-1);
-
+  cX = width/2;
+  cY = height/2;
 //  NOTE: this sketch assumes all Adobe Stock modes live in P5 root/_allmodelsP5/
 //  ALL LIST
 
@@ -155,25 +160,28 @@ void draw()
   if(s!=null )
   {
     //  get the point
-    //  NOTE: these start as center point, and later get reassigned
-    x = width/2;  // random(frameCount,width);
-    y = height/2;  // random(frameCount,height);
-
-    vect = fix.circleXY( x, y, radius, frameCount%360 );
+    vect = fix.circleXY( cX, cY, radius, frameCount%360 );
+    // reset X/Y to circle coordinates
+    x = vect.x;
+    y = vect.y;
 
  if(frameCount%frameMod==0){
-  
-  // reset X/Y to circle coordinates
-  x = vect.x;
-  y = vect.y;
+ 
+   if(mouseCam){
+    camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
+   }
 
-  // SAVE THE SHINY STUFF FOR ONCE THE CONCEPT IS PROVEN
-  // hint(DISABLE_DEPTH_TEST);
-  // camera();
-  // lights(); //    because P3D
-  // ambientLight(x%255, y%255,(frameCount%255));
-  // emissive(x%255, y%255,(frameCount%255) );
-  // specular(x%255, y%255,(frameCount%255) );
+   
+  lights(); //    because P3D
+
+
+  if(lights){
+    // SAVE THE SHINY STUFF FOR ONCE THE CONCEPT IS PROVEN
+    //hint(DISABLE_DEPTH_TEST);
+    ambientLight(x%255, y%255,(frameCount%255));
+    emissive(y%255,(frameCount%255),x%255 );
+    specular((frameCount%255), x%255, y%255 );
+  }
 
 	translate(x,y,1);//frameCount%y);
   
@@ -191,9 +199,10 @@ void draw()
     {
   		s.disableStyle();
   		//	TODO: you can't stroke shapes?
-  		s.setStroke( color((frameCount%255)) );
-  		stroke((frameCount%255) );
-  		fill(x%255, y%255,(frameCount%255) );
+  		s.setStroke( color((frameCount%255), x%255, y%255 ) );
+  		stroke((frameCount%255), x%255, y%255  );
+  		fill((frameCount%255),x%255, y%255 );
+      tint((frameCount%255), x%255, y%255  );
   	}
 
   	shape(s);
