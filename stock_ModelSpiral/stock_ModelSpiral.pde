@@ -106,53 +106,6 @@ TODO: identify product groups, run through the spiral
 
 
   - groups by category ( re-run on PC for textures )
-  
-  //  * BOXES *
-  // shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-  // shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
-
-//  * LIQUIDS *
-// shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj    " ) );
-// shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
-
-//  * FOR THE BUSINESS *
-// shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
-
-
-
-//  * DISPLAYS *
-// shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779556/pos_store_shelves_1441.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/207431428/pos_store_steps_1447.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779653/slat_rack_display_1434.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/210882383/tall_jewelry_display_1427.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
-// shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
 
 */
 
@@ -167,7 +120,7 @@ PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 43;	//	circle radius
 int getRad = 24;	//43;  //105;	//	Radius increaser
@@ -192,15 +145,51 @@ void setup()
 
 //  ALL LIST
 //  * BOXES *
-shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
 
+//  * LIQUIDS *
+// shapes.add( loadShape( "../_allmodelsP5/124690437/bottle_sprayLid.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/134633983/can_drink.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/182473223/a_pill_bottle_1_204.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/201384220/thermos_289.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/205410505/bottle_with_dropper_196.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/211014911/plastic_cup_lid_1512.obj" ) );
+
+//  * FOR THE BUSINESS *
+shapes.add( loadShape( "../_allmodelsP5/209727496/two_envelopes_1562.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/214005311/two_business_cards_1581.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/209728013/stack_envelopes_1574.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/207431140/business_card_pile_1580.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/213241878/business_card_fan_1579.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
+shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+
+
+
+//  * DISPLAYS *
+// shapes.add( loadShape( "../_allmodelsP5/207431046/assorted_display_cubes_1433.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/207432973/hexagonal_display_structure_1411.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/210882136/pos_big_booth_1455.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779556/pos_store_shelves_1441.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/207431428/pos_store_steps_1447.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/209727994/promotional_booth_1496.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/208142394/round_display_table_1375.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779653/slat_rack_display_1434.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/210882383/tall_jewelry_display_1427.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/212779768/tiered_corner_table_1386.obj" ) );
+// shapes.add( loadShape( "../_allmodelsP5/214005530/woven_basket_display_1438.obj" ) );
 
 println("\n   Here we go! \n ");
 
@@ -222,34 +211,33 @@ void draw()
 
  if(frameCount%frameMod==0){
  
-   if(mouseCam){
+   if(mouseCam)
+   {
     camera(mouseX, height/2, (height/2) / tan(PI/6), mouseX, height/2, 0, 0, 1, 0);
-   }else{
-    camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
-}
+   }
+  //  else{
+  //   camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+  // }
 
    
   lights(); //    because P3D
 
 
   if(lights){
-    hint(DISABLE_DEPTH_TEST);  //  TODO: does this really help?
-    ambientLight(x%255, y%255,(frameCount%255));
-    emissive(y%255,(frameCount%255),x%255 );
-    specular((frameCount%255), x%255, y%255 );
+    ambientLight((frameCount%111), x%111, y%111 );
+    emissive(y%111,(frameCount%111),x%111 );
+    specular(x%111, y%111,(frameCount%111));
   }
 
-	translate(x,y,1);//frameCount%y);
+	translate(x,y,1);//getRad);//frameCount%y);
   
   pushMatrix();
 
   //	USING box(43) FOR DEBUG PURPOSES
   //	box(43);
-
   	s.rotateX(frameCount);
   	s.rotateY(frameCount);
   	s.rotateZ(frameCount);
-
 
   	if(fillStyle)
     {
