@@ -15,7 +15,7 @@ PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = ytue;  //  TRUE: fill w/x,y or FALSE:;. leave style as is
+Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE:;. leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 80;	//24;	//	circle radius
 int getRad = 100;	//	Radius increaser
