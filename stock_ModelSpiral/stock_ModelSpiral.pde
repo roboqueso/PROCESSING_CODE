@@ -120,14 +120,14 @@ PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
 Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 42;	//24;	//	circle radius
 int getRad = 80;	//	Radius increaser
 int frameMod = 16;//13;  //8;	// % frameCount to control how many shapes get laid down
 int preScale = 8;	//	pre-scale up shapes if needed
 int ss = 0;	//	shape index
-String GROUP =  "LIQUIDS";	//"BUSINESS" "BOXES"	"DISPLAYS"	"LIQUIDS"
+String GROUP =  "BRAND";	// "BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
 
 
 /* ------------------------------------------------------------------------- */
@@ -148,17 +148,41 @@ void setup()
 
 switch(GROUP){
 
-	case "BOXES":
+  case "BOXES":
+  {
+    //  * BOXES *
+    shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+  }
+  break;
+  
+
+	case "BRAND":
 	{
-		//  * BOXES *
-		shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/209726889/box_dispenser_1487.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/124822996/box_tallClosed.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/212779366/boxes_wall_display_1391.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/190403630/juice_box_a_082.obj" ) );
-		shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+		//  * BRAND *
+
+
+    shapes.add( loadShape( "../_allmodelsP5/212779386/clamp_top_bottle_1531.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/184479554/b_decorative_box_175.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/218401617/product_package_box_1286.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/213242412/small_cardboard_tube_1555.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/190403568/a_business_cards_002.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/213242160/open_magazine_back_1568.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/184479727/business_cards_001.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/124822938/box_drawerOpened.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/172516539/gift_box_192b.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/199461298/can_insulator_128.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/172516460/business_cards_002b.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/208142479/tall_spray_can_1530.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/123690361/bag_cutoutHandled_wide.obj" ) );
 	}
 	break;
 	
