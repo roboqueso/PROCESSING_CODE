@@ -32,7 +32,7 @@ int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
 
-String GROUP =  "BRAND";  //BOXES BRAND "BUSINESS" "DISPLAYS"  "LIQUIDS"
+String GROUP =  "LIQUIDS";  //BOXES BRAND "BUSINESS" "DISPLAYS"  "LIQUIDS"
 //  NOTE: 2 runs for each group : true-true & false-false
 Boolean lights =  true;  //  EXTRA lights
 Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
@@ -186,22 +186,21 @@ switch(GROUP)
 
 
           if(lights){
-            hint(DISABLE_DEPTH_TEST);  //  TODO: does this really help?
-            ambientLight(d.x()%255, d.y()%255,(frameCount%255));
-            emissive(d.y()%255,(frameCount%255),d.x()%255 );
-            specular((frameCount%255), d.x()%255, d.y()%255 );
+            ambientLight(d.x()%111, d.y()%111,(frameCount%111));
+            emissive(d.y()%111,(frameCount%111),d.x()%111 );
+            specular((frameCount%111), d.x()%111, d.y()%111 );
           }
     
           if(fillStyle)
           {
               d
-              .stroke((frameCount%255), (int)d.x()%255, (int)d.y()%255  )
-              .fill((frameCount%255), (int)d.x()%255, (int)d.y()%255 );
+              .stroke((frameCount%111), (int)d.x()%111, (int)d.y()%111  )
+              .fill((frameCount%111), (int)d.x()%111, (int)d.y()%111 );
           }
 
           d
             .size( drawW, drawH )
-            .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
+            .stroke( (int) d.x()%111, (int) d.y()%111, (int) d.z()%111 )
             .rotateX(d.x())
             .rotateY(d.y())
             // .rotateZ(d.z())
