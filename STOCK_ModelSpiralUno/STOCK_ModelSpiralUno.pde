@@ -8,6 +8,7 @@ STOCK_ModelSpiralUno
 
 // https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
+import nervoussystem.obj.*;
 
 Fixlib fix = Fixlib.init(this);
 
@@ -15,16 +16,17 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
+boolean recordObj = true;	//	export to OBJ, requires import nervoussystem.obj.*
 Boolean lights =  true;  //  EXTRA lights
 Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
-int radius = 222;  //303; //222;	//24;	//	circle radius
+int radius = 123;  //303; //222;	//24;	//	circle radius
 // int getRad = 111; //100;	//	Radius increaser
 // int frameMod = 12;//13;  //8;	// % frameCount to control how many shapes get laid down
 int preScale = 3;//13; //3;	//	pre-scale up shapes if needed
 int ss = 0;	//	shape index
-String GROUP =  "BOXES";	// "BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
-
+String GROUP =  "FIXBOMB";	// "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
+String SAVE_NAME = "thisShouldBeDynamic";
 
 /* ------------------------------------------------------------------------- */
 
@@ -41,14 +43,37 @@ void setup()
   cX = width/2;
   cY = height/2;
 
+	//	Generate filename containing sketch settings meta NOW
+	SAVE_NAME = fix.pdeName() + "-"+ GROUP + "_" + lights + "_" + fillStyle + "_" + radius + "_" + preScale + "-"+ fix.getTimestamp();
+
 //  DEBUG FOR DN
 println("cX, cY: "+ cX +"," +cY );
-println("radius (start): "+ radius );
+println("radius : "+ radius );
 
 //  NOTE: this sketch assumes all Adobe Stock modes live in P5 root/_allmodelsP5/
 
 switch(GROUP){
 
+  case "FIXBOMB":
+  {
+    //  * FICKES *
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+  }
+  break;
+  
   case "BOXES":
   {
     //  * BOXES *
@@ -160,6 +185,13 @@ println("preScale: "+ preScale );
   // pick shape
   s = shapes.get( ss );
 
+
+	//	LET'S MAKE AN OBJ!
+	if (recordObj) {
+		beginRecord("nervoussystem.obj.OBJExport", SAVE_NAME + ".obj");
+	}
+
+
 println("\n   Here we go! \n ");
 
 }
@@ -170,7 +202,7 @@ void draw()
   //  ENDER
   if( ss > shapes.size() )
   {
-    println("ss: "+ss);
+    println("PEACE OUT!: "+ss);
     doExit();
   }
   else
@@ -214,10 +246,10 @@ println("translate(x,y, ss+frameCount) : " + x+","+y+","+(ss+frameCount) );
   	// s.rotateY( ss*(width/shapes.size()) );
   	// s.rotateZ(frameCount);
 
-//  DISPLAY MODELS ARE UPSIDE DOWN?
-s.rotateX(cos(frameCount));
-s.rotateY(sin(frameCount));
-s.rotateZ(frameCount);
+	//  DISPLAY MODELS ARE UPSIDE DOWN?
+	s.rotateX(cos(frameCount));
+	s.rotateY(sin(frameCount));
+	s.rotateZ(frameCount);
 
     // s.rotateY( cos( radians(frameCount)) );
     // s.rotate( frameCount);
@@ -268,8 +300,15 @@ println("rotate: "+ frameCount +"\n\n");  //  *(width/shapes.size())
 /**
   End of sketch closer
 */
-void doExit(){
-  String msg = GROUP;// + " - ericfickes.com";
+void doExit()
+{
+	if(recordObj){
+		endRecord();
+		recordObj=false;
+	}
+
+
+  String msg = "ericfickes.com";
   //  stamp bottom right based on textSize
   fill(0);
   textSize(16);
@@ -277,11 +316,13 @@ void doExit(){
 
   //	SAVE W/META FOR RE-RUN HELP
   //	NAME-GROUP-lights_fillStyle_radius_preScale-TIMESTAMP
-  save( fix.pdeName() + "-"+ GROUP + "_" + lights + "_" + fillStyle + "_" + radius + "_" + preScale + "-"+ fix.getTimestamp()+".png" );    //  USE .TIF IF COLOR  
-  
+  save( SAVE_NAME +".png" );    //  USE .TIF IF COLOR  
+
   //  cleanup
   fix = null;
   shapes = null;
+
+
 
   noLoop();
   exit();
