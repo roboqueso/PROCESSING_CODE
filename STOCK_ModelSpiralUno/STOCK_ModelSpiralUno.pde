@@ -16,9 +16,9 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float cX, cY, x, y;
 PVector vect = new PVector();
-boolean recordObj = true;	//	export to OBJ, requires import nervoussystem.obj.*
-Boolean lights =  true;  //  EXTRA lights
-Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
+boolean recordObj = false;	//	export to OBJ, requires import nervoussystem.obj.*
+Boolean lights =   false;  //  EXTRA lights
+Boolean fillStyle =  false;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 123;  //303; //222;	//24;	//	circle radius
 // int getRad = 111; //100;	//	Radius increaser
@@ -57,19 +57,41 @@ switch(GROUP){
   case "FIXBOMB":
   {
     //  * FICKES *
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
-    shapes.add( loadShape( "../_allmodelsP5/212779421/cube_display_box_1367.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
+    shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
     shapes.add( loadShape( "../_allmodelsP5/207433028/male_mannequin_head_1325.obj" ) );
   }
   break;
@@ -234,7 +256,7 @@ void draw()
     specular(x%111, y%111,(frameCount%111));
   }
 
-	translate(x,y, ss+frameCount);
+	translate(x,y,1);// ss+frameCount);
 
 //  DEBUG FOR DN
 println("translate(x,y, ss+frameCount) : " + x+","+y+","+(ss+frameCount) );
