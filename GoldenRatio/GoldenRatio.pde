@@ -1,8 +1,4 @@
-float phi = (sqrt(5)+1)/2;
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
-Fixlib fix = Fixlib.init(this);
-String SAVE_NAME = "thisShouldBeDynamic";
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -25,7 +21,6 @@ void setup()
   noStroke();  
   //strokeWeight(HALF_PI);
   //stroke(255);
-  smooth(8);
 
 /*
   for (float i=0; i<10; i++) 
