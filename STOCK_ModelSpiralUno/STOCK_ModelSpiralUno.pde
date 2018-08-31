@@ -8,16 +8,16 @@ https://stock.adobe.com/collections/G8eYeCWZyF0PMNOZZxgVNzpNFPADcljj?content_id=
 // TODO: Run 100% of the free stock.adobe.com OBJs through this
 
 	172516642/stationary_003.obj
-	210882332/stationary_papers_1544.obj
-	190403568/a_business_cards_002.obj
-	184479727/business_cards_001.obj
-	201384220/thermos_289.obj
-	172516539/gift_box_192b.obj
-	207432973/hexagonal_display_structure_1411.obj
-	177154561/id_card_021.obj
-	214005311/two_business_cards_1581.obj
-	184479554/b_decorative_box_175.obj
-	190403630/juice_box_a_082.obj
+210882332/stationary_papers_1544.obj
+190403568/a_business_cards_002.obj
+184479727/business_cards_001.obj
+201384220/thermos_289.obj
+172516539/gift_box_192b.obj
+207432973/hexagonal_display_structure_1411.obj
+177154561/id_card_021.obj
+214005311/two_business_cards_1581.obj
+184479554/b_decorative_box_175.obj
+190403630/juice_box_a_082.obj
 207432898/closed_wide_envelope_1566.obj
 207431342/open_folder_1582.obj
 205410505/bottle_with_dropper_196.obj
@@ -118,12 +118,12 @@ import fixlib.*;
 
 boolean recordObj = false;	//	export to OBJ, requires import nervoussystem.obj.*
 Boolean lights =   true;  //  EXTRA lights
-Boolean fillStyle =  true;  //  TRUE: fill w/x,y or FALSE: leave style as is
-Boolean rotateGolden = false;	// Default to TRUE, not all OBJs look good on true
+Boolean fillStyle =   true;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean rotateGolden = true;	// Default to TRUE, not all OBJs look good on true
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
 int radius = 303; //222;	//24;	//	circle radius
-float preScale = 11;	//	pre-scale up shapes if needed
-String OBJ_NAME = "190403630/juice_box_a_082.obj";	//	FOR META
+float preScale = 2;	//	pre-scale up shapes if needed
+String OBJ_NAME = "207432973/hexagonal_display_structure_1411.obj";	//	FOR META
 String GROUP =  "FIXBOMB";	// "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
 
 
@@ -410,13 +410,13 @@ void doExit()
   String msg = OBJ_NAME;//"ericfickes.com";
   ////  stamp bottom right based on textSize
   fill(0);
-  textSize(43);
+  textSize(36);
   //  OG BOTTOM RIGHT STAMP
   //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
   //  NEW RIGHT VERTICAL STAMP
   textAlign(CENTER,BOTTOM);
   pushMatrix();
-    translate(width-TWO_PI,height-(textWidth(msg)+textAscent())+96);
+    translate(width-TWO_PI, cY);
     rotate(-HALF_PI);
     text(msg,0,0);
   popMatrix();
