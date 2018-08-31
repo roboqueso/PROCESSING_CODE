@@ -197,50 +197,54 @@ strokeWeight(strokeWt);
 
   for (int r = 0; r < height; r++) 
   {
+  	//	get the point
+    gX = cos(GR*r)*r;
+    gY = sin(GR*r)*r;
 
 
+// colors 1
+if(r%2==0)
+stroke(GR*r%255, r%255, r%255);
+else if(r%3==0)
+stroke(r%255, GR*r%255, r%255); 
+else if(r%5==0)
+stroke(r%255, r%255, GR*r%255); 
+else
+stroke( GR*r%255,GR*r%255, GR*r%255);
 
-/*    
-    // colors
-    if(r%2==0)
-     stroke(f*r%255, f%255, r%255); 
-    else if(r%3==0)
-     stroke(r%255, f*r%255, f%255); 
-    else if(r%5==0)
-     stroke(f%255, r%255, f*r%255); 
-    else
-     stroke( f*r%255,f*r%255, f*r%255);
-*/
+
+ 	//	JFX STROKE
 	// if(r%2==0)
-		ctx.setStroke(gradStroke);
+	// 	ctx.setStroke(gradStroke);
 	// else
 	// 	ctx.setStroke(gradient);
-
     //  NOTE: big variable in the resulting circle pattern
     // if(r%24==0){
     // 	strokeWt = (strokeWt*GR)%sqrt(height);
     // 	strokeWeight(strokeWt);
     // }
-    
-    //	NOTE: r%{loop number} would make for great GIF frames
-    if(r%43==0){
-    	strokeWt = (strokeWt*GR)%sqrt(height);
-    	strokeWeight(strokeWt);
-    }
 
 //	TODO: need gradual incrementor code, or "TWEEN" logic applies ( HOscillator? )
     // strokeWeight((r*GR)%(int)sqrt(width));		//	cool sprinklery
+
     // strokeWeight((r*GR)%cX);	//	crazy spiderman face
+	strokeWeight((r*GR)%width);	//	crazy spiderman face
 	// strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
 	// strokeWeight( 1+(r/TWO_PI)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( HALF_PI+(r/GR)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( noise(r)+(r/GR) );	// smooth tight spiral
 	// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
-// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
+    
+    //	NOTE: r%{loop number} would make for great GIF frames
+    // if(r%43==0){
+    // 	// strokeWt = (strokeWt*GR)%sqrt(height);
+    // 	strokeWt = (strokeWt*GR)%sqrt(height);
+    // 	strokeWeight(strokeWt);
+    // }
 
 
-    gX = cos(GR*r)*r;
-    gY = sin(GR*r)*r;
+
+
 
     point(gX, gY);    
     
