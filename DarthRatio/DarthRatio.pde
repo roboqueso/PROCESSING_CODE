@@ -47,6 +47,8 @@ Light.Point light;
 Lighting lighting = new Lighting();
 
 float cX, cY;
+float gX,gY;
+float strokeWt = .69;
 
 //  NOTE: some of these BlendModes cause the sketch to only show a blank white screen
 //  ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
@@ -64,11 +66,13 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  //background(#242424);
   background(-1);
 
   ellipseMode(CENTER);
   rectMode(CENTER);
+
+  noFill();
+
 
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
@@ -90,11 +94,9 @@ void setup()
 
 //  TODO: determine DARK + Gold color themes from StarWars Darth Vaders
 //  revisit these gradients
-  //  fill
-  gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF1975 20%, #13EF13 50%, #8833EF 80% )");
-
-  //  stroke
-  gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF8833 30%, #18ef20 50%, #1975EF 80%)");
+  
+  gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
+  gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2018 30%, #EF4308 60%, #1975EF 80%)");
 
 }
 
@@ -183,26 +185,21 @@ void draw() {
   // ctx.setEffect(lighting);
 
 // ctx.setEffect(displacementMap)  
-  //  STROKE
-  //  FILL
-  if(frameCount < cX)
-  {
-    ctx.setStroke(gradStroke);
-    ctx.setFill(gradient);
-  }
-  else
-  {
-    noFill();
-    ctx.setFill(null);
-  }
+
 
   
 
 //  DO DRAWING HERE
- translate(width*0.5, height*0.5);
+translate(cX, cY);
+
+//  STROKE
+strokeWeight(strokeWt);
+
+  for (int r = 0; r < height; r++) 
+  {
 
 
-  for (int r = 0; r < width; r+=HALF_PI) {
+
 /*    
     // colors
     if(r%2==0)
@@ -214,16 +211,35 @@ void draw() {
     else
      stroke( f*r%255,f*r%255, f*r%255);
 */
+	if(r%2==0)
+		ctx.setStroke(gradStroke);
+	else
+		ctx.setStroke(gradient);
 
     //  NOTE: big variable in the resulting circle pattern
-    // strokeWeight( 1+(r/TWO_PI)%sqrt(width) );
-    strokeWeight( HALF_PI );
+    if(r%180==0){
+    	strokeWt *= GR;
+    	strokeWeight(strokeWt);
+    }
+//	TODO: need gradual incrementor code, or "TWEEN" logic applies ( HOscillator? )
+    // strokeWeight((r*GR)%(int)sqrt(width));		//	cool sprinklery
+    // strokeWeight((r*GR)%cX);	//	crazy spiderman face
+	// strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
+	// strokeWeight( 1+(r/TWO_PI)%sqrt(width) );	// More open DOT spiral
+	// strokeWeight( HALF_PI+(r/GR)%sqrt(width) );	// More open DOT spiral
+	// strokeWeight( noise(r)+(r/GR) );	// smooth tight spiral
+	// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
+// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
 
 
-    //  Swap out shape here
-    point(cos(GR*r)*r, sin(GR*r)*r);    
+    gX = cos(GR*r)*r;
+    gY = sin(GR*r)*r;
+
+    point(gX, gY);    
     
-    // rect(cos(GR*r)*r, sin(GR*r)*r, sqrt(width), sqrt(width), r);
+    //	TODO: Get point & strokeWeight + FX figured out, then visit the other primitives
+    // rect(cos(GR*r)*r, sin(GR*r)*r, sqrt(width), sqrt(width));
+    // ellipse(cos(GR*r)*r, sin(GR*r)*r, (GR*r)%180, (GR*r)%180 );
   } 
 
 
