@@ -211,16 +211,23 @@ strokeWeight(strokeWt);
     else
      stroke( f*r%255,f*r%255, f*r%255);
 */
-	if(r%2==0)
+	// if(r%2==0)
 		ctx.setStroke(gradStroke);
-	else
-		ctx.setStroke(gradient);
+	// else
+	// 	ctx.setStroke(gradient);
 
     //  NOTE: big variable in the resulting circle pattern
-    if(r%180==0){
-    	strokeWt *= GR;
+    // if(r%24==0){
+    // 	strokeWt = (strokeWt*GR)%sqrt(height);
+    // 	strokeWeight(strokeWt);
+    // }
+    
+    //	NOTE: r%{loop number} would make for great GIF frames
+    if(r%43==0){
+    	strokeWt = (strokeWt*GR)%sqrt(height);
     	strokeWeight(strokeWt);
     }
+
 //	TODO: need gradual incrementor code, or "TWEEN" logic applies ( HOscillator? )
     // strokeWeight((r*GR)%(int)sqrt(width));		//	cool sprinklery
     // strokeWeight((r*GR)%cX);	//	crazy spiderman face
