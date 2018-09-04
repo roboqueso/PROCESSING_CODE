@@ -28,32 +28,29 @@ import javafx.scene.shape.*;
 
 import fixlib.*;
 
+
+//	this sketch is all about point() used w/strokeWeight() to add the magic
+float strokeWt = .69;
+//	control JFX global Blend mode
+boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+
+
 Fixlib fix = Fixlib.init(this);
 float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
-
-
 String SAVE_NAME = "thisShouldBeDynamic";
-
 GraphicsContext ctx;
-
-LinearGradient gradient, gradStroke;
-DropShadow fxDropShadow;
+Light.Distant light;
+Lighting lighting = new Lighting();
+BlendMode bMode;
 Glow fxGlow;
 Bloom fxBloom;
 InnerShadow fxInnerShadow;
 ColorAdjust fxColorAdjust;
-
-Light.Point light;
-Lighting lighting = new Lighting();
-
+LinearGradient gradient, gradStroke;
+DropShadow fxDropShadow;
 float cX, cY;
 float gX,gY;
-float strokeWt = .69;
 
-//  NOTE: some of these BlendModes cause the sketch to only show a blank white screen
-//  ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
-//  HARD_LIGHT, LIGHTEN, MULTIPLY, OVERLAY, RED, SCREEN, SOFT_LIGHT, SRC_ATOP, SRC_OVER
-BlendMode bMode = BlendMode.SRC_OVER;
 
 /* ------------------------------------------------------------------------- */
 
@@ -66,13 +63,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(-1);
-
-  ellipseMode(CENTER);
-  rectMode(CENTER);
-
-  noFill();
-
+  background(-1);	//	EF2018
 
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
@@ -81,11 +72,11 @@ void setup()
   cY = height/2;
 
   // JAVAFX!
-  fxColorAdjust = new ColorAdjust();
+  // fxColorAdjust = new ColorAdjust();
   fxGlow = new Glow();
   fxBloom = new Bloom();
-  fxInnerShadow = new InnerShadow();
-  fxDropShadow = new DropShadow();  //2d, 4d, 6d, Color.gray(0, 1));
+  // fxInnerShadow = new InnerShadow();
+  // fxDropShadow = new DropShadow();  //2d, 4d, 6d, Color.gray(0, 1));
 
 
   // in order to apply effects we need to get the 'native' graphics context of our canvas
@@ -94,9 +85,9 @@ void setup()
 
 //  TODO: determine DARK + Gold color themes from StarWars Darth Vaders
 //  revisit these gradients
-  
-  gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
-  gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2018 30%, #EF4308 60%, #1975EF 80%)");
+
+// gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
+// gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2018 30%, #EF4308 60%, #1975EF 80%)");
 
 }
 
@@ -143,7 +134,7 @@ void draw() {
 
 
 //  BLOOM
-//  fxBloom.setThreshold(frameCount/10 % 1.0);
+fxBloom.setThreshold(.8);//frameCount/10 % 1.0);
 
 
 //  COLOR ADJUST
@@ -155,34 +146,34 @@ void draw() {
 
 
 //  GLOW
-//  fxGlow.setLevel(1.0);  //frameCount/10 % 1.0);
+fxGlow.setLevel(.8);	// 1.0
 
 
 //  LIGHTING
   //  NOTE: Light works differently depending on how you set Inputs and combinations of when and where
-  // light = new Light.Point(cX, cY, frameCount%69, Color.rgb( 255, 255, 255 )  );
-  // lighting.setLight(light);
-//  TODO: Add a Blur here?
-  // lighting.setBumpInput(fxBloom);
-  // lighting.setContentInput(fxBloom);
-  // lighting.setDiffuseConstant(frameCount/10%2.0f);  //  2.0
-  // lighting.setSurfaceScale(frameCount/10%10.0f);  //  10.0
-  // lighting.setSpecularConstant(frameCount/10% 2.0f);  //  2.0
-  // lighting.setSpecularExponent(frameCount% 40.0f);  //  40.0
-  
+  light = new Light.Distant();//cX, cY, frameCount%69, Color.rgb( 255, 255, 255 )  );
+  light.setAzimuth(-135.0);
+  lighting.setLight(light);
+  lighting.setSurfaceScale(10);	//10);	//5.0);
 
-  //  TODO: work with BlendMode
-  // ctx.setGlobalBlendMode(bMode);
+//  TODO: Add a Blur here?
+  lighting.setBumpInput(fxGlow);
+  lighting.setContentInput(fxBloom);	//	fxBloom UNSHARPENS?
+  lighting.setDiffuseConstant(.96);	//frameCount/10%2.0f);  //  2.0
+
+//	these two are cool, but kind of wash out the others.  VERY B&W
+  lighting.setSpecularConstant(.69);	//frameCount/10% 2.0f);  //  2.0
+  lighting.setSpecularExponent(4.20);//(frameCount*.1)% 13.0f);  //  40.0
+  
   //  TODO: does this ever make a difference?
   // ctx.setFillRule(FillRule.NON_ZERO);
 
   //  APPLY EFFECTS - order matters
+  ctx.setEffect(lighting);
   // ctx.setEffect(fxColorAdjust);
-  // ctx.setEffect(fxBloom);
-  // ctx.setEffect(fxGlow);
   // ctx.setEffect(fxInnerShadow);
   // ctx.setEffect(fxDropShadow);
-  // ctx.setEffect(lighting);
+  
 
 // ctx.setEffect(displacementMap)  
 
@@ -201,16 +192,31 @@ strokeWeight(strokeWt);
     gX = cos(GR*r)*r;
     gY = sin(GR*r)*r;
 
+    //	think locally, blend Globally
+    if(blendDark){
+	    //	SET 1 - BLACK SUNSHINE
+		if(r%3==0)
+			bMode = BlendMode.DARKEN;
+		else if(r%4==0)
+			bMode = BlendMode.HARD_LIGHT;
+		else
+			bMode = BlendMode.DIFFERENCE;
+	} else {
+	    //	SET 2 - RGB 3D GLASSES VIBE
+	    //	NOTE: TBD what the best color combo is here
+	    //	ALL 3 colors work well in each r% position
+		if(r%3==0)
+			bMode = BlendMode.BLUE;
+		else if(r%4==0)
+			bMode = BlendMode.RED;
+		else
+			bMode = BlendMode.GREEN;
+	}
+	ctx.setGlobalBlendMode(bMode);
 
-// colors 1
-if(r%2==0)
-stroke(GR*r%255, r%255, r%255);
-else if(r%3==0)
-stroke(r%255, GR*r%255, r%255); 
-else if(r%5==0)
-stroke(r%255, r%255, GR*r%255); 
-else
-stroke( GR*r%255,GR*r%255, GR*r%255);
+//	NOTE: stroke changes the effectiveness of bMode logic ( good or bad )
+// stroke( r%2==0?0:255);	//	rings of color
+stroke( r%255 );	//	rings of color
 
 
  	//	JFX STROKE
@@ -228,8 +234,8 @@ stroke( GR*r%255,GR*r%255, GR*r%255);
     // strokeWeight((r*GR)%(int)sqrt(width));		//	cool sprinklery
 
     // strokeWeight((r*GR)%cX);	//	crazy spiderman face
-	strokeWeight((r*GR)%width);	//	crazy spiderman face
-	// strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
+	// strokeWeight((r/GR)%width);	//	crazy spiderman face
+	strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
 	// strokeWeight( 1+(r/TWO_PI)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( HALF_PI+(r/GR)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( noise(r)+(r/GR) );	// smooth tight spiral
