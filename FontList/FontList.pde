@@ -1,3 +1,9 @@
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
+//  TODO: redo the grid logic to tile LEFT to RIGHT, TOP to BOTTOM
+//  use calculate textWidth(msg) for each font to calculate NEXT X,Y
+
 //  
 //  Show a grid of ALL installed fonts
 //
@@ -12,18 +18,29 @@ void setup(){
   background(0);
   stroke(255);
   fill(255);
-  
+
+  // debug
+  printArray(fontList);
 
 }
 
 void draw(){
 
-
+  
+ if(frameCount>=fontList.length){
+    if(isFinal){
+      save( fix.pdeName() + fix.getTimestamp()+".png" );
+    }
+    
+    noLoop();   
+ }else{  
   try {
     fnt = fontList[frameCount];
     textFont( createFont( fnt, txtSz ));
   } 
   catch( Exception exc ){
+println("EXC: " + exc.getMessage() );
+
     fnt = fontList[ int(random(fontList.length-1)) ];
     textFont( createFont( fnt, txtSz ));
     fill(random(255));
@@ -37,8 +54,10 @@ text( fnt, xx, yy );
     yy += textAscent()+textDescent();
     
   } else {
-    yy = 0;
-    xx += txtSz*6.7;  // 11;//
+    yy = txtSz;
+    // NOTE: figure out a way to fit the full font list into the screen dynamically
+    xx += txtSz*13;//6.7;  // 11;//
+
   }
   
   
@@ -57,14 +76,6 @@ text( fnt, xx, yy );
     stroke(#20EF12);
     point(1024/2, 768/2);
   
-    if(isFinal){
-      save( fix.pdeName() + fix.getTimestamp()+".png" );
-    }
-    
-    noLoop();
-  
   }
-  
+ } 
 }
-
-

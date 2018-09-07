@@ -4,6 +4,9 @@ HAVATARS  : square one starting point P5/HYPE template sketch
 * size(displayWidth, displayHeight, P3D)
 * HDR w, h is 2x1 EX: 2048, 1024
 
+NOTE: this loads HImages into HGridLayout
+Figure out cool ways to 3D, shape, image texture
+
 TODO:
 - P5 your AVATARS
 - bring in self photo for base
@@ -21,6 +24,13 @@ Google+ : 680 x 680 ?
 Instagram : 312 x 312 ?
 LinkedIn : 200 x 200 ?
 Twitter : 520 x 520 ?
+
+behance_ericfickes.png
+ello_ericfickes.png
+google+_ericfickes.png
+instagram_ericfickes.png
+linkedin_ericfickes.png
+twitter_ericfickes.png
 
 
 
@@ -43,6 +53,8 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
+PFont font1;
+HText lbl;
 
 int gridX,gridY;
 int colCt = 2;
@@ -50,10 +62,14 @@ int rowCt = 3;  //  NOTE: remember to update this value
 int colSpacing = 8;
 int drawW, drawH; //  HDrawable Width / Height
 
+
+PImage imgBehance, imgEllo, imgGoogle, imgInstagram, imgLinkedin, imgTwitter;
+
+
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1280, 720, P3D); //"processing.opengl.PGraphics3D");
+    size(displayWidth, displayHeight, P3D); //"processing.opengl.PGraphics3D");
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -62,23 +78,33 @@ void  settings ()  {
 
 void setup() {
 
-  //  init VARIABLES
-  drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
-  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
-  gridX = (drawW/2)+colSpacing;
-  gridY = (drawH/2)+colSpacing;
+	//  init VARIABLES
+	drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
+	drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+	gridX = (drawW/2)+colSpacing;
+	gridY = (drawH/2)+colSpacing;
+
+	//	load avatar images
+	imgBehance = loadImage("behance_ericfickes.png");
+	imgEllo = loadImage("ello_ericfickes.png");
+	imgGoogle = loadImage("google+_ericfickes.png");
+	imgInstagram = loadImage("instagram_ericfickes.png");
+	imgLinkedin = loadImage("linkedin_ericfickes.png");
+	imgTwitter = loadImage("twitter_ericfickes.png");
+
+font1 = createFont("DoppioOne-Regular.ttf", 24);
 
   //  init HYPE
   H.init(this).background(-1).use3D(true);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
-    
-    .add (
-
-      // swap this out with something else
-      new HRect()
-    )
+    .add ( new HImage( imgBehance ) )
+    .add ( new HImage( imgEllo ) )
+    .add ( new HImage( imgGoogle ) )
+    .add ( new HImage( imgInstagram ) )
+    .add ( new HImage( imgLinkedin ) )
+    .add ( new HImage( imgTwitter ) )
 
     .layout (
       new HGridLayout()
@@ -94,14 +120,19 @@ void setup() {
 
           //  DO STUFF HERE
           HDrawable d = (HDrawable) obj;
-          d
-            .size( drawW, drawH )
-            .noFill()
-            .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
-            .anchorAt(H.CENTER)
-          ;
-        
 
+
+// TODO: can you dynamically re-use HText lbl?
+lbl = new HText( obj.toString(), 24, font1);
+lbl.fill( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255).anchorAt(H.CENTER);	//.loc( d.x(), d.y());
+
+          d
+            .anchorAt(H.CENTER)
+            .scale(.69)
+            .add(lbl)
+          ;
+
+// H.add(lbl);
 
         }
       }
@@ -111,6 +142,8 @@ void setup() {
   ;
 
   H.drawStage();
+
+  doExit();
 }
 
 
