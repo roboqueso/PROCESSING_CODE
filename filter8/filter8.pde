@@ -41,20 +41,20 @@ HDrawablePool pool;
 1 = vertical ( slices go top down )
 2 = horizontal -> OG filter8, slices go left to right
 */
-int MODE = 1;
-Boolean do_both_modes = true;	// run 1, then 2, then bounce
-String SRC_FILE = "f8_FXinP5.png";
+int MODE = 2;
+Boolean do_both_modes = false;	// run 1, then 2, then bounce
+String SRC_FILE = "b2.png";
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
 
 // TODO: fix clearStage
-int colSpacing = 43;
+int colSpacing = 0;
 
 
 PImage pImg, imgSlice;
 
 //	TODO: fix SCALE
 
-int iScale = -1;	//	-1 inverts slices
+int iScale = -11;	//	-1 inverts slices
 					//	1 keeps normal
 
 

@@ -30,7 +30,10 @@ import fixlib.*;
 
 
 //	this sketch is all about point() used w/strokeWeight() to add the magic
-float strokeWt = .69;
+float swtIndex = 1;	//	counts the current strokeWeight starting point ( want to run 1 - 360 )
+float swtMax = 100;	//	Use this to control ending the sketch.  The max swtIndex value before exiting.
+float strokeWt = swtIndex;	//69;	//69;	//.69;
+
 //	control JFX global Blend mode
 boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 
@@ -55,7 +58,7 @@ float gX,gY;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1920, 1080, FX2D); // FX2D required
+    size(displayWidth, displayHeight, FX2D); // FX2D required
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -64,9 +67,6 @@ void  settings ()  {
 void setup() 
 {
   background(-1);	//	EF2018
-
-  //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
 
   cX = width/2;
   cY = height/2;
@@ -95,6 +95,10 @@ void setup()
 
 /*****************************************************************************/
 void draw() {
+
+//	NOTE: moved this here since each run through draw() creates a PNG.  This needs to change each time
+//  Generate filename containing sketch settings meta NOW
+SAVE_NAME = fix.pdeName() + "_" + strokeWt +  "_" + blendDark + "-" + fix.getTimestamp();
 
 
 //  SHADOWS
@@ -205,12 +209,31 @@ strokeWeight(strokeWt);
 	    //	SET 2 - RGB 3D GLASSES VIBE
 	    //	NOTE: TBD what the best color combo is here
 	    //	ALL 3 colors work well in each r% position
+		
+
+		//	SET1: starts BLUE / YELLOW / B&W before overlapping and going full rainbow!
+		// if(r%3==0)
+		// 	bMode = BlendMode.RED;
+		// else if(r%4==0)
+		// 	bMode = BlendMode.BLUE;
+		// else
+		// 	bMode = BlendMode.DIFFERENCE;
+
+		// SET 2 : starts PINK / YELLOW / BLACK
+		// if(r%3==0)
+		// 	bMode = BlendMode.BLUE;
+		// else if(r%4==0)
+		// 	bMode = BlendMode.GREEN;
+		// else
+		// 	bMode = BlendMode.DIFFERENCE;
+
+		// SET  3: starts TEAL / PINK / BLACK ---> hotness
 		if(r%3==0)
-			bMode = BlendMode.BLUE;
+			bMode = BlendMode.GREEN;
 		else if(r%4==0)
 			bMode = BlendMode.RED;
 		else
-			bMode = BlendMode.GREEN;
+			bMode = BlendMode.DIFFERENCE;
 	}
 	ctx.setGlobalBlendMode(bMode);
 
@@ -235,18 +258,18 @@ stroke( r%255 );	//	rings of color
 
     // strokeWeight((r*GR)%cX);	//	crazy spiderman face
 	// strokeWeight((r/GR)%width);	//	crazy spiderman face
-	strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
+	// strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
 	// strokeWeight( 1+(r/TWO_PI)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( HALF_PI+(r/GR)%sqrt(width) );	// More open DOT spiral
 	// strokeWeight( noise(r)+(r/GR) );	// smooth tight spiral
 	// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
     
     //	NOTE: r%{loop number} would make for great GIF frames
-    // if(r%43==0){
-    // 	// strokeWt = (strokeWt*GR)%sqrt(height);
-    // 	strokeWt = (strokeWt*GR)%sqrt(height);
-    // 	strokeWeight(strokeWt);
-    // }
+    if(r%360==0){
+    	// strokeWt = (strokeWt*GR)%sqrt(height);
+    	strokeWt *= GR;
+    	strokeWeight(strokeWt);
+    }
 
 
 
@@ -261,12 +284,22 @@ stroke( r%255 );	//	rings of color
 
 
 
+/*
+run an array of strokeWeights
+1 - 111
+*/
 
+	if(swtIndex<=swtMax)
+	{
+		save(SAVE_NAME+".png");
+System.gc();
+	  	swtIndex++;
+	  	strokeWt = swtIndex;
 
-  //if(frameCount>PI){
-    noLoop();
-    doExit();
-  //}
+	} else {
+	    noLoop();
+	    doExit();
+    }
   
 }
 
