@@ -1,30 +1,10 @@
 /**
-HGoldenJuice = Draw fix.shapeJous() around the Golden Ratio
+DSHOrangeJuice.pde - DEVASKATION flavored HGoldenJuice
 
-GoldenJuice ported to using HYPE framework
-
-
-  InnerShadow
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
-
-  DropShadow
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DropShadow.html
-
-  JavaFX GLOW
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Glow.html
-
-  JavaFX LinearGradient
-  https://docs.oracle.com/javafx/2/api/javafx/scene/paint/LinearGradient.html
-
-  Bloom
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Bloom.html
-
-  BlendMode
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/BlendMode.html
-
-  DisplacementMap
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DisplacementMap.html
-
+TODO:
+- colors
+- fonts
+- assets load shapes
 */
 import javafx.scene.canvas.*;
 import javafx.scene.effect.*;
@@ -42,7 +22,8 @@ HShape tmpShp;
 //	this sketch is all about point() used w/strokeWeight() to add the magic
 float strokeWt = .69;
 //	control JFX global Blend mode
-boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+boolean displace = false;	//	Apply displacementMap
 
 Fixlib fix = Fixlib.init(this);
 float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
@@ -55,35 +36,36 @@ Glow fxGlow;
 Bloom fxBloom;
 InnerShadow fxInnerShadow;
 ColorAdjust fxColorAdjust;
-LinearGradient gradient, gradStroke;
+
 DropShadow fxDropShadow;
 float cX, cY;
 float gX,gY;
 
 
-RadialGradient radGrad;
 
-/* ------------------------------------------------------------------------- */
+//	TEST : Displacement Map?
+ FloatMap floatMap = new FloatMap();
+ DisplacementMap displacementMap = new DisplacementMap();
 
+
+/*****************************************************************************/
 void  settings ()  {
     size(1920, 1080, FX2D);//, P3D, P2D, FX2D	NOTE: P2D throwing tesselation errors
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
 
+
+
 /*****************************************************************************/
 void setup() 
 {
   background(-1);	//	EF2018
 
+	// GET NATIVE context for JFX effects
+	ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
-// init JFX first?
-// in order to apply effects we need to get the 'native' graphics context of our canvas
-// ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
-ctx = ((Canvas) this.surface.getNative()).getGraphicsContext2D();
-
-  	//	GET HYPED
-	//  init HYPE
+  	//	GET HYPE
 	H.init(this).background(-1).use3D(false);	//	JFX no worky w/3D
 	colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205);
 
@@ -95,18 +77,33 @@ ctx = ((Canvas) this.surface.getNative()).getGraphicsContext2D();
 
   // JAVAFX!
 
+
+  //	DISPLACEMENT MAP
+  if(displace){
+
+	floatMap.setWidth(width);
+	floatMap.setHeight(height);
+
+	for (int i = 0; i < width; i+=HALF_PI) 
+	{
+		// double v = (Math.sin(i / 20.0 * TWO_PI) - 0.5) / 40.0;
+		double v = (Math.sin(i / 20.0 * TWO_PI) - GR ) / 40.0;
+		
+		for (int j = 0; j < height; j+=HALF_PI) 
+		{
+			floatMap.setSamples(i, j, 0.0f, (float) v);
+		}
+	}
+
+	displacementMap.setMapData(floatMap);
+
+  }
+
   fxColorAdjust = new ColorAdjust();
   fxGlow = new Glow();
   fxBloom = new Bloom();
   fxInnerShadow = new InnerShadow();
   fxDropShadow = new DropShadow();  //2d, 4d, 6d, Color.gray(0, 1));
-
-//  TODO: determine DARK + Gold color themes from StarWars Darth Vaders
-//  revisit these gradients
-//  TODO: come back and run DS gradients
-//  NOTE: these don't work with HYPE
-gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
-gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2018 30%, #EF4308 60%, #1975EF 80%)");
 
 
 //  BLOOM
@@ -141,28 +138,19 @@ fxGlow.setLevel(.8);  // 1.0
   lighting.setSpecularConstant(.69);  //frameCount/10% 2.0f);  //  2.0
   lighting.setSpecularExponent(4.20);//(frameCount*.1)% 13.0f);  //  40.0
   
-  //  TODO: does this ever make a difference?
-  ctx.setFillRule(FillRule.NON_ZERO);
-
-  //  APPLY EFFECTS - order matters
-  ctx.setEffect(lighting);
-  ctx.setEffect(fxColorAdjust);
-  
-//  TODO: come back to displacementMap
-// ctx.setEffect(displacementMap);
-
-
-  
-
-//  DO DRAWING HERE
-//  NOTE: doing "translate" in calculation of gX,gY so the coords translate for HYPE
-// translate(cX, cY);
 
 //  STROKE
 strokeWeight(strokeWt);
 
 
+//  TODO: does this ever make a difference?
+ctx.setFillRule(FillRule.EVEN_ODD);	//default is FillRule.NON_ZERO);
+//  APPLY EFFECTS - order matters
+ctx.setEffect(lighting);
+ctx.setEffect(fxColorAdjust);
 
+
+//	LOOP STARTS HERE 
 
   for (int rr = 0; rr < height; rr++) 
   {
@@ -266,14 +254,6 @@ stroke( rr%255 );
   // make new shape
   tmpShp = new HShape( fix.shapeJous( gX, gY, rr%43, (int)strokeWt ) );
 
-//  TODO: why doesn't this work?  Is JFX interfering?
-  // tmpShp.fill(colors.getColor());
-  // tmpShp.stroke(colors.getColor());
-
-  // ctx.setFill(  Color.web( Integer.toHexString(colors.getColor()))  );
-  // ctx.setStroke(  Color.web( Integer.toHexString(colors.getColor()))  );
-
-
    H.add( tmpShp );
   } 
 
@@ -285,6 +265,10 @@ stroke( rr%255 );
 void draw() 
 {
 
+	if(displace)
+	{
+		ctx.setEffect(displacementMap);
+	}
 
 //  HYPE IT ALL
 H.drawStage();
