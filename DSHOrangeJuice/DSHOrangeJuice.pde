@@ -15,7 +15,7 @@ import fixlib.*;
 
 import hype.*;
 import hype.extended.colorist.HColorPool;
-
+import hype.extended.behavior.*;
 
 
 HShape tmpShp;
@@ -23,6 +23,9 @@ HImage tmpImg;
 //	this sketch is all about point() used w/strokeWeight() to add the magic
 float strokeWt = .69;
 //	control JFX global Blend mode
+
+//	NOTE: blendDark = true IS SLOW AF!!!!
+//	all output is solid black
 boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 boolean displace = false;	//	Apply displacementMap
 
@@ -42,11 +45,19 @@ DropShadow fxDropShadow;
 float cX, cY;
 float gX,gY;
 
-HColorPool colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205).fillOnly();
+HColorPool colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205);
 
-//	etex
+//	run a dark and NOT for each asset
+// String[]        texNames         = {"skateboard.svg"};
+// String[]        texNames         = {"shield-noskaters.svg"};
+// String[]        texNames         = {"derby.svg"};
+// String[]        texNames         = {"devaskation.svg"};
+// String[]        texNames         = {"hockey.svg"};
+// String[]        texNames         = {"inline.svg"};
+
 String[]        texNames         = {"shield-noskaters.svg","derby.svg", "devaskation.svg", "hockey.svg", "inline.svg", "skateboard.svg" };
-// = {"shield-noskaters.png","derby.png", "devaskation.png", "hockey.png", "inline.png", "skateboard.png" };
+
+// String[]        texNames         = {"shield-noskaters.png","derby.png", "devaskation.png", "hockey.png", "inline.png", "skateboard.png" };
 int             texNamesLen      = texNames.length;
 // PImage[]        texLoaded        = new PImage[texNamesLen];
 PShape[]        texLoaded        = new PShape[texNamesLen];
@@ -72,7 +83,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(0);	//	#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205
+  background(0);	
 
 	// GET NATIVE context for JFX effects
 	ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
@@ -93,7 +104,8 @@ void setup()
 
 
   	//	GET HYPE
-	H.init(this).background(-1).use3D(false);	//	JFX no worky w/3D
+  	//	//	#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205
+	H.init(this).background(0);	//	JFX no worky w/3D
 	
 
   //  Generate filename containing sketch settings meta NOW
@@ -188,7 +200,7 @@ ctx.setEffect(fxColorAdjust);
     //  think locally, blend Globally
     if(blendDark)
     {
-
+// println("stroke() removed from blendDark - does this matter?");
 		//  NOTE: stroke changes the effectiveness of bMode logic ( good or bad )
 		// stroke( rr%2==0?0:255);
 		stroke( rr%255 );
@@ -228,50 +240,32 @@ ctx.setEffect(fxColorAdjust);
 	//  SHADOWS
 	if(blendDark)
 	{
-		fxDropShadow.setColor(Color.rgb(rr%160, rr%160, rr%160) );
-		fxInnerShadow.setColor(Color.rgb(rr%160, rr%160, rr%160) );
+		//	override background color to be white 
+		background(255);
+		H.background(255);
+
+		fxDropShadow.setColor(Color.rgb(rr%255, rr%255, rr%255) );
+		fxInnerShadow.setColor(Color.rgb(rr%255, rr%255, rr%255) );
 		// fxInnerShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
 	}
 	else
 	{
-		/*
-		//  mix up inner shadow color
-		if(rr%3==0)
-		{
-			fxDropShadow.setColor(Color.rgb(rr%3,rr%3,rr%3));
-			fxInnerShadow.setColor(Color.rgb(rr%3, rr%3, rr%3));
-		}
-		else if(rr%7==0)
-		{
-			fxDropShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
-			fxInnerShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
-		}
-		else if(rr%13==0)
-		{
-			fxDropShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
-			fxInnerShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
-		}
-		else if(rr%25==0)
-		{
-			fxDropShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
-			fxInnerShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
-		}
-		else 
-		{
-			*/
-			//	HYPE COLORS
-		    fxDropShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
-		    fxInnerShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
-		// }
+		background(colors.getColor());
+		H.background(colors.getColor());
+
+		//	HYPE COLORS
+	    fxDropShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
+	    fxInnerShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
 	}
 
-  fxDropShadow.setOffsetX(rr%3f);
-  fxDropShadow.setOffsetY(rr%3f);
+  fxDropShadow.setOffsetX(4f);
+  fxDropShadow.setOffsetY(4f);
   fxDropShadow.setInput(fxGlow);
 
-  fxInnerShadow.setOffsetX(rr%3f);
-  fxInnerShadow.setOffsetY(rr%3f);
+  fxInnerShadow.setOffsetX(2f);
+  fxInnerShadow.setOffsetY(2f);
   fxInnerShadow.setInput(fxBloom);
+  
   ctx.setEffect(fxInnerShadow);
   ctx.setEffect(fxDropShadow);
 
@@ -306,34 +300,40 @@ ctx.setEffect(fxColorAdjust);
     //  strokeWeight(strokeWt);
     // }
 
+
   // SHAPEJOUS
   // tmpShp = new HShape( fix.shapeJous( gX, gY, rr%43, (int)strokeWt ) );
 
 
-   //	SVG
-   tmpShp = new HShape(  texLoaded[rr%texNamesLen]  );
+	//	SVG
+	tmpShp = new HShape(  texLoaded[rr%texNamesLen]  );
 
 
-	tmpShp
-		.rotation(rr)
-		.loc(gX, gY);
+// debug
+// println("(height/rr) ): "+(height/rr) );
+
+	//	TODO: get scale() and rotation() dialed in
+	//		   	.scale( (rr/20)%0.88 )
+	//	Use HOscillator for scaling?
+	tmpShp.loc(gX, gY);
+
+//	TODO: does this work?
+new HOscillator()
+	.target(tmpShp)
+	.property(H.SCALE)
+	.range(.24, 2.40)
+	.speed(0.8)
+	.freq(3)
+	.currentStep(rr);
 
 
 	if(blendDark)
 	{
-		tmpShp
-			.enableStyle(false)
-			.anchorAt(H.CENTER)
-			.fill( rr%255 );
+		tmpShp.enableStyle(false);
 	}
 	else
 	{
-		tmpShp
-			.fill(colors.getColor())
-			.stroke(colors.getColor());
-	
 		tmpShp.randomColors(colors);
-		// tmpShp.randomColors(colors.strokeOnly());
 	}
 
 	H.add( tmpShp );
@@ -356,7 +356,9 @@ void draw()
 	//  HYPE IT ALL
 	H.drawStage();
 
+
   //if(frameCount>PI){
+
     noLoop();
     doExit();
   //}
@@ -366,9 +368,9 @@ void draw()
 
 void doExit(){
 
-   save(SAVE_NAME+".png");
-    // noLoop();
-    // System.gc();
-    super.exit();
+	save(SAVE_NAME+".png");
+	// noLoop();
+	// System.gc();
+	super.exit();
 
 }
