@@ -101,7 +101,7 @@ void setup() {
 	imgLinkedin = loadImage("linkedin_ericfickes.png");
 	imgTwitter = loadImage("twitter_ericfickes.png");
 
-font1 = createFont("AMCAP_Eternal.ttf", 24);
+	font1 = createFont("AMCAP_Eternal.ttf", 24);
 
   //  init HYPE
   H.init(this).background(-1).use3D(true);

@@ -17,8 +17,9 @@ import hype.*;
 import hype.extended.colorist.HColorPool;
 
 
-HColorPool colors;
+
 HShape tmpShp;
+HImage tmpImg;
 //	this sketch is all about point() used w/strokeWeight() to add the magic
 float strokeWt = .69;
 //	control JFX global Blend mode
@@ -41,6 +42,17 @@ DropShadow fxDropShadow;
 float cX, cY;
 float gX,gY;
 
+HColorPool colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205).fillOnly();
+
+//	etex
+String[]        texNames         = {"shield-noskaters.svg","derby.svg", "devaskation.svg", "hockey.svg", "inline.svg", "skateboard.svg" };
+// = {"shield-noskaters.png","derby.png", "devaskation.png", "hockey.png", "inline.png", "skateboard.png" };
+int             texNamesLen      = texNames.length;
+// PImage[]        texLoaded        = new PImage[texNamesLen];
+PShape[]        texLoaded        = new PShape[texNamesLen];
+
+
+
 
 
 //	TEST : Displacement Map?
@@ -60,14 +72,29 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(-1);	//	EF2018
+  background(0);	//	#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205
 
 	// GET NATIVE context for JFX effects
 	ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
+
+//	TODO: is this the best way for HYPE?
+	// LOAD IMAGES
+	/*
+	for (int i = 0; i < texNamesLen; ++i) {
+		texLoaded[i] = loadImage(texNames[i]);
+	}
+*/
+
+	//	LOAD SHAPES
+	for (int i = 0; i < texNamesLen; ++i) {
+		texLoaded[i] = loadShape(texNames[i]);
+	}
+
+
   	//	GET HYPE
 	H.init(this).background(-1).use3D(false);	//	JFX no worky w/3D
-	colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205);
+	
 
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
@@ -162,10 +189,9 @@ ctx.setEffect(fxColorAdjust);
     if(blendDark)
     {
 
-
-//  NOTE: stroke changes the effectiveness of bMode logic ( good or bad )
-// stroke( rr%2==0?0:255);
-stroke( rr%255 );
+		//  NOTE: stroke changes the effectiveness of bMode logic ( good or bad )
+		// stroke( rr%2==0?0:255);
+		stroke( rr%255 );
 
 
 
@@ -184,17 +210,84 @@ stroke( rr%255 );
     bMode = BlendMode.SRC_OVER;
 
     //  NOTE: renderer is using JFX, HYPE's shape.stroke() appears to get overwritten
+    // ctx.setFill( Color.web( Integer.toHexString(colors.getColor())) );
     // ctx.setStroke( Color.web( Integer.toHexString(colors.getColor())) );
     //  WHY DOESN'T THIS WORK?!?!?
 
     //HACK : the only way to get custom color stroke working?!?!
+    // fill( colors.getColor() );
     stroke( colors.getColor() );
+    tint ( colors.getColor() );
 
   }
 
   ctx.setGlobalBlendMode(bMode);
 
 
+
+	//  SHADOWS
+	if(blendDark)
+	{
+		fxDropShadow.setColor(Color.rgb(rr%160, rr%160, rr%160) );
+		fxInnerShadow.setColor(Color.rgb(rr%160, rr%160, rr%160) );
+		// fxInnerShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
+	}
+	else
+	{
+		/*
+		//  mix up inner shadow color
+		if(rr%3==0)
+		{
+			fxDropShadow.setColor(Color.rgb(rr%3,rr%3,rr%3));
+			fxInnerShadow.setColor(Color.rgb(rr%3, rr%3, rr%3));
+		}
+		else if(rr%7==0)
+		{
+			fxDropShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
+			fxInnerShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
+		}
+		else if(rr%13==0)
+		{
+			fxDropShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
+			fxInnerShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
+		}
+		else if(rr%25==0)
+		{
+			fxDropShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
+			fxInnerShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
+		}
+		else 
+		{
+			*/
+			//	HYPE COLORS
+		    fxDropShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
+		    fxInnerShadow.setColor(Color.web( Integer.toHexString(colors.getColor())));
+		// }
+	}
+
+  fxDropShadow.setOffsetX(rr%3f);
+  fxDropShadow.setOffsetY(rr%3f);
+  fxDropShadow.setInput(fxGlow);
+
+  fxInnerShadow.setOffsetX(rr%3f);
+  fxInnerShadow.setOffsetY(rr%3f);
+  fxInnerShadow.setInput(fxBloom);
+  ctx.setEffect(fxInnerShadow);
+  ctx.setEffect(fxDropShadow);
+
+
+
+/*
+   //	IMAGE
+   tmpImg = new HImage( texLoaded[(int)random(texNamesLen)] );
+   tmpImg
+   	.scale( (rr/10)%0.6 )
+   	.rotation(rr)
+   	.loc(gX, gY);
+
+   H.add(tmpImg);
+*/
+//	TODO: re-visit strokeWeight with SHAPES, not IMAGES
 //  TODO: need gradual incrementor code, or "TWEEN" logic applies ( HOscillator? )
     // strokeWeight((r*GR)%(int)sqrt(width));   //  cool sprinklery
 
@@ -213,48 +306,38 @@ stroke( rr%255 );
     //  strokeWeight(strokeWt);
     // }
 
-
-//  SHADOWS
-
-  //  mix up inner shadow color
-  if(rr%7==0)
-  {
-    fxDropShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
-    fxDropShadow.setInput(fxBloom);
-    fxInnerShadow.setColor(Color.rgb(rr%242, (int)random(rr%242), rr%242) );
-    fxInnerShadow.setInput(fxGlow);
-  }
-  else if(rr%13==0)
-  {
-    fxDropShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
-    fxInnerShadow.setColor(Color.rgb(rr%255, (int)random(rr%255), rr%255) );
-  }
-  else if(rr%24==0)
-  {
-    fxDropShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
-    fxInnerShadow.setColor(Color.rgb((int)random(rr%255), (int)random(rr%255), (int)random(rr%255) ) );
-  }
-  else
-  {
-    fxDropShadow.setColor(Color.rgb(rr%3,rr%3,rr%3));
-    fxInnerShadow.setColor(Color.rgb(rr%3, rr%3, rr%3));
-  }
-
-  fxDropShadow.setOffsetX(rr%3f);
-  fxDropShadow.setOffsetY(rr%3f);
-  fxDropShadow.setInput(fxGlow);
-
-  fxInnerShadow.setOffsetX(rr%3f);
-  fxInnerShadow.setOffsetY(rr%3f);
-  fxInnerShadow.setInput(fxBloom);
-  ctx.setEffect(fxInnerShadow);
-  ctx.setEffect(fxDropShadow);
+  // SHAPEJOUS
+  // tmpShp = new HShape( fix.shapeJous( gX, gY, rr%43, (int)strokeWt ) );
 
 
-  // make new shape
-  tmpShp = new HShape( fix.shapeJous( gX, gY, rr%43, (int)strokeWt ) );
+   //	SVG
+   tmpShp = new HShape(  texLoaded[rr%texNamesLen]  );
 
-   H.add( tmpShp );
+
+	tmpShp
+		.rotation(rr)
+		.loc(gX, gY);
+
+
+	if(blendDark)
+	{
+		tmpShp
+			.enableStyle(false)
+			.anchorAt(H.CENTER)
+			.fill( rr%255 );
+	}
+	else
+	{
+		tmpShp
+			.fill(colors.getColor())
+			.stroke(colors.getColor());
+	
+		tmpShp.randomColors(colors);
+		// tmpShp.randomColors(colors.strokeOnly());
+	}
+
+	H.add( tmpShp );
+
   } 
 
 }
@@ -270,8 +353,8 @@ void draw()
 		ctx.setEffect(displacementMap);
 	}
 
-//  HYPE IT ALL
-H.drawStage();
+	//  HYPE IT ALL
+	H.drawStage();
 
   //if(frameCount>PI){
     noLoop();
