@@ -1,10 +1,19 @@
 import hype.*;
 import hype.extended.layout.HGridLayout;
 import hype.extended.colorist.HColorPool;
+import fixlib.*;
+
+/* ------------------------------------------------------------------------- */
+Fixlib fix = Fixlib.init(this);
 
 HColorPool    colors;
 HDrawablePool pool;
 
+
+// DS_attachSVG
+// * run background spiral pattern
+// * 11 columns on top
+// * D E V A S K A T I O N  ( 11 LETTERS, one for each column )
 
 /*****************************************************************************/
 void  settings ()  {
@@ -75,9 +84,37 @@ Current DS 6 SVG heights
 
 
 	H.drawStage();
-	noLoop();
+
+
+	doExit();
 }
 
 void draw() {
+}
 
+
+
+/* ------------------------------------------------------------------------- */
+/*  NON - P5 BELOW  */
+/* ------------------------------------------------------------------------- */
+
+/**
+  End of sketch closer
+*/
+void doExit(){
+  String msg = "ericfickes.com";
+  //  stamp bottom right based on textSize
+  fill(0);
+  textSize(16);
+  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );    //  USE .TIF IF COLOR  
+  
+  //  cleanup
+  fix = null;
+  
+  noLoop();
+  exit();
+  System.gc();
+  System.exit(1);
 }
