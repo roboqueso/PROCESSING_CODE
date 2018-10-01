@@ -2,7 +2,7 @@
 HAVATARS  : square one starting point P5/HYPE template sketch
 * BLOOD-DRAGON : 1920 x 1071
 * size(displayWidth, displayHeight, P3D)
-* HDR w, h is 2x1 EX: 2048, 1024
+* HDR w, h is 2x1 EX: 2048, 1096
 
 NOTE: this loads HImages into HGridLayout
 Figure out cool ways to 3D, shape, image texture
@@ -53,25 +53,23 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
-PFont font1;
+HColorPool    colors;
+
+PFont font1, font2, font3;
 HText lbl;
 
 int gridX,gridY;
-int colCt = 2;
-int rowCt = 3;  //  NOTE: remember to update this value
-int colSpacing = 8;
+int colCt = 11;
+int rowCt = 11;  //  NOTE: remember to update this value
+int colSpacing = 1;
 int drawW, drawH; //  HDrawable Width / Height
+String[] dsletters = {"D","E","V","A","S","K","A","T","I","O","N"};
 
+PImage imgDerby, imgDevaskation, imgHockey, imgInline, imgSheildNoSk8, imgSkateboard;
 
-PImage imgBehance, imgEllo, imgGoogle, imgInstagram, imgLinkedin, imgTwitter;
-
-
-/*
-TODO: setup Devaskation color palette for HYPE
-
-#000000, #ED7100, #315D15, #3D107B, #E35205, #FFFFFF
-
-*/
+// TODO: get all 6 DS fonts into /data
+String[] fontNames = { "AMCAP Eternal.ttf", "Cardo-Regular.ttf", "Myriad Pro Regular.ttf"};
+PFont[] fontList =  new PFont[fontNames.length];
 
 
 
@@ -90,30 +88,40 @@ void setup() {
 	//  init VARIABLES
 	drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
 	drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
-	gridX = (drawW/2)+colSpacing;
+	gridX = (drawW/2)+(colSpacing*5);
 	gridY = (drawH/2)+colSpacing;
 
 	//	load avatar images
-	imgBehance = loadImage("behance_ericfickes.png");
-	imgEllo = loadImage("ello_ericfickes.png");
-	imgGoogle = loadImage("google+_ericfickes.png");
-	imgInstagram = loadImage("instagram_ericfickes.png");
-	imgLinkedin = loadImage("linkedin_ericfickes.png");
-	imgTwitter = loadImage("twitter_ericfickes.png");
+	imgDerby = loadImage("derby.png");
+	imgDevaskation = loadImage("devaskation.png");
+	imgHockey = loadImage("hockey.png");
+	imgInline = loadImage("inline.png");
+	imgSheildNoSk8 = loadImage("shield-noskaters.png");
+	imgSkateboard = loadImage("skateboard.png");
 
-	font1 = createFont("AMCAP_Eternal.ttf", 24);
+
+	//	pre-load fonts
+	for(int ff = 0; ff < fontNames.length; ff++){
+		fontList[ff] = createFont( fontNames[ff], 24);
+	}
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this);
+
+	colors = new HColorPool(#000000, #ED7100, #315D15, #3D107B, #E35205);
+
+	background(colors.getColor());
+	H.background(colors.getColor());
 
   pool = new HDrawablePool(colCt*rowCt);
+  
   pool.autoAddToStage()
-    .add ( new HImage( imgBehance ) )
-    .add ( new HImage( imgEllo ) )
-    .add ( new HImage( imgGoogle ) )
-    .add ( new HImage( imgInstagram ) )
-    .add ( new HImage( imgLinkedin ) )
-    .add ( new HImage( imgTwitter ) )
+    .add ( new HImage( imgDerby ).anchorAt(H.CENTER) )
+    // .add ( new HImage( imgDevaskation ).anchorAt(H.CENTER) )
+    .add ( new HImage( imgHockey ).anchorAt(H.CENTER) )
+    .add ( new HImage( imgInline ).anchorAt(H.CENTER) )
+    // .add ( new HImage( imgSheildNoSk8 ).anchorAt(H.CENTER) )
+    .add ( new HImage( imgSkateboard ).anchorAt(H.CENTER) )
 
     .layout (
       new HGridLayout()
@@ -131,31 +139,31 @@ void setup() {
           HDrawable d = (HDrawable) obj;
 
 
-// TODO: can you dynamically re-use HText lbl?
-lbl = new HText( obj.toString(), 24, font1);
-//lbl.fill( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255).anchorAt(H.CENTER);	//.loc( d.x(), d.y());
-lbl.fill(#000000);
+	// TODO: rotate all 6 DS fonts in a smarter manner
+	// if(pool.currentIndex()%2==0)
+	// 	lbl = new HText( dsletters[pool.currentIndex()%dsletters.length], 69, font2);
+	// else if(pool.currentIndex()%3==0)
+	// 	lbl = new HText( dsletters[pool.currentIndex()%dsletters.length], 69, font3);
+	// else 
+		lbl = new HText( dsletters[pool.currentIndex()%dsletters.length], 69, fontList[pool.currentIndex()%fontList.length]);
 
-/*
-TODO: create 6 assets from DEVASKATION LOGO ( players, title, full crest )
-* load in DS assets instead of EF social meedz
+	// debug
+	// println("pool.currentIndex(): "+pool.currentIndex() );
 
-TODO: get colorPixelist or colorPool working with fill ( fill each asset label with each DS color )
-#000000
-#ED7100
-#315D15
-#3D107B
-#E35205
-#FFFFFF
-*/
-  d
-            .anchorAt(H.CENTER)
-            .scale(.69)
-            .add(lbl)
-          ;
 
-// H.add(lbl);
 
+
+		lbl.fill(#FFFFFF);	//colors.getColor());
+		lbl.anchorAt(H.CENTER);
+
+	  d.add(lbl);
+
+		// d.strokeWeight(1).stroke(#FFFFFF);
+		// d.tint(colors.getColor());
+        d.width(drawW);
+        d.height(drawH);
+		d.stroke(colors.getColor());
+		d.fill(colors.getColor());
         }
       }
     )
@@ -191,10 +199,8 @@ void draw() {
   if(save_frame){
     saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##.png");  //  USE .TIF IF COLOR
   }
+  if(frameCount>96)doExit();
   */
-
-  if(frameCount>43)doExit();
-
 }
 
 
@@ -213,7 +219,7 @@ void draw() {
 void doExit(){
   String msg = "ericfickes.com";
   //  stamp bottom right based on textSize
-  fill(0);
+  fill(colors.getColor());
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
