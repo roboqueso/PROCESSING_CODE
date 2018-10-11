@@ -24,17 +24,28 @@ import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 String SAVE_NAME = "thisShouldBeDynamic";
-int maxFrame = 69;
+String txtMsg;
+int maxFrame = 8;
 
 GraphicsContext ctx;
 
 // TODO: dial in shadows first, then light, then other FX
 DropShadow ds, ds1;
-InnerShadow is, is1;
-Blend blend, blend1, blend2;
+InnerShadow is = new InnerShadow();
+InnerShadow is1 = new InnerShadow();
+
+Blend blend = new Blend();
+Blend blend1 = new Blend();
+Blend blend2 = new Blend();
 
 
-float cX, cY;
+
+float cX, cY, x1, y1;
+
+int rectW,rectH;
+int rectRad = 0;  //  store rect radius / point size / 
+int txtH, txtW;
+
 
 //  A value of null is treated as pass-though this means no effect on a parent such as a Group and the equivalent of SRC_OVER for a single Node.
 //  SRC_OVER = DEFAULT, use while concepting
@@ -57,7 +68,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(#EFEFEF);
+  background(-1);
 
   cX = width/2;
   cY = height/2;
@@ -68,59 +79,21 @@ void setup()
   //see: https://docs.oracle.com/javase/10/docs/api/javafx/scene/canvas/GraphicsContext.html
   ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
+  //  BIG ASS TEXT
+  txtH = (int)(width/TWO_PI);
+  textSize(txtH);
 
-// JAVAFX CSS: https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+  textAlign(CENTER);
+  rectMode(CENTER);
 
-//  TODO: work with BlendMode
-ctx.setGlobalBlendMode(bMode);
-ctx.setFillRule(FillRule.NON_ZERO);    
-ctx.setMiterLimit(1.0); //  default = 10.0
-ctx.setFontSmoothingType( FontSmoothingType.LCD );
+  txtH = (int) (textAscent()+textDescent());
+
+  ctx.setGlobalBlendMode(bMode);
+  ctx.setFontSmoothingType( FontSmoothingType.GRAY );
+  ctx.setFillRule(FillRule.EVEN_ODD); //  https://docs.oracle.com/javafx/2/api/javafx/scene/shape/FillRule.html
+  ctx.setMiterLimit(1); //  default = 10.0, 1 gives nice round edge to text
 
 
-//  inspired by neon sign
-        
-        blend = new Blend();
-        blend.setMode(BlendMode.MULTIPLY);
-  
-        ds = new DropShadow();
-        ds.setColor(Color.rgb(254, 235, 66, 0.3));
-        ds.setOffsetX(5);
-        ds.setOffsetY(5);
-        ds.setRadius(5);
-        ds.setSpread(0.2);
-        
-        blend.setBottomInput(ds);
-        
-        ds1 = new DropShadow();
-        ds1.setColor(Color.web("#EF4318")); //  #f13a00
-        ds1.setRadius(20);
-        ds1.setSpread(0.2);
-        
-        blend2 = new Blend();
-        blend2.setMode(BlendMode.MULTIPLY);
-        
-        is = new InnerShadow();
-        is.setColor(Color.web("#EF1975"));  //  #feeb42
-        is.setRadius(9);
-        is.setChoke(0.8);
-        blend2.setBottomInput(is);
-        
-        is1 = new InnerShadow();
-        is1.setColor(Color.web("#EF2018")); //  #f13a00
-        is1.setRadius(5);
-        is1.setChoke(0.4);
-        blend2.setTopInput(is1);
-        
-        blend1 = new Blend();
-        blend1.setMode(BlendMode.MULTIPLY);
-        blend1.setBottomInput(ds1);
-        blend1.setTopInput(blend2);
-        
-        blend.setTopInput(blend1);
-         
-        // text.setEffect(blend);
-        ctx.setEffect(blend);
 
 }
 
@@ -130,43 +103,121 @@ ctx.setFontSmoothingType( FontSmoothingType.LCD );
 void draw() {
 
 
+//  TEXT pre-calcs
+x1 = random(cX);
+y1 = random(height);
 
-//  SKETCH HERE
-
-strokeWeight(random(HALF_PI,maxFrame));
-point( random(width), random(height) );
-
-strokeWeight(random( 1, HALF_PI ));
-line( random(width), random(height), random(width), random(height) );
-
-noFill();
-rect( random(width), random(height), 69, 69, random(-frameCount, -maxFrame) );
+txtMsg = binary(frameCount, 8); //  anymore and text flies off screen
+txtW = (int)textWidth(txtMsg);
+rectW = txtW%width;
+rectH = txtH; // (int)( textAscent() + textDescent());
 
 
-textSize(random(TWO_PI,maxFrame));
 
-
-//  STROKE or FILL
+//  TODO: figure out smarter way to re-use blends to alternate NEON
 if(frameCount%2==0)
 {
-  ctx.setStroke(Color.web("#19EF75"));
-  ctx.setFill(Color.web("#EF4318"));
-  // fill(0xEFEFEF);
-
-  ctx.strokeText( binary(frameCount),  random(maxFrame, cY), (frameCount*random(maxFrame))%height );
+  //  GREEN
+  ctx.setStroke(Color.web("#19EF75"));  //  1843EF
+  
+      blend = new Blend();
+      blend.setMode(BlendMode.MULTIPLY);
+            
+      ds = new DropShadow();
+      ds.setColor(Color.web("#19EF75", 0.75));
+      ds.setOffsetX(5);
+      ds.setOffsetY(5);
+      ds.setRadius(5);
+      ds.setSpread(0.2);
+      
+      blend.setBottomInput(ds);
+      
+      ds1 = new DropShadow();
+      ds1.setColor(Color.web("#2018EF", 0.75));
+      ds1.setRadius(20);
+      ds1.setSpread(0.2);
+      
+      blend2 = new Blend();
+      blend2.setMode(BlendMode.MULTIPLY);
+      
+      is = new InnerShadow();
+      is.setColor(Color.web("#1975EF", 0.75)) ;
+      is.setRadius(9);
+      is.setChoke(0.8);
+      blend2.setBottomInput(is);
+      
+      is1 = new InnerShadow();
+      is1.setColor(Color.web("#20EF18", 0.75)) ;
+      is1.setRadius(5);
+      is1.setChoke(0.4);
+      blend2.setTopInput(is1);
+      
+      blend1 = new Blend();
+      blend1.setMode(BlendMode.MULTIPLY);
+      blend1.setBottomInput(ds1);
+      blend1.setTopInput(blend2);
+      
+      blend.setTopInput(blend1);
+      
+      ctx.setEffect(blend);
 }
 else
 { 
-  ctx.setStroke(Color.web("#1975EF"));
-  ctx.setFill(Color.web("#EF4318"));
-  // fill(0xEF4318);
-  
-  ctx.fillText( binary(frameCount),  random(maxFrame, cY), (frameCount*random(maxFrame))%height );
+  ctx.setStroke(Color.web("#EFEF43"));
+
+      blend = new Blend();
+      blend.setMode(BlendMode.MULTIPLY);
+            
+      ds = new DropShadow();
+      ds.setColor(Color.web("#EF1975", 0.75));
+      ds.setOffsetX(5);
+      ds.setOffsetY(5);
+      ds.setRadius(5);
+      ds.setSpread(0.2);
+      
+      blend.setBottomInput(ds);
+      
+      ds1 = new DropShadow();
+      ds1.setColor(Color.web("#EF2018", 0.75));
+      ds1.setRadius(20);
+      ds1.setSpread(0.2);
+      
+      blend2 = new Blend();
+      blend2.setMode(BlendMode.MULTIPLY);
+      
+      is = new InnerShadow();
+      is.setColor(Color.web("#EF1975", 0.75));
+      is.setRadius(9);
+      is.setChoke(0.8);
+      blend2.setBottomInput(is);
+      
+      is1 = new InnerShadow();
+      is1.setColor(Color.web("#EF2018", 0.75));
+      is1.setRadius(5);
+      is1.setChoke(0.4);
+      blend2.setTopInput(is1);
+      
+      blend1 = new Blend();
+      blend1.setMode(BlendMode.MULTIPLY);
+      blend1.setBottomInput(ds1);
+      blend1.setTopInput(blend2);
+      
+      blend.setTopInput(blend1);
+
 }
 
 
+  ctx.setEffect(blend);
 
 
+//  RECT
+strokeWeight(TWO_PI);
+noFill();
+rect( x1+(txtW/2), y1-(txtH/PI)  , rectW, rectH, -rectRad );
+
+
+//  TEXT
+ctx.strokeText( txtMsg,  x1, y1 );
 
 
   //  STOPPER
