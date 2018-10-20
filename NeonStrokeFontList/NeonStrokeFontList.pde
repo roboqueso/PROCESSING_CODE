@@ -3,8 +3,9 @@ NeonStrokeFontList - NeonStroke + FontList
 
 see : https://docs.oracle.com/javafx/2/text/jfxpub-text.htm
 
-MOTHERFUCIKING FONTS WON'T CHANGE
-GOD DAMN JAVAFX
+TODO:
+- fix RECT to be perfectly centered
+- fix TEXT sizing to be centered in RECT
 
 
 */
@@ -37,14 +38,13 @@ float cX, cY, x1, y1;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 8;  //  0 = ALL INSTALLED FONTS
+int stopper = 0;  //  0 = ALL INSTALLED FONTS
 
 
 //  TEXT VARS
 String txtMsg;
 String fnt;
 // String[] fontList = PFont.list();  //  P5 FONT LIST
-
 String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
 int txtH = 11;  // arbitrary starting font size
 int txtW;
