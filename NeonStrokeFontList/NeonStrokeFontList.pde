@@ -21,7 +21,6 @@ Fixlib fix = Fixlib.init(this);
 String SAVE_NAME = "thisShouldBeDynamic";
 String SAVE_EXTENSION = ".PNG"; //  ".TIF";
 
-Canvas chuck;
 GraphicsContext ctx;  //see: https://docs.oracle.com/javase/10/docs/api/javafx/scene/canvas/GraphicsContext.html
 
 DropShadow ds, ds1;
@@ -38,16 +37,19 @@ float cX, cY, x1, y1;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 13;
+int stopper = 8;  //  0 = ALL INSTALLED FONTS
 
 
 //  TEXT VARS
 String txtMsg;
 String fnt;
-String[] fontList = PFont.list();
+// String[] fontList = PFont.list();  //  P5 FONT LIST
+
+String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
 int txtH = 11;  // arbitrary starting font size
 int txtW;
 
+Font jFont;
 
 //  A value of null is treated as pass-though this means no effect on a parent such as a Group and the equivalent of SRC_OVER for a single Node.
 //  SRC_OVER = DEFAULT, use while concepting
@@ -106,6 +108,8 @@ void draw() {
     try 
     {
       fnt = fontList[frameCount-1]; //  -1 so we get font[0]
+
+      jFont = new Font(fnt, txtH );
     } 
     catch( Exception exc )
     {
@@ -117,10 +121,7 @@ void draw() {
       //  P5 FONT
       textFont( createFont( fnt, txtH ) );
       //  JFX FONT
-      ctx.setFont( Font.font( fnt, txtH ) );
-
-// // debug
-// text(fnt, cX, cY/2);
+      ctx.setFont( jFont );
 
     //  APPEND FONT TO SAVE_NAME FOR TRACKING
     //  Generate filename containing sketch settings meta NOW
