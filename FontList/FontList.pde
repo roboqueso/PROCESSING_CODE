@@ -14,7 +14,7 @@ public Boolean isFinal = true;
 
 void setup(){
   // size( 1024, 768 );
-  size( displayWidth, displayHeight );
+  size( displayWidth, displayHeight,);
   background(0);
   stroke(255);
   fill(255);

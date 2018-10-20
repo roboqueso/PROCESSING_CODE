@@ -3,8 +3,9 @@ NeonStrokeFontList - NeonStroke + FontList
 
 see : https://docs.oracle.com/javafx/2/text/jfxpub-text.htm
 
-- tune in color(s), text size and font
-- re-visit https://docs.oracle.com/javafx/2/text/jfxpub-text.htm for additional magic
+MOTHERFUCIKING FONTS WON'T CHANGE
+GOD DAMN JAVAFX
+
 
 */
 import javafx.scene.canvas.*;
@@ -37,7 +38,7 @@ float cX, cY, x1, y1;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 1;
+int stopper = 13;
 
 
 //  TEXT VARS
@@ -81,7 +82,7 @@ void setup()
   rectMode(CENTER);
 
   //  ARBITRARY starting textSize
-  textSize(24);
+  textSize(txtH);
   txtH = (int) (textAscent()+textDescent());
 
   ctx.setGlobalBlendMode(bMode);
@@ -113,11 +114,13 @@ void draw() {
       fnt = fontList[ int(random(fontList.length-1)) ];
     }
 
-    //  P5 FONT
-    textFont( createFont( fnt, txtH ) );
-    //  JFX FONT
-    ctx.setFont( Font.font( fnt, txtH ) );
+      //  P5 FONT
+      textFont( createFont( fnt, txtH ) );
+      //  JFX FONT
+      ctx.setFont( Font.font( fnt, txtH ) );
 
+// // debug
+// text(fnt, cX, cY/2);
 
     //  APPEND FONT TO SAVE_NAME FOR TRACKING
     //  Generate filename containing sketch settings meta NOW
@@ -133,7 +136,7 @@ void draw() {
 
     //  RE-MEASURE FOR RECT
     txtW = (int) textWidth(txtMsg);
-    rectW = (int) ( txtW*.98 );
+    rectW = txtW; //(int) ( txtW*.98 );
     rectH = (int)( textAscent() + textDescent());
 
     //  text X/Y
