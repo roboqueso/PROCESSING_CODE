@@ -4,8 +4,7 @@ NeonStrokeFontList - NeonStroke + FontList
 see : https://docs.oracle.com/javafx/2/text/jfxpub-text.htm
 
 TODO:
-- fix RECT to be perfectly centered
-- fix TEXT sizing to be centered in RECT
+- run through all and check for needed tweaks
 
 
 */
@@ -14,6 +13,9 @@ import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
+import javafx.geometry.VPos;
+import javafx.scene.text.TextAlignment;
+
 
 import fixlib.*;
 
@@ -32,14 +34,14 @@ Blend blend = new Blend();
 Blend blend1 = new Blend();
 Blend blend2 = new Blend();
 
+boolean showFrame = true; //  include the text frame ( FALSE = just text )
 
-
-float cX, cY, x1, y1;
+float cX, cY, txtX, txtY;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 0;  //  0 = ALL INSTALLED FONTS
-
+int stopper = 4;  //  0 = ALL INSTALLED FONTS
+int strokeSz = 8;  //  Stroke weight affects the FRAME and the TEXT
 
 //  TEXT VARS
 String txtMsg;
@@ -74,26 +76,36 @@ void setup()
 {
   background(-1);
 
+  
+  noFill();
+  rectMode(CENTER); //  NOTE: rect( x,y ) = the RECT's CENTER POINT
+  textAlign(CENTER,CENTER);
+  //  ARBITRARY starting textSize
+  textSize(txtH);
+
+  strokeJoin(ROUND);
+  strokeCap(ROUND);
+
   cX = width/2;
   cY = height/2;
 
   //see: https://docs.oracle.com/javase/10/docs/api/javafx/scene/canvas/GraphicsContext.html
   ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
-  textAlign(CENTER);
-  rectMode(CENTER);
-
-  //  ARBITRARY starting textSize
-  textSize(txtH);
   txtH = (int) (textAscent()+textDescent());
 
   ctx.setGlobalBlendMode(bMode);
   ctx.setFontSmoothingType( FontSmoothingType.GRAY );
   ctx.setFillRule(FillRule.EVEN_ODD); //  https://docs.oracle.com/javafx/2/api/javafx/scene/shape/FillRule.html
-  ctx.setMiterLimit(1); //  default = 10.0, 1 gives nice round edge to text
+  
+  //  The ratio limit of how far a MITER line join may extend in the direction of a 
+  //  sharp corner between segments in the boundary path of a shape, relative to the 
+  //  line width, before it is truncated to a BEVEL join in a stroke operation.
+  ctx.setMiterLimit(1.0); //  default = 10.0, 1 is nice
+  ctx.setLineCap(StrokeLineCap.ROUND);
 
-  // debug
-  printArray(fontList);
+  ctx.setTextAlign(TextAlignment.CENTER);
+  ctx.setTextBaseline(VPos.CENTER);
 
 }
 
@@ -125,7 +137,7 @@ void draw() {
 
     //  APPEND FONT TO SAVE_NAME FOR TRACKING
     //  Generate filename containing sketch settings meta NOW
-    SAVE_NAME = fix.pdeName() + "-bMode-" + bMode + "-" + fnt + "-" + (frameCount-1);
+    SAVE_NAME = fix.pdeName() + "-bMode-" + bMode + "-FRAME-" + showFrame + "-" + fnt + "-" + (frameCount-1);
 
     //  TEXT pre-calcs
     txtMsg = fnt; //  font name
@@ -137,12 +149,16 @@ void draw() {
 
     //  RE-MEASURE FOR RECT
     txtW = (int) textWidth(txtMsg);
-    rectW = txtW; //(int) ( txtW*.98 );
+    rectW = (int) ( txtW*.99 );
     rectH = (int)( textAscent() + textDescent());
 
     //  text X/Y
-    x1 = 0;
-    y1 = cY+(txtH/PI);  //random(height);
+    txtX = cX;
+    txtY = cY;  //+(txtH/PI);  //random(height);
+
+    // Shrink text size so it fits INSIDE the RECT better
+    txtH -= 8;
+    textSize(txtH);
 
 
 //  TODO: figure out smarter way to re-use blends to alternate NEON
@@ -158,12 +174,17 @@ void draw() {
     ctx.setEffect(blend);
 
     //  RECT
-    strokeWeight(TWO_PI);
-    noFill();
-    rect( x1+(txtW/2)-9, y1-(txtH/PI) , rectW, rectH, -rectRad );
+    if(showFrame){
+      //  STROKE A BIT BIGGER THAN TEXT
+      strokeWeight(strokeSz*HALF_PI);
+      //  Use CENTER PONT because rectMode(CENTER)
+      rect( cX, cY , rectW, rectH, -rectRad );
+    }
 
     //  TEXT
-    ctx.strokeText( txtMsg, x1-16, y1 );
+    strokeWeight(strokeSz);
+
+    ctx.strokeText( txtMsg, txtX, txtY );
 
     //  SAVE PNG FOR EACH FONT
     stampAndSave();
@@ -198,7 +219,7 @@ void stampAndSave()
 
   textSize(13);
   txtMsg = "ERICFICKES.COM";
-  text(txtMsg, width-textWidth(txtMsg), height-textAscent());
+  text(txtMsg, width-(textWidth(txtMsg)*.5), height-( (textAscent()+textDescent())*1.11 ) );
   save(SAVE_NAME+SAVE_EXTENSION); //  CONTROL EXTENSION UP TOP
 }
 
@@ -308,7 +329,7 @@ void doExit(){
   //  stamp bottom right based on textSize
   fill(#EF1975);
   textSize(13);
-  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+  text(msg, width-(textWidth(msg)+textAscent()), height-txtH);
   
   save(SAVE_NAME+SAVE_EXTENSION); //  CONTROL EXTENSION UP TOP
   
