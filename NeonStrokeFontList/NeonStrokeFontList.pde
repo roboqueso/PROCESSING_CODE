@@ -34,13 +34,13 @@ Blend blend = new Blend();
 Blend blend1 = new Blend();
 Blend blend2 = new Blend();
 
-boolean showFrame = true; //  include the text frame ( FALSE = just text )
+boolean showFrame = false; //  include the text frame ( FALSE = just text )
 
 float cX, cY, txtX, txtY;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 4;  //  0 = ALL INSTALLED FONTS
+int stopper = 11;  //  0 = ALL INSTALLED FONTS
 int strokeSz = 8;  //  Stroke weight affects the FRAME and the TEXT
 
 //  TEXT VARS
@@ -66,7 +66,7 @@ BlendMode bMode = BlendMode.SRC_OVER;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(displayWidth, displayHeight, FX2D); // FX2D required
+    size(1920,1080, FX2D); // FX2D required
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -80,9 +80,8 @@ void setup()
   noFill();
   rectMode(CENTER); //  NOTE: rect( x,y ) = the RECT's CENTER POINT
   textAlign(CENTER,CENTER);
-  //  ARBITRARY starting textSize
-  textSize(txtH);
 
+  //  ONLY IF ROUND EDGES NEEDED - impacts sharp edged fonts
   strokeJoin(ROUND);
   strokeCap(ROUND);
 
@@ -101,8 +100,10 @@ void setup()
   //  The ratio limit of how far a MITER line join may extend in the direction of a 
   //  sharp corner between segments in the boundary path of a shape, relative to the 
   //  line width, before it is truncated to a BEVEL join in a stroke operation.
-  ctx.setMiterLimit(1.0); //  default = 10.0, 1 is nice
-  ctx.setLineCap(StrokeLineCap.ROUND);
+  
+  //  ONLY IF ROUND EDGES NEEDED - impacts sharp edged fonts
+  // ctx.setMiterLimit(1.0); //  default = 10.0, 1 is nice
+  // ctx.setLineCap(StrokeLineCap.ROUND);
 
   ctx.setTextAlign(TextAlignment.CENTER);
   ctx.setTextBaseline(VPos.CENTER);
@@ -141,7 +142,8 @@ void draw() {
 
     //  TEXT pre-calcs
     txtMsg = fnt; //  font name
-    
+
+
     //  RE-ADJUST TEXTSIZE TO FIT WIDTH
     txtW = (int)textWidth(txtMsg);
     txtH = (int)min(txtH*width/txtW, height);
@@ -185,6 +187,11 @@ void draw() {
     strokeWeight(strokeSz);
 
     ctx.strokeText( txtMsg, txtX, txtY );
+
+
+//  DROP P5 text in bottom LEFT corner
+textSize(69);
+text(txtMsg, cX, height-( (textAscent()+textDescent())*1.11 ) );
 
     //  SAVE PNG FOR EACH FONT
     stampAndSave();
