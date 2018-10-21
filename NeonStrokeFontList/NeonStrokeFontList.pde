@@ -40,14 +40,256 @@ float cX, cY, txtX, txtY;
 
 int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
-int stopper = 11;  //  0 = ALL INSTALLED FONTS
-int strokeSz = 8;  //  Stroke weight affects the FRAME and the TEXT
+int stopper = 0;  //  0 = ALL INSTALLED FONTS
+int strokeSz = 9;  //  Stroke weight affects the FRAME and the TEXT
 
 //  TEXT VARS
 String txtMsg;
 String fnt;
 // String[] fontList = PFont.list();  //  P5 FONT LIST
-String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
+
+//  ALL INSTALLED FONTS - as known by JFX
+ String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
+
+//  TODO: curate favorites - NON-STANDARD SHIT
+/*
+// manual list
+String[] fontList = {
+".SF NS Text"
+, "AMCAP Eternal"
+, "Adobe Clean"
+, "Adobe Clean Han"
+, "Al Bayan"
+, "Al Nile"
+, "Al Tarikh"
+, "American Typewriter"
+, "Andale Mono"
+, "Apple Braille"
+, "Apple Chancery"
+, "Apple Color Emoji"
+, "Apple SD Gothic Neo"
+, "Apple Symbols"
+, "AppleGothic"
+, "AppleMyungjo"
+, "Arial"
+, "Arial Black"
+, "Arial Hebrew"
+, "Arial Hebrew Scholar"
+, "Arial Narrow"
+, "Arial Rounded MT Bold"
+, "Arial Unicode MS"
+, "Avenir"
+, "Avenir Next"
+, "Avenir Next Condensed"
+, "Ayuthaya"
+, "Baghdad"
+, "Bangla MN"
+, "Bangla Sangam MN"
+, "Barricada Pro"
+, "Basic Sans SF"
+, "Baskerville"
+, "Beirut"
+, "Beloved Sans"
+, "Big Caslon"
+, "Bitwise"
+, "Blenny"
+, "Bodoni 72"
+, "Bodoni 72 Oldstyle"
+, "Bodoni 72 Smallcaps"
+, "Bodoni Ornaments"
+, "Bradley Hand"
+, "Brush Script MT"
+, "Bungee"
+, "Cardo"
+, "Catwing"
+, "Chalkboard"
+, "Chalkboard SE"
+, "Chalkduster"
+, "Charter"
+, "Cochin"
+, "Comic Sans MS"
+, "Copperplate"
+, "Corsiva Hebrew"
+, "Courier"
+, "Courier New"
+, "Cranberry Gin"
+, "Critter Std"
+, "DIN Alternate"
+, "DIN Condensed"
+, "Damascus"
+, "DecoType Naskh"
+, "Devanagari MT"
+, "Devanagari Sangam MN"
+, "Didot"
+, "Discourse Middle"
+, "Diwan Kufi"
+, "Diwan Thuluth"
+, "Euphemia UCAS"
+, "Fairwater Solid Serif"
+, "Farah"
+, "Farisi"
+, "Fh_Perception"
+, "Fira Sans"
+, "Futura"
+, "GB18030 Bitmap"
+, "Geeza Pro"
+, "Geneva"
+, "Georgia"
+, "Gill Sans"
+, "Gujarati MT"
+, "Gujarati Sangam MN"
+, "Gurmukhi MN"
+, "Gurmukhi MT"
+, "Gurmukhi Sangam MN"
+, "HWT Mardell"
+, "Heiti SC"
+, "Heiti TC"
+, "Helvetica"
+, "Helvetica Neue"
+, "Herculanum"
+, "Hiragino Kaku Gothic StdN"
+, "Hiragino Maru Gothic ProN"
+, "Hiragino Mincho ProN"
+, "Hiragino Sans"
+, "Hiragino Sans GB"
+, "Hobeaux Rococeaux"
+, "Hoefler Text"
+, "ITF Devanagari"
+, "ITF Devanagari Marathi"
+, "Impact"
+, "InaiMathi"
+, "Industry"
+, "Jumble"
+, "Kailasa"
+, "Kannada MN"
+, "Kannada Sangam MN"
+, "Kefa"
+, "Khmer MN"
+, "Khmer Sangam MN"
+, "Kohinoor Bangla"
+, "Kohinoor Devanagari"
+, "Kohinoor Telugu"
+, "Kokonor"
+, "KonTikiJF"
+, "Kozuka Gothic Pr6N"
+, "Kozuka Mincho Pr6N"
+, "Krungthep"
+, "KufiStandardGK"
+, "Lao MN"
+, "Lao Sangam MN"
+, "Limh"
+, "LoRes 22 OT"
+, "LoRes 9 OT"
+, "Lucida Bright"
+, "Lucida Grande"
+, "Lucida Sans"
+, "Lucida Sans Typewriter"
+, "Luminari"
+, "Malayalam MN"
+, "Malayalam Sangam MN"
+, "Marker Felt"
+, "Menlo"
+, "Merriweather"
+, "Microsoft Sans Serif"
+, "Mishafi"
+, "Mishafi Gold"
+, "Monaco"
+, "Monospaced"
+, "Montserrat"
+, "Montserrat Alternates"
+, "Mr Eaves Mod OT"
+, "Mr Eaves San OT"
+, "Mshtakan"
+, "Muna"
+, "Myanmar MN"
+, "Myanmar Sangam MN"
+, "Myriad Pro"
+, "Nadeem"
+, "New Peninim MT"
+, "Noteworthy"
+, "Noto Nastaliq Urdu"
+, "Open Sans"
+, "Optima"
+, "Oriya MN"
+, "Oriya Sangam MN"
+, "PT Mono"
+, "PT Sans"
+, "PT Sans Caption"
+, "PT Sans Narrow"
+, "PT Serif"
+, "PT Serif Caption"
+, "Palatino"
+, "Papyrus"
+, "Phoreus Cherokee"
+, "Phosphate"
+, "PingFang HK"
+, "PingFang SC"
+, "PingFang TC"
+, "Plantagenet Cherokee"
+, "Program Nar OT"
+, "Program OT"
+, "Raanana"
+, "Raleway"
+, "Rockwell"
+, "Rollerscript"
+, "STIXGeneral"
+, "STIXIntegralsD"
+, "STIXIntegralsSm"
+, "STIXIntegralsUp"
+, "STIXIntegralsUpD"
+, "STIXIntegralsUpSm"
+, "STIXNonUnicode"
+, "STIXSizeFiveSym"
+, "STIXSizeFourSym"
+, "STIXSizeOneSym"
+, "STIXSizeThreeSym"
+, "STIXSizeTwoSym"
+, "STIXVariants"
+, "STSong"
+, "Sana"
+, "SansSerif"
+, "Sathu"
+, "Savoye LET"
+, "Serif"
+, "Shree Devanagari 714"
+, "SignPainter"
+, "Signo"
+, "Silom"
+, "Sinhala MN"
+, "Sinhala Sangam MN"
+, "Skia"
+, "Snell Roundhand"
+, "Songti SC"
+, "Songti TC"
+, "Sukhumvit Set"
+, "Symbol"
+, "System"
+, "Tahoma"
+, "Tamil MN"
+, "Tamil Sangam MN"
+, "Tarzana Nar OT"
+, "Tarzana Wide OT"
+, "Telugu MN"
+, "Telugu Sangam MN"
+, "Thonburi"
+, "Times"
+, "Times New Roman"
+, "Trattatello"
+, "Trebuchet MS"
+, "VAG Rundschrift D"
+, "Verdana"
+, "Waseem"
+, "Webdings"
+, "Wingdings"
+, "Wingdings 2"
+, "Wingdings 3"
+, "Zapf Dingbats"
+, "Zapfino"
+, "Zeoruz"
+};
+*/
+
+
 int txtH = 11;  // arbitrary starting font size
 int txtW;
 
@@ -69,21 +311,24 @@ void  settings ()  {
     size(1920,1080, FX2D); // FX2D required
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
+
+
+    // debug
+printArray(fontList);
 }
 
 /*****************************************************************************/
 void setup() 
 {
   background(-1);
-
   
   noFill();
   rectMode(CENTER); //  NOTE: rect( x,y ) = the RECT's CENTER POINT
   textAlign(CENTER,CENTER);
 
   //  ONLY IF ROUND EDGES NEEDED - impacts sharp edged fonts
-  strokeJoin(ROUND);
-  strokeCap(ROUND);
+  // strokeJoin(ROUND);
+  // strokeCap(ROUND);
 
   cX = width/2;
   cY = height/2;
@@ -138,7 +383,7 @@ void draw() {
 
     //  APPEND FONT TO SAVE_NAME FOR TRACKING
     //  Generate filename containing sketch settings meta NOW
-    SAVE_NAME = fix.pdeName() + "-bMode-" + bMode + "-FRAME-" + showFrame + "-" + fnt + "-" + (frameCount-1);
+    SAVE_NAME = fix.pdeName() + "-" + fnt + "-" + (frameCount-1) + "-bMode-" + bMode + "-FRAME-" + showFrame + "-strokeSz-" + strokeSz ;
 
     //  TEXT pre-calcs
     txtMsg = fnt; //  font name
@@ -191,7 +436,7 @@ void draw() {
 
 //  DROP P5 text in bottom LEFT corner
 textSize(69);
-text(txtMsg, cX, height-( (textAscent()+textDescent())*1.11 ) );
+text(txtMsg, textWidth(txtMsg), height-( (textAscent()+textDescent())*1.11 ) );
 
     //  SAVE PNG FOR EACH FONT
     stampAndSave();
