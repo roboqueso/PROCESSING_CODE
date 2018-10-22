@@ -33,7 +33,7 @@ GraphicsContext ctx;  //see: https://docs.oracle.com/javase/10/docs/api/javafx/s
 
 LinearGradient gradFill, gradStroke;
 
-boolean showBg = false; //  show background image
+// boolean showBg = true; //  show background image
 
 float cX, cY, txtX, txtY;
 
@@ -41,35 +41,39 @@ int rectW,rectH;
 int rectRad = 0;  //  store rect radius / point size / 
 int stopper = 0;  //  0 = Run through entire fontList[] array
 int strokeSz = 4;  //  Stroke weight affects the FRAME and the TEXT
+int bgClr = 0x131313;  // background(bgClr)
+int ballInc = 3; // Text Ball INCREMENTOR value. Think 360 / ballInc
+boolean showBall = true; //  Show text ball behind big message
+
 
 //  TEXT VARS
 String txtMsg;
 String fnt;
+
 // String[] fontList = PFont.list();  //  P5 FONT LIST
 
 //  ALL INSTALLED FONTS - as known by JFX
 // String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
-//  TODO: curate favorites - NON-STANDARD SHIT
-//  * export to OBJ favorites after adding NEON_SIGN_MSG feature
-
 
 //  DEVASKATION FONTS
 // String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo" };
 
+String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic", "Arial Rounded MT Bold" };
+
+/*
 //  FAVORITES
 String[] fontList = { "Slaytanic", "AMCAP Eternal",  "Arial Rounded MT Bold", "Bitwise", "Cardo", 
                       "Catwing", "Chalkduster", "Courier", "Cranberry Gin", "Didot", "Fh_Perception", "Georgia", "Impact", 
                       "Jumble", "Krungthep", "PT Mono", "Raleway", "Rockwell", 
                       "SignPainter", "Silom",  "Trattatello", "Zeoruz" };
-
+*/
 
 
 
 int txtH = 11;  // arbitrary starting font size
 int txtW;
-// int bgColor = 255;  //  0 black, 255 white
 Font jFont;
-PImage bgImage;
+
 
 //  A value of null is treated as pass-though this means no effect on a parent such as a Group and the equivalent of SRC_OVER for a single Node.
 //  SRC_OVER = DEFAULT, use while concepting
@@ -78,7 +82,7 @@ PImage bgImage;
 //  16 BlendModes : Run final sketch through all 16 BlendModes
 //  ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
 //  HARD_LIGHT, LIGHTEN, MULTIPLY, OVERLAY, RED, SCREEN, SOFT_LIGHT, SRC_ATOP
-BlendMode bMode = BlendMode.EXCLUSION;
+BlendMode bMode = BlendMode.SRC_ATOP;
 
 
 /* ------------------------------------------------------------------------- */
@@ -87,9 +91,6 @@ void  settings ()  {
     size(1920,1440, FX2D); // FX2D required
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
-
-    if(showBg)
-      bgImage = loadImage("graffiti.png");
   
   // debug
   printArray(fontList);
@@ -98,16 +99,11 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(-1);
-
-  if(showBg)
-    image(bgImage,0,0,width,height);
+  background(bgClr);
   
   noFill();
   rectMode(CENTER); //  NOTE: rect( x,y ) = the RECT's CENTER POINT
   textAlign(CENTER,CENTER);
-
-  // textMode(SHAPE); //  todo: retry with P3D
 
   cX = width/2;
   cY = height/2;
@@ -116,10 +112,11 @@ void setup()
   ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
   //  fill
-  gradFill = LinearGradient.valueOf("linear-gradient(from 0px 0px to 0px "+height+"px, #5ca4db 20%, #a0aea8 40%, #cf94ad 60%, #a4347d 80% )");
+  gradFill = LinearGradient.valueOf("linear-gradient(from 0px 0px to 0px "+height+"px, #434343 20%, #757575 40%, #DADDAD 60%, #EFEFEF 80% )");
 
   //  stroke
-  gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #1975EF 20%, #EFEFEF 40%, #ef4318 60%, #EF1975 80%)");
+  gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to 0px "+height+"px, #EFEFEF 20%, #DADDAD 40%, #757575 60%, #242424 80% )");
+
 
   
   ctx.setStroke(gradStroke);  //  Color.BLACK
@@ -128,15 +125,6 @@ void setup()
   ctx.setGlobalBlendMode(bMode);
   ctx.setFontSmoothingType( FontSmoothingType.GRAY );  //  LCD or GRAY
   ctx.setFillRule(FillRule.EVEN_ODD); //  https://docs.oracle.com/javafx/2/api/javafx/scene/shape/FillRule.html
-  
-  //  The ratio limit of how far a MITER line join may extend in the direction of a 
-  //  sharp corner between segments in the boundary path of a shape, relative to the 
-  //  line width, before it is truncated to a BEVEL join in a stroke operation.
-  
-  //  ONLY IF ROUND EDGES NEEDED - impacts sharp edged fonts
-  // ctx.setMiterLimit(1.0); //  default = 10.0, 1 is nice
-  // ctx.setLineCap(StrokeLineCap.ROUND);
-
   ctx.setTextAlign(TextAlignment.CENTER);
   ctx.setTextBaseline(VPos.CENTER);
 
@@ -170,9 +158,7 @@ void draw() {
 
     //  APPEND FONT TO SAVE_NAME FOR TRACKING
     //  Generate filename containing sketch settings meta NOW
-    // Blendmode doesn't really matter at the moment
-    //  
-    SAVE_NAME = fix.pdeName() + "-" + (frameCount-1) + "-" + fnt  + "-strokeSz" + strokeSz +"-bMode-" + bMode;
+    SAVE_NAME = fix.pdeName() + "-" + (frameCount-1) + "-" + fnt  + "-strokeSz" + strokeSz +"-bMode-" + bMode +"-showBall"+showBall;
 
     //  TEXT pre-calcs
     txtMsg = fnt; //  font name
@@ -192,36 +178,40 @@ void draw() {
 
 
   //  TEXT BALL
-  pushMatrix();
-  translate(cX, cY); // Translate to the center
-  for(int rr = 0; rr < 360; rr+=6)
+  if(showBall)
   {
+    pushMatrix();
+    translate(cX, cY); // Translate to the center
+    for(int rr = 0; rr < 360; rr+=ballInc)
+    {
+      rotate(rr);
 
-    rotate(rr);                // Rotate by theta
+      //  TEXT
 
-    //  TEXT
-    strokeWeight(strokeSz*.69);
-    textSize(txtH*.69);
-    ctx.fillText( txtMsg, 0,0 );
-    ctx.strokeText( txtMsg, 0,0 );
+      //  p5
+      textSize(txtH*.69);
+      text(txtMsg,0,0);
 
-    text(txtMsg,0,0);
+      //  jfx
+      // strokeWeight(strokeSz*.69);
+      // textSize(txtH*.69);
+      // ctx.strokeText( txtMsg, 0,0 );
 
+    }
+    popMatrix();
   }
-  popMatrix();
 
 
 
-
-    //  TEXT
-    textSize(txtH);
-    strokeWeight(strokeSz);
-    ctx.fillText( txtMsg, txtX, txtY );
-    ctx.strokeText( txtMsg, txtX, txtY );
+  //  TEXT
+  textSize(txtH);
+  strokeWeight(strokeSz);
+  ctx.fillText( txtMsg, txtX, txtY );
+  ctx.strokeText( txtMsg, txtX, txtY );
 
 
   //  DROP P5 text in upper LEFT corner
-  fill(#696969);
+  fill(#EF4318);
   textSize(txtH/PI);
   text(txtMsg, txtX,  txtX-textDescent() );
 
@@ -249,16 +239,7 @@ void draw() {
 void stampAndSave()
 {
   textSize(13);
-  if(frameCount%2==0)
-  {
-    //green();
-    fill(#20EF18);
-  }
-  else
-  { 
-    // red();
-    fill(#EF4324);
-  }
+  fill(#EF1975);
   txtMsg = "ERICFICKES.COM";
   text(txtMsg, width-(textWidth(txtMsg)*.25), height-( (textAscent()+textDescent())*1.11 ) );
   save(SAVE_NAME+SAVE_EXTENSION); //  CONTROL EXTENSION UP TOP

@@ -4,8 +4,7 @@ NeonStrokeFontList - NeonStroke + FontList
 see : https://docs.oracle.com/javafx/2/text/jfxpub-text.htm
 
 TODO:
-- run through all and check for needed tweaks
-
+  * export to OBJ favorites after adding NEON_SIGN_MSG feature
 
 */
 import javafx.scene.canvas.*;
@@ -46,21 +45,25 @@ int strokeSz = 9;  //  Stroke weight affects the FRAME and the TEXT
 //  TEXT VARS
 String txtMsg;
 String fnt;
+
+
 // String[] fontList = PFont.list();  //  P5 FONT LIST
 
 //  ALL INSTALLED FONTS - as known by JFX
 // String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
-//  TODO: curate favorites - NON-STANDARD SHIT
-//  * export to OBJ favorites after adding NEON_SIGN_MSG feature
-
 
 //  DEVASKATION FONTS
 // String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo" };
 
+String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic", "Arial Rounded MT Bold" };
+
+/*
 //  FAVORITES
-String[] fontList = { "Slaytanic", "AMCAP Eternal", "Andale Mono", "Arial Rounded MT Bold", "Bitwise", "Bodoni Ornaments", "Cardo", "Catwing", "Chalkduster", "Courier", "Cranberry Gin", "Didot", "Fh_Perception", "Georgia", "Impact", "Jumble", "Krungthep", "Luminari", "PT Mono", "Raleway", "Rockwell", "Rollerscipt", "Shree Devanagari 714", "SignPainter", "Silom", "Snell Roundhand", "Trattatello", "Zapfino", "Zeoruz" };
-
-
+String[] fontList = { "Slaytanic", "AMCAP Eternal",  "Arial Rounded MT Bold", "Bitwise", "Cardo", 
+                      "Catwing", "Chalkduster", "Courier", "Cranberry Gin", "Didot", "Fh_Perception", "Georgia", "Impact", 
+                      "Jumble", "Krungthep", "PT Mono", "Raleway", "Rockwell", 
+                      "SignPainter", "Silom",  "Trattatello", "Zeoruz" };
+*/
 
 
 int txtH = 11;  // arbitrary starting font size
