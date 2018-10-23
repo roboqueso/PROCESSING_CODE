@@ -1,5 +1,5 @@
 /**
- * load image and dice into pieces 
+ * load image and dice into pieces, slices saved to disk at slices/slice name .png
  */
 
 PImage img, tmpSlice;
