@@ -32,10 +32,14 @@ import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
-String SAVE_TYPE = ".png";
+String SAVE_NAME = "thisShouldBeDynamic";
+String SAVE_TYPE = ".png";  // ".tif";
 
 String mainImgFile = "12PTQT.004.png";
 String bgImgFile = "bg/12PTQT.004.JPG";
+boolean saveFrame = true;
+boolean rotateTiles = true;
+
 int gridX,gridY;
 int colCt = 8;
 int rowCt = colCt;  //  NOTE: remember to update this value
@@ -44,12 +48,9 @@ int drawW, drawH; //  HDrawable Width / Height
 int frmCt = 3;  //  stop after frameCount exceeds frmCt
 PImage mainImg, bgImg, tmpSlice;
 
-// PImage[] slices = {};
-// int sliceIndex = 0;
 
-HImage tmpImg;
+HImage tmpImg, bgHImg;  //  background image reference
 
-boolean save_frame = true;
 
 
 
@@ -65,7 +66,6 @@ void  settings ()  {
     pixelDensity(displayDensity());
 
     mainImg = loadImage(mainImgFile);
-    if(bgImgFile!="")
       bgImg = loadImage(bgImgFile);
 }
 
@@ -74,31 +74,27 @@ void  settings ()  {
 void setup() {
 
   //  init VARIABLES
-  drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
-  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+  drawW = (int)( (width-(colSpacing*2))/colCt);
+  drawH = (int)( (height-(colSpacing*2))/rowCt);
   gridX = 0; //(drawW/2)+colSpacing; 
   gridY = 0; //(drawH/2)+colSpacing;
 
-  // noFill();
+  //  Generate filename containing sketch settings meta NOW
+  SAVE_NAME = fix.pdeName() + "-rotate"+ rotateTiles + "-"+fix.getTimestamp();
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
   
-  // image(bgImg, 0,0,width,height);
-
-// debug
-// println("width: "+ width + " : " + mainImg.width + " : " + H.app().width );
+  //  BACKGROUND IMAGE
+  bgHImg = new HImage( bgImg );
+  bgHImg.anchorAt(H.CENTER).loc(width/2, height/2);
+  H.add(bgHImg);
 
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage();
 
-  // if(bgImgFile!=""){
-  //   H.add( new HImage( bgImg ) );
-  // }
   //  SLICE IT UP
-  
-  // slices = new PImage[(rowCt*colCt)];
 
   //  OUTER ROW LOOP ( t - b ) 
   for( int row = 0; row < rowCt; row++)
@@ -110,45 +106,23 @@ void setup() {
 
       tmpImg = new HImage( tmpSlice );
 
-      // // decorate the image slice
-      // tmpImg.stroke(0xEF1975);
-      // tmpImg.tint((int)random(255));
-      // tmpImg.rotate(90*col);
+      //  rotate ?
+      if(rotateTiles)
+          tmpImg.rotate(90*col);
 
       pool.add(tmpImg);
-
-// TODO: if you save ou
-      // slices[sliceIndex] = tmpSlice;
-
-      // // track original slice positioning
-      // sliceIndex ++;
     }
   }
 
 
-pool
-    .layout (
-      new HGridLayout()
-      .startLoc(gridX, gridY)
-      .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
-      .cols(colCt)
-      .rows(rowCt)
-    );
-
-
-    // .onRequest (
-    //    new HCallback() {
-    //     public void run(Object obj) {
-
-    //       if(pool.currentIndex()==0){
-
-    //         ((HImage)obj).rotation( random(360) );
-    //       }
-
-    //     }
-    //   }
-    // );
-
+  pool
+      .layout (
+        new HGridLayout()
+        .startLoc(gridX, gridY)
+        .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
+        .cols(colCt)
+        .rows(rowCt)
+      );
 
 }
 
@@ -159,36 +133,41 @@ pool
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  H.add( new HImage(bgImg).rotation(frameCount*360) );
-  pool.requestAll();  //  When would you call shuffleRequestAll()?
+
+
+  pool.requestAll();
+
+  //  rotate obj already known by HYPE
+  bgHImg.rotateZ( (frameCount+1)*90);
 
   H.drawStage();
 
   //  save frame
-  if(save_frame){
-    saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##"+SAVE_TYPE);  //  USE .TIF IF COLOR
+  if(saveFrame){
+    saveFrame( SAVE_NAME + "_##"+SAVE_TYPE);  //  USE .TIF IF COLOR
   }
 
   pool.drain();
 
   if(frameCount>frmCt) {
-    //  final frame clears stage
-    //  and just spits out MAIN image
-  // add stage background image
-  
+    //  FINAL FRAME
+    //  Grab images, do some magic, clear stage, slap down final frame
 
-  mainImg.resize(width, height);
-  bgImg.resize(width,height);
+    //  resize for masking
+    mainImg.resize(width, height);
+    bgImg.resize(width,height);
 
-  bgImg.mask(mainImg);
-  mainImg.mask(bgImg);
+    //  get stage
+    tmpSlice = get(0,0, width,height);
 
-  H.add(new HImage(mainImg));
+    //  MASK
+    mainImg.mask(bgImg);
+    mainImg.mask(tmpSlice);
 
-//  NOTE: can't seem to just reset background
-//  H.backgroundImage(mainImg)
+    //  give it back to HYPE
+    H.add(new HImage(mainImg));
 
-    //  NO grid
+    //  NO grid, just the final frame image
     H.clearStage();
     H.drawStage();
 
@@ -218,7 +197,7 @@ void doExit(){
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
+  save( SAVE_NAME+"_FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;
