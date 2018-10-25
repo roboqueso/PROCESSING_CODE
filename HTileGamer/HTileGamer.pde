@@ -29,26 +29,40 @@ import hype.interfaces.*;
 import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
-Fixlib fix = Fixlib.init(this);
-HDrawablePool pool;
-
-String SAVE_NAME = "thisShouldBeDynamic";
+String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  // ".tif";
 
-String mainImgFile = "12PTQT.004.png";
-String bgImgFile = "bg/12PTQT.004.JPG";
-boolean saveFrame = true;
-boolean rotateTiles = true;
 
-int gridX,gridY;
+String mainImgFile = "WFNT.0032.png"; //  This file gets sliced
+String bgImgFile = "bg/WFNT.0032.jpg";  //  Background and final frame mask source
+
+//  MODES
+
+  boolean p5Filters = false;
+  boolean rotateTiles = false;
+
+  // boolean p5Filters = true;
+  // boolean rotateTiles = true;
+
+  // boolean p5Filters = false;
+  // boolean rotateTiles = true;
+
+  // boolean p5Filters = true;
+  // boolean rotateTiles = false;
+
+//  END MODES
+int frmCt = 7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
+boolean saveFrame = true;
 int colCt = 8;
-int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 0;
-int drawW, drawH; //  HDrawable Width / Height
-int frmCt = 3;  //  stop after frameCount exceeds frmCt
+int colSpacing = 1; //  keep this at 1 as minimum
+/* ------------------------------------------------------------------------- */
+
+int rowCt = colCt;  //  Maintains even 1:1 grid
+int drawW, drawH, gridX, gridY; // slice dimensions, grid position
 PImage mainImg, bgImg, tmpSlice;
 
-
+Fixlib fix = Fixlib.init(this);
+HDrawablePool pool;
 HImage tmpImg, bgHImg;  //  background image reference
 
 
@@ -76,11 +90,11 @@ void setup() {
   //  init VARIABLES
   drawW = (int)( (width-(colSpacing*2))/colCt);
   drawH = (int)( (height-(colSpacing*2))/rowCt);
-  gridX = 0; //(drawW/2)+colSpacing; 
-  gridY = 0; //(drawH/2)+colSpacing;
+  gridX = colSpacing; //(drawW/2)+colSpacing; 
+  gridY = colSpacing; //(drawH/2)+colSpacing;
 
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-rotate"+ rotateTiles + "-"+fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "-P5F"+ p5Filters + "-ROT"+ rotateTiles + "-"+fix.getTimestamp();
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -106,9 +120,16 @@ void setup() {
 
       tmpImg = new HImage( tmpSlice );
 
-      //  rotate ?
-      if(rotateTiles)
-          tmpImg.rotate(90*col);
+      //  ROTATE slice before putting in the pool?
+      if(rotateTiles){
+        tmpImg.rotate(90*col);
+      }
+          
+      //  APPLY P5 FILTERS?
+      if(p5Filters){
+        tmpImg.image().filter(INVERT);
+        tmpImg.image().filter(OPAQUE);
+      }
 
       pool.add(tmpImg);
     }
