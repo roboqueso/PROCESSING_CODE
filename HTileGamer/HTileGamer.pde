@@ -44,14 +44,15 @@ int drawW, drawH; //  HDrawable Width / Height
 int frmCt = 3;  //  stop after frameCount exceeds frmCt
 PImage mainImg, bgImg, tmpSlice;
 
-PImage[] slices = {};
+// PImage[] slices = {};
+// int sliceIndex = 0;
 
 HImage tmpImg;
 
 boolean save_frame = true;
 
 
-int sliceIndex = 0;
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -83,7 +84,7 @@ void setup() {
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
   
-  image(bgImg, 0,0,width,height);
+  // image(bgImg, 0,0,width,height);
 
 // debug
 // println("width: "+ width + " : " + mainImg.width + " : " + H.app().width );
@@ -92,10 +93,12 @@ void setup() {
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage();
 
-  
+  // if(bgImgFile!=""){
+  //   H.add( new HImage( bgImg ) );
+  // }
   //  SLICE IT UP
   
-  slices = new PImage[(rowCt*colCt)];
+  // slices = new PImage[(rowCt*colCt)];
 
   //  OUTER ROW LOOP ( t - b ) 
   for( int row = 0; row < rowCt; row++)
@@ -110,14 +113,15 @@ void setup() {
       // // decorate the image slice
       // tmpImg.stroke(0xEF1975);
       // tmpImg.tint((int)random(255));
-      tmpImg.rotate(90*col);
+      // tmpImg.rotate(90*col);
 
       pool.add(tmpImg);
 
-      slices[sliceIndex] = tmpSlice;
+// TODO: if you save ou
+      // slices[sliceIndex] = tmpSlice;
 
-      // track original slice positioning
-      sliceIndex ++;
+      // // track original slice positioning
+      // sliceIndex ++;
     }
   }
 
@@ -131,18 +135,20 @@ pool
       .rows(rowCt)
     );
 
-/*
-    .onRequest (
-       new HCallback() {
-        public void run(Object obj) {
-        }
-      }
-    );
-*/
 
-if(bgImgFile!=""){
-  H.add( new HImage( bgImg) );
-}
+    // .onRequest (
+    //    new HCallback() {
+    //     public void run(Object obj) {
+
+    //       if(pool.currentIndex()==0){
+
+    //         ((HImage)obj).rotation( random(360) );
+    //       }
+
+    //     }
+    //   }
+    // );
+
 
 }
 
@@ -153,11 +159,8 @@ if(bgImgFile!=""){
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-
-
-
+  H.add( new HImage(bgImg).rotation(frameCount*360) );
   pool.requestAll();  //  When would you call shuffleRequestAll()?
-  // H.background((int)random(255));
 
   H.drawStage();
 
@@ -177,7 +180,6 @@ void draw() {
   mainImg.resize(width, height);
   bgImg.resize(width,height);
 
-  
   bgImg.mask(mainImg);
   mainImg.mask(bgImg);
 
@@ -212,7 +214,7 @@ void doExit(){
   //  stamp bottom right based on textSize
   fill(#EF1975);  //colors.getColor());
 
-  textFont( createFont("Bitwise", 24));
+  textFont( createFont("Bitwise", 43));
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
