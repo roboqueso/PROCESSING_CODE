@@ -1,7 +1,11 @@
 /*
-HTileGamer  : take an image and slice into a slide game
+HTileGamer  : take an image and slice into a slide game.
+This is the NEWER version of concept DS_tileGame.pde
 
 TODO: 
+
+- re-visit DS_tileGame.pde for any tips
+* add saving of slices to disk for asset loading into P5
 
 - re-visit logic and confirm
 ** is memory safe?
@@ -31,25 +35,27 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
+HColorPool    colors;
 
-String SAVE_TYPE = ".png";
+String SAVE_NAME = "thisShouldBeDynamic";
+String SAVE_TYPE = ".png";  // ".tif";
 
-String mainImgFile = "12PTQT.004.png";
-String bgImgFile = "bg/12PTQT.004.JPG";
+String mainImgFile = "devaskation-logo-small.png";
 int gridX,gridY;
-int colCt = 8;
+int colCt = 11;
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 0;
+int colSpacing = 1; //  keep this at 1 as minimum
 int drawW, drawH; //  HDrawable Width / Height
-int frmCt = 3;  //  stop after frameCount exceeds frmCt
-PImage mainImg, bgImg, tmpSlice;
+int frmCt = 2;  //  stop after frameCount exceeds frmCt
+int bgColor;
+PImage mainImg, tmpSlice;
 
 PImage[] slices = {};
 
 HImage tmpImg;
 
-boolean save_frame = true;
-
+boolean saveFrames = true;
+boolean tintTiles = true;
 
 int sliceIndex = 0;
 
@@ -58,14 +64,12 @@ int sliceIndex = 0;
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
     // size(1400,1400, P3D);  // TODO: follow image size for now. Come back and make sketch own sliced dimensions
-    size(1920, 1920, P3D);
+    size(720,700, P3D);
 
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 
     mainImg = loadImage(mainImgFile);
-    if(bgImgFile!="")
-      bgImg = loadImage(bgImgFile);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -73,25 +77,42 @@ void  settings ()  {
 void setup() {
 
   //  init VARIABLES
-  drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
-  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
-  gridX = 0; //(drawW/2)+colSpacing; 
-  gridY = 0; //(drawH/2)+colSpacing;
-
-  // noFill();
+  drawW = (int)( (width-(colSpacing*2))/colCt);
+  drawH = (int)( (height-(colSpacing*2))/rowCt);
+  gridX = colSpacing; //(drawW/2)+colSpacing; 
+  gridY = colSpacing; //(drawH/2)+colSpacing;
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
-  
-  image(bgImg, 0,0,width,height);
-
+//  .backgroundImg(mainImg)
 // debug
 // println("width: "+ width + " : " + mainImg.width + " : " + H.app().width );
 
+  colors = new HColorPool(#000000, #ED7100, #315D15, #3D107B, #E35205, #FFFFFF);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage();
 
+  //  rando bgColor
+  if(tintTiles)
+    bgColor = #FFFFFF;
+  else
+    bgColor = colors.getColor();
+
+// manual runs
+  // bgColor = #000000;
+  // bgColor = #ED7100;
+  // bgColor = #315D15;
+  // bgColor = #3D107B;
+  // bgColor = #E35205;
+
+
+
+  //  Generate filename containing sketch settings meta NOW
+  SAVE_NAME = fix.pdeName() + "-TINT_"+ tintTiles + "-"+fix.getTimestamp();
+
+  background(bgColor);
+  H.background(bgColor);
   
   //  SLICE IT UP
   
@@ -129,20 +150,29 @@ pool
       .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
       .cols(colCt)
       .rows(rowCt)
-    );
+    )
 
-/*
-    .onRequest (
-       new HCallback() {
+
+    .onCreate(
+      new HCallback() {
         public void run(Object obj) {
+
+//  NOTE: this sketch is currently image only mode
+          HImage d = (HImage) obj;
+          //  NOTE: if you remove hard coding and go with scale, colSpacing no work
+          // d.width(drawW).height(drawH);
+
+          //  pull color from DS color pool
+          if(tintTiles)
+            d.tint(colors.getColor());
+          else
+            noTint();
+          
+
         }
       }
-    );
-*/
+      );
 
-if(bgImgFile!=""){
-  H.add( new HImage( bgImg) );
-}
 
 }
 
@@ -154,16 +184,13 @@ if(bgImgFile!=""){
 void draw() {
 
 
-
-
   pool.requestAll();  //  When would you call shuffleRequestAll()?
-  // H.background((int)random(255));
 
   H.drawStage();
 
   //  save frame
-  if(save_frame){
-    saveFrame( fix.pdeName() + "-" + fix.getTimestamp() + "_##"+SAVE_TYPE);  //  USE .TIF IF COLOR
+  if(saveFrames){
+    saveFrame( SAVE_NAME + "_##" + SAVE_TYPE);  //  USE .TIF IF COLOR
   }
 
   pool.drain();
@@ -172,15 +199,6 @@ void draw() {
     //  final frame clears stage
     //  and just spits out MAIN image
   // add stage background image
-  
-
-  mainImg.resize(width, height);
-  bgImg.resize(width,height);
-
-  
-  bgImg.mask(mainImg);
-  mainImg.mask(bgImg);
-
   H.add(new HImage(mainImg));
 
 //  NOTE: can't seem to just reset background
@@ -204,19 +222,24 @@ void draw() {
 /*  NON - P5 BELOW  */
 /* ------------------------------------------------------------------------- */
 
+void stampIt(){
+  String msg = "DEVASKATION x ERICFICKES";
+  //  stamp bottom right based on textSize
+  // fill(#EF1975);  //colors.getColor());
+  fill(colors.getColor());
+
+  textFont( createFont("AMCAP Eternal", 24));
+  textSize(13);
+  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+}
+
 /**
   End of sketch closer
 */
 void doExit(){
-  String msg = "ERICFICKES.COM";
-  //  stamp bottom right based on textSize
-  fill(#EF1975);  //colors.getColor());
+  stampIt();
 
-  textFont( createFont("Bitwise", 24));
-  textSize(13);
-  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
-
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
+  save( SAVE_NAME+"_FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;

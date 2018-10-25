@@ -33,7 +33,7 @@ void draw() {
 
 
 	pushMatrix();
-		translate(width/2, height/2, frameCount);
+		translate( random(width/2), random(height/2), frameCount);
 
 		rotateX(frameCount);
 		rotateY(frameCount);

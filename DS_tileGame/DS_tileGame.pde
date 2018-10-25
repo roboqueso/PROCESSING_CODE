@@ -9,6 +9,7 @@ Fixlib fix = Fixlib.init(this);
 HColorPool    colors;
 HDrawablePool pool;
 String SAVE_NAME = "thisShouldBeDynamic";
+String SAVE_TYPE = ".png";	// ".tif";
 
 boolean tintTiles = false;	//	TRUE : tint tiles from DS color pool, FALSE : use color from assets, noTint();
 
@@ -376,11 +377,11 @@ void doExit(){
   //  stamp bottom right based on textSize
   fill(#EF1975);  //colors.getColor());
 
-  textFont( createFont("AMCAP Eternal.ttf", 24));
+  textFont( createFont("AMCAP Eternal", 24));
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save(SAVE_NAME+".png"); //  USE .TIF IF COLOR  
+  save(SAVE_NAME+SAVE_TYPE); //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;
