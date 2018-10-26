@@ -32,9 +32,8 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  // ".tif";
 
-
-String mainImgFile = "WFNT.0032.png"; //  This file gets sliced
-String bgImgFile = "bg/WFNT.0032.jpg";  //  Background and final frame mask source
+String mainImgFile = "XYZASST.0041.png"; //  This file gets sliced
+String bgImgFile = "bg/XYZASST.0041.jpg";  //  Background and final frame mask source
 
 //  MODES
 
@@ -51,6 +50,8 @@ String bgImgFile = "bg/WFNT.0032.jpg";  //  Background and final frame mask sour
   // boolean rotateTiles = false;
 
 //  END MODES
+
+
 int frmCt = 7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 boolean saveFrame = true;
 int colCt = 8;
@@ -94,7 +95,7 @@ void setup() {
   gridY = colSpacing; //(drawH/2)+colSpacing;
 
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-P5F"+ p5Filters + "-ROT"+ rotateTiles + "-"+fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "-P5F"+ p5Filters + "-ROT"+ rotateTiles + "-"+mainImgFile;  //fix.getTimestamp();
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -154,9 +155,8 @@ void setup() {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-
-
-  pool.requestAll();
+  // Bernard Purdie would shuffle it
+  pool.shuffleRequestAll();
 
   //  rotate obj already known by HYPE
   bgHImg.rotateZ( (frameCount+1)*90);
