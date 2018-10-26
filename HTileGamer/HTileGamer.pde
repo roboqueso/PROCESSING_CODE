@@ -32,8 +32,8 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  // ".tif";
 
-String mainImgFile = "XYZASST.0041.png"; //  This file gets sliced
-String bgImgFile = "bg/XYZASST.0041.jpg";  //  Background and final frame mask source
+String mainImgFile =  "WTFf8fickes1.png"; //  This file gets sliced. Be aware of special characters in file names
+String bgImgFile = "WTFfickes.jpg";  //  Background and final frame mask source
 
 //  MODES
 
@@ -52,7 +52,7 @@ String bgImgFile = "bg/XYZASST.0041.jpg";  //  Background and final frame mask s
 //  END MODES
 
 
-int frmCt = 7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
+int frmCt = 0;  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 boolean saveFrame = true;
 int colCt = 8;
 int colSpacing = 1; //  keep this at 1 as minimum
@@ -68,14 +68,14 @@ HImage tmpImg, bgHImg;  //  background image reference
 
 
 
-
+int WID, HT;
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
     // size(1400,1400, P3D);  // TODO: follow image size for now. Come back and make sketch own sliced dimensions
-    size(1920, 1920, P3D);
+    size(1500, 1115, P3D);
 
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
@@ -95,7 +95,7 @@ void setup() {
   gridY = colSpacing; //(drawH/2)+colSpacing;
 
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-P5F"+ p5Filters + "-ROT"+ rotateTiles + "-"+mainImgFile;  //fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "-"+mainImgFile + (p5Filters ? "_P5F_": "" ) + (rotateTiles ? "_ROTATE_": "" );  //fix.getTimestamp();
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -174,12 +174,17 @@ void draw() {
     //  FINAL FRAME
     //  Grab images, do some magic, clear stage, slap down final frame
 
-    //  resize for masking
-    mainImg.resize(width, height);
-    bgImg.resize(width,height);
+//  TODO: get() is now erroring out with
+//  HTileGamer.pde:178:0:178:0: ArrayIndexOutOfBoundsException
 
     //  get stage
     tmpSlice = get(0,0, width,height);
+    //  resize for masking
+    mainImg.resize(width, height);
+    bgImg.resize(width,height);
+    tmpSlice.resize(width,height);
+
+
 
     //  MASK
     mainImg.mask(bgImg);

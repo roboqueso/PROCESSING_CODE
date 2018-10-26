@@ -43,10 +43,10 @@ HDrawablePool pool;
 */
 int MODE = 1;
 Boolean do_both_modes = true;	// run 1, then 2, then bounce
-Boolean debug = false;	// show P5 filter labels
+Boolean debug = true;	// show P5 filter labels
 String SRC_FILE = "fickes.jpg";
 String SAVE_NAME = "thisShouldBeDynamic";
-String SAVE_TYPE = ".png";	//".tif";	// 
+String SAVE_TYPE = ".tif";	// ".png";
 String sMode;	// temp filter name holder
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
 
@@ -81,7 +81,7 @@ void setup() {
 	// "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic"
 	textFont( createFont("AMCAP Eternal", 69));
 
-	SAVE_NAME = fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_debug" + debug + "_" + fix.getTimestamp();
+	SAVE_NAME = fix.pdeName() + "_" + SRC_FILE + "" + MODE + (debug ? "_debug_": "" ) + fix.getTimestamp();
 
   //	load source image
 	if(null==pImg)	pImg = loadImage(SRC_FILE);
