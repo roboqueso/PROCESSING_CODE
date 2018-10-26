@@ -41,9 +41,12 @@ HDrawablePool pool;
 1 = vertical ( slices go top down )
 2 = horizontal -> OG filter8, slices go left to right
 */
-int MODE = 2;
-Boolean do_both_modes = false;	// run 1, then 2, then bounce
-String SRC_FILE = "b2.png";
+int MODE = 1;
+Boolean do_both_modes = true;	// run 1, then 2, then bounce
+String SRC_FILE = "fickes.jpg";
+String SAVE_NAME = "thisShouldBeDynamic";
+String SAVE_TYPE = ".tif";	// ".png"
+String sMode;	// temp filter name holder
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
 
 // TODO: fix clearStage
@@ -62,7 +65,8 @@ int iScale = -11;	//	-1 inverts slices
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(displayWidth, displayHeight, P3D); // matching dimensions of pImg for best results
+    // size(displayWidth, displayHeight, P3D); // matching dimensions of pImg for best results
+    size(1500,1115, P3D); // matching dimensions of pImg for best results
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -72,6 +76,11 @@ void  settings ()  {
 void setup() {
 
 	background(-1);
+	fill(#EF2018);
+	// "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic"
+	textFont( createFont("AMCAP Eternal", 69));
+
+	SAVE_NAME = fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_" + fix.getTimestamp();
 
   //	load source image
 	if(null==pImg)	pImg = loadImage(SRC_FILE);
@@ -154,50 +163,74 @@ void setup() {
 
 		//	apply 1 of 8 filters
 		switch(pool.currentIndex()){
-			//	THRESHOLD
-			//	Converts the image to black and white pixels depending if they are above or below the threshold defined by the level parameter. The parameter must be between 0.0 (black) and 1.0 (white). If no level is specified, 0.5 is used.
+
 			case 0:
-				imgSlice.filter(THRESHOLD, 1);	//, random(0,1));
-			break;
-			
-			// GRAY
-			// Converts any colors in the image to grayscale equivalents. No parameter is used.
-			case 1:
-				imgSlice.filter(GRAY);
-			break;
-			
-			//	INVERT - Sets each pixel to its inverse value. No parameter is used.
-			case 2:
-				imgSlice.filter(INVERT);
-			break;
 
-			// OPAQUE - Sets the alpha channel to entirely opaque. No parameter is used.
-			case 3:
-				imgSlice.filter(OPAQUE);
-			break;
-
-			// POSTERIZE
-			// Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
-			case 4:
+				// POSTERIZE
+				// Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
 				imgSlice.filter(POSTERIZE, 8);
-			break;
-
-			// BLUR
-			// Executes a Guassian blur with the level parameter specifying the extent of the blurring. If no parameter is used, the blur is equivalent to Guassian blur of radius 1. Larger values increase the blur.
-			case 5:
-				imgSlice.filter(BLUR,8);	// TODO: what is filter(BLUR) range?
-			break;
-
-			// ERODE
-			// Reduces the light areas. No parameter is used.			
-			case 6:
-				imgSlice.filter(ERODE);
+				sMode = "POSTERIZE";
+				
 			break;
 			
-			// DILATE
-			// Increases the light areas. No parameter is used.
-			case 7:
+
+			case 1:
+				// ERODE
+				// Reduces the light areas. No parameter is used.			
+				imgSlice.filter(ERODE);
+				sMode = "ERODE";
+			break;
+			
+				
+			case 2:
+
+				//	THRESHOLD
+				//	Converts the image to black and white pixels depending if they are above or below the threshold defined by the level parameter. The parameter must be between 0.0 (black) and 1.0 (white). If no level is specified, 0.5 is used.
+				imgSlice.filter(THRESHOLD, 1);	//, random(0,1));
+				sMode = "THRESHOLD";
+			break;
+
+			
+			case 3:
+
+				// DILATE
+				// Increases the light areas. No parameter is used.
 				imgSlice.filter(DILATE);
+				sMode = "DILATE";				
+
+			break;
+
+
+			case 4:
+
+				//	INVERT - Sets each pixel to its inverse value. No parameter is used.
+				imgSlice.filter(INVERT);
+				sMode = "INVERT";
+			break;
+
+
+			case 5:
+
+				// OPAQUE - Sets the alpha channel to entirely opaque. No parameter is used.
+				imgSlice.filter(OPAQUE);
+				sMode = "OPAQUE";
+			break;
+
+			case 6:
+
+				// GRAY
+				// Converts any colors in the image to grayscale equivalents. No parameter is used.
+				imgSlice.filter(GRAY);
+				sMode = "GRAY";
+
+			break;
+			
+			case 7:
+
+				// BLUR
+				// Executes a Guassian blur with the level parameter specifying the extent of the blurring. If no parameter is used, the blur is equivalent to Guassian blur of radius 1. Larger values increase the blur.
+				imgSlice.filter(BLUR,8);	// TODO: what is filter(BLUR) range?
+				sMode = "BLUR";
 			break;
 
 		}
@@ -209,14 +242,15 @@ void setup() {
 			.image(imgSlice)
         	.scale(iScale)
 			.height(drawH)
-			.width(drawW);
-        	// .anchorAt(H.LEFT);
+			.width(drawW)
+			.add( new HText( sMode, 16 ).anchorAt(H.TOP).fill( (int) ii.x()%255, (int) ii.y()%255, (int) ii.z()%255) );
         }
       }
     )
 
    .requestAll()
   ;
+
 
 	H.drawStage();
 	doExit();
@@ -254,13 +288,12 @@ void draw() {
 */
 void doExit(){
 
-  String msg = "ericfickes.com";
+  String msg = "ERICFICKES.COM";
   //  stamp bottom right based on textSize
-  fill(0);
   textSize(16);
-  text(msg, (width-textWidth(msg))-(textAscent()/3), height-textAscent());
+  text(msg, (width-textWidth(msg))-(textAscent()/3), height-textAscent()/2);
 
-  save( fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_" + fix.getTimestamp()+".png" );
+  save( SAVE_NAME+SAVE_TYPE );
 
   if(do_both_modes && MODE == 1){
 
