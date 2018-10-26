@@ -43,9 +43,10 @@ HDrawablePool pool;
 */
 int MODE = 1;
 Boolean do_both_modes = true;	// run 1, then 2, then bounce
+Boolean debug = false;	// show P5 filter labels
 String SRC_FILE = "fickes.jpg";
 String SAVE_NAME = "thisShouldBeDynamic";
-String SAVE_TYPE = ".tif";	// ".png"
+String SAVE_TYPE = ".png";	//".tif";	// 
 String sMode;	// temp filter name holder
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
 
@@ -80,7 +81,7 @@ void setup() {
 	// "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic"
 	textFont( createFont("AMCAP Eternal", 69));
 
-	SAVE_NAME = fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_" + fix.getTimestamp();
+	SAVE_NAME = fix.pdeName() + "_" + SRC_FILE + "_" + MODE + "_debug" + debug + "_" + fix.getTimestamp();
 
   //	load source image
 	if(null==pImg)	pImg = loadImage(SRC_FILE);
@@ -94,11 +95,7 @@ void setup() {
 			rowCt = 8;	//	NOTE: remember to update this value
 
 			drawW = width;
-			drawH = (int)(height/rowCt)-colSpacing;	//( (height-(colSpacing))/rowCt)-colSpacing;
-//	TODO: does this need to be tweaked?
-//	BECAUSE H.CENTER?
-			// gridX = 0;	//(drawW/2)+colSpacing;
-			// gridY = height/2;	//(drawH/2)+colSpacing;
+			drawH = (int)(height/rowCt)-colSpacing;
 		}
 
 		break;
@@ -242,8 +239,11 @@ void setup() {
 			.image(imgSlice)
         	.scale(iScale)
 			.height(drawH)
-			.width(drawW)
-			.add( new HText( sMode, 16 ).anchorAt(H.TOP).fill( (int) ii.x()%255, (int) ii.y()%255, (int) ii.z()%255) );
+			.width(drawW);
+
+		if(debug)
+			ii.add( new HText( sMode, 16 ).anchorAt(H.TOP).fill( (int) ii.x()%255, (int) ii.y()%255, (int) ii.z()%255) );
+
         }
       }
     )
