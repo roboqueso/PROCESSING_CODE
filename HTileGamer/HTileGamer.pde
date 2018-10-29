@@ -30,124 +30,21 @@ import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
-String SAVE_TYPE = ".png";  // ".tif";
+String SAVE_TYPE = ".tif";  // ".tif";
 
 
-String bgImgFile = "bg/jellybg.png";  //  Background and final frame mask source
+String bgImgFile = "bg.png";  //  Background and final frame mask source
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"Jelly1_oc13290.png",
-"Jelly1_oc13494.png",
-"Jelly1_oc13735.png",
-"Jelly1_oc13945.png",
-"Jelly1_oc14123.png",
-"Jelly1_oc45918.png",
-"Jelly2_oc13597.png",
-"Jelly2_oc13637.png",
-"Jelly2_oc13741.png",
-"Jelly2_oc13755.png",
-"Jelly2_oc13923.png",
-"Jelly2_oc13953.png",
-"Jelly2_oc13957.png",
-"Jelly2_oc13990.png",
-"Jelly2_oc14011.png",
-"Jelly2_oc14101.png",
-"Jelly2_oc14139.png",
-"Jelly2_oc14157.png",
-"Jelly2_oc14193.png",
-"Jelly2_oc14206.png",
-"Jelly2_oc14240.png",
-"Jelly2_oc14271.png",
-"Jelly2_oc14457.png",
-"Jelly2_oc14568.png",
-"Jelly2_oc14573.png",
-"Jelly2_oc14575.png",
-"Jelly2_oc14648.png",
-"Jelly2_oc14784.png",
-"Jelly2_oc14794.png",
-"Jelly2_oc14821.png",
-"Jelly2_oc14901.png",
-"Jelly2_oc14971.png",
-"Jelly2_oc15538.png",
-"Jelly2_oc16390.png",
-"Jelly3_oc10312.png",
-"Jelly3_oc10370.png",
-"Jelly3_oc10456.png",
-"Jelly3_oc10575.png",
-"Jelly3_oc10634.png",
-"Jelly3_oc10703.png",
-"Jelly3_oc10722.png",
-"Jelly3_oc10814.png",
-"Jelly3_oc10817.png",
-"Jelly3_oc10846.png",
-"Jelly3_oc10849.png",
-"Jelly3_oc10855.png",
-"Jelly3_oc10883.png",
-"Jelly3_oc10890.png",
-"Jelly3_oc10895.png",
-"Jelly3_oc10918.png",
-"Jelly3_oc10955.png",
-"Jelly3_oc11065.png",
-"Jelly3_oc11081.png",
-"Jelly3_oc11308.png",
-"Jelly3_oc11380.png",
-"Jelly3_oc11433.png",
-"Jelly3_oc11457.png",
-"Jelly3_oc11504.png",
-"Jelly3_oc11542.png",
-"Jelly3_oc11597.png",
-"Jelly3_oc11627.png",
-"Jelly3_oc11645.png",
-"Jelly3_oc11727.png",
-"Jelly3_oc11728.png",
-"Jelly3_oc11758.png",
-"Jelly3_oc11760.png",
-"Jelly3_oc11765.png",
-"Jelly3_oc11768.png",
-"Jelly3_oc11934.png",
-"Jelly3_oc11967.png",
-"Jelly3_oc12033.png",
-"Jelly3_oc12037.png",
-"Jelly3_oc12040.png",
-"Jelly3_oc12057.png",
-"Jelly3_oc12060.png",
-"Jelly3_oc12062.png",
-"Jelly3_oc12107.png",
-"Jelly3_oc12136.png",
-"Jelly3_oc12193.png",
-"Jelly3_oc12354.png",
-"Jelly3_oc12520.png",
-"Jelly3_oc12747.png",
-"Jelly3_oc12756.png",
-"Jelly3_oc12883.png",
-"Jelly3_oc14552.png",
-"Jelly3_oc14992.png",
-"Jelly3_oc15018.png",
-"Jelly3_oc15504.png",
-"Jelly3_oc15818.png",
-"Jelly3_oc15847.png",
-"Jelly3_oc15916.png",
-"Jelly3_oc15945.png",
-"Jelly3_oc16047.png",
-"Jelly3_oc16285.png",
-"Jelly3_oc16306.png",
-"Jelly3_oc16391.png",
-"Jelly3_oc16563.png",
-"Jelly3_oc16821.png",
-"Jelly3_oc16884.png",
-"Jelly3_oc16941.png",
-"Jelly3_oc16977.png",
-"Jelly3_oc17602.png",
-"Jelly3_oc4122.png",
-"Jelly3_oc4578.png",
-"Jelly3_oc4975.png"
+"NOTHINGSEXY19.png"
 };
 
 //  MODES
 
-/
+  boolean p5Filters = false;
+  boolean rotateTiles = false;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = true;
@@ -161,9 +58,9 @@ String[] imgs = {
 //  END MODES
 
 
-int frmCt = 0;  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
+int frmCt = 3;  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 boolean saveFrame = true;
-int colCt = 11;
+int colCt = 4;
 int colSpacing = 1; //  keep this at 1 as minimum
 /* ------------------------------------------------------------------------- */
 
@@ -184,7 +81,7 @@ int imgIdx = 0;
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
     // size(1400,1400, P3D);  // TODO: follow image size for now. Come back and make sketch own sliced dimensions
-    size(800, 800, P3D);
+    size(1920, 1080, P3D);
 
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
@@ -294,12 +191,14 @@ void draw() {
     bgImg.resize(width,height);
     tmpSlice.resize(width,height);
 
-
-
+try{
     //  MASK
     mainImg.mask(bgImg);
     mainImg.mask(tmpSlice);
 
+}catch(Exception exc ){
+  println("EXCEPTION: "+ exc.getMessage());
+}
     //  give it back to HYPE
     H.add(new HImage(mainImg));
 
