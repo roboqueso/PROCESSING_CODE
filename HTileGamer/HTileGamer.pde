@@ -29,27 +29,79 @@ import hype.interfaces.*;
 import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
+
+// TODO: add shapeJousT to FIXLIB
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * HYPE port of FIXLIB'S Lissajous PShape maker
+   * @param a     X coordinate
+   * @param b     Y coordinate
+   * @param amp   Amplitude or size
+   * @param inc   Loop magic incrementer [ 1 - 36 supported ]. (360 / inc) = number of points in returned PShape
+   * @param textImg PImage to use as shape texture
+   * @return  PShape containing vertices in the shape of a lissajous pattern
+   */
+  public HPath hypeJuice( float a, float b, float amp, int inc, PImage textImg )
+  {
+    int juicePts = 160; //  160 is the NEW hotness -> slightly less points, no blank frames 9-36
+    int z = 0;
+
+    //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
+    //  Ideal range is someplace between 1 and 36
+    if( ( inc < 1 ) || ( inc > 36 ) ) {
+      inc = 1;
+    }
+    
+    float x, y;
+    // PShape shp = createShape();
+    HPath hp = new HPath();
+    
+    hp.beginPath();
+    hp.texture(textImg);
+
+
+    for ( int t = 0; t <= juicePts  ; t+=inc)
+    {
+      //  NEW HOTNESS!
+      x = a - amp * PApplet.cos((a * t * TWO_PI)/360);
+      y = b - amp * PApplet.sin((b * t * TWO_PI)/360);
+
+      //  give shapes up and down Z-depth
+      z = ( t < (juicePts*.5) ) ? t : juicePts-t;
+
+      hp.vertexUV(x, y, x, y );
+    }
+
+    hp.endPath();
+
+    return hp;
+  }
+
+/* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
-String SAVE_TYPE = ".tif";  // ".tif";
+String SAVE_TYPE = ".png";  // ".tif";
 
 
-String bgImgFile = "bg.png";  //  Background and final frame mask source
+//  NOTE: bgImgFile is now the currently loaded mainImg
+// String bgImgFile = "yellow.png";  //  Background and final frame mask source
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"NOTHINGSEXY19.png"
+  "1.png",
+  "2.png",
+  "3.png"
 };
 
 //  MODES
-
   boolean p5Filters = false;
   boolean rotateTiles = false;
 
-  // boolean p5Filters = true;
+  // boolean p5Filters = false;
   // boolean rotateTiles = true;
 
-  // boolean p5Filters = false;
+  // boolean p5Filters = true;
   // boolean rotateTiles = true;
 
   // boolean p5Filters = true;
@@ -58,10 +110,11 @@ String[] imgs = {
 //  END MODES
 
 
-int frmCt = 3;  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
+int frmCt = 2;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 boolean saveFrame = true;
-int colCt = 4;
-int colSpacing = 1; //  keep this at 1 as minimum
+boolean saveLast = false; //  save final frame
+int colCt = 16;//  2, 4, 8, 16
+int colSpacing = 8;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -72,7 +125,8 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HImage tmpImg, bgHImg;  //  background image reference
 
-
+HShape hShp;
+PShape pShp;
 
 int imgIdx = 0;
 
@@ -82,11 +136,8 @@ void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
     // size(1400,1400, P3D);  // TODO: follow image size for now. Come back and make sketch own sliced dimensions
     size(1920, 1080, P3D);
-
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
-
-    bgImg = loadImage(bgImgFile);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -94,18 +145,27 @@ void  settings ()  {
 void setup() {
 
   //  init VARIABLES
-  drawW = (int)( (width-(colSpacing*2))/colCt);
-  drawH = (int)( (height-(colSpacing*2))/rowCt);
+  // drawW = (int)( (width-(colSpacing*2))/colCt);
+  // drawH = (int)( (height-(colSpacing*2))/rowCt);
+  drawW = (int)( (width/colCt)-colSpacing);
+  drawH = (int)( (height/rowCt)-colSpacing);
   gridX = colSpacing; //(drawW/2)+colSpacing; 
   gridY = colSpacing; //(drawH/2)+colSpacing;
 
   mainImg = loadImage( imgs[imgIdx] );
+  bgImg = mainImg;
 
+/*
+  if(bgImg==null){
+    // just load background once
+    bgImg = loadImage(bgImgFile);
+  }
+*/
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE": "" );  //fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + "-"+colCt+"col" + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE": "" );  //fix.getTimestamp();
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true).autoClear(true);
+  H.init(this).background(-1).use3D(true).autoClear(false);
   
   //  BACKGROUND IMAGE
   bgHImg = new HImage( bgImg );
@@ -128,12 +188,21 @@ void setup() {
 
       tmpImg = new HImage( tmpSlice );
 
+      //  3D
+      tmpImg.z( row+col );
+
+
+      //  TODO: get hypJuice working w/texture
+      // pool.add(  hypeJuice( (drawW*col), (drawH*row), drawH, (row+col), tmpSlice ) );
+
       //  ROTATE slice before putting in the pool?
       if(rotateTiles){
-        tmpImg.rotate(90*col);
+        tmpImg.rotateX(90*col);
+        tmpImg.rotateY(90*row);
+        // tmpImg.rotateZ(90*col);
       }
           
-      //  APPLY P5 FILTERS?
+      // //  APPLY P5 FILTERS?
       if(p5Filters){
         tmpImg.image().filter(INVERT);
         tmpImg.image().filter(OPAQUE);
@@ -163,10 +232,11 @@ void setup() {
 void draw() {
 
   // Bernard Purdie would shuffle it
-  pool.shuffleRequestAll();
+  // pool.shuffleRequestAll();
+  pool.requestAll();
 
   //  rotate obj already known by HYPE
-  bgHImg.rotateZ( (frameCount+1)*90);
+  // bgHImg.rotateZ( (frameCount+1)*90);
 
   H.drawStage();
 
@@ -177,7 +247,8 @@ void draw() {
 
   pool.drain();
 
-  if(frameCount>frmCt) {
+  //  Move to next image every time frameCount HITS the "(frmCt)"th mark
+  if(frameCount%frmCt==0) {
     //  FINAL FRAME
     //  Grab images, do some magic, clear stage, slap down final frame
 
@@ -185,20 +256,24 @@ void draw() {
 //  HTileGamer.pde:178:0:178:0: ArrayIndexOutOfBoundsException
 
     //  get stage
+    tmpSlice = null;
     tmpSlice = get(0,0, width,height);
+    
+
     //  resize for masking
-    mainImg.resize(width, height);
+    mainImg.resize(width,height);
     bgImg.resize(width,height);
     tmpSlice.resize(width,height);
 
-try{
-    //  MASK
-    mainImg.mask(bgImg);
-    mainImg.mask(tmpSlice);
+    try{
+        //  MASK
+        mainImg.mask(bgImg);
+        mainImg.mask(tmpSlice);
 
-}catch(Exception exc ){
-  println("EXCEPTION: "+ exc.getMessage());
-}
+    }catch(Exception exc ){
+      println("EXCEPTION: "+ exc.getMessage());
+    }
+
     //  give it back to HYPE
     H.add(new HImage(mainImg));
 
@@ -206,11 +281,13 @@ try{
     H.clearStage();
     H.drawStage();
 
-    stampAndSave();
+    stampAndSave(saveLast);
+
+
     if(imgIdx < imgs.length-1 )
     {
       imgIdx++;
-      setup();  
+      setup();
     }
     else
     {
@@ -233,7 +310,7 @@ try{
 /**
   End of sketch closer
 */
-void stampAndSave(){
+void stampAndSave(boolean saveFinal){
   String msg = "ERICFICKES.COM";
   //  stamp bottom right based on textSize
   fill(#EF1975);  //colors.getColor());
@@ -242,7 +319,7 @@ void stampAndSave(){
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( SAVE_NAME+"-FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
+  if(saveFinal) save( SAVE_NAME+"-FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
 }
 
 
