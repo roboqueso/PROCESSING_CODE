@@ -90,69 +90,39 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "1.png",
-"10.png",
-"11.png",
-"12.png",
-"13.png",
-"14.png",
-"15.png",
-"16.png",
-"17.png",
-"18.png",
-"19.png",
-"2.png",
-"20.png",
-"21.png",
-"22.png",
-"23.png",
-"24.png",
-"25.png",
-"26.png",
-"27.png",
-"28.png",
-"29.png",
-"3.png",
-"30.png",
-"31.png",
-"32.png",
-"33.png",
-"34.png",
-"35.png",
-"36.png",
-"37.png",
-"38.png",
-"39.png",
-"4.png",
-"40.png",
-"41.png",
-"42.png",
-"43.png",
-"44.png",
-"45.png",
-"46.png",
-"47.png",
-"48.png",
-"49.png",
-"5.png",
-"50.png",
-"51.png",
-"52.png",
-"53.png",
-"54.png",
-"55.png",
-"56.png",
-"6.png",
-"7.png",
-"8.png",
-"9.png"
+  "i1.png",
+"i10.png",
+"i11.png",
+"i12.png",
+"i13.png",
+"i14.png",
+"i15.png",
+"i16.png",
+"i17.png",
+"i18.png",
+"i19.png",
+"i2.png",
+"i20.png",
+"i21.png",
+"i22.png",
+"i23.png",
+"i24.png",
+"i25.png",
+"i26.png",
+"i3.png",
+"i4.png",
+"i5.png",
+"i6.png",
+"i7.png",
+"i8.png",
+"i9.png"
 };
 
 boolean saveFrame = true;
 boolean saveLast = true; //  save final frame
 
 
-boolean rotateWacky = false;  // requires rotateTiles = true
+boolean rotateWacky = true;  // requires rotateTiles = true
 
 //  MODES
   // boolean p5Filters = true;
@@ -252,7 +222,7 @@ void setup() {
       if(rotateTiles){
 
         //  RANDOM PIE vs 90
-        tmpImg.rotate( rotateWacky ? ( (drawW*col)+(drawH*row) ) : (90*col) );
+        tmpImg.rotate( rotateWacky ? ( (row+col)*45 ) : (90*col) );
 
         //  TODO - are there better rotate combos to be had?
       }
