@@ -44,9 +44,9 @@ HDrawablePool pool;
 int MODE = 1;
 Boolean do_both_modes = true;	// run 1, then 2, then bounce
 Boolean debug = true;	// show P5 filter labels
-String SRC_FILE = "fickes.jpg";
+String SRC_FILE = "htg.png";
 String SAVE_NAME = "thisShouldBeDynamic";
-String SAVE_TYPE = ".tif";	// ".png";
+String SAVE_TYPE = ".png";	// ".png" or .tif;
 String sMode;	// temp filter name holder
 int gridX,gridY, colCt,rowCt,drawW, drawH;	//	"INTERNALS" -> set by MODE
 
@@ -67,7 +67,7 @@ int iScale = -11;	//	-1 inverts slices
 
 void  settings ()  {
     // size(displayWidth, displayHeight, P3D); // matching dimensions of pImg for best results
-    size(1500,1115, P3D); // matching dimensions of pImg for best results
+    size(1920, 1080, P3D); // matching dimensions of pImg for best results
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }

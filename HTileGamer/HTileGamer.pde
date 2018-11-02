@@ -32,51 +32,52 @@ import fixlib.*;
 
 // TODO: add shapeJousT to FIXLIB
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /**
-   * HYPE port of FIXLIB'S Lissajous PShape maker
-   * @param a     X coordinate
-   * @param b     Y coordinate
-   * @param amp   Amplitude or size
-   * @param inc   Loop magic incrementer [ 1 - 36 supported ]. (360 / inc) = number of points in returned PShape
-   * @param textImg PImage to use as shape texture
-   * @return  PShape containing vertices in the shape of a lissajous pattern
-   */
-  public HPath hypeJuice( float a, float b, float amp, int inc, PImage textImg )
-  {
-    int juicePts = 160; //  160 is the NEW hotness -> slightly less points, no blank frames 9-36
-    int z = 0;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+         * HYPE port of FIXLIB'S Lissajous PShape maker
+         * @param a     X coordinate
+         * @param b     Y coordinate
+         * @param amp   Amplitude or size
+         * @param inc   Loop magic incrementer [ 1 - 36 supported ]. (360 / inc) = number of points in returned PShape
+         * @param textImg PImage to use as shape texture
+         * @return  PShape containing vertices in the shape of a lissajous pattern
 
-    //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
-    //  Ideal range is someplace between 1 and 36
-    if( ( inc < 1 ) || ( inc > 36 ) ) {
-      inc = 1;
-    }
-    
-    float x, y;
-    // PShape shp = createShape();
-    HPath hp = new HPath();
-    
-    hp.beginPath();
-    hp.texture(textImg);
+        public HPath hypeJuice( float a, float b, float amp, int inc, PImage textImg )
+        {
+          int juicePts = 160; //  160 is the NEW hotness -> slightly less points, no blank frames 9-36
+          int z = 0;
+
+          //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
+          //  Ideal range is someplace between 1 and 36
+          if( ( inc < 1 ) || ( inc > 36 ) ) {
+            inc = 1;
+          }
+          
+          float x, y;
+          // PShape shp = createShape();
+          HPath hp = new HPath();
+          
+          hp.beginPath();
+          hp.texture(textImg);
 
 
-    for ( int t = 0; t <= juicePts  ; t+=inc)
-    {
-      //  NEW HOTNESS!
-      x = a - amp * PApplet.cos((a * t * TWO_PI)/360);
-      y = b - amp * PApplet.sin((b * t * TWO_PI)/360);
+          for ( int t = 0; t <= juicePts  ; t+=inc)
+          {
+            //  NEW HOTNESS!
+            x = a - amp * PApplet.cos((a * t * TWO_PI)/360);
+            y = b - amp * PApplet.sin((b * t * TWO_PI)/360);
 
-      //  give shapes up and down Z-depth
-      z = ( t < (juicePts*.5) ) ? t : juicePts-t;
+            //  give shapes up and down Z-depth
+            z = ( t < (juicePts*.5) ) ? t : juicePts-t;
 
-      hp.vertexUV(x, y, x, y );
-    }
+            hp.vertexUV(x, y, x, y );
+          }
 
-    hp.endPath();
+          hp.endPath();
 
-    return hp;
-  }
+          return hp;
+        }
+         */
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
@@ -90,31 +91,88 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  BG image is still static ATM
 String[] imgs = { 
   "1.png",
-  "2.png",
-  "3.png"
+"10.png",
+"11.png",
+"12.png",
+"13.png",
+"14.png",
+"15.png",
+"16.png",
+"17.png",
+"18.png",
+"19.png",
+"2.png",
+"20.png",
+"21.png",
+"22.png",
+"23.png",
+"24.png",
+"25.png",
+"26.png",
+"27.png",
+"28.png",
+"29.png",
+"3.png",
+"30.png",
+"31.png",
+"32.png",
+"33.png",
+"34.png",
+"35.png",
+"36.png",
+"37.png",
+"38.png",
+"39.png",
+"4.png",
+"40.png",
+"41.png",
+"42.png",
+"43.png",
+"44.png",
+"45.png",
+"46.png",
+"47.png",
+"48.png",
+"49.png",
+"5.png",
+"50.png",
+"51.png",
+"52.png",
+"53.png",
+"54.png",
+"55.png",
+"56.png",
+"6.png",
+"7.png",
+"8.png",
+"9.png"
 };
 
+boolean saveFrame = true;
+boolean saveLast = true; //  save final frame
+
+
+boolean rotateWacky = false;  // requires rotateTiles = true
+
 //  MODES
-  boolean p5Filters = false;
-  boolean rotateTiles = false;
-
-  // boolean p5Filters = false;
-  // boolean rotateTiles = true;
-
-  // boolean p5Filters = true;
-  // boolean rotateTiles = true;
-
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
+
+  // boolean p5Filters = false;
+  // boolean rotateTiles = false;
+
+  // boolean p5Filters = true;
+  // boolean rotateTiles = true;
+
+boolean p5Filters = false;
+boolean rotateTiles = true;
 
 //  END MODES
 
 
-int frmCt = 2;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-boolean saveFrame = true;
-boolean saveLast = false; //  save final frame
+int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 16;//  2, 4, 8, 16
-int colSpacing = 8;
+int colSpacing = 0;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -162,7 +220,7 @@ void setup() {
   }
 */
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + "-"+colCt+"col" + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE": "" );  //fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + "-"+colCt+"col" + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE": "" ) + (rotateWacky ? "WACKY": "" );  //fix.getTimestamp();
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(false);
@@ -184,28 +242,28 @@ void setup() {
     //  INNER COLUMN LOOP ( l-r )  
     for( int col = 0; col < colCt; col++)
     {
-      tmpSlice = mainImg.get( (drawW*col), (drawH*row), drawW, drawH);
+      // tmpSlice = mainImg.get( (drawW*col), (drawH*row), drawW, drawH);      
+//  TODO: move to using HSprite instead
+      tmpImg = new HImage( mainImg.get( (drawW*col), (drawH*row), drawW, drawH) );
+      tmpImg.anchorAt(H.CENTER);
 
-      tmpImg = new HImage( tmpSlice );
-
-      //  3D
-      tmpImg.z( row+col );
-
-
-      //  TODO: get hypJuice working w/texture
-      // pool.add(  hypeJuice( (drawW*col), (drawH*row), drawH, (row+col), tmpSlice ) );
 
       //  ROTATE slice before putting in the pool?
       if(rotateTiles){
-        tmpImg.rotateX(90*col);
-        tmpImg.rotateY(90*row);
-        // tmpImg.rotateZ(90*col);
+
+        //  RANDOM PIE vs 90
+        tmpImg.rotate( rotateWacky ? ( (drawW*col)+(drawH*row) ) : (90*col) );
+
+        //  TODO - are there better rotate combos to be had?
       }
           
-      // //  APPLY P5 FILTERS?
+      //  APPLY P5 FILTERS?
       if(p5Filters){
-        tmpImg.image().filter(INVERT);
-        tmpImg.image().filter(OPAQUE);
+
+        tmpImg.image().filter(OPAQUE);        
+        // POSTERIZE
+        // Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
+        tmpImg.image().filter(POSTERIZE, 8 );
       }
 
       pool.add(tmpImg);
@@ -236,7 +294,7 @@ void draw() {
   pool.requestAll();
 
   //  rotate obj already known by HYPE
-  // bgHImg.rotateZ( (frameCount+1)*90);
+  bgHImg.rotateZ( (frameCount+1)*90);
 
   H.drawStage();
 
@@ -254,6 +312,9 @@ void draw() {
 
 //  TODO: get() is now erroring out with
 //  HTileGamer.pde:178:0:178:0: ArrayIndexOutOfBoundsException
+//  F.P5 V3.4 -> debug deez nutz
+
+//  TODO: re-run in P5 3.3.7
 
     //  get stage
     tmpSlice = null;
