@@ -90,59 +90,36 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "i1.png",
-"i10.png",
-"i11.png",
-"i12.png",
-"i13.png",
-"i14.png",
-"i15.png",
-"i16.png",
-"i17.png",
-"i18.png",
-"i19.png",
-"i2.png",
-"i20.png",
-"i21.png",
-"i22.png",
-"i23.png",
-"i24.png",
-"i25.png",
-"i26.png",
-"i3.png",
-"i4.png",
-"i5.png",
-"i6.png",
-"i7.png",
-"i8.png",
-"i9.png"
-};
+  "different_strokes.png"
+  };
 
 boolean saveFrame = true;
 boolean saveLast = true; //  save final frame
 
-
-boolean rotateWacky = true;  // requires rotateTiles = true
-
 //  MODES
+// boolean p5Filters = false;
+// boolean rotateTiles = false;
+  
+// boolean p5Filters = true;
+// boolean rotateTiles = true;
+
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
-
-  // boolean p5Filters = false;
-  // boolean rotateTiles = false;
-
-  // boolean p5Filters = true;
-  // boolean rotateTiles = true;
 
 boolean p5Filters = false;
-boolean rotateTiles = true;
-
+boolean rotateTiles = false;
 //  END MODES
+
+//  NOTE : each of these rotate vars require rotateTiles = true
+boolean rotateWacky = false;  // requires rotateTiles = true
+boolean rotateX = false;  // Rotates each tile's X axis
+boolean rotateY = false;  // Rotates each tile's Y axis
+boolean rotateZ = true;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 16;//  2, 4, 8, 16
-int colSpacing = 0;
+int colSpacing = 16;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -155,6 +132,7 @@ HImage tmpImg, bgHImg;  //  background image reference
 
 HShape hShp;
 PShape pShp;
+HBox tmpBox;
 
 int imgIdx = 0;
 
@@ -162,7 +140,6 @@ int imgIdx = 0;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    // size(1400,1400, P3D);  // TODO: follow image size for now. Come back and make sketch own sliced dimensions
     size(1920, 1080, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
@@ -190,10 +167,12 @@ void setup() {
   }
 */
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + "-"+colCt+"col" + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE": "" ) + (rotateWacky ? "WACKY": "" );  //fix.getTimestamp();
+  //  NOTE: SUB STATEMENTS PAST rotateTiles
+  SAVE_NAME = fix.pdeName() + "-"+ imgs[imgIdx] + "" +colCt+"x"+colSpacing + (p5Filters ? "-P5F": "" ) + (rotateTiles ? "-ROTATE" + (rotateWacky ? "WACKY": "" )
+               + (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" );
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true).autoClear(false);
+  H.init(this).background(-1).use3D(true);
   
   //  BACKGROUND IMAGE
   bgHImg = new HImage( bgImg );
@@ -212,31 +191,80 @@ void setup() {
     //  INNER COLUMN LOOP ( l-r )  
     for( int col = 0; col < colCt; col++)
     {
-      // tmpSlice = mainImg.get( (drawW*col), (drawH*row), drawW, drawH);      
-//  TODO: move to using HSprite instead
+      //  get image slice
       tmpImg = new HImage( mainImg.get( (drawW*col), (drawH*row), drawW, drawH) );
       tmpImg.anchorAt(H.CENTER);
-
+      
+      //  create box to hold slice
+      tmpBox = new HBox();
+      tmpBox.width(drawW).height(drawH);
+      tmpBox
+        .depth( random( -(drawH+drawW), (drawH+drawW)*TWO_PI ) )
+        .z( random( -(colSpacing+colCt+col+row)*PI, (colSpacing+colCt+col+row)*PI ) );
+// .noStroke()
 
       //  ROTATE slice before putting in the pool?
       if(rotateTiles){
 
-        //  RANDOM PIE vs 90
-        tmpImg.rotate( rotateWacky ? ( (row+col)*45 ) : (90*col) );
+        //  general rotation
+        if( !rotateX &&  !rotateY &&  !rotateZ ){
+          tmpImg.rotation( rotateWacky ? ( (row+col)*random(15,90) ) : (90* (row+col) ) );
+          tmpBox.rotation( rotateWacky ? ( (row+col)*random(15,90) ) : (90* (row+col) ) );
+        }
+
+        //  TODO: does this make much difference?
+        if(rotateX) tmpImg.rotationX( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+        if(rotateY) tmpImg.rotationY( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+        if(rotateZ) tmpImg.rotationZ( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+
+
+        //  individual axis rotations
+        if(rotateX) tmpBox.rotationX( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+        if(rotateY) tmpBox.rotationY( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+        if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
+
+     // tmpBox.depth( (drawW+drawH) ).width(drawW).height(drawH).noStroke().z(-500).rotationZ(33);
 
         //  TODO - are there better rotate combos to be had?
       }
-          
+
+
+
       //  APPLY P5 FILTERS?
       if(p5Filters){
+          tmpImg.image().filter(OPAQUE);
+          // POSTERIZE
+          // Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
+          tmpImg.image().filter(POSTERIZE, 8 );
 
-        tmpImg.image().filter(OPAQUE);        
-        // POSTERIZE
-        // Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
-        tmpImg.image().filter(POSTERIZE, 8 );
+        tmpBox.textureFront( tmpImg.image() );
+
+          // tmpImg.image().filter(INVERT);
+        tmpBox.textureTop( tmpImg.image() );
+
+          // tmpImg.image().filter(GRAY);
+        tmpBox.textureBottom( tmpImg.image() );
+
+          // tmpImg.image().filter(INVERT);
+        tmpBox.textureBack( tmpImg.image() );
+
+          tmpImg.image().filter(GRAY);
+        tmpBox.textureLeft( tmpImg.image() );
+
+          tmpImg.image().filter(INVERT);
+        tmpBox.textureRight( tmpImg.image() );
+
+
+      } else {
+
+      //  assign HBox texture
+      tmpBox.texture(tmpImg.image());
+      //  TODO: expand to setting individual textures per box side ( )
+        
       }
 
-      pool.add(tmpImg);
+      //  drop it in the pool
+      pool.add( tmpBox );
     }
   }
 
@@ -265,6 +293,11 @@ void draw() {
 
   //  rotate obj already known by HYPE
   bgHImg.rotateZ( (frameCount+1)*90);
+
+
+ // pointLight(255, 51,  0,    0, height/2, -300); // orange
+ // pointLight(0,  149, 168,  width, height/2, -300); // teal
+ // pointLight(255, 204,  0, width/2, height/2, -400); // yellow
 
   H.drawStage();
 
@@ -297,16 +330,26 @@ void draw() {
     tmpSlice.resize(width,height);
 
     try{
+
+// TODO: GET MASKING CODE WORKING
+// bgImg.filter(DILATE);
+// bgImg.filter(ERODE);
+// bgImg.filter(INVERT);
+// bgImg.filter(GRAY);
+bgImg.filter(POSTERIZE,4);
+//  FINAL FRAME IS PRETTY SKETCH ATM
+
         //  MASK
-        mainImg.mask(bgImg);
-        mainImg.mask(tmpSlice);
+        tmpSlice.mask(bgImg);
+        tmpSlice.mask(mainImg);
 
     }catch(Exception exc ){
       println("EXCEPTION: "+ exc.getMessage());
     }
 
     //  give it back to HYPE
-    H.add(new HImage(mainImg));
+    // H.add(new HImage(mainImg));
+    H.add(new HImage(tmpSlice));
 
     //  NO grid, just the final frame image
     H.clearStage();
@@ -350,7 +393,7 @@ void stampAndSave(boolean saveFinal){
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  if(saveFinal) save( SAVE_NAME+"-FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
+  if(saveFinal) save( SAVE_NAME+"_FINAL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
 }
 
 
