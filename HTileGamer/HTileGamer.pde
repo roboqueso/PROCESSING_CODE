@@ -90,7 +90,22 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "different_strokes.png"
+  "retile1.png",
+  "retile2.png",
+  "retile3.png",
+  "retile4.png",
+  "retile5.png",
+  "retile6.png",
+  "retile7.png",
+  "retile8.png",
+  "retile9.png",
+  "retile10.png",
+  "retile11.png",
+  "retile12.png",
+  "retile13.png",
+  "retile14.png",
+  "retile15.png",
+  "retile16.png"
   };
 
 boolean saveFrame = true;
@@ -99,27 +114,27 @@ boolean saveLast = true; //  save final frame
 //  MODES
 // boolean p5Filters = false;
 // boolean rotateTiles = false;
-  
+
+// boolean p5Filters = true;
+// boolean rotateTiles = false;
+
 // boolean p5Filters = true;
 // boolean rotateTiles = true;
 
-  // boolean p5Filters = true;
-  // boolean rotateTiles = false;
-
 boolean p5Filters = false;
-boolean rotateTiles = false;
+boolean rotateTiles = true;
 //  END MODES
 
 //  NOTE : each of these rotate vars require rotateTiles = true
-boolean rotateWacky = false;  // requires rotateTiles = true
-boolean rotateX = false;  // Rotates each tile's X axis
-boolean rotateY = false;  // Rotates each tile's Y axis
+boolean rotateWacky = true;  // requires rotateTiles = true
+boolean rotateX = true;  // Rotates each tile's X axis
+boolean rotateY = true;  // Rotates each tile's Y axis
 boolean rotateZ = true;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 16;//  2, 4, 8, 16
-int colSpacing = 16;
+int colCt = 4;//  2, 4, 8, 16
+int colSpacing = 0;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -172,7 +187,7 @@ void setup() {
                + (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" );
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).use3D(true).autoClear(true);
   
   //  BACKGROUND IMAGE
   bgHImg = new HImage( bgImg );
@@ -199,69 +214,51 @@ void setup() {
       tmpBox = new HBox();
       tmpBox.width(drawW).height(drawH);
       tmpBox
-        .depth( random( -(drawH+drawW), (drawH+drawW)*TWO_PI ) )
+        .depth( random( -width, width ) )
+        // .noStroke()
+        .stroke( (drawW*col)%255 , (drawH*row)%255 , (colSpacing+colCt+col+row) %255 )
         .z( random( -(colSpacing+colCt+col+row)*PI, (colSpacing+colCt+col+row)*PI ) );
-// .noStroke()
 
-      //  ROTATE slice before putting in the pool?
-      if(rotateTiles){
+        //  ROTATE before adding to pool
+        if(rotateTiles){
 
-        //  general rotation
-        if( !rotateX &&  !rotateY &&  !rotateZ ){
-          tmpImg.rotation( rotateWacky ? ( (row+col)*random(15,90) ) : (90* (row+col) ) );
-          tmpBox.rotation( rotateWacky ? ( (row+col)*random(15,90) ) : (90* (row+col) ) );
+          //  general rotation
+          if( !rotateX &&  !rotateY &&  !rotateZ ){
+            tmpBox.rotation( rotateWacky ? ( pool.currentIndex()*random(15,90) ) : (90* pool.currentIndex() ) );
+          }
+
+          //  individual axis rotations
+          if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+          if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+          if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
         }
 
-        //  TODO: does this make much difference?
-        if(rotateX) tmpImg.rotationX( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
-        if(rotateY) tmpImg.rotationY( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
-        if(rotateZ) tmpImg.rotationZ( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
 
-
-        //  individual axis rotations
-        if(rotateX) tmpBox.rotationX( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
-        if(rotateY) tmpBox.rotationY( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
-        if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( (row+col)*random(180) ) : (90* (row+col) ) );
-
-     // tmpBox.depth( (drawW+drawH) ).width(drawW).height(drawH).noStroke().z(-500).rotationZ(33);
-
-        //  TODO - are there better rotate combos to be had?
-      }
-
-
-
-      //  APPLY P5 FILTERS?
+      //  APPLY Texture here
       if(p5Filters){
-          tmpImg.image().filter(OPAQUE);
-          // POSTERIZE
-          // Limits each channel of the image to the number of colors specified as the parameter. The parameter can be set to values between 2 and 255, but results are most noticeable in the lower ranges.
-          tmpImg.image().filter(POSTERIZE, 8 );
-
+          tmpImg.image().filter(INVERT);
         tmpBox.textureFront( tmpImg.image() );
 
-          // tmpImg.image().filter(INVERT);
-        tmpBox.textureTop( tmpImg.image() );
-
-          // tmpImg.image().filter(GRAY);
-        tmpBox.textureBottom( tmpImg.image() );
-
-          // tmpImg.image().filter(INVERT);
-        tmpBox.textureBack( tmpImg.image() );
-
+          tmpImg.image().filter(OPAQUE);
+          tmpImg.image().filter(POSTERIZE, 8 );
           tmpImg.image().filter(GRAY);
-        tmpBox.textureLeft( tmpImg.image() );
+        tmpBox.textureTop( tmpImg.image() );
+        tmpBox.textureBottom( tmpImg.image() );
+          
 
-          tmpImg.image().filter(INVERT);
-        tmpBox.textureRight( tmpImg.image() );
+        tmpBox.textureBack( bgImg );
+          bgImg.filter(INVERT);
+        tmpBox.textureLeft( bgImg );
+        tmpBox.textureRight( bgImg );
 
 
       } else {
 
       //  assign HBox texture
       tmpBox.texture(tmpImg.image());
-      //  TODO: expand to setting individual textures per box side ( )
         
       }
+
 
       //  drop it in the pool
       pool.add( tmpBox );
@@ -276,7 +273,36 @@ void setup() {
         .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
         .cols(colCt)
         .rows(rowCt)
-      );
+      )
+
+      .onCreate(
+         new HCallback() {
+          public void run(Object obj) {
+           
+           tmpBox = (HBox) obj;
+
+            //  ROTATE slice before putting in the pool?
+            if(rotateTiles)
+            {
+
+              //  general rotation
+              if( !rotateX && !rotateY && !rotateZ ){
+                tmpBox.rotation( rotateWacky ? ( pool.currentIndex()*random(15,90) ) : (90* pool.currentIndex() ) );
+              }
+
+              //  individual axis rotations
+              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+
+            }
+
+
+
+
+          }
+         }
+        );
 
 }
 
@@ -294,15 +320,33 @@ void draw() {
   //  rotate obj already known by HYPE
   bgHImg.rotateZ( (frameCount+1)*90);
 
+  if(p5Filters){
+    /*
+    Sets an orthographic projection and defines a parallel clipping volume. 
+    All objects with the same dimension appear the same size, regardless of whether 
+    they are near or far from the camera. The parameters to this function specify the 
+    clipping volume where left and right are the minimum and maximum x values, top and bottom 
+    are the minimum and maximum y values, and near and far are the minimum and maximum z values. 
 
- // pointLight(255, 51,  0,    0, height/2, -300); // orange
- // pointLight(0,  149, 168,  width, height/2, -300); // teal
- // pointLight(255, 204,  0, width/2, height/2, -400); // yellow
+    If no parameters are given, the default is used: ortho(-width/2, width/2, -height/2, height/2).
+    */
+    // ortho(left, right, bottom, top, near, far);
+    ortho(-width/2, width/2, -height/2, height/2); // Same as ortho()
+    // translate(width/2, height/2, frameCount );
+    rotateX(-HALF_PI/6);
+    rotateY(-HALF_PI/6);
+
+    rotateZ(radians(8));
+
+  } else {
+    perspective();
+  }
 
   H.drawStage();
 
   //  save frame
   if(saveFrame){
+    stampAndSave(false);
     saveFrame( SAVE_NAME + "_##"+SAVE_TYPE);  //  USE .TIF IF COLOR
   }
 
@@ -310,6 +354,9 @@ void draw() {
 
   //  Move to next image every time frameCount HITS the "(frmCt)"th mark
   if(frameCount%frmCt==0) {
+
+    perspective();
+
     //  FINAL FRAME
     //  Grab images, do some magic, clear stage, slap down final frame
 
@@ -336,7 +383,7 @@ void draw() {
 // bgImg.filter(ERODE);
 // bgImg.filter(INVERT);
 // bgImg.filter(GRAY);
-bgImg.filter(POSTERIZE,4);
+bgImg.filter(POSTERIZE,8);
 //  FINAL FRAME IS PRETTY SKETCH ATM
 
         //  MASK
@@ -348,11 +395,9 @@ bgImg.filter(POSTERIZE,4);
     }
 
     //  give it back to HYPE
-    // H.add(new HImage(mainImg));
     H.add(new HImage(tmpSlice));
 
     //  NO grid, just the final frame image
-    H.clearStage();
     H.drawStage();
 
     stampAndSave(saveLast);
