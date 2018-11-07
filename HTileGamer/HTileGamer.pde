@@ -90,26 +90,11 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "retile1.png",
-  "retile2.png",
-  "retile3.png",
-  "retile4.png",
-  "retile5.png",
-  "retile6.png",
-  "retile7.png",
-  "retile8.png",
-  "retile9.png",
-  "retile10.png",
-  "retile11.png",
-  "retile12.png",
-  "retile13.png",
-  "retile14.png",
-  "retile15.png",
-  "retile16.png"
+  "6col1.png","6col2.png","6col3.png","6col4.png","6col5.png","6col6.png"
   };
 
 boolean saveFrame = true;
-boolean saveLast = true; //  save final frame
+boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
 
 //  MODES
 // boolean p5Filters = false;
@@ -126,15 +111,15 @@ boolean rotateTiles = true;
 //  END MODES
 
 //  NOTE : each of these rotate vars require rotateTiles = true
-boolean rotateWacky = true;  // requires rotateTiles = true
-boolean rotateX = true;  // Rotates each tile's X axis
-boolean rotateY = true;  // Rotates each tile's Y axis
-boolean rotateZ = true;  // Rotates each tile's Z axis
+boolean rotateWacky = false;  // requires rotateTiles = true
+boolean rotateX = false;  // Rotates each tile's X axis
+boolean rotateY = false;  // Rotates each tile's Y axis
+boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 4;//  2, 4, 8, 16
-int colSpacing = 0;
+int colCt = 8;//  2, 4, 8, 16
+int colSpacing = (colCt*4);
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -169,8 +154,8 @@ void setup() {
   // drawH = (int)( (height-(colSpacing*2))/rowCt);
   drawW = (int)( (width/colCt)-colSpacing);
   drawH = (int)( (height/rowCt)-colSpacing);
-  gridX = colSpacing; //(drawW/2)+colSpacing; 
-  gridY = colSpacing; //(drawH/2)+colSpacing;
+  gridX = colSpacing*2;
+  gridY = colSpacing*2;
 
   mainImg = loadImage( imgs[imgIdx] );
   bgImg = mainImg;
@@ -214,10 +199,10 @@ void setup() {
       tmpBox = new HBox();
       tmpBox.width(drawW).height(drawH);
       tmpBox
-        .depth( random( -width, width ) )
-        // .noStroke()
-        .stroke( (drawW*col)%255 , (drawH*row)%255 , (colSpacing+colCt+col+row) %255 )
-        .z( random( -(colSpacing+colCt+col+row)*PI, (colSpacing+colCt+col+row)*PI ) );
+        .depth( random( -drawW, drawW ) )
+        .noStroke()
+        .z( (int) ( random(-(colSpacing+colCt+col+row), (colSpacing+colCt+col+row) )) );
+
 
         //  ROTATE before adding to pool
         if(rotateTiles){
@@ -228,28 +213,27 @@ void setup() {
           }
 
           //  individual axis rotations
-          if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
-          if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
-          if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+          if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
+          if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
+          if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
         }
 
 
       //  APPLY Texture here
       if(p5Filters){
+
           tmpImg.image().filter(INVERT);
-        tmpBox.textureFront( tmpImg.image() );
-
           tmpImg.image().filter(OPAQUE);
-          tmpImg.image().filter(POSTERIZE, 8 );
-          tmpImg.image().filter(GRAY);
-        tmpBox.textureTop( tmpImg.image() );
+        tmpBox.textureFront( tmpImg.image() );
+      	tmpBox.textureBack( tmpImg.image() );
         tmpBox.textureBottom( tmpImg.image() );
-          
 
-        tmpBox.textureBack( bgImg );
           bgImg.filter(INVERT);
+          bgImg.filter(OPAQUE);
         tmpBox.textureLeft( bgImg );
         tmpBox.textureRight( bgImg );
+        tmpBox.textureTop( bgImg );
+
 
 
       } else {
@@ -291,9 +275,9 @@ void setup() {
               }
 
               //  individual axis rotations
-              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
-              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
-              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(180) ) : (90* pool.currentIndex() ) );
+              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
 
             }
 
@@ -320,6 +304,7 @@ void draw() {
   //  rotate obj already known by HYPE
   bgHImg.rotateZ( (frameCount+1)*90);
 
+  
   if(p5Filters){
     /*
     Sets an orthographic projection and defines a parallel clipping volume. 
@@ -331,11 +316,10 @@ void draw() {
     If no parameters are given, the default is used: ortho(-width/2, width/2, -height/2, height/2).
     */
     // ortho(left, right, bottom, top, near, far);
-    ortho(-width/2, width/2, -height/2, height/2); // Same as ortho()
+    ortho();
     // translate(width/2, height/2, frameCount );
     rotateX(-HALF_PI/6);
     rotateY(-HALF_PI/6);
-
     rotateZ(radians(8));
 
   } else {
