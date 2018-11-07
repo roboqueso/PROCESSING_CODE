@@ -30,23 +30,60 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "jbro1.png"
+  "jbro1.png" ,
+"jbro10.png",
+"jbro11.png",
+"jbro12.png",
+"jbro13.png",
+"jbro14.png",
+"jbro15.png",
+"jbro16.png",
+"jbro17.png",
+"jbro18.png",
+"jbro19.png",
+"jbro2.png",
+"jbro20.png",
+"jbro21.png",
+"jbro22.png",
+"jbro23.png",
+"jbro24.png",
+"jbro25.png",
+"jbro26.png",
+"jbro27.png",
+"jbro28.png",
+"jbro29.png",
+"jbro3.png",
+"jbro30.png",
+"jbro31.png",
+"jbro32.png",
+"jbro33.png",
+"jbro34.png",
+"jbro35.png",
+"jbro4.png",
+"jbro5.png",
+"jbro6.png",
+"jbro7.png",
+"jbro8.png",
+"jbro9.png"
   };
+
+
 
 boolean saveFrame = true;
 boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
+boolean stroke = true;	//	stroke the box
 
 //  MODES
-boolean p5Filters = false;
-boolean rotateTiles = false;
+// boolean p5Filters = false;
+// boolean rotateTiles = false;
 
 // boolean p5Filters = true;
 // boolean rotateTiles = false;
 
-// boolean p5Filters = true;
-// boolean rotateTiles = true;
+boolean p5Filters = false;
+boolean rotateTiles = true;
 
-// boolean p5Filters = false;
+// boolean p5Filters = true;
 // boolean rotateTiles = true;
 //  END MODES
 
@@ -56,11 +93,12 @@ boolean rotateX = false;  // Rotates each tile's X axis
 boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
 
-boolean stroke = true;
+boolean diamond = true;
+
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 40;//  2, 4, 8, 16
-int colSpacing = 4;
+int colSpacing = 2;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -81,7 +119,7 @@ int imgIdx = 0;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size(1920, 1080, P3D);
+    size(1600, 1600, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -140,31 +178,18 @@ void setup() {
       tmpBox = new HBox();
       tmpBox.width(drawW).height(drawH);
       tmpBox
-        .depth( random( -drawW, drawW ) )
-        .z( (int) ( random(-(colSpacing+colCt+col+row), (colSpacing+colCt+col+row) )) );
+        .depth( random( -drawW, drawW ) + (random(colSpacing+colCt+col+row)*HALF_PI) )
+        .z( random( -drawW, drawW ) + (colSpacing+colCt+col+row) );
+		// .z( (int) ( random(-(colSpacing+colCt+col+row), )) );
 
         if(stroke){
-			tmpBox.stroke( (int)(drawW*col*PI)%255, 
+			tmpBox.stroke( (int)(drawW*col*TWO_PI)%255, 
 							(int)(drawH*col*PI)%255, 
-							(int)(colSpacing+colCt+col+row*PI)%255 );
+							(int)(colSpacing+colCt+col+row*TWO_PI)%255 );
         }else {
         	tmpBox.noStroke();
         }
 
-
-        //  ROTATE before adding to pool
-        if(rotateTiles){
-
-          //  general rotation
-          if( !rotateX &&  !rotateY &&  !rotateZ ){
-            tmpBox.rotation( rotateWacky ? ( pool.currentIndex()*random(15,90) ) : (90* pool.currentIndex() ) );
-          }
-
-          //  individual axis rotations
-          if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
-          if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
-          if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex()*random(4,345) ) : (90* random(4)+pool.currentIndex() ) );
-        }
 
 
       //  APPLY Texture here
@@ -207,15 +232,22 @@ void setup() {
         .rows(rowCt)
       )
 
+
       .onCreate(
          new HCallback() {
           public void run(Object obj) {
            
+
            tmpBox = (HBox) obj;
 
-            //  ROTATE slice before putting in the pool?
-            if(rotateTiles)
-            {
+        if(rotateTiles && diamond){
+
+        	tmpBox
+            .rotationX(45)
+        	 .rotationY(45);
+
+
+        }else if(rotateTiles && !diamond){
 
               //  general rotation
               if( !rotateX && !rotateY && !rotateZ ){
