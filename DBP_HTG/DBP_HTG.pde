@@ -1,23 +1,12 @@
 /*
-HTileGamer  : take an image and slice into a slide game
+DBP_HTG = Double Brother Programmer _ HTileGamer  : take an image and slice into a slide game
 
 TODO: 
 
-- re-visit logic and confirm
-** is memory safe?
-** is re-assemble logic the smartest?
-
-
-  load image
-
-  devaskation-logo-flat.png
-  1400 x 1400
-
-  slice to grid
-
-animate
-
-reassemble
+- DBP collab warmup exercise ( JBro is 40 )
+- 1600x1600
+- 40 columns
+- 40 spacing?
 
 */
 
@@ -29,55 +18,6 @@ import hype.interfaces.*;
 import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
-
-// TODO: add shapeJousT to FIXLIB
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /**
-         * HYPE port of FIXLIB'S Lissajous PShape maker
-         * @param a     X coordinate
-         * @param b     Y coordinate
-         * @param amp   Amplitude or size
-         * @param inc   Loop magic incrementer [ 1 - 36 supported ]. (360 / inc) = number of points in returned PShape
-         * @param textImg PImage to use as shape texture
-         * @return  PShape containing vertices in the shape of a lissajous pattern
-
-        public HPath hypeJuice( float a, float b, float amp, int inc, PImage textImg )
-        {
-          int juicePts = 160; //  160 is the NEW hotness -> slightly less points, no blank frames 9-36
-          int z = 0;
-
-          //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
-          //  Ideal range is someplace between 1 and 36
-          if( ( inc < 1 ) || ( inc > 36 ) ) {
-            inc = 1;
-          }
-          
-          float x, y;
-          // PShape shp = createShape();
-          HPath hp = new HPath();
-          
-          hp.beginPath();
-          hp.texture(textImg);
-
-
-          for ( int t = 0; t <= juicePts  ; t+=inc)
-          {
-            //  NEW HOTNESS!
-            x = a - amp * PApplet.cos((a * t * TWO_PI)/360);
-            y = b - amp * PApplet.sin((b * t * TWO_PI)/360);
-
-            //  give shapes up and down Z-depth
-            z = ( t < (juicePts*.5) ) ? t : juicePts-t;
-
-            hp.vertexUV(x, y, x, y );
-          }
-
-          hp.endPath();
-
-          return hp;
-        }
-         */
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
@@ -116,6 +56,7 @@ boolean rotateX = false;  // Rotates each tile's X axis
 boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
 
+boolean stroke = true;
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 40;//  2, 4, 8, 16
@@ -200,8 +141,15 @@ void setup() {
       tmpBox.width(drawW).height(drawH);
       tmpBox
         .depth( random( -drawW, drawW ) )
-        .noStroke()
         .z( (int) ( random(-(colSpacing+colCt+col+row), (colSpacing+colCt+col+row) )) );
+
+        if(stroke){
+			tmpBox.stroke( (int)(drawW*col*PI)%255, 
+							(int)(drawH*col*PI)%255, 
+							(int)(colSpacing+colCt+col+row*PI)%255 );
+        }else {
+        	tmpBox.noStroke();
+        }
 
 
         //  ROTATE before adding to pool
