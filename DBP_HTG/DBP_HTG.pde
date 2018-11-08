@@ -30,7 +30,7 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "jbro1.png" ,
+  "jbro1.png",
 "jbro10.png",
 "jbro11.png",
 "jbro12.png",
@@ -70,8 +70,8 @@ String[] imgs = {
 
 
 boolean saveFrame = true;
-boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
-boolean stroke = true;	//	stroke the box
+boolean saveLast = false; // NOTE: this switch is hit or miss depending on your source image.
+boolean stroke = false;	//	stroke the box
 
 //  MODES
 // boolean p5Filters = false;
@@ -88,17 +88,19 @@ boolean rotateTiles = true;
 //  END MODES
 
 //  NOTE : each of these rotate vars require rotateTiles = true
+boolean diamond = true;
+
 boolean rotateWacky = false;  // requires rotateTiles = true
 boolean rotateX = false;  // Rotates each tile's X axis
 boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
 
-boolean diamond = true;
+
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 40;//  2, 4, 8, 16
-int colSpacing = 2;
+int colSpacing = 0;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -243,8 +245,8 @@ void setup() {
         if(rotateTiles && diamond){
 
         	tmpBox
-            .rotationX(45)
-        	 .rotationY(45);
+            .rotationX(135)
+        	 .rotationY(135);
 
 
         }else if(rotateTiles && !diamond){
@@ -255,9 +257,9 @@ void setup() {
               }
 
               //  individual axis rotations
-              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
-              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
-              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex() * random(4,345) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
 
             }
 
