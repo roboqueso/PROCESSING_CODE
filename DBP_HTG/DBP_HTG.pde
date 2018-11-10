@@ -27,23 +27,32 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-    "synthFest.jpg",
-    "mergers.png"};
-
+"dog.jpg"}; /*,
+"timmysChill.jpg",
+"bdaySign.jpg",
+"cake.jpg",
+"zBrokenFuton.jpg",
+"secrets.jpg",
+"lightCandles.jpg",
+"timmy_big.jpg",
+"ball.jpg",
+"dollars.jpg"
+  };
+*/
 
 boolean saveFrame = true;
 boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
 boolean stroke = false;	//	stroke the box
 
 //  MODES
-  // boolean p5Filters = false;
-  // boolean rotateTiles = false;
+  boolean p5Filters = false;
+  boolean rotateTiles = false;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
 
-  boolean p5Filters = false;
-  boolean rotateTiles = true;
+  // boolean p5Filters = false;
+  // boolean rotateTiles = true;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = true;
@@ -52,20 +61,17 @@ boolean stroke = false;	//	stroke the box
   //  NOTE : each of these rotate vars require rotateTiles = true
 
 boolean diamond = true;
+boolean dOffset = false;  // helper for diamond mode
 
-
-boolean rotateWacky = false;  // requires rotateTiles = true
+boolean rotateWacky = false ;  // requires rotateTiles = true
 boolean rotateX = false;  // Rotates each tile's X axis
 boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
-
-// boolean squareMode = false;  //  Boxes are square based on width/colCt
-
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 8;//  2, 4, 8, 16
-int colSpacing = 20;
+int colSpacing = 0;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -86,7 +92,7 @@ color sClr;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size(1920, 1080, P3D);
+    size(1600, 1600, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -107,16 +113,16 @@ void setup() {
     drawH = (int)( (height/rowCt)-colSpacing);    
   }
 
-  gridX = colSpacing;
-  gridY = colSpacing;
+  gridX = drawW/2;
+  gridY = drawW/2;
 
   mainImg = loadImage( imgs[imgIdx] );
   bgImg = loadImage( imgs[imgIdx] );  //  force load
 
   //  Generate filename containing sketch settings meta NOW
   //  NOTE: SUB STATEMENTS PAST rotateTiles
-  SAVE_NAME = imgs[imgIdx] + "" +colCt+"x"+colSpacing + (p5Filters ? "P5F": "" )+ (rotateTiles ? "ROTATE" + (rotateWacky ? "WACKY": "" )
-               + (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" ) +  ( (rotateTiles&&diamond) ? "DMND": "" ) ;
+  SAVE_NAME = imgs[imgIdx] + "" +colCt+"x"+colSpacing + (p5Filters ? "P5F": "" )+ (rotateTiles ? "ROTA" + (rotateWacky ? "WACK": "" )
+               + (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" ) +  ( diamond ? "DMND": "" ) ;
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -162,8 +168,6 @@ void setup() {
             .z( drawW );          
         }
 
-
-
         if(stroke)
         {
           //  Grab color from the current tmpImg
@@ -176,18 +180,6 @@ void setup() {
         {
         	tmpBox.noStroke();
         }
-
-
-//  general rotation
-    if( !rotateX && !rotateY && !rotateZ ){
-      tmpBox.rotation( rotateWacky ? ( (row+col)*random(15,90) ) : (90* (row+col) ) );
-    }
-
-    //  individual axis rotations
-    if(rotateX) tmpBox.rotationX( rotateWacky ? ( (row+col) * random(5,150) ) : (90 * random(4)+(row+col) ) );
-    if(rotateY) tmpBox.rotationY( rotateWacky ? ( (row+col) * random(5,150) ) : (90 * random(4)+(row+col) ) );
-    if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( (row+col) * random(5,150) ) : (90 * random(4)+(row+col) ) );
-
 
 
       //  APPLY Texture here
@@ -232,16 +224,25 @@ void setup() {
          new HCallback() {
           public void run(Object obj) {
            
-
            tmpBox = (HBox) obj;
 
-        if(rotateTiles && diamond){
+          // diamond row off setter
+          if(pool.currentIndex()%colCt==0){
+            dOffset = !dOffset;
+          }
 
-        	tmpBox
-              .rotationX(135)
-              .rotationY(135);
+        if(diamond){
 
-        } else if(rotateTiles && !diamond){
+
+          tmpBox
+              .rotationX(45)
+              .rotationY(45);
+
+              if(dOffset){
+                tmpBox.x( tmpBox.x() + (drawW/2) );
+              }
+
+        } else if(rotateTiles){
 
               //  general rotation
               if( !rotateX && !rotateY && !rotateZ ){
@@ -341,13 +342,9 @@ void draw() {
     H.add(new HImage(tmpSlice));
     H.clearStage();
 
-ortho();
     //  NO grid, just the final frame image
     H.drawStage();
-
     stampAndSave(saveLast);
-
-perspective();
 
 
     if(imgIdx < imgs.length-1 )
@@ -387,12 +384,26 @@ perspective();
 */
 void stampAndSave(boolean saveFinal){
   String msg = "ERICFICKES.COM";
-  //  stamp bottom right based on textSize
-  fill(#EF1975);  //colors.getColor());
 
   textFont( createFont("Bitwise", 43));
-  textSize(13);
-  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+
+  // sClr = get( width/2, height/2 );
+  // //  fill color from image
+  // fill( sClr );
+  fill( #EF2018 );
+
+  textSize(36);
+  //  OG BOTTOM RIGHT STAMP
+  //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
+  //  NEW RIGHT VERTICAL STAMP
+  textAlign(CENTER,BOTTOM);
+  pushMatrix();
+    translate(width-TWO_PI, (height/2));
+    rotate(-HALF_PI);
+    text(msg,0,0);
+  popMatrix();
+
+
 
   if(saveFinal) save( SAVE_NAME+"_FNL"+SAVE_TYPE );    //  USE .TIF IF COLOR  
 }
