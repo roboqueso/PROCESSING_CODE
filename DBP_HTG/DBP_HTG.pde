@@ -5,6 +5,12 @@ TODO:
 
 - DBP collab warmup exercise ( JBro is 40 )
 
+- NOTE: diamond most isn't right
+
+- this sketch is about to be scrapped
+
+- run Salidas through PS actions, then bring back for dicing
+
 */
 
 import hype.*;
@@ -27,32 +33,53 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"dog.jpg"}; /*,
-"timmysChill.jpg",
-"bdaySign.jpg",
-"cake.jpg",
-"zBrokenFuton.jpg",
-"secrets.jpg",
-"lightCandles.jpg",
-"timmy_big.jpg",
-"ball.jpg",
-"dollars.jpg"
+"dbl27.png",
+"dbl21.png",
+"dbl16.png",
+"dbl5.png",
+"dbl15.png",
+"dbl19.png",
+"dbl2.png",
+"dbl12.png",
+"dbl6.png",
+"dbl18.png",
+"dbl11.png",
+"dbl17.png",
+"dbl10.png",
+"dbl13.png",
+"dbl1.png",
+"dbl29.png",
+"dbl14.png",
+"dbl8.png",
+"dbl28.png",
+"dbl23.png",
+"dbl22.png",
+"dbl20.png",
+"dbl26.png",
+"dbl25.png",
+"dbl3.png",
+"dbl9.png",
+"dbl24.png",
+"dbl4.png",
+"dbl7.png"
   };
-*/
+
 
 boolean saveFrame = true;
 boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
 boolean stroke = false;	//	stroke the box
 
 //  MODES
+  // boolean p5Filters = false;
+  // boolean rotateTiles = false;
+
   boolean p5Filters = false;
-  boolean rotateTiles = false;
+  boolean rotateTiles = true;
+
 
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
 
-  // boolean p5Filters = false;
-  // boolean rotateTiles = true;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = true;
@@ -60,10 +87,9 @@ boolean stroke = false;	//	stroke the box
 
   //  NOTE : each of these rotate vars require rotateTiles = true
 
-boolean diamond = true;
-boolean dOffset = false;  // helper for diamond mode
+boolean diamond = false;
 
-boolean rotateWacky = false ;  // requires rotateTiles = true
+
 boolean rotateX = false;  // Rotates each tile's X axis
 boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
@@ -72,8 +98,9 @@ boolean rotateZ = false;  // Rotates each tile's Z axis
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 8;//  2, 4, 8, 16
 int colSpacing = 0;
-/* ------------------------------------------------------------------------- */
 
+/* ------------------------------------------------------------------------- */
+boolean dOffset = false;  // helper for diamond mode
 int rowCt = colCt;  //  Maintains even 1:1 grid
 int drawW, drawH, gridX, gridY; // slice dimensions, grid position
 PImage mainImg, bgImg, tmpSlice;
@@ -108,21 +135,27 @@ void setup() {
     drawW = (int)( (width/rowCt)-colSpacing);
     drawH = drawW;
 
+    gridX = 0;
+    gridY = 0;
+
+    // colSpacing = (int)(drawW/PI);
+
   } else {
     drawW = (int)( (width/colCt)-colSpacing);
-    drawH = (int)( (height/rowCt)-colSpacing);    
+    drawH = (int)( (height/rowCt)-colSpacing);  
+
+	  gridX = drawW/2;
+	  gridY = drawW/2;  
   }
 
-  gridX = drawW/2;
-  gridY = drawW/2;
 
   mainImg = loadImage( imgs[imgIdx] );
   bgImg = loadImage( imgs[imgIdx] );  //  force load
 
   //  Generate filename containing sketch settings meta NOW
   //  NOTE: SUB STATEMENTS PAST rotateTiles
-  SAVE_NAME = imgs[imgIdx] + "" +colCt+"x"+colSpacing + (p5Filters ? "P5F": "" )+ (rotateTiles ? "ROTA" + (rotateWacky ? "WACK": "" )
-               + (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" ) +  ( diamond ? "DMND": "" ) ;
+  SAVE_NAME = imgs[imgIdx] + "" +colCt+"x"+colSpacing + (p5Filters ? "P5F": "" )+ (rotateTiles ? "ROTA" + 
+               (rotateX ? "rX": "" ) + (rotateY ? "rY": "" ) + (rotateZ ? "rZ": "" ) : "" ) +  ( diamond ? "DMND": "" ) ;
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -152,21 +185,16 @@ void setup() {
       
       //  create box to hold slice
       tmpBox = new HBox();
-      tmpBox.width(drawW).height(drawH);
-      
-
-        if(p5Filters)
-        {
-          tmpBox
-                .depth( random( -drawW, drawW ) + ( TWO_PI * (colSpacing+colCt+col+row) ) )
-                .z( random( -drawW, drawW ) * (colSpacing+colCt+col+row) );
-        }
-        else 
-        {
-          tmpBox
-            .depth( drawH )
-            .z( drawW );          
-        }
+      tmpBox.width(drawW).height(drawH);//.z(row+col);
+		
+		if(p5Filters)
+	    {
+	      tmpBox.depth( random( -drawW, drawW ) + ( TWO_PI * (colSpacing+colCt+col+row) ) );
+	    }
+	    else 
+	    {
+	      tmpBox.depth( drawH );      
+	    }
 
         if(stroke)
         {
@@ -185,16 +213,17 @@ void setup() {
       //  APPLY Texture here
       if(p5Filters)
       {
-        tmpBox.textureFront( tmpImg.image() );
+        tmpBox.textureBottom( tmpImg.image() );
+          tmpImg.image().filter(INVERT);
         tmpBox.textureTop( tmpImg.image() );
-          tmpImg.image().filter(OPAQUE);
-        tmpBox.textureRight( tmpImg.image() );
+			tmpImg.image().filter(OPAQUE);
+        tmpBox.textureFront( tmpImg.image() );
+
 
         tmpBox.textureLeft( bgHImg.image() );
-          bgHImg.image().filter(GRAY);
+			bgHImg.image().filter(OPAQUE);
+        tmpBox.textureRight( bgHImg.image() );
         tmpBox.textureBack( bgHImg.image() );
-          bgHImg.image().filter(INVERT);
-        tmpBox.textureBottom( bgHImg.image() );
 
       } else {
 
@@ -227,7 +256,7 @@ void setup() {
            tmpBox = (HBox) obj;
 
           // diamond row off setter
-          if(pool.currentIndex()%colCt==0){
+          if( (pool.currentIndex()>colCt) &&  pool.currentIndex()%colCt==0){
             dOffset = !dOffset;
           }
 
@@ -246,13 +275,13 @@ void setup() {
 
               //  general rotation
               if( !rotateX && !rotateY && !rotateZ ){
-                tmpBox.rotation( rotateWacky ? ( pool.currentIndex()*random(15,90) ) : (90* pool.currentIndex() ) );
+                tmpBox.rotation( 90* pool.currentIndex() );
               }
 
               //  individual axis rotations
-              if(rotateX) tmpBox.rotationX( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
-              if(rotateY) tmpBox.rotationY( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
-              if(rotateZ) tmpBox.rotationZ( rotateWacky ? ( pool.currentIndex() * random(5,150) ) : (90 * random(4)+pool.currentIndex() ) );
+              if(rotateX) tmpBox.rotationX( 90 * pool.currentIndex() );
+              if(rotateY) tmpBox.rotationY( 90 * pool.currentIndex() );
+              if(rotateZ) tmpBox.rotationZ( 90 * pool.currentIndex() );
 
             }
 
@@ -283,11 +312,8 @@ void draw() {
     // NOTE: this section is kind of ok, not super dope
 
     ortho();
-
-    translate( gridX, gridY, frameCount );
-    rotateX(-HALF_PI/PI);
-    rotateY(-HALF_PI/TWO_PI);
-
+    rotateX(HALF_PI/PI);
+    // rotateY(-HALF_PI/PI);
 
 
   } else {
@@ -390,7 +416,7 @@ void stampAndSave(boolean saveFinal){
   // sClr = get( width/2, height/2 );
   // //  fill color from image
   // fill( sClr );
-  fill( #EF2018 );
+  fill( #242424 );
 
   textSize(36);
   //  OG BOTTOM RIGHT STAMP
