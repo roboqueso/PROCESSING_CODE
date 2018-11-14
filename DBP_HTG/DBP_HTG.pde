@@ -5,7 +5,8 @@ TODO:
 
 - DBP collab warmup exercise ( JBro is 40 )
 
-- NOTE: diamond most isn't right
+- BUG : diamond most isn't completely right
+
 
 - this sketch is about to be scrapped
 
@@ -33,61 +34,66 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"dbl27.png",
-"dbl21.png",
-"dbl16.png",
-"dbl5.png",
-"dbl15.png",
-"dbl19.png",
-"dbl2.png",
-"dbl12.png",
-"dbl6.png",
-"dbl18.png",
-"dbl11.png",
-"dbl17.png",
-"dbl10.png",
-"dbl13.png",
-"dbl1.png",
-"dbl29.png",
-"dbl14.png",
-"dbl8.png",
-"dbl28.png",
-"dbl23.png",
-"dbl22.png",
-"dbl20.png",
-"dbl26.png",
-"dbl25.png",
-"dbl3.png",
-"dbl9.png",
-"dbl24.png",
-"dbl4.png",
-"dbl7.png"
+"elloYR8ArtBus3.png",
+"behanceYR8ArtBus3.png",
+"t32.png",
+"dblBK3.png",
+"DMNDS10.png",
+"t36.png",
+"t38.png",
+"dblBK4.png",
+"DMNDS12.png",
+"dblBK0.png",
+"PS5.png",
+"DMNDS15.png",
+"DMNDS14.png",
+"PS0.png",
+"DMNDS11.png",
+"PS7.png",
+"PS2.png",
+"DMNDS16.png",
+"DMNDS6.png",
+"DMNDS9.png",
+"t39.png",
+"DMNDS8.png",
+"PS9.png",
+"DMNDS13.png",
+"PS6.png",
+"DMNDS5.png",
+"DMNDS3.png",
+"PS8.png",
+"PS1.png",
+"DMNDS2.png",
+"t30.png",
+"t31.png",
+"DMNDS4.png",
+"DMNDS1.png",
+"DMNDS0.png",
+"lasers.png"
   };
 
 
 boolean saveFrame = true;
 boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
-boolean stroke = false;	//	stroke the box
+boolean stroke = true;	//	stroke the box
 
 //  MODES
   // boolean p5Filters = false;
   // boolean rotateTiles = false;
 
-  boolean p5Filters = false;
-  boolean rotateTiles = true;
-
+  // boolean p5Filters = false;
+  // boolean rotateTiles = true;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
 
-
-  // boolean p5Filters = true;
-  // boolean rotateTiles = true;
+  boolean p5Filters = true;
+  boolean rotateTiles = true;
 //  END MODES
 
   //  NOTE : each of these rotate vars require rotateTiles = true
 
-boolean diamond = false;
+boolean diamond = true;
 
 
 boolean rotateX = false;  // Rotates each tile's X axis
@@ -96,7 +102,7 @@ boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 8;//  2, 4, 8, 16
+int colCt = 6;//  2, 4, 8, 16
 int colSpacing = 0;
 
 /* ------------------------------------------------------------------------- */
@@ -119,7 +125,7 @@ color sClr;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size(1600, 1600, P3D);
+    size( 1200, 1200, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -135,18 +141,19 @@ void setup() {
     drawW = (int)( (width/rowCt)-colSpacing);
     drawH = drawW;
 
-    gridX = 0;
-    gridY = 0;
-
-    // colSpacing = (int)(drawW/PI);
+    gridX = drawW/4;
+    gridY = drawH/4;
 
   } else {
     drawW = (int)( (width/colCt)-colSpacing);
     drawH = (int)( (height/rowCt)-colSpacing);  
 
-	  gridX = drawW/2;
-	  gridY = drawW/2;  
+    gridX = drawW/2;
+    gridY = drawH/2;
+
   }
+
+
 
 
   mainImg = loadImage( imgs[imgIdx] );
@@ -185,7 +192,7 @@ void setup() {
       
       //  create box to hold slice
       tmpBox = new HBox();
-      tmpBox.width(drawW).height(drawH);//.z(row+col);
+      tmpBox.width(drawW).height(drawH).z(row+col);
 		
 		if(p5Filters)
 	    {
@@ -193,7 +200,7 @@ void setup() {
 	    }
 	    else 
 	    {
-	      tmpBox.depth( drawH );      
+	      tmpBox.depth( drawW );      
 	    }
 
         if(stroke)
@@ -365,7 +372,8 @@ void draw() {
     }
 
     //  give it back to HYPE
-    H.add(new HImage(tmpSlice));
+    tmpImg = new HImage(tmpSlice);
+    H.add(tmpImg);
     H.clearStage();
 
     //  NO grid, just the final frame image
@@ -379,10 +387,12 @@ void draw() {
 
       //  fully reset stage before calling setup()
       H.remove(bgHImg);
+      H.remove(tmpImg);
       H.clearStage();
 
       mainImg = null;
-      bgImg = null;
+      bgHImg = null;
+      tmpImg = null;
       tmpSlice = null;
 
       setup();
