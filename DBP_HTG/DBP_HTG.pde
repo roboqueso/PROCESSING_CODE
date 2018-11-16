@@ -25,7 +25,7 @@ import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
-String SAVE_TYPE = ".png";  // ".tif";
+String SAVE_TYPE = ".tif";  //".tif";
 
 
 //  NOTE: bgImgFile is now the currently loaded mainImg
@@ -34,30 +34,84 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"artbus1.png",
-"artbus2.png",
-"artbus3.png",
-"artbus4.png",
-"artbus5.png",
-"artbus6.png",
-"artbus7.png",
-"artbus8.png",
-"artbus9.png",
-"artbus10.png",
-"artbus11.png",
-"artbus12.png",
-"artbus13.png",
-"artbus14.png",
-"artbus15.png",
-"artbus0.png",
-"artbus16.png",
-"artbus17.png",
-"artbus18.png"
+"gm68.png",
+"gm3.png",
+"gm33.png",
+"gm52.png",
+"gm1.png",
+"gm66.png",
+"gm40.png",
+"gm12.png",
+"gm18.png",
+"gm54.png",
+"gm0.png",
+"gm62.png",
+"gm46.png",
+"gm37.png",
+"gm20.png",
+"gm34.png",
+"gm50.png",
+"gm7.png",
+"gm71.png",
+"gm53.png",
+"gm72.png",
+"gm4.png",
+"gm56.png",
+"gm60.png",
+"gm64.png",
+"gm38.png",
+"gm44.png",
+"gm5.png",
+"gm30.png",
+"gm32.png",
+"gm6.png",
+"gm48.png",
+"gm13.png",
+"gm70.png",
+"gm22.png",
+"gm49.png",
+"gm47.png",
+"gm63.png",
+"gm9.png",
+"gm59.png",
+"gm51.png",
+"gm61.png",
+"gm16.png",
+"gm69.png",
+"gm36.png",
+"gm29.png",
+"gm27.png",
+"gm41.png",
+"gm67.png",
+"gm65.png",
+"gm26.png",
+"gm35.png",
+"gm31.png",
+"gm43.png",
+"gm55.png",
+"gm15.png",
+"gm57.png",
+"gm10.png",
+"gm39.png",
+"gm17.png",
+"gm8.png",
+"gm19.png",
+"gm24.png",
+"gm2.png",
+"gm21.png",
+"gm23.png",
+"gm42.png",
+"gm45.png",
+"gm25.png",
+"gm14.png",
+"gm11.png",
+"gm28.png",
+"gm58.png"
   };
 
 
 boolean saveFrame = true;
-boolean saveLast = false; // NOTE: this switch is hit or miss depending on your source image.
+boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
 boolean stroke = false;	//	stroke the box
 
 //  MODES
@@ -76,7 +130,8 @@ boolean stroke = false;	//	stroke the box
 
   //  NOTE : each of these rotate vars require rotateTiles = true
 
-boolean diamond = true;
+// boolean diamond = true;
+boolean diamond = false;
 
 
 boolean rotateX = false;  // Rotates each tile's X axis
@@ -86,7 +141,7 @@ boolean rotateZ = false;  // Rotates each tile's Z axis
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
 int colCt = 4;//  2, 4, 8, 16
-int colSpacing = 80;
+int colSpacing = 0;
 
 /* ------------------------------------------------------------------------- */
 boolean dOffset = false;  // helper for diamond mode
@@ -101,14 +156,14 @@ HImage tmpImg, bgHImg;  //  background image reference
 HShape hShp;
 PShape pShp;
 HBox tmpBox;
-
+HGridLayout hgl;
 int imgIdx = 0;
 color sClr;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size( 2400, 2400, P3D);
+    size( 1200, 1200, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -121,22 +176,23 @@ void setup() {
   if(diamond)
   {
     //  SQUARE BOXES
-    drawW = (int)( (width/rowCt)-colSpacing);
+    drawW = (int) (width/rowCt);
     drawH = drawW;
 
-    gridX = drawW/4;
-    gridY = drawH/4;
+    gridX = (int) (drawW/HALF_PI);
+    gridY = (int) (drawH/HALF_PI);
 
   } else {
     drawW = (int)( (width/colCt)-colSpacing);
     drawH = (int)( (height/rowCt)-colSpacing);  
 
-    gridX = drawW/2;
-    gridY = drawH/2;
-
+    gridX = (int) (drawW/2)+colSpacing;
+    gridY = (int) (drawH/2)+colSpacing;
+    // gridX = (int) (drawW/PI);
+    // gridY = (int) (drawH/PI);
   }
 
-
+  // NOTE: this might not work for NON DIAMOND
 
 
   mainImg = loadImage( imgs[imgIdx] );
@@ -155,7 +211,7 @@ void setup() {
   
   //  BACKGROUND IMAGE
   bgHImg = new HImage( bgImg );
-  bgHImg.anchorAt(H.CENTER).loc(width/2, height/2);
+  bgHImg.anchorAt(H.CENTER).loc(width/2, height/2).z(-drawW);
   H.add(bgHImg);
   
     //  NOTE : DO NOT USE bgImg anywhere past this line.  Use bgHImg instead
@@ -178,15 +234,15 @@ void setup() {
       
       //  create box to hold slice
       tmpBox = new HBox();
-      tmpBox.width(drawW).height(drawH).z(row+col);
+      tmpBox.width(drawW).height(drawH).z(drawH+row+col);
 		
-		if(p5Filters)
+		if(diamond)
 	    {
-	      tmpBox.depth( random( -drawW, drawW ) + ( TWO_PI * (colSpacing+colCt+col+row) ) );
+	      tmpBox.depth( drawW+col+row );//.z( drawW+col+row ); //  random( -drawW, drawW ) + ( TWO_PI * (colSpacing+colCt+col+row) ) );
 	    }
 	    else 
 	    {
-	      tmpBox.depth( drawW );      
+	      tmpBox.depth(drawH+row+col).z(drawH+row+col);
 	    }
 
         if(stroke)
@@ -195,7 +251,7 @@ void setup() {
           sClr = mainImg.get( (drawW*col), (drawH*row) );
           //  stroke it
           tmpBox.stroke( sClr );
-          tmpBox.strokeWeight(PI);
+          tmpBox.strokeWeight(1);
         }
         else 
         {
@@ -231,25 +287,36 @@ void setup() {
     }
   }
 
+  //  adjust Grid Layout     
+  if(diamond)
+  {
+    hgl = new HGridLayout()
+    .startLoc(gridX, gridY)
+    .spacing( drawW*.8, drawH, 0 )
+    .cols(colCt)
+    .rows(rowCt);
+  } 
+  else
+  {
+    hgl = new HGridLayout()
+    .startLoc(gridX, gridY)
+    .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
+    .cols(colCt)
+    .rows(rowCt);
+  }
+  
 
   pool
-      .layout (
-        new HGridLayout()
-        .startLoc(gridX, gridY)
-        .spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
-        .cols(colCt)
-        .rows(rowCt)
-      )
-
-
+      .layout ( hgl )
       .onCreate(
          new HCallback() {
           public void run(Object obj) {
            
            tmpBox = (HBox) obj;
 
+//  TODO: figure out better offsetter
           // diamond row off setter
-          if( (pool.currentIndex()>colCt) &&  pool.currentIndex()%colCt==0){
+          if( ( pool.currentIndex()>1) &&  pool.currentIndex()%colCt==0){
             dOffset = !dOffset;
           }
 
@@ -261,7 +328,8 @@ void setup() {
               .rotationY(45);
 
               if(dOffset){
-                tmpBox.x( tmpBox.x() + (drawW/2) );
+                // tmpBox.x( tmpBox.x() + (drawW/PI) );
+                // tmpBox.y( tmpBox.y() + (drawH/HALF_PI) );
               }
 
         } else if(rotateTiles){
