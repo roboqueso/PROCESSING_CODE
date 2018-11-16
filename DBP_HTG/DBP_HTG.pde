@@ -34,61 +34,44 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"elloYR8ArtBus3.png",
-"behanceYR8ArtBus3.png",
-"t32.png",
-"dblBK3.png",
-"DMNDS10.png",
-"t36.png",
-"t38.png",
-"dblBK4.png",
-"DMNDS12.png",
-"dblBK0.png",
-"PS5.png",
-"DMNDS15.png",
-"DMNDS14.png",
-"PS0.png",
-"DMNDS11.png",
-"PS7.png",
-"PS2.png",
-"DMNDS16.png",
-"DMNDS6.png",
-"DMNDS9.png",
-"t39.png",
-"DMNDS8.png",
-"PS9.png",
-"DMNDS13.png",
-"PS6.png",
-"DMNDS5.png",
-"DMNDS3.png",
-"PS8.png",
-"PS1.png",
-"DMNDS2.png",
-"t30.png",
-"t31.png",
-"DMNDS4.png",
-"DMNDS1.png",
-"DMNDS0.png",
-"lasers.png"
+"artbus1.png",
+"artbus2.png",
+"artbus3.png",
+"artbus4.png",
+"artbus5.png",
+"artbus6.png",
+"artbus7.png",
+"artbus8.png",
+"artbus9.png",
+"artbus10.png",
+"artbus11.png",
+"artbus12.png",
+"artbus13.png",
+"artbus14.png",
+"artbus15.png",
+"artbus0.png",
+"artbus16.png",
+"artbus17.png",
+"artbus18.png"
   };
 
 
 boolean saveFrame = true;
-boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
-boolean stroke = true;	//	stroke the box
+boolean saveLast = false; // NOTE: this switch is hit or miss depending on your source image.
+boolean stroke = false;	//	stroke the box
 
 //  MODES
   // boolean p5Filters = false;
   // boolean rotateTiles = false;
 
-  // boolean p5Filters = false;
-  // boolean rotateTiles = true;
+  boolean p5Filters = false;
+  boolean rotateTiles = true;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
 
-  boolean p5Filters = true;
-  boolean rotateTiles = true;
+  // boolean p5Filters = true;
+  // boolean rotateTiles = true;
 //  END MODES
 
   //  NOTE : each of these rotate vars require rotateTiles = true
@@ -102,8 +85,8 @@ boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 6;//  2, 4, 8, 16
-int colSpacing = 0;
+int colCt = 4;//  2, 4, 8, 16
+int colSpacing = 80;
 
 /* ------------------------------------------------------------------------- */
 boolean dOffset = false;  // helper for diamond mode
@@ -125,7 +108,7 @@ color sClr;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size( 1200, 1200, P3D);
+    size( 2400, 2400, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -157,7 +140,10 @@ void setup() {
 
 
   mainImg = loadImage( imgs[imgIdx] );
+  
+//  hard coding ARTBUS as BG
   bgImg = loadImage( imgs[imgIdx] );  //  force load
+  // bgImg = loadImage( "ART_BUS.png" ); //imgs[imgIdx] );  //  force load
 
   //  Generate filename containing sketch settings meta NOW
   //  NOTE: SUB STATEMENTS PAST rotateTiles
