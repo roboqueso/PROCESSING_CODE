@@ -9,8 +9,7 @@ TODO:
 
 
 - this sketch is about to be scrapped
-
-- run Salidas through PS actions, then bring back for dicing
+LET IT GO
 
 */
 
@@ -25,7 +24,7 @@ import fixlib.*;
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
-String SAVE_TYPE = ".tif";  //".tif";
+String SAVE_TYPE = ".png";  //".tif";
 
 
 //  NOTE: bgImgFile is now the currently loaded mainImg
@@ -34,92 +33,23 @@ String SAVE_TYPE = ".tif";  //".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"gm68.png",
-"gm3.png",
-"gm33.png",
-"gm52.png",
-"gm1.png",
-"gm66.png",
-"gm40.png",
-"gm12.png",
-"gm18.png",
-"gm54.png",
-"gm0.png",
-"gm62.png",
-"gm46.png",
-"gm37.png",
-"gm20.png",
-"gm34.png",
-"gm50.png",
-"gm7.png",
-"gm71.png",
-"gm53.png",
-"gm72.png",
-"gm4.png",
-"gm56.png",
-"gm60.png",
-"gm64.png",
-"gm38.png",
-"gm44.png",
-"gm5.png",
-"gm30.png",
-"gm32.png",
-"gm6.png",
-"gm48.png",
-"gm13.png",
-"gm70.png",
-"gm22.png",
-"gm49.png",
-"gm47.png",
-"gm63.png",
-"gm9.png",
-"gm59.png",
-"gm51.png",
-"gm61.png",
-"gm16.png",
-"gm69.png",
-"gm36.png",
-"gm29.png",
-"gm27.png",
-"gm41.png",
-"gm67.png",
-"gm65.png",
-"gm26.png",
-"gm35.png",
-"gm31.png",
-"gm43.png",
-"gm55.png",
-"gm15.png",
-"gm57.png",
-"gm10.png",
-"gm39.png",
-"gm17.png",
-"gm8.png",
-"gm19.png",
-"gm24.png",
-"gm2.png",
-"gm21.png",
-"gm23.png",
-"gm42.png",
-"gm45.png",
-"gm25.png",
-"gm14.png",
-"gm11.png",
-"gm28.png",
-"gm58.png"
-  };
+"p1.png",
+"p4.png",
+"p3.png",
+"p2.png"
+};
 
 
 boolean saveFrame = true;
-boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
+boolean saveLast = false; // NOTE: this switch is hit or miss depending on your source image.
 boolean stroke = false;	//	stroke the box
 
 //  MODES
-  // boolean p5Filters = false;
-  // boolean rotateTiles = false;
-
   boolean p5Filters = false;
-  boolean rotateTiles = true;
+  boolean rotateTiles = false;
+
+  // boolean p5Filters = false;
+  // boolean rotateTiles = true;
 
   // boolean p5Filters = true;
   // boolean rotateTiles = false;
@@ -128,9 +58,7 @@ boolean stroke = false;	//	stroke the box
   // boolean rotateTiles = true;
 //  END MODES
 
-  //  NOTE : each of these rotate vars require rotateTiles = true
 
-// boolean diamond = true;
 boolean diamond = false;
 
 
@@ -140,8 +68,8 @@ boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
 int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 4;//  2, 4, 8, 16
-int colSpacing = 0;
+int colCt = 8;//  2, 4, 8, 16
+int colSpacing = 16;
 
 /* ------------------------------------------------------------------------- */
 boolean dOffset = false;  // helper for diamond mode
