@@ -1,17 +1,19 @@
 /*
 DiamondMode - fn diamonds bro
-* roots from DBP_HTG
 
-Stop DBP_HTG
+HINT() FIXED NOFILL
+			* roots from DBP_HTG
 
-New P5 HGridLayout DIAMOND mode like below
+			Stop DBP_HTG
 
-Recreate this pic 
-- HText w/same font
-on top of
-- HGridLayout HBox rotated to make DAIAMONDs
+			New P5 HGridLayout DIAMOND mode like below
 
-Screen 0,0 should be the CENTER point of the BOX, don’t show points
+			Recreate this pic 
+			- HText w/same font
+			on top of
+			- HGridLayout HBox rotated to make DAIAMONDs
+
+			Screen 0,0 should be the CENTER point of the BOX, don’t show points
 
 
 
@@ -37,7 +39,7 @@ String SAVE_TYPE = ".png";  //".tif";
 boolean saveFrame = true;
 boolean stroke = false;	//	stroke the box
 
-int colCt = 8;//  2, 4, 8, 16
+int colCt = 2;//  2, 4, 8, 16
 
 /* ------------------------------------------------------------------------- */
 boolean dOffset = false;  // helper for diamond mode
@@ -47,7 +49,7 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
-PImage p;
+
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
@@ -63,62 +65,43 @@ void setup() {
 	
 	noFill();
 	//  init VARIABLES
-	drawW = (int) (width/colCt);
+	drawW = (int) ( ( width/colCt  ) * 1.25 );
 
-	gridX = (int) (drawW*.69);
-	gridY = (int) (drawW*.69);
+	gridX = (int) (drawW*.4);
+	gridY = (int) (drawW*.4);
 
-	p = loadImage("bigpixel.png");
-
-p.resize(1200, 1200);
-background(p);
 
   //  Generate filename containing sketch settings meta NOW
   //  NOTE: SUB STATEMENTS PAST rotateTiles
   SAVE_NAME = fix.pdeName() + "c"+colCt+ fix.getTimestamp();
 
   //  init HYPE
-  H.init(this).backgroundImg(p).use3D(true);//.autoClear(true);
+  H.init(this).background(HConstants.CLEAR).use3D(true).autoClear(true);
   
   pool = new HDrawablePool(colCt*rowCt);
   
     hgl = new HGridLayout()
     .startLoc(gridX, gridY)
-    .spacing( drawW *.8 , drawW *.8  )
+    .spacing( drawW *.75 , drawW *.75  )
     .cols(colCt)
     .rows(rowCt);
 
   pool
 	.autoAddToStage()
-	.layout ( hgl );
-/*
-	//	Decorate boxes here and drop in pool
-	for(int b = 1; b < (colCt*rowCt); b++){
+	.add( new HBox() )
+	.layout ( hgl )
+	.onCreate(
+    new HCallback() {
+	    public void run(Object obj) 
+	    {
 
-			tmpB = new HBox();
-
-			tmpB.noFill();
-
-			pool.add(tmpB);
-
-			// tmpB = null;
-	}
-*/
-	pool.onCreate(
-	    new HCallback() {
-	    public void run(Object obj) {
-	     //int i = pool.currentIndex();
-
-	     HBox d = (HBox) obj;
-	       // d.depth(drawW).width(drawW).height(drawW).rotationX(45).rotationY(45);
-	       d.noFill();
+			tmpB = (HBox) obj;
+			tmpB.depth(drawW).width(drawW).height(drawW).rotationX(45).rotationY(45).noFill().strokeWeight(PI);;
 	    }
-   }
-  );
-  
-    tmpB = new HBox();
-    tmpB.noFill();
-  pool.add( tmpB );
+		}
+	)
+	.requestAll();
+
 }
 
 
@@ -128,8 +111,8 @@ background(p);
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-	pool.requestAll();
-
+	// this hint fixes HBox.noFill()
+	hint(ENABLE_DEPTH_SORT);
 	H.drawStage();
 
 	doExit();
