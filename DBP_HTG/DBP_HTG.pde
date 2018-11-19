@@ -157,7 +157,7 @@ void setup() {
     for( int col = 0; col < colCt; col++)
     {
       //  get image slice
-      tmpImg = new HImage( mainImg.get( (drawW*col), (drawH*row), drawW, drawH) );
+      tmpImg = new HImage( mainImg.get( (drawW*col), (drawH*row), drawW, drawH) ) );
       tmpImg.anchorAt(H.CENTER);
       
       //  create box to hold slice
