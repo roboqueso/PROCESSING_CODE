@@ -24,12 +24,12 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-//  TODO: this sketch is currently being build around 4.  
-//  FIX hgl centering and math so adjusting colCt keeps things centered properly
-int colCt = 4;//  2, 4, 8, 16
+int colCt = 1;//  2, 4, 8, 16
+
+int maxCt = 12; // max frame count, increment colCt until maxCt is hit
 
 //  diamond MODE = which rotation pattern is applied
-int MODE = 1; // 1, 2, 3, 4, 5
+int MODE = 5; // 1, 2, 3, 4, 5
 
 
 
@@ -42,7 +42,7 @@ HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
-
+float colSpacing;
 
 /* ------------------------------------------------------------------------- */
 
@@ -68,9 +68,10 @@ void setup() {
 
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
+  colSpacing = drawW *.5;
 
 // TODO: fix gridX/gridY to always center hgl regardless of colCt 
-  gridX = gridY = (int) ( drawW * (1.00+(1.00 / colCt)) );
+  gridX = gridY = (int) ( (width/2) - (((colCt-1)*colSpacing)/2) );
 
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + MODE + "_"+ colCt;
@@ -78,13 +79,13 @@ void setup() {
   //  init HYPE
   H.init(this).use3D(true).autoClear(true).background(-1);
   
-  pool = new HDrawablePool(colCt*rowCt);
+  pool = new HDrawablePool(colCt*colCt);
   
   hgl = new HGridLayout()
     .cols(colCt)
-    .rows(rowCt)
+    .rows(colCt)
     .startLoc(gridX, gridY)
-    .spacing( drawW *.5 ,drawW *.5 ,drawW  );
+    .spacing( colSpacing ,colSpacing  );
 
   pool
 	.autoAddToStage()
@@ -182,16 +183,20 @@ Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
 void draw() {
 
 
+  H.drawStage();
 
 
-H.drawStage();
-/*
-strokeWeight(TWO_PI);
-stroke(#EF1975);
-line(0,(height/2), width, (height/2));
-line((width/2),0, (width/2), height); 
-*/
-	doExit();
+  //  multi runs for testing
+  if(colCt>maxCt)
+  {
+  	doExit();
+  } else {
+    save( SAVE_NAME+SAVE_TYPE );    //  USE .TIF IF COLOR
+    colCt++;
+    pool.drain();
+    H.clearStage();
+    setup();
+  }
 
 }
 
