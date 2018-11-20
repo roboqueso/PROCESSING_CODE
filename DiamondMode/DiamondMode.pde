@@ -24,23 +24,25 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-
-
+//  TODO: this sketch is currently being build around 4.  
+//  FIX hgl centering and math so adjusting colCt keeps things centered properly
 int colCt = 4;//  2, 4, 8, 16
+
+//  diamond MODE = which rotation pattern is applied
+int MODE = 1; // 1, 2, 3, 4, 5
+
+
 
 /* ------------------------------------------------------------------------- */
 float sw = PI;
-boolean dOffset = false;  // helper for diamond mode
 int rowCt = colCt;  //  Maintains even 1:1 grid
-int drawW, gridX, gridY; // slice dimensions, grid position
+int drawW, gridX, gridY;
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
-PImage p;
+boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
 
-String MODE = "SNOWFLAKES";
-// String MODE = "SQUARES";
 
 /* ------------------------------------------------------------------------- */
 
@@ -54,10 +56,11 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-  
+  background(-1);
+
   // these hints fix HBox.noFill()
-  hint(ENABLE_DEPTH_SORT);
-  //  hint(DISABLE_DEPTH_TEST);
+  if(fixNoFill)hint(ENABLE_DEPTH_SORT);
+
 
   strokeCap(PROJECT);
   strokeJoin(MITER);
@@ -66,18 +69,14 @@ void setup() {
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
 
-  //  NOTE: this formula is specific to HBOX
-  // gridX = gridY = (int) ( drawW*1.25 );
-  // double m = 1.00+(1.00 / colCt);
+// TODO: fix gridX/gridY to always center hgl regardless of colCt 
   gridX = gridY = (int) ( drawW * (1.00+(1.00 / colCt)) );
 
-// p = loadImage("galixy.png");
-
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "_"+colCt + "_"+ MODE +"_"+fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + MODE + "_"+ colCt;
 
   //  init HYPE
-  H.init(this).use3D(true).autoClear(true);
+  H.init(this).use3D(true).autoClear(true).background(-1);
   
   pool = new HDrawablePool(colCt*rowCt);
   
@@ -98,29 +97,66 @@ void setup() {
 	    {
 
 			tmpB = (HBox) obj;
-      tmpB.depth(drawW).width(drawW).height(drawW).z(-420);
+      tmpB.depth(drawW).width(drawW).height(drawW).z(-420).noFill().strokeWeight(sw);
 
       //  ROTATE COMBOs
 
-      if( p != null ){
-        tmpB.texture(p).noStroke();
-      } else {
-        tmpB.noFill().strokeWeight(sw);
-      }
+
+/*
+- // equation 2
+if you look at the Front Ortho of the image there is the triangle ABC. 
+Length B is the side of the cube L, 
+length A is the length of a faces diagonal L * sqrt(2) (basic pythagoras). 
+
+The tangent of angle alpha will be L / (L * sqrt(2)) or 
+1 / sqrt(2) atan of which equates to 35.2644 degrees. 
+
+The rotation_euler XYZ (45, 35.264, 0)
+
+The length of the longest diagonal C is L * sqrt(3), Once again from pythagoras. 
+
+If the origin is in the middle of the cube translate the cube L * sqrt(3) / 2 to put it on its point.
+
+Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
+
+- see: http://petercollingridge.appspot.com/3D-tutorial/rotating-objects
+
+*/
+
+
 
       switch (MODE) {
-        case "SNOWFLAKES":
-          //  HOT DIAMONDS "snowflakes"
-          tmpB.rotation(45);
-        break;
-
-        case "SQUARES":
+        case 1:
           //  3D SQUARES
           tmpB.rotateX(90);
         break;
 
+        case 2:
+          //  SIDE PLAID
+          tmpB.rotateX(45);
+          tmpB.rotateZ(90);
+        break;
+
+        case 3:
+          // equation 1
+          // To perform this rotation type in 3D view: ry=atan(1/sqrt(2))*180/pi. This will give you a perfectly oriented cube.
+          tmpB.rotateY( atan(1/sqrt(2))*180/PI );
+        break;
+
+        case 4:
+          tmpB.rotateX(45);
+          tmpB.rotateY(35.264);
+          tmpB.rotateZ(0);
+        break;
+
+        case 5:
+          //  HOT DIAMONDS "snowflakes"
+          tmpB.rotation(45);
+        break;
+
         default :
           println("unknown MODE: "+  MODE);
+
         break;  
       }
 
