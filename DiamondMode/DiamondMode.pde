@@ -24,25 +24,23 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-int colCt = 1;//  2, 4, 8, 16
-
-int maxCt = 12; // max frame count, increment colCt until maxCt is hit
-
-//  diamond MODE = which rotation pattern is applied
+int colCt = 8;	//	MIN 2
 int MODE = 5; // 1, 2, 3, 4, 5
 
 
-
 /* ------------------------------------------------------------------------- */
+
+float drawZ;
 float sw = PI;
 int rowCt = colCt;  //  Maintains even 1:1 grid
-int drawW, gridX, gridY;
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
 float colSpacing;
+float drawW, gridX, gridY;
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -54,78 +52,84 @@ void  settings ()  {
 }
 
 /* ------------------------------------------------------------------------- */
-
 void setup() {
-  background(-1);
 
-  // these hints fix HBox.noFill()
-  if(fixNoFill)hint(ENABLE_DEPTH_SORT);
-
-
-  strokeCap(PROJECT);
-  strokeJoin(MITER);
+	background(-1);
+	strokeCap(PROJECT);
+	strokeJoin(MITER);
 	noFill();
+
+	// these hints fix HBox.noFill()
+	if(fixNoFill)hint(ENABLE_DEPTH_SORT);
+	//	be safe
+	if(colCt<2)colCt=2;
+
+
 
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
-  colSpacing = drawW *.5;
+	colSpacing = drawW * .5;
 
-// TODO: fix gridX/gridY to always center hgl regardless of colCt 
-  gridX = gridY = (int) ( (width/2) - (((colCt-1)*colSpacing)/2) );
+	//	MAGIC : resize box size after calculating grid spacing for zoomage
+	// drawW = drawW * 1.125;
 
-  //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + MODE + "_"+ colCt;
+	drawZ = height/2;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
 
-  //  init HYPE
-  H.init(this).use3D(true).autoClear(true).background(-1);
+	//	center HGL
+	gridX = gridY = (int) ( (width/2) - (((colCt-1)*colSpacing)/2) );
+
+	//  Generate filename containing sketch settings meta NOW
+	SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + MODE + "_"+ colCt;
+
+	//  init HYPE
+	H.init(this).use3D(true).autoClear(true).background(-1);
   
-  pool = new HDrawablePool(colCt*colCt);
+	pool = new HDrawablePool(colCt*colCt);
   
-  hgl = new HGridLayout()
-    .cols(colCt)
-    .rows(colCt)
-    .startLoc(gridX, gridY)
-    .spacing( colSpacing ,colSpacing  );
+  	hgl = new HGridLayout()
+	    .cols(colCt)
+	    .rows(colCt)
+	    .startLoc(gridX, gridY) 
+	    .spacing( colSpacing, colSpacing, drawZ  );
 
-  pool
-	.autoAddToStage()
-  // .add( new HBox() )
-	.add( new HBox() )
-	.layout ( hgl )
-	.onCreate(
-    new HCallback() {
-	    public void run(Object obj) 
-	    {
-
-			tmpB = (HBox) obj;
-      tmpB.depth(drawW).width(drawW).height(drawW).z(-420).noFill().strokeWeight(sw);
+	pool
+		.autoAddToStage()
+		.add( new HBox() )
+		.layout ( hgl )
+		.onCreate(
+			new HCallback() {
+			    public void run(Object obj) 
+			    {
+					tmpB = (HBox) obj;
+			  
+			  		tmpB.depth(drawW).width(drawW).height(drawW).z(drawZ).noFill().strokeWeight(sw);
 
       //  ROTATE COMBOs
 
 
-/*
-- // equation 2
-if you look at the Front Ortho of the image there is the triangle ABC. 
-Length B is the side of the cube L, 
-length A is the length of a faces diagonal L * sqrt(2) (basic pythagoras). 
+	/*
+	- // equation 2
+	if you look at the Front Ortho of the image there is the triangle ABC. 
+	Length B is the side of the cube L, 
+	length A is the length of a faces diagonal L * sqrt(2) (basic pythagoras). 
 
-The tangent of angle alpha will be L / (L * sqrt(2)) or 
-1 / sqrt(2) atan of which equates to 35.2644 degrees. 
+	The tangent of angle alpha will be L / (L * sqrt(2)) or 
+	1 / sqrt(2) atan of which equates to 35.2644 degrees. 
 
-The rotation_euler XYZ (45, 35.264, 0)
+	The rotation_euler XYZ (45, 35.264, 0)
 
-The length of the longest diagonal C is L * sqrt(3), Once again from pythagoras. 
+	The length of the longest diagonal C is L * sqrt(3), Once again from pythagoras. 
 
-If the origin is in the middle of the cube translate the cube L * sqrt(3) / 2 to put it on its point.
+	If the origin is in the middle of the cube translate the cube L * sqrt(3) / 2 to put it on its point.
 
-Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
+	Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
 
-- see: http://petercollingridge.appspot.com/3D-tutorial/rotating-objects
+	- see: http://petercollingridge.appspot.com/3D-tutorial/rotating-objects
 
-*/
+	*/
 
 
-
+	//	ROTATE MODE
       switch (MODE) {
         case 1:
           //  3D SQUARES
@@ -173,6 +177,7 @@ Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
 
 
 
+
 }
 
 
@@ -183,20 +188,20 @@ Interestinglythe volume can be calculated using C**3 / (3*sqrt(3))
 void draw() {
 
 
+	//	TODO: how do you "auto zoom" so hgl is always shrink wrapped to screen?
+	//	https://processing.org/reference/camera_.html
+// camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+
+
+//	interesting!
+// camera(width/2, height/2, drawZ, gridX, gridY, drawZ, 0, 1, 0);
+
+//	zoom it!
+// camera(width/2, height/2, (height/2) / tan(TWO_PI/6), width/2, height/2, 0, 0, 1, 0);
+
   H.drawStage();
 
-
-  //  multi runs for testing
-  if(colCt>maxCt)
-  {
   	doExit();
-  } else {
-    save( SAVE_NAME+SAVE_TYPE );    //  USE .TIF IF COLOR
-    colCt++;
-    pool.drain();
-    H.clearStage();
-    setup();
-  }
 
 }
 
@@ -229,7 +234,7 @@ void doExit(){
   //  NEW RIGHT VERTICAL STAMP
   textAlign(CENTER,BOTTOM);
   pushMatrix();
-    translate(width-TWO_PI, (height/2));
+    translate(width-13, (height/2));
     rotate(-HALF_PI);
     text(msg,0,0);
   popMatrix();
