@@ -71,9 +71,40 @@ void setup() {
 	colSpacing = drawW * .5;
 
 	//	MAGIC : resize box size after calculating grid spacing for zoomage
-	// drawW = drawW * 1.125;
+	switch(MODE){
+		case 1:
+			drawW = drawW * 1.75;
+			drawZ = height/2;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
+		
+		case 2:
+			drawW = drawW * 1.25;
+			drawZ = height/PI;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
+		
+		case 3:
+			drawW = drawW * HALF_PI;	//1.5;
+			drawZ = height/PI ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
 
-	drawZ = height/2;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		case 4:
+			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
+			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
+
+		case 5:
+			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
+			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
+
+		default:
+			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
+			// drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+		break;
+	}
+
+
+	
 
 	//	center HGL
 	gridX = gridY = (int) ( (width/2) - (((colCt-1)*colSpacing)/2) );
