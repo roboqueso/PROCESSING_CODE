@@ -25,20 +25,20 @@ String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
 int colCt = 8;	//	MIN 2
-int MODE = 5; // 1, 2, 3, 4, 5
+int MODE = 7; // 1, 2, 3, 4, 5, 6, 7
 
 
 /* ------------------------------------------------------------------------- */
 
 float drawZ;
-float sw = PI;
+float sw = 2;	//PI;
 int rowCt = colCt;  //  Maintains even 1:1 grid
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
-float colSpacing;
+float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 
 
@@ -64,11 +64,11 @@ void setup() {
 	//	be safe
 	if(colCt<2)colCt=2;
 
-
-
 	//  init VARIABLES
-	drawW = (int) ( width/colCt  );
-	colSpacing = drawW * .5;
+	drawW = (int) ( width/colCt*2    );	//	*2 since colSpacing cuts drawW in half
+
+	colSpacingX = colSpacingY = (drawW * .5);
+
 
 	//	MAGIC : resize box size after calculating grid spacing for zoomage
 	switch(MODE){
@@ -88,8 +88,9 @@ void setup() {
 		break;
 
 		case 4:
-			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
-			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			colSpacingX *= .75;
+			colSpacingY *= .75;
+			drawZ = 0;
 		break;
 
 		case 5:
@@ -97,17 +98,34 @@ void setup() {
 			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
 		break;
 
+		//  RECODE THE ONLINE SAMPLES
+		case 6:
+			drawW = drawW * .5;	//HALF_PI;	//1.125;	//1.5;
+			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+
+		break;
+
+		case 7:
+
+			//	TODO: case 7: -> PROFESSIONAL
+			colSpacingX *= .75;
+			colSpacingY *= .75;
+			drawZ = 0;
+
+
+		break;
+
 		default:
-			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
-			// drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+
+
 		break;
 	}
 
 
 	
-
 	//	center HGL
-	gridX = gridY = (int) ( (width/2) - (((colCt-1)*colSpacing)/2) );
+	gridX = (int) ( (width/2) - (((colCt-1)*colSpacingX)/2) );
+	gridY = (int) ( (width/2) - (((colCt-1)*colSpacingY)/2) );
 
 	//  Generate filename containing sketch settings meta NOW
 	SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + MODE + "_"+ colCt;
@@ -121,7 +139,7 @@ void setup() {
 	    .cols(colCt)
 	    .rows(colCt)
 	    .startLoc(gridX, gridY) 
-	    .spacing( colSpacing, colSpacing, drawZ  );
+	    .spacing( colSpacingX, colSpacingY, drawZ  );
 
 	pool
 		.autoAddToStage()
@@ -134,6 +152,7 @@ void setup() {
 					tmpB = (HBox) obj;
 			  
 			  		tmpB.depth(drawW).width(drawW).height(drawW).z(drawZ).noFill().strokeWeight(sw);
+
 
       //  ROTATE COMBOs
 
@@ -180,15 +199,33 @@ void setup() {
         break;
 
         case 4:
-          tmpB.rotateX(45);
-          tmpB.rotateY(35.264);
-          tmpB.rotateZ(0);
+          tmpB.rotationX( 45 );
+          tmpB.rotationY( 36 );
+          tmpB.rotationZ( 0 );
+
         break;
 
         case 5:
           //  HOT DIAMONDS "snowflakes"
           tmpB.rotation(45);
         break;
+
+        case 6:
+          	//  RECODE THE ONLINE SAMPLES
+          	tmpB.rotateX(45);
+			tmpB.rotateY(45);
+        break;
+		
+		case 7:
+
+          // TODO: case 7 = PROFESSIONAL
+          	tmpB.rotateX( 90 );
+          	tmpB.rotateY( 45 );
+
+          	tmpB.rotateZ( 90 );
+
+
+		break;
 
         default :
           println("unknown MODE: "+  MODE);
@@ -221,16 +258,14 @@ void draw() {
 
 	//	TODO: how do you "auto zoom" so hgl is always shrink wrapped to screen?
 	//	https://processing.org/reference/camera_.html
-// camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
+	// camera(width/2, height/2, (height/2) / tan(PI/6), width/2, height/2, 0, 0, 1, 0);
 
 
-//	interesting!
-// camera(width/2, height/2, drawZ, gridX, gridY, drawZ, 0, 1, 0);
-
-//	zoom it!
-// camera(width/2, height/2, (height/2) / tan(TWO_PI/6), width/2, height/2, 0, 0, 1, 0);
+pushMatrix();
 
   H.drawStage();
+
+popMatrix();
 
   	doExit();
 
