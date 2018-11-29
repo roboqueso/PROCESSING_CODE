@@ -24,7 +24,7 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-int colCt = 8;	//	MIN 2
+int colCt = 16;	//	MIN 2
 int MODE = 7; // 1, 2, 3, 4, 5, 6, 7
 
 
@@ -65,7 +65,7 @@ void setup() {
 	if(colCt<2)colCt=2;
 
 	//  init VARIABLES
-	drawW = (int) ( width/colCt*2    );	//	*2 since colSpacing cuts drawW in half
+	drawW = (int) ( width/colCt );	//	*2 since colSpacing cuts drawW in half
 
 	colSpacingX = colSpacingY = (drawW * .5);
 
@@ -73,8 +73,9 @@ void setup() {
 	//	MAGIC : resize box size after calculating grid spacing for zoomage
 	switch(MODE){
 		case 1:
-			drawW = drawW * 1.75;
-			drawZ = height/2;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			drawW *= 1.25;
+
+			drawZ = drawW/2;
 		break;
 		
 		case 2:
@@ -107,11 +108,10 @@ void setup() {
 
 		case 7:
 
-			//	TODO: case 7: -> PROFESSIONAL
-			colSpacingX *= .75;
-			colSpacingY *= .75;
-			drawZ = 0;
+			colSpacingX = (drawW * 1.42);
+			colSpacingY = (drawW * 1.63 );
 
+			drawZ = 0;//drawW*1.25;
 
 		break;
 
@@ -219,11 +219,9 @@ void setup() {
 		case 7:
 
           // TODO: case 7 = PROFESSIONAL
-          	tmpB.rotateX( 90 );
-          	tmpB.rotateY( 45 );
-
-          	tmpB.rotateZ( 90 );
-
+          tmpB.rotationX(55);
+          tmpB.rotationZ(45);
+          ortho();
 
 		break;
 

@@ -24,8 +24,8 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-int colCt = 16;	//	MIN 2
-
+int colCt = 2;	//	MIN 2
+//	2,3,5,8,13 ,21,34,55
 
 /* ------------------------------------------------------------------------- */
 
@@ -36,7 +36,7 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
-boolean fixNoFill = false; //  switch to make noFill() work and give the wireframe effect on HBox
+boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 
@@ -54,8 +54,6 @@ void  settings ()  {
 void setup() {
 
 	background(-1);
-	strokeCap(PROJECT);
-	strokeJoin(MITER);
 	noFill();
 
 	// these hints fix HBox.noFill()
@@ -66,7 +64,7 @@ void setup() {
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
 	colSpacingX = (drawW * 1.42);
-	colSpacingY = (drawW * 1.62 );
+	colSpacingY = (drawW * 1.63 );
 
 	drawZ = 0;//drawW*1.25;
 
