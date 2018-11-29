@@ -1,11 +1,4 @@
 /*
-DiamondMode - fn diamonds bro
-
-HINT() FIXED NOFILL
-	
-
-TODO: gridX, gridY is not dynamically CENTERing HGridLayout
-
 [ PROFESSIONAL ]
 "Your conduit to success"
 
@@ -24,13 +17,25 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 
-int colCt = 2;	//	MIN 2
+// String SRC_FILE = "S11.jpg";
+// String SRC_FILE = "S10.jpg";
+// String SRC_FILE = "S9.jpg";
+// String SRC_FILE = "S8.jpg";
+String SRC_FILE = "S7.jpg";
+// String SRC_FILE = "S6.jpg";
+// String SRC_FILE = "S5.jpg";
+// String SRC_FILE = "S4.jpg";
+// String SRC_FILE = "S3.jpg";
+// String SRC_FILE = "S2.jpg";
+// String SRC_FILE = "S1.jpg";
+
+int colCt = 24;	//	MIN 2
 //	2,3,5,8,13 ,21,34,55
 
 /* ------------------------------------------------------------------------- */
 
 float drawZ;
-float sw = PI;	//PI;
+float sw = HALF_PI;	//PI;
 int rowCt = colCt;  //  Maintains even 1:1 grid
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
@@ -39,7 +44,8 @@ HBox tmpB;
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
-
+color sClr;
+PImage srcImg, tmpImg;
 
 /* ------------------------------------------------------------------------- */
 
@@ -63,17 +69,20 @@ void setup() {
 
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
-	colSpacingX = (drawW * 1.42);
+	colSpacingX = (drawW * 1.41);
 	colSpacingY = (drawW * 1.63 );
 
-	drawZ = 0;//drawW*1.25;
+	drawZ = drawW;
 
 	//	center HGL
 	gridX = (int) ( (width/2) - (((colCt-1)*colSpacingX)/2) );
 	gridY = (int) ( (width/2) - (((colCt-1)*colSpacingY)/2) );
 
 	//  Generate filename containing sketch settings meta NOW
-	SAVE_NAME = fix.pdeName() + (fixNoFill?"":"FILLED") + "_"+ colCt;
+	SAVE_NAME = SRC_FILE + (fixNoFill?"":"FILLED") + "_"+ colCt;
+
+	srcImg = loadImage(SRC_FILE);
+	srcImg.resize(width, height);
 
 	//  init HYPE
 	H.init(this).use3D(true).autoClear(true).background(-1);
@@ -86,23 +95,56 @@ void setup() {
 	    .startLoc(gridX, gridY) 
 	    .spacing( colSpacingX, colSpacingY, drawZ  );
 
+	pool.autoAddToStage();
+
+  //  SLICE IT UP
+
+  //  OUTER ROW LOOP ( t - b ) 
+  for( int row = 0; row < rowCt; row++)
+  {
+    //  INNER COLUMN LOOP ( l-r )  
+    for( int col = 0; col < colCt; col++)
+    {
+      //  get image slice
+      tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
+      
+      //  create box to hold slice
+      tmpB = new HBox();
+
+      tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
+      tmpB.textureFront(tmpImg);
+      tmpB.textureLeft(tmpImg);
+      tmpB.textureBack(tmpImg);
+
+      tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);
+      tmpB.textureTop(tmpImg);
+      tmpB.textureRight(tmpImg);
+      tmpB.textureBottom(tmpImg);
+
+      //  drop it in the pool
+      pool.add( tmpB );
+    }
+  }
+
 	pool
-		.autoAddToStage()
-		.add( new HBox() )
 		.layout ( hgl )
 		.onCreate(
 			new HCallback() {
 			    public void run(Object obj) 
 			    {
 					tmpB = (HBox) obj;
-			  
-			  		tmpB.depth(drawW).width(drawW).height(drawW).z(drawZ).noFill().strokeWeight(sw);
 
-          tmpB.rotationX(55);
-          tmpB.rotationZ(45);
+					tmpB.depth(drawW).width(drawW).height(drawW).z(drawZ).strokeWeight(sw);
 
 
-	    }
+          //  Grab color from the current tmpImg
+          sClr = srcImg.get( (int)tmpB.x(), (int)tmpB.y() );
+          //  stroke it
+          tmpB.stroke( sClr );
+
+					tmpB.rotationX(55);
+					tmpB.rotationZ(45);
+			    }
 		}
 	)
 	.requestAll();
@@ -119,8 +161,12 @@ void setup() {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
+srcImg.filter(POSTERIZE,8);
+
 	ortho();
 	H.drawStage();
+	
+	image(srcImg,0,0);
 
   	doExit();
 
