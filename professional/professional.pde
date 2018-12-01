@@ -27,9 +27,9 @@ String SAVE_TYPE = ".png";  //".tif";
 // String SRC_FILE = "S4.jpg";
 // String SRC_FILE = "S3.jpg";
 // String SRC_FILE = "S2.jpg";
-String SRC_FILE = "S1.jpg";
+String SRC_FILE = "";	//"Jelly3_fickes_YESog.png";// "Jelly3_fickes_YES.png";
 
-int colCt = 24;	//	MIN 2
+int colCt = 16;	//	MIN 2
 //	2,3,5,8,13 ,21,34,55
 
 /* ------------------------------------------------------------------------- */
@@ -42,10 +42,15 @@ HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
+boolean fixOverlap = false; // adjusts colSpacingX & Y such that cubes touch like diamonds. This will typically cut off ~ 4 visible columns from colCt
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 color sClr;
 PImage srcImg, tmpImg;
+
+//	don't let windows tell me how to size
+int mainW = 1600;
+int mainH = 1600;
 
 /* ------------------------------------------------------------------------- */
 
@@ -59,7 +64,7 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
 
-	background(H.CLEAR );
+	background( H.CLEAR );
 	noFill();
 
 	// these hints fix HBox.noFill()
@@ -68,27 +73,37 @@ void setup() {
 	if(colCt<2)colCt=2;
 
 	//  init VARIABLES
-	drawW = (int) ( width/colCt  );
-	colSpacingX = (drawW * 1.41);
-	colSpacingY = (drawW * 1.63 );
+	drawW = (int) ( mainW/colCt  );
+
+	if(fixOverlap)
+	{
+		colSpacingX = (drawW * 1.41);
+		colSpacingY = (drawW * 1.63 );
+	}
+	else
+	{
+		colSpacingX = drawW;
+		colSpacingY = drawW;
+	}
+
 
 	drawZ = drawW;
 
 	//	center HGL
-	gridX = (int) ( (width/2) - (((colCt-1)*colSpacingX)/2) );
-	gridY = (int) ( (width/2) - (((colCt-1)*colSpacingY)/2) );
+	gridX = (int) ( (mainW/2) - (((colCt-1)*colSpacingX)/2) );
+	gridY = (int) ( (mainW/2) - (((colCt-1)*colSpacingY)/2) );
 
 	//  Generate filename containing sketch settings meta NOW
-	SAVE_NAME = SRC_FILE + ((sw>0)?"LINE":"") + (fixNoFill?"":"FILL") + "_"+ colCt;
+	SAVE_NAME = SRC_FILE + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"FILL")  + (fixOverlap?"":"OVRL") + "_"+ colCt;
 
 	if(SRC_FILE!=""){
 		srcImg = loadImage(SRC_FILE);
-		srcImg.resize(width, height);
+		srcImg.resize(mainW, mainH);
 		image(srcImg,0,0);
 	}
 
 	//  init HYPE
-	H.init(this).background(H.CHOCOLATE).use3D(true).autoClear(true);
+	H.init(this).background(H.WHITESMOKE).use3D(true).autoClear(true);
 
 	pool = new HDrawablePool(colCt*colCt);
   
@@ -108,11 +123,11 @@ void setup() {
     //  INNER COLUMN LOOP ( l-r )  
     for( int col = 0; col < colCt; col++)
     {
-		//  get image slice
-		tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
-
 		//  create box to hold slice
 		tmpB = new HBox();
+
+		//  get image slice
+		tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
 
 		tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);
 		tmpB.textureBack(tmpImg);
@@ -137,6 +152,7 @@ void setup() {
 			    public void run(Object obj) 
 			    {
 					tmpB = (HBox) obj;
+
 					tmpB.depth(drawW).z(drawZ).rotationX(55).rotationZ(45).width(drawW).height(drawW);
 
 					if(sw >0 && (SRC_FILE!="") )
@@ -151,6 +167,13 @@ void setup() {
 					{
 			         	tmpB.strokeWeight(sw);
 			        }
+
+// println("pool.currentIndex(): "+ pool.currentIndex() );
+// if(pool.currentIndex()%2!=0){
+// 	tmpB.stroke(H.ORANGE).strokeWeight(TWO_PI);
+// }
+
+
 			    }
 		}
 	);
@@ -169,8 +192,9 @@ void draw() {
 
 	pool.requestAll();
 	// EF stamp
-	HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Bitwise", 24) );
-	lbl.fill(H.WHITESMOKE).loc(width*.875, height-(textAscent()+textDescent()), drawW+drawZ );
+	// HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Bitwise", 24) );
+	HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Impact", 24) );
+	lbl.fill(H.TEAL).loc(mainW*.9, height-(textAscent()+textDescent()), drawW+drawZ );
 	H.add(lbl);
 
 	ortho();
@@ -183,12 +207,12 @@ void draw() {
 
 		//	p5 on osx isn't masking????
 		tmpImg = get();
-		tmpImg.resize( srcImg.width, srcImg.height);
+		tmpImg.resize( mainW, mainH );
 		tmpImg.filter(GRAY);
 
 		try{
 			srcImg.mask(tmpImg);	
-			tmpImg.mask(srcImg);
+
 		} catch(Exception e){
 
 			println("e: "+e);
@@ -197,10 +221,10 @@ void draw() {
 		}
 
  	// FLIP THE SCRIPT
-	translate(width/2, height/2, 0);
+	translate(mainW/2, mainH/2, 0);
   	scale(-1, -1);
 
-	image(srcImg,-width/2, -height/2, width, height);
+	image(srcImg,-mainW/2, -mainH/2, mainW, mainH );
 
 
 	}	
