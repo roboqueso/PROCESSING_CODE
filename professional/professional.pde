@@ -27,7 +27,9 @@ String SAVE_TYPE = ".png";  //".tif";
 // String SRC_FILE = "S4.jpg";
 // String SRC_FILE = "S3.jpg";
 // String SRC_FILE = "S2.jpg";
-String SRC_FILE = "";	//"Jelly3_fickes_YESog.png";// "Jelly3_fickes_YES.png";
+
+// String SRC_FILE = "Jelly3_fickes_YESog.png";
+String SRC_FILE = "Jelly3_fickes_YES.png";
 
 int colCt = 16;	//	MIN 2
 //	2,3,5,8,13 ,21,34,55
@@ -35,7 +37,7 @@ int colCt = 16;	//	MIN 2
 /* ------------------------------------------------------------------------- */
 
 float drawZ;
-float sw = HALF_PI;	//0;
+float sw = 0;
 int rowCt = colCt;  //  Maintains even 1:1 grid
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
@@ -194,7 +196,7 @@ void draw() {
 	// EF stamp
 	// HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Bitwise", 24) );
 	HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Impact", 24) );
-	lbl.fill(H.TEAL).loc(mainW*.9, height-(textAscent()+textDescent()), drawW+drawZ );
+	lbl.fill(H.RED).loc(mainW*.9, height-(textAscent()+textDescent()), drawW+drawZ );
 	H.add(lbl);
 
 	ortho();
@@ -208,7 +210,7 @@ void draw() {
 		//	p5 on osx isn't masking????
 		tmpImg = get();
 		tmpImg.resize( mainW, mainH );
-		tmpImg.filter(GRAY);
+		tmpImg.filter(INVERT);
 
 		try{
 			srcImg.mask(tmpImg);	
