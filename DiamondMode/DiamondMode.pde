@@ -13,11 +13,6 @@ OG DiamondMode remnants : might be shit, validate
 			drawZ = drawW/2;
 		break;
 		
-		case 2:
-			drawW = drawW * 1.25;
-			drawZ = height/PI;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
-		break;
-		
 		case 3:
 			drawW = drawW * HALF_PI;	//1.5;
 			drawZ = height/PI ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
@@ -89,12 +84,6 @@ OG DiamondMode remnants : might be shit, validate
           tmpB.rotateX(90);
         break;
 
-        case 2:
-          //  SIDE PLAID
-          tmpB.rotateX(45);
-          tmpB.rotateZ(90);
-        break;
-
         case 3:
           // equation 1
           // To perform this rotation type in 3D view: ry=atan(1/sqrt(2))*180/pi. This will give you a perfectly oriented cube.
@@ -155,32 +144,20 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
-
-// String SRC_FILE = "S11.jpg";
-// String SRC_FILE = "S10.jpg";
-// String SRC_FILE = "S9.jpg";
-// String SRC_FILE = "S8.jpg";
-// String SRC_FILE = "S7.jpg";
-// String SRC_FILE = "S6.jpg";
-// String SRC_FILE = "S5.jpg";
-// String SRC_FILE = "S4.jpg";
-// String SRC_FILE = "S3.jpg";
-// String SRC_FILE = "S2.jpg";
-String SRC_FILE = "S1g.png";
-
-int colCt = 24;	//	MIN 2
-//	2,3,5,8,13 ,21,34,55
-
+int MODE = 2;
+String SRC_FILE = "g7.png";	//	o2.png
+int colCt = 8;	//	MIN 2
+float sw = 0;
 /* ------------------------------------------------------------------------- */
 
 float drawZ;
-float sw = 0;	//0;
+
 int rowCt = colCt;  //  Maintains even 1:1 grid
 Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
-boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
+boolean fixNoFill = false; //  switch to make noFill() work and give the wireframe effect on HBox
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 color sClr;
@@ -189,7 +166,6 @@ PImage srcImg, tmpImg;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    //  For best results, change size() to match dimensions of mainImgFile
     size( 1600, 1600, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
@@ -208,17 +184,50 @@ void setup() {
 
 	//  init VARIABLES
 	drawW = (int) ( width/colCt  );
-	colSpacingX = (drawW * 1.41);
-	colSpacingY = (drawW * 1.63 );
 
-	drawZ = drawW;
+	//	ROTATE MODE
+      switch (MODE) {
+        case 1:
+			
+			colSpacingX = (drawW * 1.41);
+			colSpacingY = (drawW * 1.63 );
+			drawZ = drawW;
+        break;
+
+        case 2:
+			drawW = drawW * 1.25;
+			colSpacingX = (drawW * .9 );
+			colSpacingY = (drawW * 1.15 );
+			drawZ = height/PI;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+        break;
+
+        case 3:
+        break;
+
+        case 4:
+        break;
+
+        case 5:
+        break;
+
+        case 6:
+        break;
+		
+		case 7:
+		break;
+
+        default :
+          println("unknown MODE: "+  MODE);
+
+        break;  
+      }
 
 	//	center HGL
 	gridX = (int) ( (width/2) - (((colCt-1)*colSpacingX)/2) );
 	gridY = (int) ( (width/2) - (((colCt-1)*colSpacingY)/2) );
 
 	//  Generate filename containing sketch settings meta NOW
-	SAVE_NAME = SRC_FILE + ((sw>0)?"SW"+sw:"") + (fixNoFill?"":"FILL") + "_"+ colCt;
+	SAVE_NAME = SRC_FILE + MODE + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"FILL") + "_"+ colCt;
 
 	if(SRC_FILE!=""){
 		try{
@@ -233,7 +242,7 @@ void setup() {
 	}
 
 	//  init HYPE
-	H.init(this).background(H.CHOCOLATE).use3D(true).autoClear(true);
+	H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
 
 	pool = new HDrawablePool(colCt*colCt);
   
@@ -247,34 +256,35 @@ void setup() {
 
   //  SLICE IT UP
   if(SRC_FILE!=""){
-  //  OUTER ROW LOOP ( t - b ) 
-  for( int row = 0; row < rowCt; row++)
-  {
-    //  INNER COLUMN LOOP ( l-r )  
-    for( int col = 0; col < colCt; col++)
-    {
-		//  get image slice
-		tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
+	  //  OUTER ROW LOOP ( t - b ) 
+	  for( int row = 1; row <= rowCt; row++)
+	  {
+	    //  INNER COLUMN LOOP ( l-r )  
+	    for( int col = 1; col <= colCt; col++)
+	    {
+			//  get image slice
+			tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
 
-		//  create box to hold slice
-		tmpB = new HBox();
+			//  create box to hold slice
+			tmpB = new HBox();
 
-		tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);
-		tmpB.textureBack(tmpImg);
+			tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);
+			tmpB.textureBack(tmpImg);
 
-		tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
-		tmpB.textureBottom(tmpImg);
+			tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
+			tmpB.textureBottom(tmpImg);
 
-		tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);		
-      	tmpB.textureRight(tmpImg);
+			tmpImg = srcImg.get( (int)(drawW*row),  (int)(drawW*col),  (int)drawW,  (int)drawW);		
+	      	tmpB.textureRight(tmpImg);
 
-      //  drop it in the pool
-      pool.add( tmpB );
-    }
-  }
-} else {
-	pool.add( new HBox().noFill() );
-}
+	      //  drop it in the pool
+	      pool.add( tmpB );
+	    }
+	  }
+	} else {
+		pool.add( new HBox().noFill() );
+	}
+
 	pool
 		.layout ( hgl )
 		.onCreate(
@@ -282,21 +292,54 @@ void setup() {
 			    public void run(Object obj) 
 			    {
 					tmpB = (HBox) obj;
-					tmpB.depth(drawW).z(drawZ).rotationX(55).rotationZ(45).width(drawW).height(drawW);
 
-					if(sw >0 && (SRC_FILE!="") )
-					{
-			          //  Grab color from the current tmpImg
-			          sClr = srcImg.get( (int)tmpB.x(), (int)tmpB.y() );
-			          //  stroke it
-			          tmpB.strokeWeight(sw).stroke( sClr );
 
-					} 
-					else 
-					{
-			         	tmpB.strokeWeight(sw);
-			        }
-			    }
+
+				//	ROTATE MODE
+				switch (MODE) {
+					case 1:
+						tmpB.depth(drawW).z(drawZ).rotationX(55).rotationZ(45).width(drawW).height(drawW);
+					break;
+
+					case 2:
+				          //  SIDE PLAID
+				          tmpB.depth(drawW).z(drawZ).rotationX(45).rotationZ(45).width(drawW).height(drawW);
+					break;
+
+					case 3:
+					break;
+
+					case 4:
+					break;
+
+					case 5:
+					break;
+
+					case 6:
+					break;
+
+					case 7:
+					break;
+
+					default :
+					println("unknown MODE: "+  MODE);
+
+					break;  
+				}
+
+				if(sw >0 && (SRC_FILE!="") )
+				{
+		          //  Grab color from the current tmpImg
+		          sClr = srcImg.get( (int)tmpB.x(), (int)tmpB.y() );
+		          //  stroke it
+		          tmpB.strokeWeight(sw).stroke( sClr );
+
+				} 
+				else 
+				{
+		         	tmpB.strokeWeight(sw);
+		        }
+		    }
 		}
 	);
 
@@ -315,7 +358,7 @@ void draw() {
 	pool.requestAll();
 	// EF stamp
 	HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Bitwise", 24) );
-	lbl.fill(H.WHITESMOKE).loc(width*.875, height-(textAscent()+textDescent()), drawW+drawZ );
+	lbl.fill(H.TEAL).loc(width*.875, height-(textAscent()+textDescent()), drawW+drawZ );
 	H.add(lbl);
 
 	ortho();
