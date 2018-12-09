@@ -15,7 +15,7 @@ OG DiamondMode remnants : might be shit, validate
 		
 		case 3:
 			drawW = drawW * HALF_PI;	//1.5;
-			drawZ = height/PI ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			drawZ = TARGETH/PI ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
 		break;
 
 		case 4:
@@ -26,13 +26,13 @@ OG DiamondMode remnants : might be shit, validate
 
 		case 5:
 			// drawW = drawW * .85;	//HALF_PI;	//1.125;	//1.5;
-			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			drawZ = TARGETH/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
 		break;
 
 		//  RECODE THE ONLINE SAMPLES
 		case 6:
 			drawW = drawW * .5;	//HALF_PI;	//1.125;	//1.5;
-			drawZ = height/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			drawZ = TARGETH/2 ;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
 
 		break;
 
@@ -145,9 +145,9 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
 int MODE = 2;
-String SRC_FILE = "g7.png";	//	o2.png
+String SRC_FILE = "gs8.png";	//	o2.png
 int colCt = 8;	//	MIN 2
-float sw = 0;
+float sw = 2;
 /* ------------------------------------------------------------------------- */
 
 float drawZ;
@@ -157,16 +157,20 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;
-boolean fixNoFill = false; //  switch to make noFill() work and give the wireframe effect on HBox
+boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HBox
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 color sClr;
 PImage srcImg, tmpImg;
 
+//	NOTE: Processing on OSX and PC have different interpretations of dimensions
+int TARGETW = 2500;
+int TARGETH = 2500;
+
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size( 1600, 1600, P3D);
+    size( 2500, 2500, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -183,7 +187,7 @@ void setup() {
 	if(colCt<2)colCt=2;
 
 	//  init VARIABLES
-	drawW = (int) ( width/colCt  );
+	drawW = (int) ( TARGETW/colCt  );
 
 	//	ROTATE MODE
       switch (MODE) {
@@ -198,7 +202,7 @@ void setup() {
 			drawW = drawW * 1.25;
 			colSpacingX = (drawW * .9 );
 			colSpacingY = (drawW * 1.15 );
-			drawZ = height/PI;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
+			drawZ = TARGETH/PI;	//drawW;	//-420;	//(drawW+colSpacing)*colCt;
         break;
 
         case 3:
@@ -223,8 +227,8 @@ void setup() {
       }
 
 	//	center HGL
-	gridX = (int) ( (width/2) - (((colCt-1)*colSpacingX)/2) );
-	gridY = (int) ( (width/2) - (((colCt-1)*colSpacingY)/2) );
+	gridX = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingX)/2) );
+	gridY = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingY)/2) );
 
 	//  Generate filename containing sketch settings meta NOW
 	SAVE_NAME = SRC_FILE + MODE + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"FILL") + "_"+ colCt;
@@ -232,7 +236,7 @@ void setup() {
 	if(SRC_FILE!=""){
 		try{
 			srcImg = loadImage(SRC_FILE);
-			srcImg.resize(width, height);
+			srcImg.resize(TARGETW, TARGETH);
 			image(srcImg,0,0);
 		} catch( Exception e){
 			// be safe in case SRC_FILE doens't load
@@ -357,8 +361,8 @@ void draw() {
 
 	pool.requestAll();
 	// EF stamp
-	HText lbl = new HText( "ERICFICKES.COM", 24, createFont("Bitwise", 24) );
-	lbl.fill(H.TEAL).loc(width*.875, height-(textAscent()+textDescent()), drawW+drawZ );
+	HText lbl = new HText( "ERICFICKES.COM", 43, createFont("Bitwise", 43) );
+	lbl.fill(H.WHITESMOKE).loc(TARGETW*.72, TARGETH-(textAscent()+textDescent()), drawW+drawZ );
 	H.add(lbl);
 
 	ortho();
@@ -371,7 +375,7 @@ void draw() {
 
 		//	p5 on osx isn't masking????
 		tmpImg = get();
-		tmpImg.resize( srcImg.width, srcImg.height);
+		tmpImg.resize( TARGETW, TARGETH );
 		tmpImg.filter(GRAY);
 
 		try{
@@ -385,10 +389,10 @@ void draw() {
 		}
 
  	// FLIP THE SCRIPT
-	translate(width/2, height/2, 0);
+	translate(TARGETW/2, TARGETH/2, 0);
   	scale(-1, -1);
 
-	image(srcImg,-width/2, -height/2, width, height);
+	image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
 
 
 	}	
@@ -421,11 +425,11 @@ void doExit(){
 
   textSize(36);
   //  OG BOTTOM RIGHT STAMP
-  //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
+  //text(msg, 	TARGETW-(textWidth(msg)+textAscent())+24, TARGETH-textAscent()+24);
   //  NEW RIGHT VERTICAL STAMP
   textAlign(CENTER,BOTTOM);
   pushMatrix();
-    translate(width-13, (height/2), 0 );
+    translate(	TARGETW-13, (TARGETH/2), 0 );
     rotate(-HALF_PI);
     text(msg,0,0);
   popMatrix();
