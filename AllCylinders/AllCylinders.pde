@@ -10,27 +10,68 @@ import hype.extended.layout.*;
 import hype.interfaces.*;
 import fixlib.*;
 
+import javafx.scene.canvas.*;
+import javafx.scene.effect.*;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import javafx.scene.text.*;
+
 /* ------------------------------------------------------------------------- */
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";1
 int MODE = 3; //   1 - 3
-String SRC_FILE = "G26.png";  //  G1 - G26.PNG
-int numSides = 4; // MIN = 3
-int mxNumSides = 11;
+String SRC_FILE;  // image names get pulled from imgs
+
+
+//  NOTE: This script now runs off of imgs[] to allow for multi-source image support
+//  BG image is still static ATM
+String[] imgs = { 
+"gt1.png",
+"gt2.png",
+"gt3.png",
+"gt4.png",
+"gt5.png",
+"gt6.png",
+"gt7.png",
+"gt8.png",
+"gt9.png",
+"gt10.png",
+"gt11.png",
+"gt12.png",
+"gt13.png",
+"gt14.png",
+"gt15.png",
+"gt16.png",
+"gt17.png",
+"gt18.png",
+"gt19.png",
+"gt20.png",
+"gt21.png",
+"gt22.png",
+"gt23.png",
+"gt24.png"
+};
+
+int numSides = 6; // MIN = 3
+int mxNumSides = 8;
 int colCt = 6;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-
 float sw = 0;
-/* ------------------------------------------------------------------------- */
-float drawZ;
 
-int rowCt = colCt;  //  Maintains even 1:1 grid
+
+
+/* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
+
+boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HCylinder
+float drawZ;
+int imgIdx = 0; // multi image indexer
+int baseNumSides = numSides; // MC HAMMER - this MUST equal numSides for multi image support to work
+int rowCt = colCt;  //  Maintains even 1:1 grid
 HDrawablePool pool;
 HGridLayout hgl;
 HCylinder tmpB;
-boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HCylinder
 float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 color sClr;
@@ -51,8 +92,10 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
 
-  background(H.CLEAR );
+  background(H.CLEAR);
   noFill();
+
+  blendMode(SUBTRACT);
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
@@ -61,26 +104,27 @@ void setup() {
 
   //  init VARIABLES
   drawW = (int) ( TARGETW/colCt  );
+  drawW *= .85;
 
   //  ROTATE MODE
       switch (MODE) {
         case 1:
           colSpacingX = drawW;  //(drawW * 1.41);
           colSpacingY = drawW;  //(drawW * 1.63 );
-          drawZ = drawW;
+          drawZ = H.CENTER; //drawW;
         break;
 
         case 2:
-          drawW = drawW * 1.25;
-          colSpacingX = drawW;  //(drawW * .9 );
-          colSpacingY = drawW;  //(drawW * 1.15 );
-          drawZ = TARGETH/PI; //drawW;  //-420; //(drawW+colSpacing)*colCt;
+          colSpacingX = drawW *  HALF_PI;
+          colSpacingY = drawW / HALF_PI;  //HALF_PI;
+ 
+          drawZ = drawW;//TARGETH/TWO_PI;
         break;
 
         case 3:
-          colSpacingX = drawW*.7;
-          colSpacingY = drawW*.75;
-          drawZ = H.CENTER; //drawW*colCt;
+          colSpacingX = drawW*.5;
+          colSpacingY = drawW*.5;
+          drawZ = H.CENTER;
         break;
 
         case 4:
@@ -105,22 +149,32 @@ void setup() {
   gridX = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingX)/2) );
   gridY = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingY)/2) );
 
-  //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = SRC_FILE + "m"+MODE + "ns"+numSides + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"F") + "_"+ colCt;
+  // multi image support : set current image
+  SRC_FILE = imgs[imgIdx];
 
-if(srcImg==null){
+  //  Generate filename containing sketch settings meta NOW
+  SAVE_NAME = SRC_FILE + "_m"+MODE + "_s"+numSides + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"_F") + "_"+ colCt;
+
+// if(srcImg==null){
   if(SRC_FILE!=""){
     try{
       srcImg = loadImage(SRC_FILE);
       srcImg.resize(TARGETW, TARGETH);
+// debug note
+println("DISABLED image("+SRC_FILE+") call");
       image(srcImg,0,0);
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
       println("LOADER: "+e);
-      SRC_FILE ="";
+      // SRC_FILE ="";
+      srcImg = get(0,0,TARGETW, TARGETH);
+      // sw=(sw<=0)?HALF_PI:sw;
     }
+  } else {
+    //  If srcImg doesn't load, hard code strokeWeight so you still see output
+    sw=(sw<=0)?HALF_PI:sw;
   }
-}
+// }
 
   //  init HYPE
   H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
@@ -136,50 +190,72 @@ if(srcImg==null){
   pool.autoAddToStage();
 
   //  SLICE IT UP
+
+  //  create box to hold slice
+  tmpB = new HCylinder();
+
+  tmpB.width(drawW).height(drawW);
+
   if(SRC_FILE!=""){
     //  OUTER ROW LOOP ( t - b ) 
-    for( int row = 1; row <= rowCt; row++)
+    for( int row = 0; row < rowCt; row++)
     {
       //  INNER COLUMN LOOP ( l-r )  
-      for( int col = 1; col <= colCt; col++)
+      for( int col = 0; col < colCt; col++)
       {
         //  get image slice
-        tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW);
-      
-      //  create box to hold slice
-      tmpB = new HCylinder();      
-            //  same 
-      tmpB.sides(numSides)
-          .texture(tmpImg)
-          .drawBottom(false)
-          .drawTop(false)
-          .topRadius(drawW/H.CENTER)
-          .bottomRadius(drawZ/H.CENTER)
-          .strokeSides(sw>0)
-          .strokeWeight(sw);
+        tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
 
-        //  drop it in the pool
-        pool.add( tmpB );
+        // debug
+        if(col%colCt==0)tmpImg.filter(INVERT);
+
+        //  same 
+        tmpB.sides(numSides)
+            .texture(tmpImg)
+            .texture( srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW) )
+            .drawBottom(false)
+            .drawTop(false)
+            .topRadius(sqrt(drawW/colCt))
+            .bottomRadius(sqrt(drawW/PI));
+
+        if(sw >0 )
+        {
+          //  Grab color from the current tmpImg
+          sClr = tmpImg.get( (int)(tmpImg.width/PI), (int)(tmpImg.height/PI) );
+          //  stroke it
+          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+        }
+
       }
     }
   } else {
+      tmpImg = get(0,0, TARGETW, TARGETH);
+      tmpImg.filter(INVERT);
+      
+        tmpB.sides(numSides)
+            .texture(tmpImg)
+            .drawBottom(false)
+            .drawTop(false)
+            .topRadius(sqrt(drawW/TWO_PI))
+            .bottomRadius(sqrt(drawW/PI));
 
-      //  create box to hold slice
-      tmpB = new HCylinder();
-      tmpB.sides(numSides)
-          .texture( get() )
-          .drawBottom(true)
-          .drawTop(false)
-          .topRadius(drawW/H.CENTER)
-          .bottomRadius(drawZ/H.CENTER)
-          .strokeSides(sw>0)
-          .strokeWeight(sw);
-    //  just add it
-    pool.add( tmpB );
+        if(sw >0 )
+        {
+          //  Grab color from the current tmpImg
+          sClr = tmpImg.get( (int)(tmpImg.width/PI), (int)(tmpImg.height/PI) );
+          //  stroke it
+          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+        }
+
   }
 
 
+  //  drop it in the pool
+  pool.add( tmpB );
+
   tmpB = null;
+  tmpImg = null;
+  sClr = -1;
 
   pool
     .layout ( hgl )
@@ -189,51 +265,38 @@ if(srcImg==null){
           {
           tmpB = (HCylinder) obj;
 
-        //  ROTATE MODE
-        switch (MODE) {
-          case 1:
-            tmpB.depth(drawW).z(drawZ).rotationX(55).rotationZ(45).width(drawW).height(drawW);
-          break;
+          //  ROTATE MODE
+          switch (MODE) {
+            case 1:
+              tmpB.depth(drawW).z(drawZ).rotationY(90).rotationZ(90);
+            break;
 
-          case 2:
-                //  SIDE PLAID
-              tmpB.depth(drawW).z(drawZ).rotationX(45).rotationZ(45).width(drawW).height(drawW);
-          break;
+            case 2:
+                tmpB.depth(drawW).z(drawZ).rotationX(90).rotationZ(45);
+            break;
 
-          case 3:
-            tmpB.depth(drawW/HALF_PI).z(drawZ).rotationX(90);//.rotationZ(25).width(drawW).height(drawW);
-          break;
+            case 3:
+              tmpB.depth(drawW/HALF_PI).z(drawZ).rotationX(90);
+            break;
 
-          case 4:
-          break;
+            case 4:
+            break;
 
-          case 5:
-          break;
+            case 5:
+            break;
 
-          case 6:
-          break;
+            case 6:
+            break;
 
-          case 7:
-          break;
+            case 7:
+            break;
 
-          default :
-          println("unknown MODE: "+  MODE);
+            default :
+            println("unknown MODE: "+  MODE);
 
-          break;  
-        }
+            break;  
+          }
 
-        if(sw >0 && (SRC_FILE!="") )
-        {
-              //  Grab color from the current tmpImg
-              sClr = srcImg.get( (int)tmpB.x(), (int)tmpB.y() );
-              //  stroke it
-              tmpB.strokeWeight(sw).stroke( sClr );
-
-        } 
-        else 
-        {
-              tmpB.strokeWeight(sw);
-            }
         }
     }
   );
@@ -250,13 +313,15 @@ if(srcImg==null){
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  pool.requestAll();
   // EF stamp
   String msg = "ERICFICKES.COM";
-  HText lbl = new HText( msg, 43, createFont("Bitwise", 43) );
-  lbl.fill(H.GOLD).loc(TARGETW*.72, TARGETH-(textAscent()+textDescent()), drawW+drawZ );
+  HText lbl = new HText( msg, 43, createFont("Silom", 43) );
+  sClr = srcImg.get( (int)(srcImg.width/2), (int)(srcImg.height/2) );
+  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
 
   H.add(lbl);
+
+  pool.requestAll();
 
   ortho();
   H.drawStage();
@@ -284,14 +349,17 @@ void draw() {
   // FLIP THE SCRIPT
   translate(TARGETW/2, TARGETH/2, 0);
     scale(-1, -1);
-
-  image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
+    image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
 
 
   } 
 
+//debug
+// stroke(#EF2018);
+// line(width/2, 0, width/2, height);
+
 //  TODO : looking to find the perfect numSides
-    if(numSides >= mxNumSides){
+    if( imgIdx == imgs.length-1 && numSides == mxNumSides){
       doExit();
     } else {
       save( SAVE_NAME+SAVE_TYPE );
@@ -308,7 +376,14 @@ void draw() {
       background(H.CLEAR);
       
       //  incrementer
-      numSides++;
+      if(numSides < mxNumSides)
+        numSides++;
+      else
+      {
+        numSides = baseNumSides; // reset
+        imgIdx++; // next image
+      }
+
       //  restar sketch
       setup();
     }
@@ -330,24 +405,6 @@ void draw() {
 */
 void doExit(){
 
-/*
-
-  String msg = "ERICFICKES.COM";
-
-  textFont( createFont("Bitwise", 43));
-  fill( #242424 );
-
-  textSize(36);
-  //  OG BOTTOM RIGHT STAMP
-  //text(msg,   TARGETW-(textWidth(msg)+textAscent())+24, TARGETH-textAscent()+24);
-  //  NEW RIGHT VERTICAL STAMP
-  textAlign(CENTER,BOTTOM);
-  pushMatrix();
-    translate(  TARGETW-13, (TARGETH/2), 0 );
-    rotate(-HALF_PI);
-    text(msg,0,0);
-  popMatrix();
-*/
   save( SAVE_NAME+SAVE_TYPE );    //  USE .TIF IF COLOR  
 
     //  cleanup
