@@ -28,36 +28,55 @@ String SRC_FILE;  // image names get pulled from imgs
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"gt1.png",
-"gt2.png",
-"gt3.png",
-"gt4.png",
-"gt5.png",
-"gt6.png",
-"gt7.png",
-"gt8.png",
-"gt9.png",
-"gt10.png",
-"gt11.png",
-"gt12.png",
-"gt13.png",
-"gt14.png",
-"gt15.png",
-"gt16.png",
-"gt17.png",
-"gt18.png",
-"gt19.png",
-"gt20.png",
-"gt21.png",
-"gt22.png",
-"gt23.png",
-"gt24.png"
+"e2.png",
+"e3.png",
+"e4.png",
+"e5.png",
+"e6.png",
+"e7.png",
+"e8.png",
+"e9.png",
+"e10.png",
+"e11.png",
+"e12.png",
+"e13.png",
+"e14.png",
+"e15.png",
+"e16.png",
+"e17.png",
+"e18.png",
+"e19.png",
+"e20.png",
+"e1.png",
+"e21.png",
+"e22.png",
+"e23.png",
+"e24.png",
+"e25.png",
+"e26.png",
+"e27.png",
+"e28.png",
+"e29.png",
+"e30.png",
+"e31.png",
+"e32.png",
+"e33.png",
+"e34.png",
+"e35.png",
+"e36.png",
+"e37.png",
+"e38.png",
+"e39.png",
+"e40.png",
+"e41.png",
+"e42.png",
+"e43.png"
 };
 
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
-int colCt = 6;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
+int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
+float sw = 1;
 
 
 
@@ -95,7 +114,7 @@ void setup() {
   background(H.CLEAR);
   noFill();
 
-  blendMode(SUBTRACT);
+  // blendMode(SUBTRACT);
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
@@ -104,7 +123,7 @@ void setup() {
 
   //  init VARIABLES
   drawW = (int) ( TARGETW/colCt  );
-  drawW *= .85;
+  // drawW *= .85;
 
   //  ROTATE MODE
       switch (MODE) {
@@ -122,8 +141,8 @@ void setup() {
         break;
 
         case 3:
-          colSpacingX = drawW*.5;
-          colSpacingY = drawW*.5;
+          colSpacingX = drawW*.65;
+          colSpacingY = drawW*.65;
           drawZ = H.CENTER;
         break;
 
@@ -161,7 +180,7 @@ void setup() {
       srcImg = loadImage(SRC_FILE);
       srcImg.resize(TARGETW, TARGETH);
 // debug note
-println("DISABLED image("+SRC_FILE+") call");
+// println("DISABLED image("+SRC_FILE+") call");
       image(srcImg,0,0);
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
@@ -204,36 +223,39 @@ println("DISABLED image("+SRC_FILE+") call");
       for( int col = 0; col < colCt; col++)
       {
         //  get image slice
-        tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
+        // tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
+        tmpImg = get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
 
         // debug
         if(col%colCt==0)tmpImg.filter(INVERT);
-
+/// NOTE: tmpImg isn't working
+//  texture(tmpImg) shows white
+//  sClr below is always white
         //  same 
         tmpB.sides(numSides)
-            .texture(tmpImg)
-            .texture( srcImg.get( (int)(drawW*col),  (int)(drawW*row),  (int)drawW,  (int)drawW) )
+            .texture(srcImg)  //  HACK
             .drawBottom(false)
             .drawTop(false)
-            .topRadius(sqrt(drawW/colCt))
-            .bottomRadius(sqrt(drawW/PI));
+            .topRadius(HALF_PI)
+            .bottomRadius(sqrt(colCt/PI));
+
+            // .topRadius(sqrt(drawW/colCt))
+            // .bottomRadius(sqrt(drawW/PI));
 
         if(sw >0 )
         {
           //  Grab color from the current tmpImg
-          sClr = tmpImg.get( (int)(tmpImg.width/PI), (int)(tmpImg.height/PI) );
+          sClr = get( (int)random(tmpImg.width), (int)random(tmpImg.height) );
           //  stroke it
           tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+// debug
+println("sClr: "+sClr);
         }
 
       }
     }
   } else {
-      tmpImg = get(0,0, TARGETW, TARGETH);
-      tmpImg.filter(INVERT);
-      
         tmpB.sides(numSides)
-            .texture(tmpImg)
             .drawBottom(false)
             .drawTop(false)
             .topRadius(sqrt(drawW/TWO_PI))
@@ -241,10 +263,9 @@ println("DISABLED image("+SRC_FILE+") call");
 
         if(sw >0 )
         {
-          //  Grab color from the current tmpImg
-          sClr = tmpImg.get( (int)(tmpImg.width/PI), (int)(tmpImg.height/PI) );
+
           //  stroke it
-          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+          tmpB.strokeSides(true).strokeWeight(sw).stroke( 0 );
         }
 
   }
