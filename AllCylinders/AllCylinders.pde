@@ -28,8 +28,50 @@ String SRC_FILE;  // image names get pulled from imgs
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"jelly1.png",
-"jelly2.png"};
+"e2.png",
+"e3.png",
+"e4.png",
+"e5.png",
+"e6.png",
+"e7.png",
+"e8.png",
+"e9.png",
+"e10.png",
+"e11.png",
+"e12.png",
+"e13.png",
+"e14.png",
+"e15.png",
+"e16.png",
+"e17.png",
+"e18.png",
+"e19.png",
+"e20.png",
+"e1.png",
+"e21.png",
+"e22.png",
+"e23.png",
+"e24.png",
+"e25.png",
+"e26.png",
+"e27.png",
+"e28.png",
+"e29.png",
+"e30.png",
+"e31.png",
+"e32.png",
+"e33.png",
+"e34.png",
+"e35.png",
+"e36.png",
+"e37.png",
+"e38.png",
+"e39.png",
+"e40.png",
+"e41.png",
+"e42.png",
+"e43.png"
+};
 
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
@@ -110,7 +152,7 @@ void setup() {
 
         case 3:
           colSpacingX = drawW*.69;
-          colSpacingY = drawW*.69;
+          colSpacingY = drawW*.85;
           drawZ = drawW;	//H.CENTER;
         break;
 
@@ -268,9 +310,13 @@ clear();
 
   // EF stamp
   String msg = "ERICFICKES.COM";
-  HText lbl = new HText( msg, 43, createFont("Silom", 43) );
-  sClr = srcImg.get( (int)(srcImg.width/2), (int)(srcImg.height/2) );
-  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
+  HText lbl = new HText( msg, 24, createFont("Silom", 24) );
+  sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
+  //  LEFT
+  lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
+
+  //  CENTERED
+  // lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
 
   H.add(lbl);
 
