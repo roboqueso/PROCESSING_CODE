@@ -28,55 +28,13 @@ String SRC_FILE;  // image names get pulled from imgs
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"e2.png",
-"e3.png",
-"e4.png",
-"e5.png",
-"e6.png",
-"e7.png",
-"e8.png",
-"e9.png",
-"e10.png",
-"e11.png",
-"e12.png",
-"e13.png",
-"e14.png",
-"e15.png",
-"e16.png",
-"e17.png",
-"e18.png",
-"e19.png",
-"e20.png",
-"e1.png",
-"e21.png",
-"e22.png",
-"e23.png",
-"e24.png",
-"e25.png",
-"e26.png",
-"e27.png",
-"e28.png",
-"e29.png",
-"e30.png",
-"e31.png",
-"e32.png",
-"e33.png",
-"e34.png",
-"e35.png",
-"e36.png",
-"e37.png",
-"e38.png",
-"e39.png",
-"e40.png",
-"e41.png",
-"e42.png",
-"e43.png"
-};
+"jelly1.png",
+"jelly2.png"};
 
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
 int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 1;
+float sw = 0;
 
 
 
@@ -114,16 +72,26 @@ void setup() {
   background(H.CLEAR);
   noFill();
 
-  // blendMode(SUBTRACT);
+  // blendMode(DARKEST);
+  // blendMode(EXCLUSION);	//	NOTE: causes a grey cloudy almost real diamond effect
+  // blendMode(MULTIPLY );	//	makes things SUPER DARK to BLACK
+  // blendMode(REPLACE );	//	"inverts" colors
+  blendMode(BLEND);	//	DEFAULT
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
+
+//	TODO: make P3D lines smooth and not shitty looking
+	// hint(ENABLE_STROKE_PERSPECTIVE);
+	// strokeJoin(ROUND);
+	// strokeCap(SQUARE);
+
+
   //  be safe
   if(colCt<2)colCt=2;
 
   //  init VARIABLES
   drawW = (int) ( TARGETW/colCt  );
-  // drawW *= .85;
 
   //  ROTATE MODE
       switch (MODE) {
@@ -141,9 +109,9 @@ void setup() {
         break;
 
         case 3:
-          colSpacingX = drawW*.65;
-          colSpacingY = drawW*.65;
-          drawZ = H.CENTER;
+          colSpacingX = drawW*.69;
+          colSpacingY = drawW*.69;
+          drawZ = drawW;	//H.CENTER;
         break;
 
         case 4:
@@ -174,26 +142,20 @@ void setup() {
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = SRC_FILE + "_m"+MODE + "_s"+numSides + ((sw>0)?"sw"+sw:"") + (fixNoFill?"":"_F") + "_"+ colCt;
 
-// if(srcImg==null){
   if(SRC_FILE!=""){
     try{
       srcImg = loadImage(SRC_FILE);
       srcImg.resize(TARGETW, TARGETH);
-// debug note
-// println("DISABLED image("+SRC_FILE+") call");
-      image(srcImg,0,0);
+
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
       println("LOADER: "+e);
-      // SRC_FILE ="";
       srcImg = get(0,0,TARGETW, TARGETH);
-      // sw=(sw<=0)?HALF_PI:sw;
     }
   } else {
     //  If srcImg doesn't load, hard code strokeWeight so you still see output
     sw=(sw<=0)?HALF_PI:sw;
   }
-// }
 
   //  init HYPE
   H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
@@ -212,64 +174,13 @@ void setup() {
 
   //  create box to hold slice
   tmpB = new HCylinder();
-
-  tmpB.width(drawW).height(drawW);
-
-  if(SRC_FILE!=""){
-    //  OUTER ROW LOOP ( t - b ) 
-    for( int row = 0; row < rowCt; row++)
-    {
-      //  INNER COLUMN LOOP ( l-r )  
-      for( int col = 0; col < colCt; col++)
-      {
-        //  get image slice
-        // tmpImg = srcImg.get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
-        tmpImg = get( (int)(drawW*col),  (int)(drawW*(row+col)),  (int)drawW,  (int)drawW);
-
-        // debug
-        if(col%colCt==0)tmpImg.filter(INVERT);
-/// NOTE: tmpImg isn't working
-//  texture(tmpImg) shows white
-//  sClr below is always white
-        //  same 
         tmpB.sides(numSides)
-            .texture(srcImg)  //  HACK
+            .texture(tmpImg)
             .drawBottom(false)
             .drawTop(false)
-            .topRadius(HALF_PI)
-            .bottomRadius(sqrt(colCt/PI));
-
-            // .topRadius(sqrt(drawW/colCt))
-            // .bottomRadius(sqrt(drawW/PI));
-
-        if(sw >0 )
-        {
-          //  Grab color from the current tmpImg
-          sClr = get( (int)random(tmpImg.width), (int)random(tmpImg.height) );
-          //  stroke it
-          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
-// debug
-println("sClr: "+sClr);
-        }
-
-      }
-    }
-  } else {
-        tmpB.sides(numSides)
-            .drawBottom(false)
-            .drawTop(false)
-            .topRadius(sqrt(drawW/TWO_PI))
-            .bottomRadius(sqrt(drawW/PI));
-
-        if(sw >0 )
-        {
-
-          //  stroke it
-          tmpB.strokeSides(true).strokeWeight(sw).stroke( 0 );
-        }
-
-  }
-
+            .topRadius(QUARTER_PI)
+            .bottomRadius(sqrt(colCt/PI))
+            .width(drawW).height(drawW);
 
   //  drop it in the pool
   pool.add( tmpB );
@@ -285,6 +196,24 @@ println("sClr: "+sClr);
           public void run(Object obj) 
           {
           tmpB = (HCylinder) obj;
+		
+		//	ADD FORMATTING AND PIZAZZ HERE
+		// HACK : .texture() works here NOT above
+        tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
+		
+		if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
+
+        tmpB.texture(tmpImg);
+
+	        if(sw >0 )
+	        {
+	          //  Grab color from the current tmpImg
+	          sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
+	          //  stroke it
+	          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+	// debug
+	println("sClr: "+sClr);
+	        }
 
           //  ROTATE MODE
           switch (MODE) {
@@ -333,6 +262,9 @@ println("sClr: "+sClr);
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+
+lights();
+clear();
 
   // EF stamp
   String msg = "ERICFICKES.COM";
