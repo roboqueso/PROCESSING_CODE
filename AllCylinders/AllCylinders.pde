@@ -28,11 +28,6 @@ import hype.extended.layout.*;
 import hype.interfaces.*;
 import fixlib.*;
 
-import javafx.scene.canvas.*;
-import javafx.scene.effect.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
 
 /* ------------------------------------------------------------------------- */
 
@@ -47,6 +42,7 @@ String SRC_FILE;  // image names get pulled from imgs
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //	String[] imgs = {""}; // used for debug, should give you wireframes
 String[] imgs = {""};//{ "e5.png" };
+// String[] imgs = {"(1).png","(2).png","(3).png","(4).png","(5).png","(6).png"};//{ "e5.png" };
 /*
 String[] imgs = { 
 
@@ -134,20 +130,14 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
 
-
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-  background(H.WHITE);
-  noFill();
+  background(H.CLEAR);
+  //noFill();
 
   //  init HYPE
-  H.init(this).background(H.WHITE).use3D(true).autoClear(true);
-
-hint(ENABLE_STROKE_PERSPECTIVE);
-strokeJoin(ROUND);
-strokeCap(SQUARE);
-
+  H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
 
   //  be safe
   if(colCt<2)colCt=2;
@@ -406,7 +396,7 @@ void draw() {
       pool = null;
       hgl = null;
 
-      background(H.WHITE);
+      background(H.CLEAR);
       
       //  incrementer
       if(numSides < mxNumSides)
@@ -448,5 +438,3 @@ void doExit(){
   System.gc();
   System.exit(1);
 }
-
-
