@@ -1,6 +1,13 @@
 /*
 AllCylinders - roots from DiamondMode, now with more fixes and ONLY HCylinder
 
+// TODO: confirm grid is equally centered across MODES 1, 2 and 3
+
+// TODO: make smooth lines in P3D ( currently too jaggy )
+
+// TODO: MOVE TO USING PGRAPHICS LIKE blending surface example online
+// "The sketch has been automatically resized to fit the screen resolution"
+//	Drawing to PGraphics allows control of output dimension
 
 */
 import hype.*;
@@ -21,62 +28,30 @@ import javafx.scene.text.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";1
-int MODE = 3; //   1 - 3
+int MODE = 1; // 1-3
+//todo: mode 2 needs fixing
 String SRC_FILE;  // image names get pulled from imgs
 
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-"e2.png",
-"e3.png",
-"e4.png",
-"e5.png",
-"e6.png",
-"e7.png",
-"e8.png",
-"e9.png",
-"e10.png",
-"e11.png",
-"e12.png",
-"e13.png",
-"e14.png",
-"e15.png",
-"e16.png",
-"e17.png",
-"e18.png",
-"e19.png",
-"e20.png",
-"e1.png",
-"e21.png",
-"e22.png",
-"e23.png",
-"e24.png",
-"e25.png",
-"e26.png",
-"e27.png",
-"e28.png",
-"e29.png",
-"e30.png",
-"e31.png",
-"e32.png",
-"e33.png",
-"e34.png",
-"e35.png",
-"e36.png",
-"e37.png",
-"e38.png",
-"e39.png",
-"e40.png",
-"e41.png",
-"e42.png",
-"e43.png"
+"1.png"
 };
+/*,
+"2.png",
+"3.png",
+"4.png",
+"5.png",
+"6.png",
+"7.png",
+"8.png"
+};*/
 
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
 int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
+float sw = 2;
 
 
 
@@ -110,23 +85,25 @@ void  settings ()  {
 
 /* ------------------------------------------------------------------------- */
 void setup() {
-
-  background(H.CLEAR);
-  noFill();
-
+  // BLEND = DEFAULT  so don't bother w/blendMode
   // blendMode(DARKEST);
   // blendMode(EXCLUSION);	//	NOTE: causes a grey cloudy almost real diamond effect
   // blendMode(MULTIPLY );	//	makes things SUPER DARK to BLACK
   // blendMode(REPLACE );	//	"inverts" colors
-  blendMode(BLEND);	//	DEFAULT
+  
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
+  background(H.CLEAR);
+  noFill();
+
+  //  init HYPE
+  H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
 //	TODO: make P3D lines smooth and not shitty looking
-	// hint(ENABLE_STROKE_PERSPECTIVE);
-	// strokeJoin(ROUND);
-	// strokeCap(SQUARE);
+// hint(ENABLE_STROKE_PERSPECTIVE);
+// strokeJoin(ROUND);
+// strokeCap(SQUARE);
 
 
   //  be safe
@@ -199,8 +176,7 @@ void setup() {
     sw=(sw<=0)?HALF_PI:sw;
   }
 
-  //  init HYPE
-  H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
+
 
   pool = new HDrawablePool(colCt*colCt);
   
@@ -294,7 +270,16 @@ void setup() {
   );
 
 
+  // EF stamp
+  String msg = "ERICFICKES.COM";
+  HText lbl = new HText( msg, 24, createFont("Silom", 24) );
+  sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
+  //  LEFT
+  lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
+	  //  CENTERED
+	  // lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
 
+  H.add(lbl);
 
 }
 
@@ -304,21 +289,6 @@ void setup() {
 
 /* ------------------------------------------------------------------------- */
 void draw() {
-
-lights();
-clear();
-
-  // EF stamp
-  String msg = "ERICFICKES.COM";
-  HText lbl = new HText( msg, 24, createFont("Silom", 24) );
-  sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
-  //  LEFT
-  lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
-
-  //  CENTERED
-  // lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
-
-  H.add(lbl);
 
   pool.requestAll();
 
@@ -334,15 +304,16 @@ clear();
     tmpImg = get();
     tmpImg.resize( TARGETW, TARGETH );
     tmpImg.filter(GRAY);
+    tmpImg.filter(INVERT);
 
     try{
-      srcImg.mask(tmpImg);  
-      tmpImg.mask(srcImg);
+		tmpImg.mask(srcImg);
+		srcImg.mask(tmpImg);  
     } catch(Exception e){
 
       println("e: "+e);
-      println("tmpImg.width : " + tmpImg.width +", "+ tmpImg.height );
-      println("srcImg.width : " + srcImg.width +", "+ srcImg.height );
+      // println("tmpImg.width : " + tmpImg.width +", "+ tmpImg.height );
+      // println("srcImg.width : " + srcImg.width +", "+ srcImg.height );
     }
 
   // FLIP THE SCRIPT
