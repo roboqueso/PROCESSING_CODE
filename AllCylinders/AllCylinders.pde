@@ -9,6 +9,17 @@ AllCylinders - roots from DiamondMode, now with more fixes and ONLY HCylinder
 // "The sketch has been automatically resized to fit the screen resolution"
 //	Drawing to PGraphics allows control of output dimension
 
+// BLEND = DEFAULT  so don't bother w/blendMode
+// blendMode(DARKEST);
+// blendMode(EXCLUSION);	//	NOTE: causes a grey cloudy almost real diamond effect
+// blendMode(MULTIPLY);	//	makes things SUPER DARK to BLACK
+// blendMode(REPLACE);	//	"inverts" colors
+
+	// test
+// textureWrap(REPEAT);
+// textureMode(NORMAL);
+// hint(ENABLE_STROKE_PURE);
+
 */
 import hype.*;
 import hype.extended.behavior.*;
@@ -27,31 +38,68 @@ import javafx.scene.text.*;
 
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
-String SAVE_TYPE = ".png";  //".tif";1
-int MODE = 1; // 1-3
-//todo: mode 2 needs fixing
+String SAVE_TYPE = ".png"; //".tif";1
+int MODE = 2; // 1-3
+// TODO : MODE 2 needs some love
 String SRC_FILE;  // image names get pulled from imgs
 
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-//  BG image is still static ATM
+//	String[] imgs = {""}; // used for debug, should give you wireframes
+String[] imgs = {""};//{ "e5.png" };
+/*
 String[] imgs = { 
-"1.png"
-};
-/*,
-"2.png",
-"3.png",
-"4.png",
-"5.png",
-"6.png",
-"7.png",
-"8.png"
-};*/
 
+"e1.png",
+"e2.png",
+"e3.png",
+"e4.png",
+"e5.png",
+"e6.png",
+"e7.png",
+"e8.png",
+"e9.png",
+"e10.png",
+"e11.png",
+"e12.png",
+"e13.png",
+"e14.png",
+"e15.png",
+"e16.png",
+"e17.png",
+"e18.png",
+"e19.png",
+"e20.png",
+"e1.png",
+"e21.png",
+"e22.png",
+"e23.png",
+"e24.png",
+"e25.png",
+"e26.png",
+"e27.png",
+"e28.png",
+"e29.png",
+"e30.png",
+"e31.png",
+"e32.png",
+"e33.png",
+"e34.png",
+"e35.png",
+"e36.png",
+"e37.png",
+"e38.png",
+"e39.png",
+"e40.png",
+"e41.png",
+"e42.png",
+"e43.png"
+};
+*/
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
 int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 2;
+float sw = PI;
 
 
 
@@ -85,25 +133,20 @@ void  settings ()  {
 
 /* ------------------------------------------------------------------------- */
 void setup() {
-  // BLEND = DEFAULT  so don't bother w/blendMode
-  // blendMode(DARKEST);
-  // blendMode(EXCLUSION);	//	NOTE: causes a grey cloudy almost real diamond effect
-  // blendMode(MULTIPLY );	//	makes things SUPER DARK to BLACK
-  // blendMode(REPLACE );	//	"inverts" colors
-  
+
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-  background(H.CLEAR);
+  background(H.WHITE);
   noFill();
 
   //  init HYPE
-  H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
-//	TODO: make P3D lines smooth and not shitty looking
-// hint(ENABLE_STROKE_PERSPECTIVE);
-// strokeJoin(ROUND);
-// strokeCap(SQUARE);
+  H.init(this).background(H.WHITE).use3D(true).autoClear(true);
+
+hint(ENABLE_STROKE_PERSPECTIVE);
+strokeJoin(ROUND);
+strokeCap(SQUARE);
 
 
   //  be safe
@@ -121,10 +164,14 @@ void setup() {
         break;
 
         case 2:
-          colSpacingX = drawW *  HALF_PI;
-          colSpacingY = drawW / HALF_PI;  //HALF_PI;
+
+        drawW *= .75;
+
+
+          colSpacingX = drawW;
+          colSpacingY = drawW;
  
-          drawZ = drawW;//TARGETH/TWO_PI;
+          drawZ = TARGETH/TWO_PI;
         break;
 
         case 3:
@@ -192,8 +239,9 @@ void setup() {
 
   //  create box to hold slice
   tmpB = new HCylinder();
-        tmpB.sides(numSides)
-            .texture(tmpImg)
+        tmpB.texture(tmpImg)
+        	// .sides( numSides )
+        	.sides( (int)(360/numSides) )	//	DEBUG : use when tweaking modes
             .drawBottom(false)
             .drawTop(false)
             .topRadius(QUARTER_PI)
@@ -215,28 +263,41 @@ void setup() {
           {
           tmpB = (HCylinder) obj;
 		
-		//	ADD FORMATTING AND PIZAZZ HERE
-		// HACK : .texture() works here NOT above
-        tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
-		
-		if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
+			//	ADD FORMATTING AND PIZAZZ HERE
+			if(srcImg!=null)
+			{
+				// HACK : .texture() works here NOT above
+		        tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
+			
+				// if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
 
-        tmpB.texture(tmpImg);
+	    	    tmpB.texture(tmpImg);
 
-	        if(sw >0 )
-	        {
-	          //  Grab color from the current tmpImg
-	          sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
+		        if(sw >0 )
+		        {
+		          //  Grab color from the current tmpImg
+		          sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
+		          //  stroke it
+		          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+		// debug
+		println("sClr: "+sClr);
+		        }
+			}
+			else
+			{
+	          sClr = 0;
 	          //  stroke it
-	          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
-	// debug
-	println("sClr: "+sClr);
-	        }
+	          tmpB.strokeSides(sw >0 ).strokeWeight(sw).stroke( sClr );
+			}
+
+
+
+
 
           //  ROTATE MODE
           switch (MODE) {
             case 1:
-              tmpB.depth(drawW).z(drawZ).rotationY(90).rotationZ(90);
+              	tmpB.depth(drawW).z(drawZ).rotationY(90).rotationZ(90);
             break;
 
             case 2:
@@ -244,7 +305,7 @@ void setup() {
             break;
 
             case 3:
-              tmpB.depth(drawW/HALF_PI).z(drawZ).rotationX(90);
+              	tmpB.depth(drawW/HALF_PI).z(drawZ).rotationX(90);
             break;
 
             case 4:
@@ -273,7 +334,11 @@ void setup() {
   // EF stamp
   String msg = "ERICFICKES.COM";
   HText lbl = new HText( msg, 24, createFont("Silom", 24) );
-  sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
+  if(srcImg!=null)
+  	sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
+  else
+  	sClr = 0;
+
   //  LEFT
   lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
 	  //  CENTERED
@@ -301,19 +366,17 @@ void draw() {
     image(srcImg,0,0);
 
     //  p5 on osx isn't masking????
-    tmpImg = get();
+    tmpImg = get(0,0, TARGETW, TARGETH );
     tmpImg.resize( TARGETW, TARGETH );
     tmpImg.filter(GRAY);
-    tmpImg.filter(INVERT);
+    // tmpImg.filter(INVERT);
 
     try{
 		tmpImg.mask(srcImg);
 		srcImg.mask(tmpImg);  
     } catch(Exception e){
 
-      println("e: "+e);
-      // println("tmpImg.width : " + tmpImg.width +", "+ tmpImg.height );
-      // println("srcImg.width : " + srcImg.width +", "+ srcImg.height );
+      println("MASKER: "+e);
     }
 
   // FLIP THE SCRIPT
@@ -343,7 +406,7 @@ void draw() {
       pool = null;
       hgl = null;
 
-      background(H.CLEAR);
+      background(H.WHITE);
       
       //  incrementer
       if(numSides < mxNumSides)
