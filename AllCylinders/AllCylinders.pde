@@ -40,9 +40,9 @@ String SRC_FILE;  // image names get pulled from imgs
 
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-//	String[] imgs = {""}; // used for debug, should give you wireframes
-String[] imgs = {""};//{ "e5.png" };
-// String[] imgs = {"(1).png","(2).png","(3).png","(4).png","(5).png","(6).png"};//{ "e5.png" };
+	String[] imgs = {""}; // used for debug, should give you wireframes
+// String[] imgs = { "e20.png" };
+
 /*
 String[] imgs = { 
 
@@ -123,21 +123,30 @@ int TARGETH = 1600;
 
 void  settings ()  {
     size( 1600, 1600, P3D);
-    smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
+    smooth(8);  //  smooth() can only be used in settings();
 }
 
 /* ------------------------------------------------------------------------- */
 void setup() {
+// TESTING
+hint(ENABLE_DEPTH_MASK);
+hint(ENABLE_DEPTH_TEST);
+hint(ENABLE_OPTIMIZED_STROKE);
+hint(ENABLE_STROKE_PERSPECTIVE);
+hint(ENABLE_STROKE_PURE);
+hint(ENABLE_TEXTURE_MIPMAPS);
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-  background(H.CLEAR);
-  //noFill();
 
+
+
+  background(-1);
+  
   //  init HYPE
-  H.init(this).background(H.CLEAR).use3D(true).autoClear(true);
+  H.init(this).background(-1).use3D(true).autoClear(true);
 
   //  be safe
   if(colCt<2)colCt=2;
@@ -226,6 +235,7 @@ void setup() {
   pool.autoAddToStage();
 
   //  SLICE IT UP
+println("sides() in DEBUG MODE!!");
 
   //  create box to hold slice
   tmpB = new HCylinder();
@@ -396,7 +406,7 @@ void draw() {
       pool = null;
       hgl = null;
 
-      background(H.CLEAR);
+      background(-1);
       
       //  incrementer
       if(numSides < mxNumSides)
