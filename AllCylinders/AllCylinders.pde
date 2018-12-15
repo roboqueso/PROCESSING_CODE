@@ -34,8 +34,7 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
-int MODE = 2; // 1-3
-// TODO : MODE 2 needs some love
+int MODE = 3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 
 
@@ -123,28 +122,19 @@ int TARGETH = 1600;
 
 void  settings ()  {
     size( 1600, 1600, P3D);
-    pixelDensity(displayDensity());
     smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
 }
 
 /* ------------------------------------------------------------------------- */
 void setup() {
-// TESTING
-hint(ENABLE_DEPTH_MASK);
-hint(ENABLE_DEPTH_TEST);
-hint(ENABLE_OPTIMIZED_STROKE);
-hint(ENABLE_STROKE_PERSPECTIVE);
-hint(ENABLE_STROKE_PURE);
-hint(ENABLE_TEXTURE_MIPMAPS);
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-
-
-
   background(-1);
-  
+  ortho();
+
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
 
@@ -163,12 +153,10 @@ hint(ENABLE_TEXTURE_MIPMAPS);
         break;
 
         case 2:
-
-        drawW *= .75;
-
+          drawW *= .8;
 
           colSpacingX = drawW;
-          colSpacingY = drawW;
+          colSpacingY = drawW*1.125;
  
           drawZ = TARGETH/TWO_PI;
         break;
@@ -223,9 +211,8 @@ hint(ENABLE_TEXTURE_MIPMAPS);
   }
 
 
-
   pool = new HDrawablePool(colCt*colCt);
-  
+ 
     hgl = new HGridLayout()
       .cols(colCt)
       .rows(colCt)
@@ -292,20 +279,24 @@ println("sides() in DEBUG MODE!!");
 
 
 
-
-
           //  ROTATE MODE
           switch (MODE) {
             case 1:
-              	tmpB.depth(drawW).z(drawZ).rotationY(90).rotationZ(90);
+              	tmpB.depth(drawW).z(drawZ).rotationX(90).rotationY(90);
             break;
 
             case 2:
-                tmpB.depth(drawW).z(drawZ).rotationX(90).rotationZ(45);
+                if(pool.currentIndex()%2==0)
+                  tmpB.depth(drawW).z(drawZ).rotation(45);
+                else
+                  tmpB.depth(drawW).z(drawZ).rotation(-45);
             break;
 
             case 3:
-              	tmpB.depth(drawW/HALF_PI).z(drawZ).rotationX(90);
+              	if(pool.currentIndex()%2==0)
+                  tmpB.depth(drawW).z(drawZ).rotation(numSides*colCt);
+                else
+                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt));
             break;
 
             case 4:
@@ -354,10 +345,12 @@ println("sides() in DEBUG MODE!!");
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+  // lights();
+  // camera();
+  // ortho();
 
   pool.requestAll();
 
-  ortho();
   H.drawStage();
 
   if(SRC_FILE!=""){
@@ -372,8 +365,8 @@ void draw() {
     // tmpImg.filter(INVERT);
 
     try{
-		tmpImg.mask(srcImg);
-		srcImg.mask(tmpImg);  
+  		tmpImg.mask(srcImg);
+  		srcImg.mask(tmpImg);  
     } catch(Exception e){
 
       println("MASKER: "+e);
