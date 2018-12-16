@@ -35,8 +35,12 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 // TODO: MODE 1 doesn't work anymore?!?!?!
-int MODE = 2; // 1-3
+int MODE = 1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
+int numSides = 6; // MIN = 3
+int mxNumSides = 8;
+int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
+float sw = 0;
 
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
@@ -88,16 +92,10 @@ String[] imgs = {
 };
 
 
-int numSides = 6; // MIN = 3
-int mxNumSides = 8;
-int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
-
-
 
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
-int cSides = (int)(360/numSides);
+int cSides = (int)(360/numSides);//(int)(360/numSides); NOTE : mode 1 can't handle 360/numSides
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HCylinder
 float drawZ;
 int imgIdx = 0; // multi image indexer
@@ -129,8 +127,17 @@ void setup() {
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
+  // test
+// textureWrap(REPEAT);
+textureMode(NORMAL);
+hint(ENABLE_STROKE_PURE);
+
   background(-1);
-  ortho();
+  
+  strokeWeight(sw);
+  noStroke();
+
+
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -148,6 +155,9 @@ void setup() {
           colSpacingX = drawW;
           colSpacingY = drawW;
           drawZ = H.CENTER;
+          
+          // NOTE : mode 1 can't handle 360/numSides
+          cSides = (int)(120/numSides);
 
           // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
           numSides = mxNumSides;
@@ -334,7 +344,7 @@ void draw() {
 // debug
 println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +" : "+ numSides +" : "+ mxNumSides );
 
-
+  ortho();
   H.drawStage();
 
 
