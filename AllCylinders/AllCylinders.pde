@@ -34,7 +34,8 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
-int MODE = 1; // 1-3
+// TODO: MODE 1 doesn't work anymore?!?!?!
+int MODE = 2; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 
 
@@ -336,15 +337,14 @@ println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +"
 
   H.drawStage();
 
-println("MASK & FLIP image() calls disabled");
-/*
-
 
   if(srcImg!=null){
     //  NOTE: if image() isn't dropped here, font background is color, not image()
     // font bg hack
     image(srcImg,0,0);
 
+println("no more masking action, just flip the script");
+/*
     //  p5 on osx isn't masking????
     tmpImg = get(0,0, TARGETW, TARGETH );
     tmpImg.resize( TARGETW, TARGETH );
@@ -358,13 +358,13 @@ println("MASK & FLIP image() calls disabled");
 
       println("MASKER: "+e);
     }
-
+*/
   // FLIP THE SCRIPT
   translate(TARGETW/2, TARGETH/2, 0);
     scale(-1, -1);
     image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
   } 
-*/
+
 //debug
 // stroke(#EF2018);
 // line(width/2, 0, width/2, height);
