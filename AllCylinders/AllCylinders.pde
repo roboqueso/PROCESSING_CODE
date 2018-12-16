@@ -34,73 +34,69 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
-int MODE = 3; // 1-3
+int MODE = 1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-	String[] imgs = {""}; // used for debug, should give you wireframes
-// String[] imgs = { "e20.png" };
+// String[] imgs = {""}; // used for debug, should give you wireframes
+// String[] imgs = { "cinco1.png" };
 
-/*
+
 String[] imgs = { 
-
-"e1.png",
-"e2.png",
-"e3.png",
-"e4.png",
-"e5.png",
-"e6.png",
-"e7.png",
-"e8.png",
-"e9.png",
-"e10.png",
-"e11.png",
-"e12.png",
-"e13.png",
-"e14.png",
-"e15.png",
-"e16.png",
-"e17.png",
-"e18.png",
-"e19.png",
-"e20.png",
-"e1.png",
-"e21.png",
-"e22.png",
-"e23.png",
-"e24.png",
-"e25.png",
-"e26.png",
-"e27.png",
-"e28.png",
-"e29.png",
-"e30.png",
-"e31.png",
-"e32.png",
-"e33.png",
-"e34.png",
-"e35.png",
-"e36.png",
-"e37.png",
-"e38.png",
-"e39.png",
-"e40.png",
-"e41.png",
-"e42.png",
-"e43.png"
+"sideWaffle1.png",
+"sideWaffle2.png",
+"sideWaffle3.png",
+"PlusLattice1.png",
+"sideWaffle4.png",
+"sideWaffle6.png",
+"PlusLattice2.png",
+"misc4.png",
+"sideWaffle5.png",
+"PlusLattice3.png",
+"PlusLattice4.png",
+"PlusLattice5.png",
+"PlusLattice6.png",
+"PlusLattice7.png",
+"cinco2.png",
+"misc5.png",
+"cinco3.png",
+"PlusLattice8.png",
+"cinco4.png",
+"DarkCrystal1.png",
+"DarkCrystal2.png",
+"DarkCrystal3.png",
+"PlusLattice9.png",
+"cinco5.png",
+"DarkCrystal4.png",
+"DarkCrystal5.png",
+"Fourth10.png",
+"PlusLattice10.png",
+"cinco6.png",
+"cinco1.png",
+"Fourth1.png",
+"Fourth2.png",
+"cinco7.png",
+"Fourth3.png",
+"Fourth4.png",
+"Fourth5.png",
+"DarkCrystal6.png",
+"Fourth7.png",
+"Fourth8.png",
+"Fourth9.png"
 };
-*/
+
+
 int numSides = 6; // MIN = 3
 int mxNumSides = 8;
 int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = PI;
+float sw = 0;
 
 
 
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
-
+int cSides = (int)(360/numSides);
 boolean fixNoFill = true; //  switch to make noFill() work and give the wireframe effect on HCylinder
 float drawZ;
 int imgIdx = 0; // multi image indexer
@@ -147,37 +143,30 @@ void setup() {
   //  ROTATE MODE
       switch (MODE) {
         case 1:
-          colSpacingX = drawW;  //(drawW * 1.41);
-          colSpacingY = drawW;  //(drawW * 1.63 );
-          drawZ = H.CENTER; //drawW;
+          drawW *= .87;
+          colSpacingX = drawW;
+          colSpacingY = drawW;
+          drawZ = H.CENTER;
+
+          // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
+          numSides = mxNumSides;
         break;
 
         case 2:
           drawW *= .8;
 
-          colSpacingX = drawW;
-          colSpacingY = drawW*1.125;
+          colSpacingX = drawW*.96;
+          colSpacingY = drawW;
  
           drawZ = TARGETH/TWO_PI;
         break;
 
         case 3:
-          colSpacingX = drawW*.69;
-          colSpacingY = drawW*.85;
-          drawZ = drawW;	//H.CENTER;
+          drawW *= .8;
+          colSpacingX = drawW;
+          colSpacingY = drawW;
+          drawZ = drawW;
         break;
-
-        case 4:
-        break;
-
-        case 5:
-        break;
-
-        case 6:
-        break;
-    
-    case 7:
-    break;
 
         default :
           println("unknown MODE: "+  MODE);
@@ -203,7 +192,7 @@ void setup() {
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
       println("LOADER: "+e);
-      srcImg = get(0,0,TARGETW, TARGETH);
+      srcImg = null;
     }
   } else {
     //  If srcImg doesn't load, hard code strokeWeight so you still see output
@@ -211,7 +200,7 @@ void setup() {
   }
 
 
-  pool = new HDrawablePool(colCt*colCt);
+    pool = new HDrawablePool(colCt*colCt);
  
     hgl = new HGridLayout()
       .cols(colCt)
@@ -224,16 +213,18 @@ void setup() {
   //  SLICE IT UP
 println("sides() in DEBUG MODE!!");
 
+
   //  create box to hold slice
   tmpB = new HCylinder();
         tmpB.texture(tmpImg)
-        	// .sides( numSides )
-        	.sides( (int)(360/numSides) )	//	DEBUG : use when tweaking modes
-            .drawBottom(false)
-            .drawTop(false)
-            .topRadius(QUARTER_PI)
-            .bottomRadius(sqrt(colCt/PI))
-            .width(drawW).height(drawW);
+        	.sides( cSides )
+          .drawBottom(false)
+          .drawTop(false)
+          .topRadius(QUARTER_PI)
+          .bottomRadius(sqrt(colCt/PI))
+// TODO: revisit bottom and top radius
+          //  .bottomRadius(QUARTER_PI/2)
+          .width(drawW).height(drawW);
 
   //  drop it in the pool
   pool.add( tmpB );
@@ -248,67 +239,57 @@ println("sides() in DEBUG MODE!!");
       new HCallback() {
           public void run(Object obj) 
           {
-          tmpB = (HCylinder) obj;
-		
-			//	ADD FORMATTING AND PIZAZZ HERE
-			if(srcImg!=null)
-			{
-				// HACK : .texture() works here NOT above
-		        tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
-			
-				// if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
+            tmpB = (HCylinder) obj;
 
-	    	    tmpB.texture(tmpImg);
+// debug
+println("run(): "+  pool.currentIndex() );
 
-		        if(sw >0 )
-		        {
-		          //  Grab color from the current tmpImg
-		          sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
-		          //  stroke it
-		          tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
-		// debug
-		println("sClr: "+sClr);
-		        }
-			}
-			else
-			{
-	          sClr = 0;
-	          //  stroke it
-	          tmpB.strokeSides(sw >0 ).strokeWeight(sw).stroke( sClr );
-			}
+      			//	ADD FORMATTING AND PIZAZZ HERE
+      			if(srcImg!=null)
+      			{
+      				// HACK : .texture() works here NOT above
+              tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
+
+      				// if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
+
+        	    tmpB.texture(tmpImg);
+
+              if(sw >0 )
+              {
+                //  Grab color from the current tmpImg
+                sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
+                //  stroke it
+                tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+              }
+      			}
+      			else
+      			{
+              sClr = 0;
+              //  stroke it
+              tmpB.strokeSides(sw>0).strokeWeight(sw).stroke( sClr );
+      			}
 
 
 
           //  ROTATE MODE
           switch (MODE) {
             case 1:
-              	tmpB.depth(drawW).z(drawZ).rotationX(90).rotationY(90);
+              	tmpB.depth(drawW).z(drawZ).rotationX(90).rotationY(90*(numSides*pool.currentIndex()));
             break;
 
             case 2:
-                if(pool.currentIndex()%2==0)
-                  tmpB.depth(drawW).z(drawZ).rotation(45);
-                else
-                  tmpB.depth(drawW).z(drawZ).rotation(-45);
+                  
+                // if(pool.currentIndex()%2==0)
+                  tmpB.depth(drawW).z(drawZ).rotationZ(45*(numSides*pool.currentIndex()));
+                // else
+                //   tmpB.depth(drawW).z(drawZ).rotationZ(-45*(numSides*pool.currentIndex()));
             break;
 
             case 3:
               	if(pool.currentIndex()%2==0)
-                  tmpB.depth(drawW).z(drawZ).rotation(numSides*colCt);
+                  tmpB.depth(drawW).z(drawZ).rotation((numSides*colCt)*PI);
                 else
-                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt));
-            break;
-
-            case 4:
-            break;
-
-            case 5:
-            break;
-
-            case 6:
-            break;
-
-            case 7:
+                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt)*PI);
             break;
 
             default :
@@ -330,10 +311,10 @@ println("sides() in DEBUG MODE!!");
   else
   	sClr = 0;
 
-  //  LEFT
-  lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
+    //  LEFT
+    // lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
 	  //  CENTERED
-	  // lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
+	  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
 
   H.add(lbl);
 
@@ -345,15 +326,21 @@ println("sides() in DEBUG MODE!!");
 
 /* ------------------------------------------------------------------------- */
 void draw() {
-  // lights();
-  // camera();
-  // ortho();
+
 
   pool.requestAll();
 
+// debug
+println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +" : "+ numSides +" : "+ mxNumSides );
+
+
   H.drawStage();
 
-  if(SRC_FILE!=""){
+println("MASK & FLIP image() calls disabled");
+/*
+
+
+  if(srcImg!=null){
     //  NOTE: if image() isn't dropped here, font background is color, not image()
     // font bg hack
     image(srcImg,0,0);
@@ -362,7 +349,7 @@ void draw() {
     tmpImg = get(0,0, TARGETW, TARGETH );
     tmpImg.resize( TARGETW, TARGETH );
     tmpImg.filter(GRAY);
-    // tmpImg.filter(INVERT);
+    tmpImg.filter(INVERT);
 
     try{
   		tmpImg.mask(srcImg);
@@ -376,10 +363,8 @@ void draw() {
   translate(TARGETW/2, TARGETH/2, 0);
     scale(-1, -1);
     image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
-
-
   } 
-
+*/
 //debug
 // stroke(#EF2018);
 // line(width/2, 0, width/2, height);
@@ -389,17 +374,8 @@ void draw() {
       doExit();
     } else {
       save( SAVE_NAME+SAVE_TYPE );
-      //  MAKING ART WITH GARBAGE
-      tmpB = null;
-      srcImg = null;
-      tmpImg = null;
-      H.clearStage();
-      pool.drain();
-      fix = null;
-      pool = null;
-      hgl = null;
 
-      background(-1);
+      cleanup();
       
       //  incrementer
       if(numSides < mxNumSides)
@@ -410,14 +386,28 @@ void draw() {
         imgIdx++; // next image
       }
 
-      //  restar sketch
+      //  restart sketch
       setup();
     }
 
 }
 
+//  GC HELPER
+void cleanup(){
+      //  MAKING ART WITH GARBAGE
+    H.clearStage();
+    pool.drain();
+    clear();
+    tmpB = null;
+    srcImg = null;
+    tmpImg = null;
+    fix = null;
+    pool = null;
+    hgl = null;
+    background(-1);
 
-
+System.gc();  // helpful?
+}
 
 
 
@@ -432,12 +422,10 @@ void draw() {
 void doExit(){
 
   save( SAVE_NAME+SAVE_TYPE );    //  USE .TIF IF COLOR  
+  cleanup();
 
-    //  cleanup
-  fix = null;
-  
+
   noLoop();
   exit();
-  System.gc();
   System.exit(1);
 }
