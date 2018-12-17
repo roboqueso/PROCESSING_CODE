@@ -35,62 +35,34 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 // TODO: MODE 1 doesn't work anymore?!?!?!
-int MODE = 1; // 1-3
+int MODE = 1; //3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides = 6; // MIN = 3
-int mxNumSides = 8;
-int colCt = 10;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
+int numSides = 6; //5; // MIN = 3
+int mxNumSides = 8; //7;
+int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
 float sw = 0;
 
-
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-// String[] imgs = {""}; // used for debug, should give you wireframes
-// String[] imgs = { "cinco1.png" };
+String[] imgs = {""}; // used for debug, should give you wireframes
+// String[] imgs = { "HTileGamer-P5Ffalse-ROTfalse-PQRASST.0031.png_FINAL.png" };
 
-
+// TODO: run all modes
+/*
 String[] imgs = { 
-"sideWaffle1.png",
-"sideWaffle2.png",
-"sideWaffle3.png",
-"PlusLattice1.png",
-"sideWaffle4.png",
-"sideWaffle6.png",
-"PlusLattice2.png",
-"misc4.png",
-"sideWaffle5.png",
-"PlusLattice3.png",
-"PlusLattice4.png",
-"PlusLattice5.png",
-"PlusLattice6.png",
-"PlusLattice7.png",
-"cinco2.png",
-"misc5.png",
-"cinco3.png",
-"PlusLattice8.png",
-"cinco4.png",
-"DarkCrystal1.png",
-"DarkCrystal2.png",
-"DarkCrystal3.png",
-"PlusLattice9.png",
-"cinco5.png",
-"DarkCrystal4.png",
-"DarkCrystal5.png",
-"Fourth10.png",
-"PlusLattice10.png",
-"cinco6.png",
-"cinco1.png",
-"Fourth1.png",
-"Fourth2.png",
-"cinco7.png",
-"Fourth3.png",
-"Fourth4.png",
-"Fourth5.png",
-"DarkCrystal6.png",
-"Fourth7.png",
-"Fourth8.png",
-"Fourth9.png"
+"PQRASST.0041.jpg",
+"PQRASST.0031.jpg",
+"PQRASST.0061.jpg",
+"A100ASST.0101.jpg",
+"XYZASST.0041.jpg",
+"PQRASST.0123.jpg",
+"VWXLQTZ.0162.jpg",
+"A100ASST.0081.jpg",
+"A100ASST.0111.jpg",
+"12PTQT.004.JPG",
+"12PTQT.005.JPG",
+"WFNT.0032.jpg"
 };
-
+*/
 
 
 /* ------------------------------------------------------------------------- */
@@ -148,6 +120,8 @@ hint(ENABLE_STROKE_PURE);
   //  init VARIABLES
   drawW = (int) ( TARGETW/colCt  );
 
+drawW *= .69;
+
   //  ROTATE MODE
       switch (MODE) {
         case 1:
@@ -157,10 +131,11 @@ hint(ENABLE_STROKE_PURE);
           drawZ = H.CENTER;
           
           // NOTE : mode 1 can't handle 360/numSides
-          cSides = (int)(120/numSides);
+          cSides = numSides;  //(int)(120/numSides);
+          // cSides = (int)(120/numSides);
 
           // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
-          numSides = mxNumSides;
+          // numSides = mxNumSides;
         break;
 
         case 2:
@@ -173,10 +148,10 @@ hint(ENABLE_STROKE_PURE);
         break;
 
         case 3:
-          drawW *= .8;
           colSpacingX = drawW;
           colSpacingY = drawW;
           drawZ = drawW;
+          cSides = (int)(180/numSides);
         break;
 
         default :
@@ -233,8 +208,6 @@ println("sides() in DEBUG MODE!!");
           .drawTop(false)
           .topRadius(QUARTER_PI)
           .bottomRadius(sqrt(colCt/PI))
-// TODO: revisit bottom and top radius
-          //  .bottomRadius(QUARTER_PI/2)
           .width(drawW).height(drawW);
 
   //  drop it in the pool
@@ -337,6 +310,10 @@ println("run(): "+  pool.currentIndex() );
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+  
+  lights();
+  clear();
+  noStroke();
 
 
   pool.requestAll();
