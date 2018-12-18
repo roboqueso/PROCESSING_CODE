@@ -40,11 +40,11 @@ String SRC_FILE;  // image names get pulled from imgs
 int numSides = 6; //5; // MIN = 3
 int mxNumSides = 8; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
+float sw = PI;
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-String[] imgs = {""}; // used for debug, should give you wireframes
-// String[] imgs = { "HTileGamer-P5Ffalse-ROTfalse-PQRASST.0031.png_FINAL.png" };
+// String[] imgs = {""}; // used for debug, should give you wireframes
+String[] imgs = { "xxxEVEN_ODD.png" };
 
 // TODO: run all modes
 /*
@@ -82,34 +82,23 @@ color sClr;
 PImage srcImg, tmpImg;
 
 //  NOTE: Processing on OSX and PC have different interpretations of dimensions
-int TARGETW = 1600;
-int TARGETH = 1600;
+int TARGETW = 1000;
+int TARGETH = 1000;
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size( 1600, 1600, P3D);
-    smooth(8);  //  smooth() can only be used in settings();
+    size( 1000, 1000, P3D);
     pixelDensity(displayDensity());
+    smooth(8);  //  smooth() can only be used in settings();
 }
 
 /* ------------------------------------------------------------------------- */
 void setup() {
+  background(-1);
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
-
-  // test
-// textureWrap(REPEAT);
-textureMode(NORMAL);
-hint(ENABLE_STROKE_PURE);
-
-  background(-1);
-  
-  strokeWeight(sw);
-  noStroke();
-
-
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -125,14 +114,15 @@ drawW *= .69;
   //  ROTATE MODE
       switch (MODE) {
         case 1:
-          drawW *= .87;
+          // drawW *= .87;
           colSpacingX = drawW;
           colSpacingY = drawW;
           drawZ = H.CENTER;
           
           // NOTE : mode 1 can't handle 360/numSides
-          cSides = numSides;  //(int)(120/numSides);
+          // cSides = numSides;  //(int)(120/numSides);
           // cSides = (int)(120/numSides);
+cSides = (int)(270/numSides);
 
           // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
           // numSides = mxNumSides;
@@ -182,7 +172,7 @@ drawW *= .69;
     }
   } else {
     //  If srcImg doesn't load, hard code strokeWeight so you still see output
-    sw=(sw<=0)?HALF_PI:sw;
+    sw=(sw==0)?HALF_PI:sw;
   }
 
 
@@ -202,12 +192,13 @@ println("sides() in DEBUG MODE!!");
 
   //  create box to hold slice
   tmpB = new HCylinder();
-        tmpB.texture(tmpImg)
+        tmpB
         	.sides( cSides )
           .drawBottom(false)
           .drawTop(false)
           .topRadius(QUARTER_PI)
           .bottomRadius(sqrt(colCt/PI))
+          .anchorAt(H.CENTER)
           .width(drawW).height(drawW);
 
   //  drop it in the pool
@@ -263,10 +254,8 @@ println("run(): "+  pool.currentIndex() );
 
             case 2:
                   
-                // if(pool.currentIndex()%2==0)
-                  tmpB.depth(drawW).z(drawZ).rotationZ(45*(numSides*pool.currentIndex()));
-                // else
-                //   tmpB.depth(drawW).z(drawZ).rotationZ(-45*(numSides*pool.currentIndex()));
+              // if(pool.currentIndex()%2==0)
+              tmpB.depth(drawW).z(drawZ).rotationZ(45*(numSides*pool.currentIndex()));
             break;
 
             case 3:
