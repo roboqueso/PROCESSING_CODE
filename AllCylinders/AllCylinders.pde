@@ -35,19 +35,17 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 
-int MODE = 2; //3; // 1-3
+int MODE = 1; //3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 int numSides = 5; // MIN = 3
 int mxNumSides = 9; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
+float sw = 2;
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 // String[] imgs = {""}; // used for debug, should give you wireframes
-String[] imgs = { "EVEN_ODD.png" };
+// String[] imgs = { "EVEN_ODD.png" };
 
-// TODO: run all modes
-/*
 String[] imgs = { 
 "PQRASST.0041.jpg",
 "PQRASST.0031.jpg",
@@ -62,7 +60,7 @@ String[] imgs = {
 "12PTQT.005.JPG",
 "WFNT.0032.jpg"
 };
-*/
+
 
 
 /* ------------------------------------------------------------------------- */
@@ -96,7 +94,6 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
   background(-1);
-    noStroke();
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
@@ -106,6 +103,8 @@ hint(ENABLE_STROKE_PERSPECTIVE);
 hint(ENABLE_DEPTH_MASK);
 hint(ENABLE_TEXTURE_MIPMAPS);
 hint(ENABLE_STROKE_PURE);
+
+blendMode(EXCLUSION);  //  NOTE: causes a grey cloudy almost real diamond effect
 
 
   //  init HYPE
@@ -322,8 +321,8 @@ println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +"
     image(srcImg,0,0);
 
 println("no more masking action, just flip the script");
-/*
-    //  p5 on osx isn't masking????
+
+     // p5 on osx isn't masking????
     tmpImg = get(0,0, TARGETW, TARGETH );
     tmpImg.resize( TARGETW, TARGETH );
     tmpImg.filter(GRAY);
@@ -336,7 +335,7 @@ println("no more masking action, just flip the script");
 
       println("MASKER: "+e);
     }
-*/
+
   // FLIP THE SCRIPT
   translate(TARGETW/2, TARGETH/2, 0);
     scale(-1, -1);
