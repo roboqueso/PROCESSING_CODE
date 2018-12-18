@@ -34,17 +34,17 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
-// TODO: MODE 1 doesn't work anymore?!?!?!
-int MODE = 1; //3; // 1-3
+
+int MODE = 2; //3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides = 6; //5; // MIN = 3
-int mxNumSides = 8; //7;
+int numSides = 5; // MIN = 3
+int mxNumSides = 9; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = PI;
+float sw = 0;
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 // String[] imgs = {""}; // used for debug, should give you wireframes
-String[] imgs = { "xxxEVEN_ODD.png" };
+String[] imgs = { "EVEN_ODD.png" };
 
 // TODO: run all modes
 /*
@@ -82,13 +82,13 @@ color sClr;
 PImage srcImg, tmpImg;
 
 //  NOTE: Processing on OSX and PC have different interpretations of dimensions
-int TARGETW = 1000;
-int TARGETH = 1000;
+int TARGETW = 1600;
+int TARGETH = 1600;
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size( 1000, 1000, P3D);
+    size( 1600, 1600, P3D);
     pixelDensity(displayDensity());
     smooth(8);  //  smooth() can only be used in settings();
 }
@@ -96,9 +96,17 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
   background(-1);
+    noStroke();
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
+
+hint(ENABLE_OPTIMIZED_STROKE);
+hint(ENABLE_STROKE_PERSPECTIVE);
+hint(ENABLE_DEPTH_MASK);
+hint(ENABLE_TEXTURE_MIPMAPS);
+hint(ENABLE_STROKE_PURE);
+
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -109,7 +117,6 @@ void setup() {
   //  init VARIABLES
   drawW = (int) ( TARGETW/colCt  );
 
-drawW *= .69;
 
   //  ROTATE MODE
       switch (MODE) {
@@ -121,16 +128,14 @@ drawW *= .69;
           
           // NOTE : mode 1 can't handle 360/numSides
           // cSides = numSides;  //(int)(120/numSides);
-          // cSides = (int)(120/numSides);
-cSides = (int)(270/numSides);
+          cSides = (int)(160/numSides);
+          // cSides = (int)(270/numSides);
 
           // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
           // numSides = mxNumSides;
         break;
 
         case 2:
-          drawW *= .8;
-
           colSpacingX = drawW*.96;
           colSpacingY = drawW;
  
@@ -254,8 +259,10 @@ println("run(): "+  pool.currentIndex() );
 
             case 2:
                   
-              // if(pool.currentIndex()%2==0)
-              tmpB.depth(drawW).z(drawZ).rotationZ(45*(numSides*pool.currentIndex()));
+              if(pool.currentIndex()%2==0)
+                tmpB.depth(drawW).z(drawZ).rotationZ(15*(numSides*pool.currentIndex()));
+              else
+                tmpB.depth(drawW).z(drawZ).rotationZ(15*-(numSides*pool.currentIndex()));
             break;
 
             case 3:
@@ -278,7 +285,7 @@ println("run(): "+  pool.currentIndex() );
 
   // EF stamp
   String msg = "ERICFICKES.COM";
-  HText lbl = new HText( msg, 24, createFont("Silom", 24) );
+  HText lbl = new HText( msg, 24, createFont("Impact", 24) );
   if(srcImg!=null)
   	sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
   else
@@ -299,11 +306,6 @@ println("run(): "+  pool.currentIndex() );
 
 /* ------------------------------------------------------------------------- */
 void draw() {
-  
-  lights();
-  clear();
-  noStroke();
-
 
   pool.requestAll();
 
@@ -346,13 +348,14 @@ println("no more masking action, just flip the script");
 // line(width/2, 0, width/2, height);
 
 //  TODO : looking to find the perfect numSides
+
+      save( SAVE_NAME+SAVE_TYPE );
+
     if( imgIdx == imgs.length-1 && numSides == mxNumSides){
       doExit();
     } else {
-      save( SAVE_NAME+SAVE_TYPE );
-
       cleanup();
-      
+       
       //  incrementer
       if(numSides < mxNumSides)
         numSides++;
@@ -381,8 +384,6 @@ void cleanup(){
     pool = null;
     hgl = null;
     background(-1);
-
-System.gc();  // helpful?
 }
 
 
@@ -398,10 +399,9 @@ System.gc();  // helpful?
 void doExit(){
 
   save( SAVE_NAME+SAVE_TYPE );    //  USE .TIF IF COLOR  
-  cleanup();
-
 
   noLoop();
+  cleanup();
   exit();
   System.exit(1);
 }
