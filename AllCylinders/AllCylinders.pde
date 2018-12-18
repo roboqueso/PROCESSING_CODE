@@ -10,10 +10,11 @@ AllCylinders - roots from DiamondMode, now with more fixes and ONLY HCylinder
 //	Drawing to PGraphics allows control of output dimension
 
 // BLEND = DEFAULT  so don't bother w/blendMode
-// blendMode(DARKEST);
+// blendMode(DARKEST);  // only the darkest colour succeeds: C = min(A*factor, B)
 // blendMode(EXCLUSION);	//	NOTE: causes a grey cloudy almost real diamond effect
-// blendMode(MULTIPLY);	//	makes things SUPER DARK to BLACK
-// blendMode(REPLACE);	//	"inverts" colors
+// blendMode(MULTIPLY);	//	 multiply the colors, result will always be darker. makes things SUPER DARK to BLACK
+// blendMode(REPLACE);	//	"inverts" colors - REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
+
 
 	// test
 // textureWrap(REPEAT);
@@ -35,12 +36,14 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 
-int MODE = 3; //3; // 1-3
+int MODE =  3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides = 5; // MIN = 3
-int mxNumSides = 9; //7;
+int numSides = 8; // MIN = 3
+int mxNumSides = 11; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 2;
+float sw = 0;
+
+// 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 // String[] imgs = {""}; // used for debug, should give you wireframes
@@ -105,8 +108,9 @@ hint(ENABLE_DEPTH_MASK);
 hint(ENABLE_TEXTURE_MIPMAPS);
 hint(ENABLE_STROKE_PURE);
 
-blendMode(EXCLUSION);  //  NOTE: causes a grey cloudy almost real diamond effect
-
+textureMode(NORMAL);
+// blendMode(EXCLUSION);  //  NOTE: causes a grey cloudy almost real diamond effect
+blendMode(DARKEST);
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -267,9 +271,9 @@ println("run(): "+  pool.currentIndex() );
 
             case 3:
               	if(pool.currentIndex()%2==0)
-                  tmpB.depth(drawW).z(drawZ).rotation((numSides*colCt)*PI);
+                  tmpB.depth(drawW).z(drawZ).rotation((numSides*colCt)*5);
                 else
-                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt)*PI);
+                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt)*5);
             break;
 
             default :
@@ -287,7 +291,7 @@ println("run(): "+  pool.currentIndex() );
   String msg = "ERICFICKES.COM";
   HText lbl = new HText( msg, 24, createFont("Impact", 24) );
   if(srcImg!=null)
-  	sClr = srcImg.get( (int)random(srcImg.width), (int)random(srcImg.height) );
+  	sClr = srcImg.get( (int)srcImg.width/2, (int)srcImg.height/2 );
   else
   	sClr = 0;
 
