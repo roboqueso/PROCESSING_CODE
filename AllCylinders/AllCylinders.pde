@@ -35,7 +35,7 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 
-int MODE = 1; //3; // 1-3
+int MODE = 3; //3; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 int numSides = 5; // MIN = 3
 int mxNumSides = 9; //7;
@@ -44,7 +44,8 @@ float sw = 2;
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 // String[] imgs = {""}; // used for debug, should give you wireframes
-// String[] imgs = { "EVEN_ODD.png" };
+// String[] imgs = { "XYZASST.0041.jpg" };
+
 
 String[] imgs = { 
 "PQRASST.0041.jpg",
@@ -320,7 +321,6 @@ println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +"
     // font bg hack
     image(srcImg,0,0);
 
-println("no more masking action, just flip the script");
 
      // p5 on osx isn't masking????
     tmpImg = get(0,0, TARGETW, TARGETH );
@@ -330,14 +330,14 @@ println("no more masking action, just flip the script");
 
     try{
   		tmpImg.mask(srcImg);
-  		srcImg.mask(tmpImg);  
+  		srcImg.mask(tmpImg);
     } catch(Exception e){
 
       println("MASKER: "+e);
     }
 
-  // FLIP THE SCRIPT
-  translate(TARGETW/2, TARGETH/2, 0);
+    // FLIP THE SCRIPT
+    translate(TARGETW/2, TARGETH/2, 0);
     scale(-1, -1);
     image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
   } 
