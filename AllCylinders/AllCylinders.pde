@@ -36,20 +36,22 @@ import fixlib.*;
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png"; //".tif";1
 
-int MODE =  3; // 1-3
+int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides = 8; // MIN = 3
-int mxNumSides = 11; //7;
+int numSides =  3;  //DEBUG 4; // MIN = 3
+int mxNumSides = 12;  // 12 = Dodecahedron
+float tRad = 1.2;
+float bRad = .4;  //DEBUG 10; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
 float sw = 0;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
-// String[] imgs = {""}; // used for debug, should give you wireframes
-// String[] imgs = { "XYZASST.0041.jpg" };
+// String[] imgs = {"birdbird.jpg"}; // used for debug, should give you wireframes
+String[] imgs = { "bobo", "birdbird.jpg", "wood.jpg", "a10.png",   "a11.png",   "a12.png",    "a13.png",    "a14.png",    "a15.png",    "a16.png",   "a1.png",  "a2.png",  "a3.png",  "a4.png",  "a5.png",  "a6.png",  "a7.png",  "a8.png",  "a9.png"  };
 
-
+/*
 String[] imgs = { 
 "PQRASST.0041.jpg",
 "PQRASST.0031.jpg",
@@ -64,7 +66,7 @@ String[] imgs = {
 "12PTQT.005.JPG",
 "WFNT.0032.jpg"
 };
-
+ */
 
 
 /* ------------------------------------------------------------------------- */
@@ -82,7 +84,7 @@ float colSpacingX,colSpacingY;
 float drawW, gridX, gridY;
 color sClr;
 PImage srcImg, tmpImg;
-
+ 
 //  NOTE: Processing on OSX and PC have different interpretations of dimensions
 int TARGETW = 1600;
 int TARGETH = 1600;
@@ -98,19 +100,24 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
   background(-1);
+  ortho();
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-hint(ENABLE_OPTIMIZED_STROKE);
-hint(ENABLE_STROKE_PERSPECTIVE);
-hint(ENABLE_DEPTH_MASK);
-hint(ENABLE_TEXTURE_MIPMAPS);
-hint(ENABLE_STROKE_PURE);
+//  NOTE: this hint makes a HOT mix action
+hint(DISABLE_DEPTH_TEST);
 
-textureMode(NORMAL);
+
+// BLEND = DEFAULT  so don't bother w/blendMode
+// blendMode(DARKEST);  // only the darkest colour succeeds: C = min(A*factor, B)
 // blendMode(EXCLUSION);  //  NOTE: causes a grey cloudy almost real diamond effect
-blendMode(DARKEST);
+// blendMode(MULTIPLY); //   multiply the colors, result will always be darker. makes things SUPER DARK to BLACK
+// blendMode(REPLACE);  //  "inverts" colors - REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
+
+
+
+
 
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
@@ -125,25 +132,24 @@ blendMode(DARKEST);
   //  ROTATE MODE
       switch (MODE) {
         case 1:
-          // drawW *= .87;
           colSpacingX = drawW;
           colSpacingY = drawW;
-          drawZ = H.CENTER;
           
-          // NOTE : mode 1 can't handle 360/numSides
-          // cSides = numSides;  //(int)(120/numSides);
-          cSides = (int)(160/numSides);
-          // cSides = (int)(270/numSides);
+          drawZ = H.CENTER;
+// 	NOTE : re-run w/ numSides only
+          // cSides = numSides;  //(int)(360/numSides);
+          cSides = (int)(180/numSides);
 
-          // NOTE: mode 1 currently looks the same for ALL numSides, so just MAX it out
-          // numSides = mxNumSides;
         break;
 
-        case 2:
-          colSpacingX = drawW*.96;
-          colSpacingY = drawW;
+        case 2: 
+        
+        drawW *= .55;
+
+          colSpacingX = drawW*1.2 ;
+          colSpacingY = drawW*1.2 ;
  
-          drawZ = TARGETH/TWO_PI;
+          drawZ = TARGETH/PI;
         break;
 
         case 3:
@@ -159,9 +165,13 @@ blendMode(DARKEST);
         break;  
       }
 
-  //  center HGL
-  gridX = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingX)/2) );
-  gridY = (int) ( (TARGETW/2) - (((colCt-1)*colSpacingY)/2) );
+      //  NOTE: HCylinders don't work out like HBoxes
+      //  this value may need to be adjusted
+      //  Calculate HGrid's starting X,Y
+      // gridX = drawW;//(int) ( (TARGETW/2) - (drawW/colCt) );
+      gridX = (int) ( (TARGETW/2) - (((colCt-1)*drawW)/2) );
+      gridY = (int) ( (TARGETW/2) - (((colCt-1)*drawW)/2) );
+
 
   // multi image support : set current image
   SRC_FILE = imgs[imgIdx];
@@ -195,20 +205,16 @@ blendMode(DARKEST);
 
   pool.autoAddToStage();
 
-  //  SLICE IT UP
-println("sides() in DEBUG MODE!!");
-
 
   //  create box to hold slice
   tmpB = new HCylinder();
         tmpB
         	.sides( cSides )
-          .drawBottom(false)
           .drawTop(false)
-          .topRadius(QUARTER_PI)
-          .bottomRadius(sqrt(colCt/PI))
-          .anchorAt(H.CENTER)
-          .width(drawW).height(drawW);
+          .drawBottom(false)
+// RADIUS IN TESTING
+          .topRadius(tRad)
+          .bottomRadius(bRad);
 
   //  drop it in the pool
   pool.add( tmpB );
@@ -225,32 +231,40 @@ println("sides() in DEBUG MODE!!");
           {
             tmpB = (HCylinder) obj;
 
+            //  spicey size
+            tmpB.anchorAt(H.CENTER).depth(drawW).z(drawZ).width( drawW ).height( drawW );
+
 // debug
 println("run(): "+  pool.currentIndex() );
 
       			//	ADD FORMATTING AND PIZAZZ HERE
       			if(srcImg!=null)
       			{
-      				// HACK : .texture() works here NOT above
-              tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)(drawW),  (int)(drawW) );
 
-      				// if(pool.currentIndex()%2==0) tmpImg.filter(INVERT);
 
-        	    tmpB.texture(tmpImg);
+					if(pool.currentIndex()%2==0)
+					{
+						// HACK : .texture() works here NOT above
+						tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
+						tmpB.texture(srcImg);
+					}
+					else
+						//  META : Use HYPE's PGraphics as texture
+						tmpB.texture( H.app().g );
 
-              if(sw >0 )
-              {
-                //  Grab color from the current tmpImg
-                sClr = tmpImg.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
-                //  stroke it
-                tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
-              }
+		              if(sw >0 )
+		              {
+		                //  Grab color from the current tmpImg
+		                sClr = H.app().g.get( (int) random(tmpImg.width/2), (int)random(tmpImg.height/2) );
+		                //  stroke it
+		                tmpB.strokeSides(true).strokeWeight(sw).stroke( sClr );
+		              }
       			}
       			else
       			{
-              sClr = 0;
-              //  stroke it
-              tmpB.strokeSides(sw>0).strokeWeight(sw).stroke( sClr );
+	              sClr = 0;
+	              //  stroke it
+	              tmpB.texture( H.app().g ).strokeSides(sw>0).strokeWeight(sw).stroke( sClr );
       			}
 
 
@@ -258,22 +272,31 @@ println("run(): "+  pool.currentIndex() );
           //  ROTATE MODE
           switch (MODE) {
             case 1:
-              	tmpB.depth(drawW).z(drawZ).rotationX(90).rotationY(90*(numSides*pool.currentIndex()));
+             // if(pool.currentIndex()%2==0)
+             //    tmpB.rotation( 135  ).rotationY(45);
+             //  else
+             //    tmpB.rotation( -45  ).rotationY(-45);
+             if(pool.currentIndex()%2==0)
+                tmpB.rotation( 125  ).rotationY(35*pool.currentIndex());
+              else
+                tmpB.rotation( -45  ).rotationY(-35*pool.currentIndex());
+
             break;
 
             case 2:
-                  
-              if(pool.currentIndex()%2==0)
-                tmpB.depth(drawW).z(drawZ).rotationZ(15*(numSides*pool.currentIndex()));
-              else
-                tmpB.depth(drawW).z(drawZ).rotationZ(15*-(numSides*pool.currentIndex()));
+
+              // if(pool.currentIndex()%2==0)
+              //   tmpB.rotationX(45).rotationY(15*(numSides*pool.currentIndex()));
+              // else
+              //   tmpB.rotationX(-45).rotationY(-15*(numSides*pool.currentIndex()));
+
             break;
 
             case 3:
-              	if(pool.currentIndex()%2==0)
-                  tmpB.depth(drawW).z(drawZ).rotation((numSides*colCt)*5);
-                else
-                  tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt)*5);
+              	// if(pool.currentIndex()%2==0)
+               //    tmpB.depth(drawW).z(drawZ).rotation((numSides*colCt)*8);
+               //  else
+               //    tmpB.depth(drawW).z(drawZ).rotation(-(numSides*colCt)*8);
             break;
 
             default :
@@ -290,17 +313,19 @@ println("run(): "+  pool.currentIndex() );
   // EF stamp
   String msg = "ERICFICKES.COM";
   HText lbl = new HText( msg, 24, createFont("Impact", 24) );
-  if(srcImg!=null)
+  if(srcImg!=null){
   	sClr = srcImg.get( (int)srcImg.width/2, (int)srcImg.height/2 );
+  }
   else
   	sClr = 0;
 
     //  LEFT
     // lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
 	  //  CENTERED
-	  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), drawW+drawZ );
+	  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), TARGETH );
 
   H.add(lbl);
+
 
 }
 
@@ -311,40 +336,41 @@ println("run(): "+  pool.currentIndex() );
 /* ------------------------------------------------------------------------- */
 void draw() {
 
+  if(srcImg!=null){
+    srcImg.filter(POSTERIZE, cSides);
+
+     // p5 on osx isn't masking????
+    tmpImg = srcImg.get(0,0, TARGETW, TARGETH );
+    tmpImg.resize( TARGETW, TARGETH );
+    srcImg.resize( TARGETW, TARGETH );
+
+
+    image(tmpImg,0,0, TARGETW, TARGETH/2);
+    // FLIP THE SCRIPT
+    translate(TARGETW/2, TARGETH/2, H.CENTER );
+    scale(-1, -1);
+    image(tmpImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH/2);
+  } 
+
+  //  flip source image and set as background before HYPE draws
+  H.backgroundImg(get());
+
+
+  translate(width/2, width/2, drawZ);
+
   pool.requestAll();
 
 // debug
 println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +" : "+ numSides +" : "+ mxNumSides );
 
+  lights();
+  camera();
   ortho();
+
+
+
   H.drawStage();
 
-
-  if(srcImg!=null){
-    //  NOTE: if image() isn't dropped here, font background is color, not image()
-    // font bg hack
-    image(srcImg,0,0);
-
-
-     // p5 on osx isn't masking????
-    tmpImg = get(0,0, TARGETW, TARGETH );
-    tmpImg.resize( TARGETW, TARGETH );
-    tmpImg.filter(GRAY);
-    tmpImg.filter(INVERT);
-
-    try{
-  		tmpImg.mask(srcImg);
-  		srcImg.mask(tmpImg);
-    } catch(Exception e){
-
-      println("MASKER: "+e);
-    }
-
-    // FLIP THE SCRIPT
-    translate(TARGETW/2, TARGETH/2, 0);
-    scale(-1, -1);
-    image(srcImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH);
-  } 
 
 //debug
 // stroke(#EF2018);
@@ -374,11 +400,14 @@ println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +"
 
 }
 
+/* ------------------------------------------------------------------------- */
 //  GC HELPER
 void cleanup(){
-      //  MAKING ART WITH GARBAGE
-    H.clearStage();
+    //  MAKING ART WITH GARBAGE
     pool.drain();
+    H.background(-1);
+    H.backgroundImg(null);
+    H.clearStage();
     clear();
     tmpB = null;
     srcImg = null;
