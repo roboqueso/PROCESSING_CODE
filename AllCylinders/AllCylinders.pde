@@ -38,35 +38,97 @@ String SAVE_TYPE = ".png"; //".tif";1
 
 int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides =  3;  //DEBUG 4; // MIN = 3
+int numSides =  4;  //DEBUG 4; // MIN = 3
 int mxNumSides = 12;  // 12 = Dodecahedron
-float tRad = 1.1;
-float bRad = .69;  //DEBUG 10; //7;
+float tRad = 1.2;
+float bRad = .96;  //DEBUG 10; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0.0;
+float sw = 2;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 // String[] imgs = {"birdbird.jpg"}; // used for debug, should give you wireframes
-String[] imgs = { "bobo", "birdbird.jpg", "wood.jpg", "a10.png",   "a11.png",   "a12.png",    "a13.png",    "a14.png",    "a15.png",    "a16.png",   "a1.png",  "a2.png",  "a3.png",  "a4.png",  "a5.png",  "a6.png",  "a7.png",  "a8.png",  "a9.png"  };
 
-/*
 String[] imgs = { 
-"PQRASST.0041.jpg",
-"PQRASST.0031.jpg",
-"PQRASST.0061.jpg",
-"A100ASST.0101.jpg",
-"XYZASST.0041.jpg",
-"PQRASST.0123.jpg",
-"VWXLQTZ.0162.jpg",
-"A100ASST.0081.jpg",
-"A100ASST.0111.jpg",
-"12PTQT.004.JPG",
-"12PTQT.005.JPG",
-"WFNT.0032.jpg"
-};
- */
+"f2.png",
+"f3.png",
+"f4.png",
+"f5.png",
+"f6.png",
+"f7.png",
+"f8.png",
+"f9.png",
+"f10.png",
+"f11.png",
+"f12.png",
+"f13.png",
+"f14.png",
+"f15.png",
+"f16.png",
+"f17.png",
+"f18.png",
+"f19.png",
+"f20.png",
+"f21.png",
+"f22.png",
+"f23.png",
+"f24.png",
+"f25.png",
+"f26.png",
+"f27.png",
+"f28.png",
+"f29.png",
+"f30.png",
+"f31.png",
+"f32.png",
+"f33.png",
+"f34.png",
+"f35.png",
+"f36.png",
+"f37.png",
+"f38.png",
+"f39.png",
+"f40.png",
+"f41.png",
+"f42.png",
+"f43.png",
+"f44.png",
+"f45.png",
+"f46.png",
+"f47.png",
+"f48.png",
+"f49.png",
+"f50.png",
+"f51.png",
+"f52.png",
+"f53.png",
+"f54.png",
+"f55.png",
+"f56.png",
+"f57.png",
+"f58.png",
+"f59.png",
+"f60.png",
+"f61.png",
+"f62.png",
+"f63.png",
+"f64.png",
+"f65.png",
+"f66.png",
+"f67.png",
+"f68.png",
+"f69.png",
+"f70.png",
+"f71.png",
+"f72.png",
+"f73.png",
+"f1.png",
+"birdbird.jpg",
+"wood.jpg"
+
+  };
+
 
 
 /* ------------------------------------------------------------------------- */
@@ -100,27 +162,12 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
   background(-1);
-  ortho();
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
-//  NOTE: this hint makes a HOT mix action
-// hint(DISABLE_DEPTH_TEST);
-
-
-// BLEND = DEFAULT  so don't bother w/blendMode
-// blendMode(DARKEST);  // only the darkest colour succeeds: C = min(A*factor, B)
-// blendMode(EXCLUSION);  //  NOTE: causes a grey cloudy almost real diamond effect
-// blendMode(MULTIPLY); //   multiply the colors, result will always be darker. makes things SUPER DARK to BLACK
-// blendMode(REPLACE);  //  "inverts" colors - REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
-
-
-
-
-
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(-1).use3D(true).autoClear(true);
 
   //  be safe
   if(colCt<2)colCt=2;
@@ -137,8 +184,8 @@ void setup() {
           
           drawZ = H.CENTER;
 // 	NOTE : re-run w/ numSides only
-          cSides = numSides;  //(int)(360/numSides);
-          // cSides = (int)(180/numSides);
+          // cSides = numSides;  //(int)(360/numSides);
+          cSides = (int)(270/numSides);
 
         break;
 
@@ -184,7 +231,7 @@ void setup() {
       srcImg = loadImage(SRC_FILE);
       srcImg.resize(TARGETW, TARGETH);
 
-H.add( new HImage(srcImg) );
+
 
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
@@ -194,8 +241,27 @@ H.add( new HImage(srcImg) );
   } else {
     //  If srcImg doesn't load, hard code strokeWeight so you still see output
     sw=(sw==0)?HALF_PI:sw;
+    srcImg = get();
   }
 
+
+  // EF stamp
+  String msg = "ERICFICKES.COM";
+  HText lbl = new HText( msg, 24, createFont("Impact", 24) );
+  if(srcImg!=null){
+  	sClr = srcImg.get( (int)srcImg.width/2, (int)srcImg.height/2 );
+  }
+  else
+  	sClr = 0;
+
+    //  LEFT
+    // lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
+	  //  CENTERED
+	  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), TARGETH );
+
+
+H.add( new HImage(srcImg) );
+H.add(lbl);
 
     pool = new HDrawablePool(colCt*colCt);
  
@@ -205,7 +271,7 @@ H.add( new HImage(srcImg) );
       .startLoc(gridX, gridY) 
       .spacing( colSpacingX, colSpacingY, drawZ  );
 
-  pool.autoAddToStage();
+  
 
 
   //  create box to hold slice
@@ -216,9 +282,8 @@ H.add( new HImage(srcImg) );
           .drawBottom(false)
 // RADIUS IN TESTING
           .topRadius(tRad)
-          .bottomRadius(bRad);
-
-          if(srcImg!=null) tmpB.texture(srcImg);
+          .bottomRadius(bRad)
+          .texture( H.app().g );
 
   //  drop it in the pool
   pool.add( tmpB );
@@ -229,6 +294,7 @@ H.add( new HImage(srcImg) );
 
   pool
     .layout ( hgl )
+    .autoAddToStage()
     .onCreate(
       new HCallback() {
           public void run(Object obj) 
@@ -246,15 +312,16 @@ println("run(): "+  pool.currentIndex() );
       			{
 
 
-					// if(pool.currentIndex()%colCt==0)
-					// {
-					// 	// HACK : .texture() works here NOT above
-					// 	tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
-					// 	tmpB.texture(srcImg);
-					// }
-					// else
-						//  META : Use HYPE's PGraphics as texture
-						tmpB.texture( H.app().g );
+// if(pool.currentIndex() < (pool.count()/2) ){
+// 	// HACK : .texture() works here NOT above
+// 	tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
+// 	tmpB.texture( tmpImg );
+// } else {
+	//  META : Use HYPE's PGraphics as texture
+	//tmpB.texture( H.app().g );	
+// }
+
+						
 
 		              if(sw >0 )
 		              {
@@ -314,21 +381,6 @@ println("run(): "+  pool.currentIndex() );
   );
 
 
-  // EF stamp
-  String msg = "ERICFICKES.COM";
-  HText lbl = new HText( msg, 24, createFont("Impact", 24) );
-  if(srcImg!=null){
-  	sClr = srcImg.get( (int)srcImg.width/2, (int)srcImg.height/2 );
-  }
-  else
-  	sClr = 0;
-
-    //  LEFT
-    // lbl.fill(sClr).anchorAt(H.LEFT).loc( colCt, TARGETH-textAscent(), drawW+drawZ );
-	  //  CENTERED
-	  lbl.fill(sClr).anchorAt(H.CENTER).loc( (TARGETW/2), TARGETH-textAscent(), TARGETH );
-
-  H.add(lbl);
 
 
 }
@@ -339,6 +391,8 @@ println("run(): "+  pool.currentIndex() );
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+
+sphereDetail(numSides);
 
   if(srcImg!=null){
     srcImg.filter(POSTERIZE, cSides);
@@ -356,16 +410,22 @@ void draw() {
     image(tmpImg,-TARGETW/2, -TARGETH/2, TARGETW, TARGETH/2);
   } 
 
+  translate(width/2, width/2, drawZ);
+
+
   //  flip source image and set as background before HYPE draws
   H.backgroundImg(get());
 
 
-  translate(width/2, width/2, drawZ);
 
-  pool.requestAll();
+
+  pool.shuffleRequestAll();
 
 // debug
 println("H.drawStage()! " + SRC_FILE + " : " + imgIdx +" : "+ (imgs.length-1) +" : "+ numSides +" : "+ mxNumSides );
+
+
+
 
   lights();
   camera();
