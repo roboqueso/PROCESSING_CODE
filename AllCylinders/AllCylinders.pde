@@ -40,10 +40,10 @@ int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 int numSides =  3;  //DEBUG 4; // MIN = 3
 int mxNumSides = 12;  // 12 = Dodecahedron
-float tRad = 1.2;
-float bRad = .4;  //DEBUG 10; //7;
+float tRad = 1.1;
+float bRad = .69;  //DEBUG 10; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 0;
+float sw = 0.0;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
@@ -106,7 +106,7 @@ void setup() {
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
 
 //  NOTE: this hint makes a HOT mix action
-hint(DISABLE_DEPTH_TEST);
+// hint(DISABLE_DEPTH_TEST);
 
 
 // BLEND = DEFAULT  so don't bother w/blendMode
@@ -120,7 +120,7 @@ hint(DISABLE_DEPTH_TEST);
 
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true).autoClear(true);
+  H.init(this).background(-1).use3D(true);
 
   //  be safe
   if(colCt<2)colCt=2;
@@ -137,8 +137,8 @@ hint(DISABLE_DEPTH_TEST);
           
           drawZ = H.CENTER;
 // 	NOTE : re-run w/ numSides only
-          // cSides = numSides;  //(int)(360/numSides);
-          cSides = (int)(180/numSides);
+          cSides = numSides;  //(int)(360/numSides);
+          // cSides = (int)(180/numSides);
 
         break;
 
@@ -184,6 +184,8 @@ hint(DISABLE_DEPTH_TEST);
       srcImg = loadImage(SRC_FILE);
       srcImg.resize(TARGETW, TARGETH);
 
+H.add( new HImage(srcImg) );
+
     } catch( Exception e){
       // be safe in case SRC_FILE doens't load
       println("LOADER: "+e);
@@ -216,6 +218,8 @@ hint(DISABLE_DEPTH_TEST);
           .topRadius(tRad)
           .bottomRadius(bRad);
 
+          if(srcImg!=null) tmpB.texture(srcImg);
+
   //  drop it in the pool
   pool.add( tmpB );
 
@@ -242,13 +246,13 @@ println("run(): "+  pool.currentIndex() );
       			{
 
 
-					if(pool.currentIndex()%2==0)
-					{
-						// HACK : .texture() works here NOT above
-						tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
-						tmpB.texture(srcImg);
-					}
-					else
+					// if(pool.currentIndex()%colCt==0)
+					// {
+					// 	// HACK : .texture() works here NOT above
+					// 	tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
+					// 	tmpB.texture(srcImg);
+					// }
+					// else
 						//  META : Use HYPE's PGraphics as texture
 						tmpB.texture( H.app().g );
 
