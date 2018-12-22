@@ -38,12 +38,12 @@ String SAVE_TYPE = ".png"; //".tif";1
 
 int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides =  4;  //DEBUG 4; // MIN = 3
+int numSides =  12;  //DEBUG 4; // MIN = 3
 int mxNumSides = 12;  // 12 = Dodecahedron
-float tRad = 1.2;
-float bRad = .96;  //DEBUG 10; //7;
+float tRad = 1.6;
+float bRad = .24;  //DEBUG 10; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 2;
+float sw = PI;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
@@ -165,7 +165,7 @@ void setup() {
 
   // these hints fix HCylinder.noFill()
   if(fixNoFill)hint(ENABLE_DEPTH_SORT);
-
+hint(DISABLE_DEPTH_TEST);
   //  init HYPE
   H.init(this).background(-1).use3D(true).autoClear(true);
 
@@ -306,6 +306,7 @@ H.add(lbl);
 
 // debug
 println("run(): "+  pool.currentIndex() );
+tmpB.texture( get() );
 
       			//	ADD FORMATTING AND PIZAZZ HERE
       			if(srcImg!=null)
@@ -315,7 +316,7 @@ println("run(): "+  pool.currentIndex() );
 // if(pool.currentIndex() < (pool.count()/2) ){
 // 	// HACK : .texture() works here NOT above
 // 	tmpImg = srcImg.get( (int)tmpB.x(),  (int)tmpB.y(),  (int)drawW,  (int)drawW );
-// 	tmpB.texture( tmpImg );
+
 // } else {
 	//  META : Use HYPE's PGraphics as texture
 	//tmpB.texture( H.app().g );	
@@ -348,9 +349,9 @@ println("run(): "+  pool.currentIndex() );
              //  else
              //    tmpB.rotation( -45  ).rotationY(-45);
              if(pool.currentIndex()%2==0)
-                tmpB.rotation( 125  ).rotationY(35*pool.currentIndex());
+                tmpB.rotation( pool.currentIndex()*125  ).rotationY(35*pool.currentIndex());
               else
-                tmpB.rotation( -45  ).rotationY(-35*pool.currentIndex());
+                tmpB.rotation( -pool.currentIndex()* 45  ).rotationY(-35*pool.currentIndex());
 
             break;
 
