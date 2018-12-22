@@ -40,10 +40,10 @@ int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
 int numSides =  12;  //DEBUG 4; // MIN = 3
 int mxNumSides = 12;  // 12 = Dodecahedron
-float tRad = 1.6;
-float bRad = .24;  //DEBUG 10; //7;
+float tRad = .86;
+float bRad = .16;  //DEBUG 10; //7;
 int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = PI;
+float sw = 4;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
@@ -185,7 +185,7 @@ hint(DISABLE_DEPTH_TEST);
           drawZ = H.CENTER;
 // 	NOTE : re-run w/ numSides only
           // cSides = numSides;  //(int)(360/numSides);
-          cSides = (int)(270/numSides);
+          cSides = (int)(180/numSides);
 
         break;
 
