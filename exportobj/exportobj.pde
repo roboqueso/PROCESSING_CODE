@@ -1,76 +1,62 @@
-import processing.opengl.*;
-import processing.dxf.*;
-// https://github.com/ericfickes/FIXLIB  
-import fixlib.*;
+import nervoussystem.obj.*;
 
-PShape s;
-int numFrames = 4;
-int childCt;
+int colCt = 4;
+int maxCt = 16;
 
-Fixlib fix = Fixlib.init(this);
 
+
+
+
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    //  For best results, change size() to match dimensions of mainImgFile
+    size( 1600, 1600, P3D);
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+
+/* ------------------------------------------------------------------------- */
 void setup() {
-  background(-1);
-  size(640, 480, P3D);
-  // The file "bot.obj" must be in the data folder
-  // of the current sketch to load successfully
-  // s = loadShape("export.obj");
+	background(-1);
+	strokeWeight(PI);
+	noFill();
 
-  // childCt = s.getChildCount();
-
-  strokeWeight(PI);
+  beginRecord("nervoussystem.obj.OBJExport", this+""+colCt+".obj");
 }
 
 
+
+
+/* ------------------------------------------------------------------------- */
 void draw() {
-
-	smooth();
-	lights();
-
-	if( frameCount == 1 ){
-	  beginRaw( DXF, fix.pdeName() +".dxf" );
-	}
+ 
+	stroke(random(255));
 
 
-	pushMatrix();
-		translate( random(width/2), random(height/2), frameCount);
+  // lights();
+  // camera();
+  // ortho();
 
-		rotateX(frameCount);
-		rotateY(frameCount);
-		rotateZ(frameCount);
-		
-		beginShape(POLYGON);
-			// shape(s, 0, 0);
+// translate(width/2, height/2, colCt );
+// pushMatrix();
 
-			// box(200);
-			sphereDetail(frameCount*3,frameCount*3);
-			sphere(frameCount*24);
-/*
-// loop through kids
-for( int cc = 0; cc < childCt; cc++){
 
-  stroke(random(255));
+	sphereDetail(colCt);
+	sphere( (colCt*240) );
 
-  for (int i = 0; i < s.getChild(cc).getVertexCount(); i++) {
-      PVector v = s.getChild(cc).getVertex(i);
-      // v.x += random(-1, 1);
-      // v.y += random(-1, 1);
-      // s.setVertex(i, v);
-      vertex( v.x, v.y, v.z );
-  
-    }
-}
-*/
-		endShape(CLOSE);
+// popMatrix();
 
-	popMatrix();
+  if(colCt > maxCt ){
+  save(this+ "-" + colCt +".png");
+  endRecord();
 
-	if(frameCount==numFrames){
-	    endRaw();
+    noLoop();
+    exit();
+  } else {
+    
+    colCt++;
+    // setup();
+  }
 
-	    save( fix.pdeName()+".png");
-
-	    noLoop();
-	    exit();
-	}
 }
