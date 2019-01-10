@@ -1,7 +1,7 @@
 import nervoussystem.obj.*;
 
-int colCt = 4;
-int maxCt = 16;
+int colCt = 8;
+int maxCt = 11;
 
 
 
@@ -19,8 +19,7 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 void setup() {
 	background(-1);
-	strokeWeight(PI);
-	noFill();
+
 
   beginRecord("nervoussystem.obj.OBJExport", this+""+colCt+".obj");
 }
@@ -30,22 +29,22 @@ void setup() {
 
 /* ------------------------------------------------------------------------- */
 void draw() {
- 
-	stroke(random(255));
-
-
-  // lights();
-  // camera();
-  // ortho();
-
 // translate(width/2, height/2, colCt );
 // pushMatrix();
 
 
-	sphereDetail(colCt);
-	sphere( (colCt*240) );
+//  MARBLE : run lowDetail middle
+//        : highDetail outer
 
-// popMatrix();
+
+  sphereDetail(360); //  outer marble
+  sphere( width/3 );
+  
+  //  3,5,8,13,21,34,55,89,144
+  // sphereDetail( (int)sqrt(144), 144); //  inner marble
+ //  sphereDetail( 3, (int)sqrt(3) ); //  inner marble
+	// sphere( width/9 );
+
 
   if(colCt > maxCt ){
   save(this+ "-" + colCt +".png");
