@@ -36,6 +36,8 @@ void draw() {
 //  MARBLE : run lowDetail middle
 //        : highDetail outer
 
+//  The default resolution is 30, vertices every 360/30 = 12 degrees.
+
 
   sphereDetail(360); //  outer marble
   sphere( width/3 );

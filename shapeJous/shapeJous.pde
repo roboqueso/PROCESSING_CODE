@@ -1,3 +1,5 @@
+import fixlib.*;
+
 int cX;
 int cY;
 
@@ -7,6 +9,7 @@ float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
 float w = 33;
+Fixlib fix = Fixlib.init(this);
 
 
 void keyPressed(){
@@ -96,6 +99,7 @@ void draw() {
   shape( shapeJous( xx, yy, 21 ) );
    
   if( yy > height ) {
+    save(this+".png");
     exit();
   }
   
