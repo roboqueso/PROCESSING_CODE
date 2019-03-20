@@ -38,7 +38,7 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 //	HUNDIES1.obj - HUNDIES27.obj in ../FIXOBJ_DATA/ ( processing root )
 
-String OBJ_NAME = "WavyObj31320191481153_18.obj";
+String OBJ_NAME = "gnarball86_43.obj";
 // String OBJ_NAME = "HUNDIES1.obj";
 // String OBJ_NAME = "HUNDIES2.obj";
 // String OBJ_NAME = "HUNDIES3.obj";
@@ -80,7 +80,7 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(0x242424);
+  background(0x090909);
   hint(ENABLE_OPTIMIZED_STROKE);
   hint(ENABLE_STROKE_PERSPECTIVE);
   hint(ENABLE_TEXTURE_MIPMAPS);
@@ -90,9 +90,9 @@ void setup()
 
 
 s1 = loadShape( DATA_PATH+OBJ_NAME );
-s1.scale(.50);
+s1.scale(.020);
 s2 = loadShape( DATA_PATH+OBJ_NAME );
-s2.scale(.25);
+s2.scale(.009);
 
 
 }
@@ -106,12 +106,16 @@ void draw() {
   camera();
 
   //	LEFT to RIGHT
-  translate( xx, height/2, 0);
-  // pushMatrix();
-	// rotate(ry);
-	rotateX(ry*.09);
-	rotateY(ry);
-	rotateZ(ry*.43);
+  translate( xx, (height/2 ) + (TWO_PI*noise(frameCount)*random(-.69, .69)) , 0);
+
+	// rotateX(ry*.09);
+	// rotateY(ry*noise(frameCount));
+	// rotateZ(ry*.43);
+
+	rotateX(ry*random(.24, .43));
+	rotateY(ry*TWO_PI);
+	// rotateZ(ry*.69+noise(frameCount));
+	rotateZ(frameCount%360 + (ry*.69+noise(frameCount)) );
 
 	s1.disableStyle();
 	s1.noStroke();
@@ -120,16 +124,36 @@ void draw() {
 	//	RED-ISH
 	// fill( (102+frameCount)%202, frameCount%69, 50+ry );
 
-//St.Patrick's GREEN?
+	//St.Patrick's GREEN?
 	// fill( ry, frameCount%43, frameCount%69 );
 
 	//	tealium
 	// fill( frameCount%75, random(frameCount, frameCount%43), random(frameCount, frameCount%24) );
 
-	fill(frameCount%45);
+	//	earth tones
+	// fill( frameCount%90, frameCount%69, frameCount%43 );
+
+	//	B&W
+	// fill(frameCount%255);
+
+	//	redish / purple
+	fill( 24+(frameCount%75)%255, 9, 24);
+
+
+	//	REDISH?
+	// fill( (43+frameCount%90)%180, frameCount%24, (frameCount%18) );
+
+
+	//	DEEP PURPLE
+	// fill( frameCount%69, frameCount%9, frameCount%69 );
+
+
 	shape(s1);
 
-  ry += 0.03;
+  // ry += 0.024;
+  // ry += 0.043;
+  // ry += 0.43;
+  ry += random(.024, .69 );
 
 
 //	CENTER SPINNER
@@ -138,14 +162,17 @@ void draw() {
 
 translate( width/2, height/2, 300);
 
-// rotate(ry);
-rotateX(ry*.5);
-rotateY(ry);
-rotateZ(ry*2);
+// rotateX(ry*.75);
+// rotateY(ry);
+// rotateZ(ry*PI);
+
+rotateX(ry*.09);
+rotateY(ry*.24);
+rotateZ(ry*.75);
 
 s2.disableStyle();
 s2.noStroke();
-fill( random(245, 255) );
+fill( random(250, 256) );
 shape(s2);
 
 
@@ -157,7 +184,7 @@ shape(s2);
   	exit();
   } else {
 
-	xx+=2;
+	xx+= TWO_PI;
 
   }
 } //<>//
