@@ -31,6 +31,7 @@ Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
 // int frameMod = getRad;  //8;  // % frameCount to control how many shapes get laid down
 int ss = 0;  //  shape index
 int xx = 0;
+int cX, cY;
 
 String SAVE_TYPE = ".TIF";	// ".TIF" -> for final print
 
@@ -38,7 +39,7 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 //	HUNDIES1.obj - HUNDIES27.obj in ../FIXOBJ_DATA/ ( processing root )
 
-String OBJ_NAME = "gnarball86_43.obj";
+String OBJ_NAME = "threeNine.obj";
 // String OBJ_NAME = "HUNDIES1.obj";
 // String OBJ_NAME = "HUNDIES2.obj";
 // String OBJ_NAME = "HUNDIES3.obj";
@@ -75,6 +76,7 @@ void  settings ()  {
     size(2000, 1000, P3D); // FX2D can't load OBJs?
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
+
 }
 
 /*****************************************************************************/
@@ -87,13 +89,15 @@ void setup()
   hint(ENABLE_STROKE_PURE);
   // these hints fix HCylinder.noFill()
   hint(ENABLE_DEPTH_SORT);
-
+	noStroke();
 
 s1 = loadShape( DATA_PATH+OBJ_NAME );
-s1.scale(.020);
+s1.scale( .6);
 s2 = loadShape( DATA_PATH+OBJ_NAME );
-s2.scale(.009);
+s2.scale( .2 );
 
+cX = (int)width/2;
+cY = (int)height/2;
 
 }
 
@@ -106,19 +110,19 @@ void draw() {
   camera();
 
   //	LEFT to RIGHT
-  translate( xx, (height/2 ) + (TWO_PI*noise(frameCount)*random(-.69, .69)) , 0);
+  translate( xx, (height/2 ) + (TWO_PI*noise(frameCount)*random(-.69, .69)) , -420 );
 
 	// rotateX(ry*.09);
 	// rotateY(ry*noise(frameCount));
 	// rotateZ(ry*.43);
 
-	rotateX(ry*random(.24, .43));
+	rotateX(ry*.43);
 	rotateY(ry*TWO_PI);
-	// rotateZ(ry*.69+noise(frameCount));
-	rotateZ(frameCount%360 + (ry*.69+noise(frameCount)) );
+	rotateZ(ry*.69+noise(frameCount));
+	// rotateZ(frameCount%360 + (ry*.69+noise(frameCount)) );
 
 	s1.disableStyle();
-	s1.noStroke();
+	//s1.noStroke();
 	
 	
 	//	RED-ISH
@@ -136,8 +140,14 @@ void draw() {
 	//	B&W
 	// fill(frameCount%255);
 
+	//	brownish
+	fill( frameCount%255, 9, frameCount%255);
+	ambientLight( frameCount%255, 9, frameCount%255);
+	ambientLight( frameCount%255, 9, frameCount%255);
+
+
 	//	redish / purple
-	fill( 24+(frameCount%75)%255, 9, 24);
+	// fill( 24+(frameCount%75)%255, 9, 24);
 
 
 	//	REDISH?
@@ -147,38 +157,25 @@ void draw() {
 	//	DEEP PURPLE
 	// fill( frameCount%69, frameCount%9, frameCount%69 );
 
+	//	purps / greens
+	// fill( frameCount%75, frameCount%43, frameCount%75 );
 
 	shape(s1);
 
   // ry += 0.024;
   // ry += 0.043;
-  // ry += 0.43;
-  ry += random(.024, .69 );
+  ry += 0.43;
+  // ry += .69;
 
 
 //	CENTER SPINNER
-  lights();
-  camera();
-
-translate( width/2, height/2, 300);
-
-// rotateX(ry*.75);
-// rotateY(ry);
-// rotateZ(ry*PI);
-
-rotateX(ry*.09);
-rotateY(ry*.24);
-rotateZ(ry*.75);
-
-s2.disableStyle();
-s2.noStroke();
-fill( random(250, 256) );
-shape(s2);
-
+	fill( frameCount%255,  frameCount%255,  frameCount%255 );
+	ambient( 255,  255,  255 );
+	ambientLight( 255,  255,  255 );
+	lightSpecular(255, 255, 255);
+	centerSpinner();
 
   if(xx > width){
-
-
 
   	save(fix.pdeName()+'_'+OBJ_NAME+'_'+fix.getTimestamp()+SAVE_TYPE);
   	exit();
@@ -188,3 +185,25 @@ shape(s2);
 
   }
 } //<>//
+
+
+void centerSpinner(){
+	// lights();
+	// camera();
+
+	translate( width/2, height/2, 420);
+
+	rotateX(ry*.15);
+	rotateY(ry*.30);
+	rotateZ(ry*.45);
+
+
+	// s2.disableStyle();
+	specular(0,0,255);
+    shininess(10.0);
+    ambient(255,0,0);
+    emissive(255,0,0);
+
+	shape(s2);
+
+}
