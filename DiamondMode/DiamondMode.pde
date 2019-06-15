@@ -144,10 +144,21 @@ import fixlib.*;
 /* ------------------------------------------------------------------------- */
 String SAVE_NAME = "thisShouldBeDynamic"; //  MC HAMMER
 String SAVE_TYPE = ".png";  //".tif";
-int MODE = 2;
-String SRC_FILE = "gs8.png";	//	o2.png
-int colCt = 8;	//	MIN 2
-float sw = 2;
+int MODE = 1;
+// String SRC_FILE = "bb1.png";	//	o2.png
+// String SRC_FILE = "bb2.png";	//	o2.png
+// String SRC_FILE = "bb3.png";	//	o2.png
+// String SRC_FILE = "bb4.png";	//	o2.png
+// String SRC_FILE = "bb5.png";	//	o2.png
+// String SRC_FILE = "bb6.png";	//	o2.png
+// String SRC_FILE = "bb7.png";	//	o2.png
+// String SRC_FILE = "bb8.png";	//	o2.png
+// String SRC_FILE = "bb9.png";	//	o2.png
+// String SRC_FILE = "bb10.png";	//	o2.png
+// String SRC_FILE = "bb11.png";	//	o2.png
+String SRC_FILE = "bb12.png";	//	o2.png
+int colCt = 9;	//	MIN 2
+float sw = 1;
 /* ------------------------------------------------------------------------- */
 
 float drawZ;

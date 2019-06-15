@@ -39,7 +39,11 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 //	HUNDIES1.obj - HUNDIES27.obj in ../FIXOBJ_DATA/ ( processing root )
 
-String OBJ_NAME = "threeNine.obj";
+// String OBJ_NAME = "NuObj-9s1.obj";
+// String OBJ_NAME = "NuObj-9s2.obj";
+String OBJ_NAME = "NuObj-24s1s2s3.obj";
+
+
 // String OBJ_NAME = "HUNDIES1.obj";
 // String OBJ_NAME = "HUNDIES2.obj";
 // String OBJ_NAME = "HUNDIES3.obj";
