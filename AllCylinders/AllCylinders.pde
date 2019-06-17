@@ -38,12 +38,12 @@ String SAVE_TYPE = ".png"; //".tif";1
 
 int MODE =  1; // 1-3
 String SRC_FILE;  // image names get pulled from imgs
-int numSides =  12;  //DEBUG 4; // MIN = 3
+int numSides =  9;  //DEBUG 4; // MIN = 3
 int mxNumSides = 12;  // 12 = Dodecahedron
 float tRad = .86;
 float bRad = .16;  //DEBUG 10; //7;
-int colCt = 8;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
-float sw = 4;
+int colCt = 9;  //  HCylinder NOTE : only follow curated from mode1 engine sizes > 5, 6, 8, 10
+float sw = 1;
 
 // 0 DARKEST - see who survives, "Sorry for the DARKEST"
 
@@ -51,81 +51,7 @@ float sw = 4;
 // String[] imgs = {"birdbird.jpg"}; // used for debug, should give you wireframes
 
 String[] imgs = { 
-"f2.png",
-"f3.png",
-"f4.png",
-"f5.png",
-"f6.png",
-"f7.png",
-"f8.png",
-"f9.png",
-"f10.png",
-"f11.png",
-"f12.png",
-"f13.png",
-"f14.png",
-"f15.png",
-"f16.png",
-"f17.png",
-"f18.png",
-"f19.png",
-"f20.png",
-"f21.png",
-"f22.png",
-"f23.png",
-"f24.png",
-"f25.png",
-"f26.png",
-"f27.png",
-"f28.png",
-"f29.png",
-"f30.png",
-"f31.png",
-"f32.png",
-"f33.png",
-"f34.png",
-"f35.png",
-"f36.png",
-"f37.png",
-"f38.png",
-"f39.png",
-"f40.png",
-"f41.png",
-"f42.png",
-"f43.png",
-"f44.png",
-"f45.png",
-"f46.png",
-"f47.png",
-"f48.png",
-"f49.png",
-"f50.png",
-"f51.png",
-"f52.png",
-"f53.png",
-"f54.png",
-"f55.png",
-"f56.png",
-"f57.png",
-"f58.png",
-"f59.png",
-"f60.png",
-"f61.png",
-"f62.png",
-"f63.png",
-"f64.png",
-"f65.png",
-"f66.png",
-"f67.png",
-"f68.png",
-"f69.png",
-"f70.png",
-"f71.png",
-"f72.png",
-"f73.png",
-"f1.png",
-"birdbird.jpg",
-"wood.jpg"
+"ColorNoiseGroundmaker-54_2019-Jun-01_11-25-55PM-000_CustomizedView17981511041_png.png"
 
   };
 

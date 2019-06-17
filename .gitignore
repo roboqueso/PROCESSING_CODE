@@ -5,3 +5,6 @@ _allmodelsP5/*
 *.png
 *.jpg
 *.tif
+*.obj
+*.hdr
+*.mtl
