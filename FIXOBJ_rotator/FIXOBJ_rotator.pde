@@ -40,7 +40,7 @@ PVector v;
 // String MODEL_PATH = "";  String MODEL_NAME = "RoShape-15s1.obj";
 // String MODEL_PATH = "";  String MODEL_NAME = "RoShape-16s1.obj";
 // String MODEL_PATH = "";  String MODEL_NAME = "RoShape-17s1.obj";
-String MODEL_PATH = "";  String MODEL_NAME = "RoShape-18s1.obj";
+String MODEL_PATH = "";  String MODEL_NAME = "JuiceBoxJuiceBox@5a729583.obj";
 
 // String MODEL_PATH = "../_allmodelsP5/210882136/";  String MODEL_NAME = "pos_big_booth_1455.obj";
 // String MODEL_PATH = "../_allmodelsP5/212779556/";  String MODEL_NAME = "pos_store_shelves_1441.obj";

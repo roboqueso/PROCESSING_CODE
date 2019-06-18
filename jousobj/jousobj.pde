@@ -42,7 +42,7 @@ void setup() {
 void draw() {
   
   
-translate( xx, yy, w);
+// translate( xx, yy, w);
   
   //if(record) {
     //X3DExport x3d = (X3DExport) createGraphics(10,10,"nervoussystem.obj.X3DExport","colored.x3d");
@@ -66,7 +66,7 @@ translate( xx, yy, w);
   
   t++;
 
-  if( xx > width ) {
+  if( xx > height ) {
     xx = -(w/2);
     yy += w*2;
   } else {

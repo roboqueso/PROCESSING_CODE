@@ -46,7 +46,7 @@ void setup() {
   cX = int( this.width / 2 );
   cY = int( this.height / 2 );
 
-  maxAngle = width * 3;
+  maxAngle = cY;//width * 3;
 
   startX1 = startX2 = startX3 = startX4 = cX;
   startY1 = startY2 = startY3 = startY4 = cY;
