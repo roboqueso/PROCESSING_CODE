@@ -1,7 +1,7 @@
-// import hype.*;
-// import hype.extended.layout.HGridLayout;
-// import hype.extended.behavior.HRotate;
-// import hype.extended.behavior.HOscillator;
+ import hype.*;
+ import hype.extended.layout.HGridLayout;
+ import hype.extended.behavior.HRotate;
+ import hype.extended.behavior.HOscillator;
 
 import nervoussystem.obj.*;
 
@@ -9,8 +9,8 @@ import nervoussystem.obj.*;
 HDrawablePool pool;
 HGridLayout hgl;
 int      boxSize;
-int colCt = 4;
-int maxCt = 16;
+int colCt = 2;
+int maxCt = 4;
 
 
 float colSpacing;

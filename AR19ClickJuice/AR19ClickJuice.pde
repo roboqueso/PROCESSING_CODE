@@ -1,283 +1,371 @@
 import nervoussystem.obj.*;
 import fixlib.*;
-
+Fixlib fix = Fixlib.init(this);
 /*
-Make "SPHERE" based OBJ shapes
-- Birds eye view looks eyeball-ish
+AR2019 seed incubator sketch
+
+seed: NEW shapeJuan shape generator for stamp shapes
+
+* amp : ideal sizes TBD
+* inc :  only work with 9, 10, 12 and 20 as the lisaJous incrementor value
+
 */
 
-Fixlib fix = Fixlib.init(this);
+    int cX, cY;
+    int ct = 0, w = 81;    //51;
+    // int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
+    int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
+    int colCt = 4;
+    PShape tmp = new PShape();
 
-float cX, cY;
-PShape nshp;
+    int shapeX, shapeY;
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // size to match image
-  size(900,900, P3D);
-
-  //  -------------------------------------------
-  smooth();
-  noFill();
-
-  cX = int( this.width / 2 );
-  cY = int( this.height / 2 );
-  
-  strokeWeight(TWO_PI);
-
-}
+    //  TODO: is there a smarter way to "get relative" when saving PNGs from a running PApplet?
+    String OUT_TYPE = ".png";   // ".tif";
+    String PNG_OUT = "";
+String msg = "ericfickes.com";
 
 
-////////////////////////////////////////////////////
-//
-void draw()
-{
-    // sphereDetail(24);
-    PShape sp = createShape( SPHERE, width );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public  void  settings ()  {
+        // size(612, 460, P3D);
+        size(1836, 1380, P3D);
+        smooth(8);
+        pixelDensity(displayDensity());
+        sketchSmooth();
+    }
 
-  OBJExport obj = (OBJExport) createGraphics( width, height, "nervoussystem.obj.OBJExport", fix.pdeName()+this+".obj");
-  obj.beginDraw();
 
-    obj.translate(cX, cY);
-    obj.beginShape(TRIANGLE_STRIP);
-    obj.stroke(0);
-    obj.noFill();
-    obj.setColor(false);
-    
-    for( int pp = 0; pp < sp.getVertexCount()-1; pp++ ){
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public  void  setup ()  {
 
-        PVector vv = sp.getVertex(pp);
-        
-        if(pp%2==0){
-            obj.vertex( vv.x, vv.y, vv.z );
-            obj.vertex( vv.x, vv.y+pp, vv.z );
-            obj.vertex( vv.x, vv.y-pp, vv.z );
+        setupStage();
+
+        //  setup variables
+        cX = width/2;
+        cY = height/2;
+
+        w = (int)(height/colCt);
+
+        ct = cts[0];
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public  void  draw ()  {
+        background(255);
+        stroke(0);
+        noFill();
+
+        shapeX = mouseX;
+        shapeY = mouseY;
+
+        tmp = shapeJuan(shapeX, shapeY, w, ct); 
+
+// translate(w, w, w);
+
+        //  SHAPE1
+        for(int rr = 0; rr < colCt; rr++ ){
+            for(int cc = 0; cc < colCt; cc++ ){
+                shape(tmp, w*cc, w*rr);
+                //shape(tmp, (width/cc)*cc, (height/rr)*cc, w, w);
+
+            }
+        }
+
+        //  OR
+        /*
+            translate(width/rr, height/cc, frameCount);
+            beginShape();
+
+                // FILL YOURSELF
+                texture( get(shapeX, shapeY , w, w+rr+cc) );
+
+                for(int vv = 0; vv < tmp.getVertexCount(); vv++ )
+                {
+                    PVector vect = tmp.getVertex(vv);
+
+                    vertex( vect.x, vect.y, vect.z, vect.y, vect.x );
+                }
+            endShape(CLOSE);
+
+        */
             
-            obj.vertex( vv.x, -vv.y+pp, vv.z );
-            obj.vertex( vv.x, -vv.y-pp, vv.z );
+
+    /*
+            //  SHAPE2  - G
+            beginShape();
+
+                stroke(frameCount%240);
+
+                // FILL YOURSELF
+                texture( get(xx,yy,width, w+ct) );
+
+                for(int vv = 0; vv < tmp.getVertexCount(); vv++ )
+                {
+                    PVector vect = tmp.getVertex(vv);
+
+                    vertex( vect.x, vect.y, vect.z, vect.y, vect.x );
+                }
+            endShape(CLOSE);
+
+
+            //  SHAPE3
+            //  do the FredV
+            pushMatrix();
+
+                // stroke(frameCount%240);
+
+                translate(xx, yy, w);
+                scale(random(.6f,4.2f));
+                rotate(tmp.getVertexCount());
+
+                shape(tmp);
+            popMatrix();
+    */
+
+
+         
+      ////  stamp bottom right based on textSize
+      fill(#EFEFEF);
+      textSize(75);
+      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+      //  OG BOTTOM RIGHT STAMP
+      //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
+      //  NEW RIGHT VERTICAL STAMP
+      textAlign(CENTER,BOTTOM);
+      pushMatrix();
+        translate(width-TWO_PI, cY);
+        rotate(-HALF_PI);
+        text(msg,0,0);
+      popMatrix();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void mouseClicked() {
+        
+        println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")");
+        
+      ////  stamp bottom right based on textSize
+      fill(0);
+      textSize(75);
+      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+      //  OG BOTTOM RIGHT STAMP
+      //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
+      //  NEW RIGHT VERTICAL STAMP
+      textAlign(CENTER,BOTTOM);
+      pushMatrix();
+        translate(width-TWO_PI, cY);
+        rotate(-HALF_PI);
+        text(msg,0,0);
+      popMatrix();
+
+        savePng();
+
+        System.gc();
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void keyPressed(){
+
+        switch(keyCode){
+
+            case ESC:{
+                doExit();
+            }
+            break;
+
+            //  GET A NEW INCREMENTOR
+            case 'i':
+            case 'I':
+            {
+                ct = cts[(int)random(cts.length)];
+
+            }
+
+            case 's':
+            case 'S':
+            {
+                savePng();
+            }
+            break;
         }
 
     }
 
-    obj.endShape(CLOSE);
 
-
-    obj.endDraw();
-    obj.dispose();
-
-
-
-    // save(this+".png");
-    exit();
-
- 
-}
-
-
-
-//////////////////////////
-int f0 = 0;
-int f1 = 1;
-//int f2 = 1;
-
-int nextFib( int f2)
-{
-  //   int result = f2;
-  f0 = f1;
-  f1 = f2;
-  f2 = f0 + f1;
-
-  return f0 + f1;
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-  noFill();
-  
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 3 == 0 ) {
-
-    xx = startX - int( cos(radians(angle)) * w );
-    yy = startY - int( sin(radians(angle)) * w );
-
-
-    ellipse( xx, yy, w, h );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * exit function
+     */
+    private void doExit(){
+        noLoop();
+        System.gc();
+        exit();
     }
-    angle++;
-  }
-}
 
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * SAVE PNG helper
+     */
+    void savePng(){
+        save(  PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + OUT_TYPE);
     }
-    angle++;
-  }
-}
 
 
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void dotCircle( float startX, float startY, float w, float h, float modAngle ) {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Helper function to clear stage
+     */
+    private void setupStage() {
 
-  float angle = 0;
-  float xx, yy;
+        //  reset stage
+        background(-1);
 
-  while ( angle < 360 ) {
+        strokeCap(ROUND);
+        strokeJoin(ROUND);
+        strokeWeight(TWO_PI);
 
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
+        noFill();
 
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      point( xx, yy );
     }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-
-
-
-
-///////////////////////////////////////////////////////////
-//  
-//  End handler, saves png to ../OUTPUT
-void doExit() 
-{
-  
-  artDaily("ERICFICKES.COM");
-
-  save( fix.pdeName() + fix.getTimestamp() + ".png" );
-  
-
-  super.stop();
-}
 
 
 
 
 
-///////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  STILL NORMING
+     * @param a X
+     * @param b Y
+     * @param amp "amplitude"
+     * @param inc incrementor, "slicer of the max point count : typically 360/inc"
+     * @return PShape
+     */
+    private PShape shapeJuan( float a, float b, float amp, int inc )
+    {
+        //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
+        //  Ideal range is someplace between 1 and 36
+        if( ( inc < 1 ) || ( inc > 36 ) ) {
+            inc = 1;
+        }
+
+        PShape shp = createShape();
+        shp.beginShape();
+
+        float x, y;
+
+        for ( int t = 0; t <= 90; t+=inc)  //  180 instead of 360?
+        {
+            //  NEW HOTNESS!
+            // x = a - amp * cos((a * t * TWO_PI)/360);
+            // y = b - amp * sin((b * t * TWO_PI)/360);
+            x = a - amp * cos((a * t * TWO_PI)/180);
+            y = b - amp * sin((b * t * TWO_PI)/180);
+
+            //  TODO: test all logics below and remove what's not usable
+
+
+//            double dt = Math.PI / 180;
+//            int w = getWidth() / 2;
+//            int h = getHeight() / 2;
+//            path.reset();
+//            path.moveTo(w, h);
+//            for (double t = 0; t < 2 * Math.PI; t += dt) {
+//                double x = w * Math.sin(5 * t) + w;
+//                double y = h * Math.sin(4 * t) + h;
+//                path.lineTo(x, y);
+//            }
+
+//function f(t) =
+//[   cos(nx t + px) ,
+//    cos(ny t + py),
+//    cos(nz t + pz) vz
+//];
 //
-//  Spit out ART DAILY message
-void artDaily( String dailyMsg ) {
-
-  PFont font = createFont( "Silom", 18 );
-
-  smooth();
-  textFont( font );
-  strokeWeight(1);
-
-//  fill( #000000 , 666 );
-  fill(#EFEFEF );
-  text( " "+dailyMsg, this.width-225, this.height-15);
-  
-//  fill( #003600 , 666 );
-  fill(0 );
-  text( " "+dailyMsg, this.width-226, this.height-16);
-}
+//            where
+//                    nx=3;
+//                    ny=2;
+//                    nz=7;
+//
+//            px=10; // by experiment
+//            py=35;
+//            pz=0;
+//
+//            vz=0.25; // vary to change height
 
 
-///////////////////////////////////////////////////////////
-//  draws circle from supplied x, y
-void drawCore( int XX, int YY, int maxSize ) {
+//            a parametrized Lissajous curve defines as
+//            y=sin(mt),
+//            x=cos(nt)
 
-  float r = 1;  // 75;
-  float theta = 2;
 
-  int alf = 10;
-  float x;
-  float y;
+//            cos(nt+τk)=cos(t)
+//            cos(mt+τk)=cos(t)
 
-  smooth();
-  strokeWeight(.13);
 
-  while ( theta <= maxSize )
-  {    
-    x = (PI*r) * cos(theta);
-    y = (PI*r) * sin(theta);
+//            A Lissajous curve with frequencies p,qp,q and phase cc is given by the parametrization
+//            x(t)=cos(p t + c )
+//            y(t)=cos(q t ).
 
-    if (x%2==0)stroke(255, alf);
-    else if (x%3==0) stroke(255, 0, 0, alf);
-    else stroke( 109, 109, 109, alf);
 
-    ellipse( int(XX+x), int(YY+y), x, x );
+//            X=r cos u cos2t−sin2 t cos t(1+rsinu);
+//            Y=r cos u sin2t+cos2 t cos t(1+rsinu);
+//            Z=s int(1+r sin u )Z=sin⁡t(1+rsin⁡u),
 
-    heart( int(YY+y), int(XX+x), int(y), int(y) );
 
-    theta+= 0.25;
 
-    if ( frameCount%2==0) {
-      r++;
-      theta+=.5;
+            //  MATT BERNHARDT
+            //  https://www.openprocessing.org/sketch/57613#
+
+
+            //  Z mods INC
+            shp.vertex(x, y, t%inc);
+        }
+        shp.endShape();
+
+        return shp;
     }
-  }
-}
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Lissajous PShape maker
+     * @param a     X coordinate
+     * @param b     Y coordinate
+     * @param amp   Amplitude or size
+     * @param inc   Loop magic incrementer [ 1 - 36 supported ]. (360 / inc) = number of points in returned PShape
+     * @return  PShape containing vertices in the shape of a lissajous pattern
+     */
+    private PShape shapeJous( float a, float b, float amp, int inc )
+    {
+        //  PROTOTYPING : trying to locate universal ideal INCrementor for lisajouss loop
+        //  Ideal range is someplace between 1 and 36
+        if( ( inc < 1 ) || ( inc > 36 ) ) {
+            inc = 1;
+        }
 
+        PShape shp = createShape();
+        shp.beginShape();
 
-///////////////////////////////////////////////////////////
-//  
-//  draw heart
-void heart( int x, int y, int w, int h ) 
-{
-  ellipseMode(RADIUS);
-  smooth();
+        float x, y;
 
-  //  stroke(#EF7519, alf);  // 37
-  stroke(#EF1111);  // 37
+        for ( int t = 0; t <= 360; t+=inc)
+        {
+            x = a - amp * sin((a * t * PI)/180);
+            y = b - amp * sin((b * t * PI)/180);
 
-  strokeWeight(2);
-  //  noFill();
+            //  Z mods INC
+            shp.vertex(x, y, t%inc);
+        }
+        shp.endShape();
 
-  //  bubbles
-  ellipse( x-w, y, w, w);
-  ellipse( x+w, y, w, w);
-  //  ellipseMode(MODE)
-  //  MODE  Either CENTER, RADIUS, CORNER, or CORNERS
-
-
-  //  lines 
-  line( x-(w*2), y, x, y + w*PI);
-  line( x+(w*2), y, x, y + w*PI);
-}
+        return shp;
+    }
