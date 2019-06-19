@@ -1,15 +1,16 @@
-import nervoussystem.obj.*;
+// import nervoussystem.obj.*;
+import processing.dxf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-// import processing.dxf.*;
 
+boolean record;
 /*
-AR2019 seed incubator sketch
 
-seed: NEW shapeJuan shape generator for stamp shapes
+a. FIGURE OUT export to DXF
+* DXF NOT WORKING
 
-* amp : ideal sizes TBD
-* inc :  only work with 9, 10, 12 and 20 as the lisaJous incrementor value
+b. merge back to AR19_DeckStamp
+
 
 */
 
@@ -57,6 +58,12 @@ seed: NEW shapeJuan shape generator for stamp shapes
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  draw ()  {
+
+      if (record) {
+        beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
+      }
+      
+      
         background(#EFEFEF);
         noFill();
 
@@ -65,34 +72,24 @@ seed: NEW shapeJuan shape generator for stamp shapes
         shapeY = mouseY%460;
         inc = cts[ct];
 
-stroke(0);
-strokeWeight(81);
-drawRingShallow();
-//  FATTY
-tmp = shapeJuan(shapeX, shapeY, w, ct); 
-shape(tmp, cX, cY);
+        stroke(0);
+        strokeWeight(81);
+        drawRingShallow();
+        //  FATTY
+        tmp = shapeJuan(shapeX, shapeY, w, ct); 
+        shape(tmp, cX, cY);
 
-stroke(255);
-strokeWeight(9);
-drawRingDeep();
-//  thin
-cShp = shapeJuan(shapeX, shapeY, w, ct);
-shape(cShp, cX, cY);
+        stroke(255);
+        strokeWeight(9);
+        drawRingDeep();
+        //  thin
+        cShp = shapeJuan(shapeX, shapeY, w, ct);
+        shape(cShp, cX, cY);
 
-/*
-
-        //  NEW RIGHT VERTICAL STAMP
-        pushMatrix();
-            textAlign(CENTER,BOTTOM);
-            fill(180);
-            textSize(75);
-            msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
-
-            translate(width-TWO_PI, cY);
-            rotate(-HALF_PI);
-            text(msg,0,0);
-        popMatrix();
-*/
+if (record) {
+    println("RECORDING");
+    doStampAndSave();
+}
 
     }
 
@@ -136,7 +133,8 @@ shape(cShp, cX, cY);
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void mouseClicked() {
+    void doStampAndSave(){
+
         msg = "~FJD/AR19_" + shapeX +"."+ shapeY +"."+ w +"."+ ct;
         println( msg );
 
@@ -153,9 +151,21 @@ shape(cShp, cX, cY);
         text(msg,0,0);
       popMatrix();
 
-        savePng();
+        //  end dxf
+        endRaw();
+        record = false;
 
+        savePng();
         System.gc();
+  }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void mouseClicked() {
+
+        // doStampAndSave();
+        record = !record;
     }
 
 
@@ -176,6 +186,13 @@ shape(cShp, cX, cY);
             case 'I':
             {
                 ct = (ct+1)%cts.length;
+            }
+            break;
+
+            case 'r':
+            case 'R':
+            {
+                // record = !record;
             }
             break;
 
