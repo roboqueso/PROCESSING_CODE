@@ -36,7 +36,8 @@ int ct = 0;
 int w = 81;    //51;
 int inc;
 // int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
-int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
+// int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
+int[] cts = { 4, 6, 9, 11, 13, 18, 20, 24, 35 };  // instead of sequential, only stick to approved incrementors
 PShape tmp = new PShape();
 int shapeX, shapeY;
 
@@ -201,8 +202,8 @@ void draw() {
             case 'I':
             {
                 ct = (ct+1)%cts.length;
-
             }
+            break;
 
             case 's':
             case 'S':
