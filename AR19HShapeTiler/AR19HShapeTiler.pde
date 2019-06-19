@@ -32,7 +32,9 @@ int rowCt = colCt;  //  NOTE: remember to update this value
 int colSpacing = 0;
 int drawW, drawH; //  HDrawable Width / Height
 int cX, cY;
-int ct = 0, w = 81;    //51;
+int ct = 0;
+int w = 81;    //51;
+int inc;
 // int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
 int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
 PShape tmp = new PShape();
@@ -67,12 +69,11 @@ void setup() {
   cY = (int) height/2;
 
   //  init HYPE
-  H.init(this).use3D(false);
+  H.init(this).use3D(true);
 
   hs = new HShape();
   hgl = new HGridLayout()
       .startLoc(gridX, gridY)
-      //.spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
       .spacing( drawW+colSpacing, drawH+colSpacing )
       .cols(colCt);
 
@@ -86,15 +87,24 @@ void setup() {
     .onCreate (
     new HCallback() {
     public void run(Object obj) {
-
+println( "idx : " + pool.currentIndex() );
       //  DO STUFF HERE
       HDrawable d = (HDrawable) obj;
       d
         .noFill()
+        .strokeWeight(TWO_PI)
         .size( drawW, drawH )
         //.scale(.9)
         //.anchorAt(H.CENTER)
         ;
+        
+        
+      if( pool.currentIndex() == 1 || pool.currentIndex() == 3 )
+      {
+        d.scale(-1,-1);
+        d.rotateX(-180);
+      }
+        
     }
   }
   );
@@ -109,10 +119,12 @@ void draw() {
 
   noFill();
   strokeWeight(TWO_PI);
-  shapeX = mouseX;
-  shapeY = mouseY;
+  shapeX = mouseX%612;
+  shapeY = mouseY%460;
+  inc = cts[ct];
 
-  tmp = shapeJuan( shapeX, shapeY, drawW, ct );
+
+  tmp = shapeJuan( shapeX, shapeY, drawW, inc );
   hs.shape(tmp);
 
   pool.requestAll();
@@ -127,7 +139,7 @@ void draw() {
       ////  stamp bottom right based on textSize
       fill(180);
       textSize(75);
-      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
       //  OG BOTTOM RIGHT STAMP
       //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
       //  NEW RIGHT VERTICAL STAMP
@@ -149,12 +161,12 @@ void draw() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
         
-        println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")");
+        println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")");
         
       ////  stamp bottom right based on textSize
       fill(0);
       textSize(75);
-      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
       //  OG BOTTOM RIGHT STAMP
       //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
       //  NEW RIGHT VERTICAL STAMP
@@ -187,7 +199,7 @@ void draw() {
             case 'i':
             case 'I':
             {
-                ct = cts[(int)random(cts.length)];
+                ct = (ct+1)%cts.length;
 
             }
 
