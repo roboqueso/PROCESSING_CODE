@@ -1,6 +1,8 @@
 import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+// import processing.dxf.*;
+
 /*
 AR2019 seed incubator sketch
 
@@ -13,10 +15,11 @@ seed: NEW shapeJuan shape generator for stamp shapes
 
     int cX, cY;
     int ct = 0, w = 81;    //51;
-    // int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
+    int inc;
     int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
     int colCt = 1;
     PShape tmp = new PShape();
+    PShape cShp = new PShape();
     int shapeX, shapeY;
 
 
@@ -48,22 +51,27 @@ seed: NEW shapeJuan shape generator for stamp shapes
 
         w = (int)(cY/colCt);
 
-        ct = cts[0];
+        inc = cts[ct];
+
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  draw ()  {
-        background(255);
+        background(255,45);
         noFill();
 
-        shapeX = mouseX+0;
-        shapeY = mouseY+0;
+      // NOTE: deck w/h
+      shapeX = mouseX%612;
+      shapeY = mouseY%460;
 
         tmp = shapeJuan(shapeX, shapeY, w, ct); 
-        // translate(0,0,1);
+        cShp = shapeJuan(shapeX, shapeY, w, ct); 
         //  SHAPE1
+
+// doCircle(cShp);
+
         for(int rr = 0; rr < colCt; rr++ ){
             for(int cc = 0; cc < colCt; cc++ ){
 
@@ -71,7 +79,15 @@ seed: NEW shapeJuan shape generator for stamp shapes
                 //   fill(#EF1975);
                 //   stroke(#EF1975);
                 translate(cX, cY, 1);
+   
+                stroke(11);
+                strokeWeight(44);
                 shape(tmp, w*cc, w*rr);
+                
+                stroke(random(255));
+                strokeWeight(TWO_PI);
+                shape(cShp, w*cc, w*rr);
+
                 //   // shape(tmp, 0,0);
                 // }
                 // else
@@ -83,9 +99,9 @@ seed: NEW shapeJuan shape generator for stamp shapes
         }
          
       ////  stamp bottom right based on textSize
-      fill(#EFEFEF);
+      fill(180);
       textSize(75);
-      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
       //  OG BOTTOM RIGHT STAMP
       //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
       //  NEW RIGHT VERTICAL STAMP
@@ -97,11 +113,38 @@ seed: NEW shapeJuan shape generator for stamp shapes
       popMatrix();
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    void doCircle( PShape cs ){
+
+println("hi: "+cs);
+
+        for(int aa = 1; aa < 361; aa++){
+            PVector pt = fix.circleXY( cX, cY, 44, aa );
+            
+            pushMatrix();
+            translate(pt.x, pt.y, pt.z);
+                // rotateX(aa);
+                
+stroke(random(255));
+                // cs.scale(.1);
+
+                shape(cs);
+
+            popMatrix();
+        }
+        // endRaw();
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
-        
+        // beginRaw(DXF, "output.dxf");
         println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")");
         
+        // cShp = shapeJuan(shapeX, shapeY, w, ct); 
+        // doCircle( cShp );
+
+
       ////  stamp bottom right based on textSize
       fill(0);
       textSize(75);
@@ -138,7 +181,7 @@ seed: NEW shapeJuan shape generator for stamp shapes
             case 'i':
             case 'I':
             {
-                ct = cts[(int)random(cts.length)];
+                ct = (ct+1)%cts.length;
 
             }
 
@@ -189,8 +232,6 @@ seed: NEW shapeJuan shape generator for stamp shapes
         noFill();
 
     }
-
-
 
 
 

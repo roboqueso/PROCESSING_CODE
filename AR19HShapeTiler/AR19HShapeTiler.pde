@@ -119,6 +119,7 @@ void draw() {
 
   noFill();
   strokeWeight(TWO_PI);
+  // NOTE: deck w/h
   shapeX = mouseX%612;
   shapeY = mouseY%460;
   inc = cts[ct];
