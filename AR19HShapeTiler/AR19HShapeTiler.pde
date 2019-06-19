@@ -1,89 +1,131 @@
-import nervoussystem.obj.*;
-import fixlib.*;
-Fixlib fix = Fixlib.init(this);
 /*
-AR2019 seed incubator sketch
+ALPHA  : square one starting point P5/HYPE template sketch
+ * BLOOD-DRAGON : 1920 x 1071
+ * size(displayWidth, displayHeight, P3D)
+ * HDR w, h is 2x1 EX: 2048, 1024
+ 
+ if(color)
+ GO TIFF
+ TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
+ else
+ PNG
+ 
+ 
+ */
 
-seed: NEW shapeJuan shape generator for stamp shapes
+import hype.*;
+import hype.extended.behavior.*;
+import hype.extended.colorist.*;
+import hype.extended.layout.*;
+import hype.interfaces.*;
+import fixlib.*;
 
-* amp : ideal sizes TBD
-* inc :  only work with 9, 10, 12 and 20 as the lisaJous incrementor value
+/* ------------------------------------------------------------------------- */
+Fixlib fix = Fixlib.init(this);
+HDrawablePool pool;
+HShape hs;
+HGridLayout hgl;
 
-*/
-
-    int cX, cY;
-    int ct = 0, w = 81;    //51;
-    // int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
-    int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
-    int colCt = 1;
-    PShape tmp = new PShape();
-    int shapeX, shapeY;
-
-
-    //  TODO: is there a smarter way to "get relative" when saving PNGs from a running PApplet?
-    String OUT_TYPE = ".png";   // ".tif";
-    String PNG_OUT = "";
-    String msg = "ericfickes.com";
+int gridX, gridY;
+int colCt = 2;
+int rowCt = colCt;  //  NOTE: remember to update this value
+int colSpacing = 0;
+int drawW, drawH; //  HDrawable Width / Height
+int cX, cY;
+int ct = 0, w = 81;    //51;
+// int[] cts = { 9, 10, 12, 20 };  // instead of sequential, only stick to approved incrementors
+int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
+PShape tmp = new PShape();
+int shapeX, shapeY;
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public  void  settings ()  {
-        // size(612, 460, P3D);
-        size(1836, 1380, P3D);
-        smooth(8);
-        pixelDensity(displayDensity());
-        sketchSmooth();
+//  TODO: is there a smarter way to "get relative" when saving PNGs from a running PApplet?
+String OUT_TYPE = ".png";   // ".tif";
+String PNG_OUT = "";
+String msg = "ericfickes.com";
+
+/* ------------------------------------------------------------------------- */
+
+void  settings () {
+    // size(612, 460, P3D);
+    size(1836, 1380, P3D);
+    smooth(8);
+    pixelDensity(displayDensity());
+    sketchSmooth();
+}
+
+/* ------------------------------------------------------------------------- */
+
+void setup() {
+
+  //  init VARIABLES
+  drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
+  drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
+  gridX = (int)( drawW/2-colSpacing);
+  gridY = (int)( drawH/2-colSpacing);
+  cX = (int) width/2;
+  cY = (int) height/2;
+
+  //  init HYPE
+  H.init(this).use3D(false);
+
+  hs = new HShape();
+  hgl = new HGridLayout()
+      .startLoc(gridX, gridY)
+      //.spacing( drawW+colSpacing, drawH+colSpacing, colSpacing )
+      .spacing( drawW+colSpacing, drawH+colSpacing )
+      .cols(colCt);
+
+    pool = new HDrawablePool(colCt*rowCt);
+    pool.autoAddToStage()
+
+    .add ( hs )
+
+    .layout ( hgl )
+
+    .onCreate (
+    new HCallback() {
+    public void run(Object obj) {
+
+      //  DO STUFF HERE
+      HDrawable d = (HDrawable) obj;
+      d
+        .noFill()
+        .size( drawW, drawH )
+        //.scale(.9)
+        //.anchorAt(H.CENTER)
+        ;
     }
+  }
+  );
+}
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public  void  setup ()  {
-
-        setupStage();
-
-        //  setup variables
-        cX = width/2;
-        cY = height/2;
-
-        w = (int)(cY/colCt);
-
-        ct = cts[0];
-    }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public  void  draw ()  {
-        background(255);
-        noFill();
 
-        shapeX = mouseX+0;
-        shapeY = mouseY+0;
+/* ------------------------------------------------------------------------- */
+void draw() {
 
-        tmp = shapeJuan(shapeX, shapeY, w, ct); 
-        // translate(0,0,1);
-        //  SHAPE1
-        for(int rr = 0; rr < colCt; rr++ ){
-            for(int cc = 0; cc < colCt; cc++ ){
+  noFill();
+  strokeWeight(TWO_PI);
+  shapeX = mouseX;
+  shapeY = mouseY;
 
-                // if(rr==0 && cc == 0){
-                //   fill(#EF1975);
-                //   stroke(#EF1975);
-                translate(cX, cY, 1);
-                shape(tmp, w*cc, w*rr);
-                //   // shape(tmp, 0,0);
-                // }
-                // else
-                //   stroke(0);
-// shape(createShape(SPHERE, w), w*cc, w*rr);
-                
+  tmp = shapeJuan( shapeX, shapeY, drawW, ct );
+  hs.shape(tmp);
 
-            }
-        }
-         
+  pool.requestAll();
+  H.drawStage();
+
+  pool.drain();
+  pool.add(hs);
+  hgl.resetIndex();
+
+
+
       ////  stamp bottom right based on textSize
-      fill(#EFEFEF);
+      fill(180);
       textSize(75);
       msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
       //  OG BOTTOM RIGHT STAMP
@@ -95,7 +137,14 @@ seed: NEW shapeJuan shape generator for stamp shapes
         rotate(-HALF_PI);
         text(msg,0,0);
       popMatrix();
-    }
+
+
+
+}
+
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
