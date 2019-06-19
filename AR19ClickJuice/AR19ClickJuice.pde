@@ -105,28 +105,6 @@ seed: NEW shapeJuan shape generator for stamp shapes
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    void doCircle( PShape cs ){
-
-println("hi: "+cs);
-
-        for(int aa = 1; aa < 361; aa++){
-            PVector pt = fix.circleXY( cX, cY, 44, aa );
-            
-            pushMatrix();
-            translate(pt.x, pt.y, pt.z);
-                // rotateX(aa);
-                
-stroke(random(255));
-                // cs.scale(.1);
-
-                shape(cs);
-
-            popMatrix();
-        }
-        // endRaw();
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
         // beginRaw(DXF, "output.dxf");
