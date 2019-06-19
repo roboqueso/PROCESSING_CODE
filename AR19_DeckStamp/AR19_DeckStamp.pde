@@ -43,7 +43,6 @@ seed: NEW shapeJuan shape generator for stamp shapes
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public  void  setup ()  {
-
         setupStage();
 
         //  setup variables
@@ -51,9 +50,7 @@ seed: NEW shapeJuan shape generator for stamp shapes
         cY = height/2;
 
         w = (int)(cY/colCt)-81;
-
-        
-
+        ct = 0;
     }
 
 
@@ -140,20 +137,18 @@ shape(cShp, cX, cY);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
-        // beginRaw(DXF, "output.dxf");
-        println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")");
+        msg = "~FJD/AR19_" + shapeX +"."+ shapeY +"."+ w +"."+ ct;
+        println( msg );
 
       pushMatrix();
-          ////  stamp bottom right based on textSize
-          fill(0);
-          textSize(75);
-          msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
-          //  OG BOTTOM RIGHT STAMP
-          //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
-          //  NEW RIGHT VERTICAL STAMP
-          textAlign(CENTER,BOTTOM);
+        ////  stamp bottom right based on textSize
+        fill(0);
+        textSize(44);
 
-        translate(width-TWO_PI, cY);
+        //  OG BOTTOM RIGHT STAMP
+        textAlign(CENTER,BOTTOM);
+
+        translate(width-24, cY);
         rotate(-HALF_PI);
         text(msg,0,0);
       popMatrix();
