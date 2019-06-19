@@ -16,7 +16,7 @@ seed: NEW shapeJuan shape generator for stamp shapes
     int cX, cY;
     int ct = 0, w = 81;    //51;
     int inc;
-    int[] cts = { 5, 6, 7, 9, 11, 13, 18, 20, 34, 30 };  // instead of sequential, only stick to approved incrementors
+    int[] cts = { 4, 6, 9, 11, 13, 18, 20, 24, 35 };  // instead of sequential, only stick to approved incrementors
     int colCt = 1;
     PShape tmp = new PShape();
     PShape cShp = new PShape();
@@ -51,7 +51,7 @@ seed: NEW shapeJuan shape generator for stamp shapes
 
         w = (int)(cY/colCt);
 
-        inc = cts[ct];
+        
 
     }
 
@@ -59,58 +59,49 @@ seed: NEW shapeJuan shape generator for stamp shapes
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  draw ()  {
-        background(255,45);
+        background(-1);
         noFill();
 
-      // NOTE: deck w/h
-      shapeX = mouseX%612;
-      shapeY = mouseY%460;
+        // NOTE: deck w/h
+        shapeX = mouseX%612;
+        shapeY = mouseY%460;
+        inc = cts[ct];
 
-        tmp = shapeJuan(shapeX, shapeY, w, ct); 
+        //  NOTE: keep the thin one HERE
+        //  thin
         cShp = shapeJuan(shapeX, shapeY, w, ct); 
-        //  SHAPE1
+        pushMatrix();
+            translate(cX, cY);//, 42);
+            noFill();
+            stroke(random(254,256), 9, 18);
+            strokeWeight(9);
+            shape(cShp);
+        popMatrix();
 
-// doCircle(cShp);
+        //  FATTY
+        tmp = shapeJuan(shapeX, shapeY, w, ct); 
+        pushMatrix();
+            translate(cX, cY);//, -TWO_PI);
+            noFill();
+            stroke(0);
+            strokeWeight(100);
+            shape(tmp);
+        popMatrix();
 
-        for(int rr = 0; rr < colCt; rr++ ){
-            for(int cc = 0; cc < colCt; cc++ ){
 
-                // if(rr==0 && cc == 0){
-                //   fill(#EF1975);
-                //   stroke(#EF1975);
-                translate(cX, cY, 1);
-   
-                stroke(11);
-                strokeWeight(44);
-                shape(tmp, w*cc, w*rr);
-                
-                stroke(random(255));
-                strokeWeight(TWO_PI);
-                shape(cShp, w*cc, w*rr);
 
-                //   // shape(tmp, 0,0);
-                // }
-                // else
-                //   stroke(0);
-// shape(createShape(SPHERE, w), w*cc, w*rr);
-                
+        ////  stamp bottom right based on textSize
+        //  NEW RIGHT VERTICAL STAMP
+        pushMatrix();
+            textAlign(CENTER,BOTTOM);
+            fill(180);
+            textSize(75);
+            msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
 
-            }
-        }
-         
-      ////  stamp bottom right based on textSize
-      fill(180);
-      textSize(75);
-      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ")";
-      //  OG BOTTOM RIGHT STAMP
-      //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
-      //  NEW RIGHT VERTICAL STAMP
-      textAlign(CENTER,BOTTOM);
-      pushMatrix();
-        translate(width-TWO_PI, cY);
-        rotate(-HALF_PI);
-        text(msg,0,0);
-      popMatrix();
+            translate(width-TWO_PI, cY);
+            rotate(-HALF_PI);
+            text(msg,0,0);
+        popMatrix();
     }
 
 
@@ -140,20 +131,17 @@ stroke(random(255));
     void mouseClicked() {
         // beginRaw(DXF, "output.dxf");
         println( "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")");
-        
-        // cShp = shapeJuan(shapeX, shapeY, w, ct); 
-        // doCircle( cShp );
 
-
-      ////  stamp bottom right based on textSize
-      fill(0);
-      textSize(75);
-      msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
-      //  OG BOTTOM RIGHT STAMP
-      //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
-      //  NEW RIGHT VERTICAL STAMP
-      textAlign(CENTER,BOTTOM);
       pushMatrix();
+          ////  stamp bottom right based on textSize
+          fill(0);
+          textSize(75);
+          msg = "(" + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ")";
+          //  OG BOTTOM RIGHT STAMP
+          //text(msg, width-(textWidth(msg)+textAscent())+24, height-textAscent()+24);
+          //  NEW RIGHT VERTICAL STAMP
+          textAlign(CENTER,BOTTOM);
+
         translate(width-TWO_PI, cY);
         rotate(-HALF_PI);
         text(msg,0,0);
@@ -182,8 +170,8 @@ stroke(random(255));
             case 'I':
             {
                 ct = (ct+1)%cts.length;
-
             }
+            break;
 
             case 's':
             case 'S':
