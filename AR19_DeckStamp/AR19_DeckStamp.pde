@@ -1,3 +1,4 @@
+import processing.dxf.*;
 import processing.pdf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
@@ -52,8 +53,10 @@ boolean record;
     public  void  draw ()  {
 
       if (record) {
-        // beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
-        beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".PDF");
+        beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
+        // beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".PDF");
+
+        textMode(SHAPE);
       }
       
       
@@ -116,6 +119,8 @@ if (record) {
     doStampAndSave();
 }
 
+System.gc();
+
     }
 
 
@@ -163,8 +168,13 @@ if (record) {
         msg = "~FJD/AR19_" + shapeX +"."+ shapeY +"."+ w +"."+ inc;
         println( msg );
 
+        //  end DXF
+        endRaw();
+
+
         //  end PDF
-        endRecord();
+        // endRecord();
+
         record = false;
 
         savePng();
