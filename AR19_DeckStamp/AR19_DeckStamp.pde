@@ -1,18 +1,8 @@
-// import nervoussystem.obj.*;
-import processing.dxf.*;
+import processing.pdf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-
+int bumpRight = 44;
 boolean record;
-/*
-
-a. FIGURE OUT export to DXF
-* DXF NOT WORKING
-
-b. merge back to AR19_DeckStamp
-
-
-*/
 
     int cX, cY;
     int ct = 0, w = 81;    //51;
@@ -36,9 +26,11 @@ b. merge back to AR19_DeckStamp
     public  void  settings ()  {
         // size(612, 460, P3D);
         size(1836, 1380, P3D);
+        // size( 1836, 1380, PDF, this+".PDF");
         smooth(8);
         pixelDensity(displayDensity());
         sketchSmooth();
+
     }
 
 
@@ -47,7 +39,7 @@ b. merge back to AR19_DeckStamp
         setupStage();
 
         //  setup variables
-        cX = width/2;
+        cX = (width/2)+bumpRight;
         cY = height/2;
 
         w = (int)(cY/colCt)-81;
@@ -60,7 +52,8 @@ b. merge back to AR19_DeckStamp
     public  void  draw ()  {
 
       if (record) {
-        beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
+        // beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
+        beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".PDF");
       }
       
       
@@ -76,15 +69,47 @@ b. merge back to AR19_DeckStamp
         strokeWeight(81);
         drawRingShallow();
         //  FATTY
-        tmp = shapeJuan(shapeX, shapeY, w, ct); 
+        tmp = shapeJuan(shapeX, shapeY, w, inc); 
         shape(tmp, cX, cY);
 
         stroke(255);
         strokeWeight(9);
         drawRingDeep();
         //  thin
-        cShp = shapeJuan(shapeX, shapeY, w, ct);
+        cShp = shapeJuan(shapeX, shapeY, w, inc);
         shape(cShp, cX, cY);
+
+//  TEXT LEFT
+  pushMatrix();
+    ////  stamp bottom right based on textSize
+    fill(0);
+    textFont( createFont("Quicksand Bold", 69) );
+    textSize(69);
+
+    //  OG BOTTOM RIGHT STAMP
+    textAlign(CENTER,BOTTOM);
+
+    translate(cX-(w*1.15), cY);
+    rotate(-HALF_PI);
+    text("~FJD/AR19",0,0);
+  popMatrix();
+
+
+//  TEXT RIGHT
+  pushMatrix();
+    ////  stamp bottom right based on textSize
+    fill(0);
+    textFont( createFont("Quicksand Bold", 69) );
+    textSize(69);
+
+    //  OG BOTTOM RIGHT STAMP
+    textAlign(CENTER,BOTTOM);
+
+    translate(cX+(w*1.35), cY);
+    rotate(-HALF_PI);
+    text(shapeX +"."+ shapeY +"."+ w +"."+ inc,0,0);
+  popMatrix();
+
 
 if (record) {
     println("RECORDING");
@@ -97,8 +122,8 @@ if (record) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void drawRingDeep()
     {
-        int oW = (int)(w*2.);
-        int iW = (int)(w*1.75);
+        int oW = (int)(w*2);
+        int iW = (int)(w*1.8);
     
     beginShape();
         for( int aa = 0; aa < 361; aa+=2)
@@ -135,24 +160,11 @@ if (record) {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void doStampAndSave(){
 
-        msg = "~FJD/AR19_" + shapeX +"."+ shapeY +"."+ w +"."+ ct;
+        msg = "~FJD/AR19_" + shapeX +"."+ shapeY +"."+ w +"."+ inc;
         println( msg );
 
-      pushMatrix();
-        ////  stamp bottom right based on textSize
-        fill(0);
-        textSize(44);
-
-        //  OG BOTTOM RIGHT STAMP
-        textAlign(CENTER,BOTTOM);
-
-        translate(width-24, cY);
-        rotate(-HALF_PI);
-        text(msg,0,0);
-      popMatrix();
-
-        //  end dxf
-        endRaw();
+        //  end PDF
+        endRecord();
         record = false;
 
         savePng();
