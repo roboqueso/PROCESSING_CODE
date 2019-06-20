@@ -1,4 +1,4 @@
-import processing.dxf.*;
+//import processing.dxf.*;
 import processing.pdf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
@@ -8,12 +8,14 @@ boolean record;
     int cX, cY;
     int ct = 0, w = 81;    //51;
     int inc;
-    int[] cts = { 4, 6, 9, 11, 13, 18, 20, 24, 35 };  // instead of sequential, only stick to approved incrementors
+    int[] cts = { 2, 4, 5, 8, 9, 10, 12, 15, 18 };  // AR19 yr9 incrementors
     int colCt = 1;
     PShape tmp = new PShape();
     PShape cShp = new PShape();
     PShape smallShp = new PShape();
     int shapeX, shapeY;
+
+
 
 
     //  TODO: is there a smarter way to "get relative" when saving PNGs from a running PApplet?
@@ -26,8 +28,7 @@ boolean record;
     @Override
     public  void  settings ()  {
         // size(612, 460, P3D);
-        size(1836, 1380, P3D);
-        // size( 1836, 1380, PDF, this+".PDF");
+        size(1836, 1380, P3D);  //  DXF or PDF
         smooth(8);
         pixelDensity(displayDensity());
         sketchSmooth();
@@ -51,18 +52,15 @@ boolean record;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  draw ()  {
-
+     
       if (record) {
-        beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
-        // beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".PDF");
-
-        textMode(SHAPE);
+        // beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
+        beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".PDF");
       }
       
       
         background(#EFEFEF);
         noFill();
-
         // NOTE: deck w/h
         shapeX = mouseX%612;
         shapeY = mouseY%460;
@@ -85,7 +83,7 @@ boolean record;
 //  TEXT LEFT
   pushMatrix();
     ////  stamp bottom right based on textSize
-    fill(0);
+    fill(255);
     textFont( createFont("Quicksand Bold", 69) );
     textSize(69);
 
@@ -101,7 +99,7 @@ boolean record;
 //  TEXT RIGHT
   pushMatrix();
     ////  stamp bottom right based on textSize
-    fill(0);
+    fill(255);
     textFont( createFont("Quicksand Bold", 69) );
     textSize(69);
 
@@ -169,11 +167,11 @@ System.gc();
         println( msg );
 
         //  end DXF
-        endRaw();
+        // endRaw();
 
 
         //  end PDF
-        // endRecord();
+        endRecord();
 
         record = false;
 
