@@ -41,7 +41,7 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 // String OBJ_NAME = "NuObj-9s1.obj";
 // String OBJ_NAME = "NuObj-9s2.obj";
-String OBJ_NAME = "NuObj-24s1s2s3.obj";
+String OBJ_NAME = "JuiceBoxJuiceBox@5a729583.obj";
 
 
 // String OBJ_NAME = "HUNDIES1.obj";
@@ -125,10 +125,10 @@ void draw() {
 	rotateZ(ry*.69+noise(frameCount));
 	// rotateZ(frameCount%360 + (ry*.69+noise(frameCount)) );
 
-	s1.disableStyle();
+	// s1.disableStyle();
 	//s1.noStroke();
 	
-	
+	if(fillStyle){
 	//	RED-ISH
 	// fill( (102+frameCount)%202, frameCount%69, 50+ry );
 
@@ -139,15 +139,15 @@ void draw() {
 	// fill( frameCount%75, random(frameCount, frameCount%43), random(frameCount, frameCount%24) );
 
 	//	earth tones
-	// fill( frameCount%90, frameCount%69, frameCount%43 );
+	fill( frameCount%90, frameCount%69, frameCount%43 );
 
 	//	B&W
 	// fill(frameCount%255);
 
 	//	brownish
-	fill( frameCount%255, 9, frameCount%255);
-	ambientLight( frameCount%255, 9, frameCount%255);
-	ambientLight( frameCount%255, 9, frameCount%255);
+	// fill( frameCount%255, 9, frameCount%255);
+	// ambientLight( frameCount%255, 9, frameCount%255);
+	// ambientLight( frameCount%255, 9, frameCount%255);
 
 
 	//	redish / purple
@@ -163,6 +163,7 @@ void draw() {
 
 	//	purps / greens
 	// fill( frameCount%75, frameCount%43, frameCount%75 );
+	}
 
 	shape(s1);
 
@@ -205,8 +206,8 @@ void centerSpinner(){
 	// s2.disableStyle();
 	specular(0,0,255);
     shininess(10.0);
-    ambient(255,0,0);
-    emissive(255,0,0);
+    // ambient(255,0,0);
+    // emissive(255,0,0);
 
 	shape(s2);
 

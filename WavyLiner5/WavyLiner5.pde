@@ -98,13 +98,13 @@ void draw() {
 
 
 	//	STOPPER
-	if( pStart.y > height)
-	{
+	// if( pStart.y > height)
+	// {
 		fill(#EFEFEF);
 		text("ericfickes.com", width-100, height-11);
 		save( fix.pdeName() + fix.getTimestamp() + ".png");
 		noLoop();
 		exit();
-	}
+	// }
 
 }

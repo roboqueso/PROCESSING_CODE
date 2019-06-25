@@ -107,24 +107,22 @@ https://stock.adobe.com/collections/G8eYeCWZyF0PMNOZZxgVNzpNFPADcljj?content_id=
 */
 
 
-// https://github.com/ericfickes/FIXLIB 
+// https://github.com/ericfickes/FIXLIB ssssssssss
 import fixlib.*;
-
-//	NOTE: NO NERVOUS SYSTEM FOR MAC?!?!?!
-//	import nervoussystem.obj.*;
+import nervoussystem.obj.*;
 
 
 //	SETTINGS
 
 boolean recordObj = false;	//	export to OBJ, requires import nervoussystem.obj.*
-Boolean lights =   true;  //  EXTRA lights
+Boolean lights =   false;  //  EXTRA lights
 Boolean fillStyle =   true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 Boolean rotateGolden = true;	// Default to TRUE, not all OBJs look good on true
 Boolean mouseCam = false;  // Maps camera() to mouse movement See: https://processing.org/tutorials/p3d/
-int radius = 303; //222;	//24;	//	circle radius
-float preScale = 0;	//	pre-scale up shapes if needed
-String OBJ_NAME = "NuObj-24s1s2s3.obj";	//	FOR META
-String GROUP =  "BOXES";	// "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
+int radius = 420; //222;	//24;	//	circle radius
+float preScale = 0.44;	//	pre-scale up shapes if needed
+String OBJ_NAME = "JuiceBoxJuiceBox@5a729583.obj";	//	FOR META
+String GROUP =  "FIXBOMB";	// "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
 
 
 //	END SETTINGS
@@ -279,7 +277,7 @@ println("radius : "+ radius );
     
     
     //	PRE-SCALE IF NEEDED
-    if(preScale>1){
+    if(preScale>0){
     
     //  DEBUG FOR DN
     println("preScale: "+ preScale );

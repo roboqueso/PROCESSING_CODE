@@ -4,7 +4,7 @@ import fixlib.*;
 
 
 
-boolean record = false;
+boolean record = true;
 
 int cX;
 int cY;
@@ -84,18 +84,20 @@ void draw() {
 
   beginShape();
 
-shape( createShape( SPHERE, pStep), pStart.x, pStart.y );
+// shape( createShape( SPHERE, pStep), pStart.x, pStart.y );
 
 
   
     vertex( pStart.x, pStart.y, pStart.z  );
     
   
-    for (int i = fullPath.size()-1; i>0; i-=9)
+    // for (int i = fullPath.size()-1; i>0; i-=9)
+    for (int i = fullPath.size()-1; i>0; i-=pStep)
     {
       pt = (PVector)fullPath.get(i);
-      shape( createShape( SPHERE, pStep), pt.x, pt.y );
-        
+      // shape( createShape( SPHERE, pStep), pt.x, pt.y );
+      // shape( createShape( RECT, pt.x, pt.y, pStep, pStep ), pt.x, pt.y );
+/*        
       //vertex(pt.x, pt.y, pt.z);
       rotateX(45);
       vertex(pt.x, pt.y, -width);
@@ -103,11 +105,13 @@ shape( createShape( SPHERE, pStep), pStart.x, pStart.y );
       rotateY(45);
       vertex(pt.x, pt.y, -width);
       vertex(pt.y, pt.x, width);
+*/
 
-      for( int aa = 20; aa <= 360; aa += 20 ) {
+      for( int aa = 20; aa <= 360; aa += pStep ) {
         
         pt2 = fix.circleXY( pt.x, pt.y, pStep, aa );
-        shape( createShape( SPHERE, pStep), pt2.x, pt2.y );
+        // shape( createShape( SPHERE, pStep), pt2.x, pt2.y );
+		// shape( createShape( RECT, pt2.x, pt2.y, pStep, pStep ), pt2.x, pt2.y );
 
         rotateX(15);
         rotateY(45);
@@ -126,11 +130,12 @@ shape( createShape( SPHERE, pStep), pStart.x, pStart.y );
         rotateZ(45);
         vertex(pt.x, pt.y, -(int)random(width) );
         
-
+/*
         rotateX(15);
         rotateY(45);
         rotateZ(45);
         vertex(pt.y, pt.x, (int)random(width) );
+        */
       }
       // HOW TO FAN OUT AROUND CONTROL POINTS?
       //  BETA - fan out around point?
@@ -139,7 +144,7 @@ shape( createShape( SPHERE, pStep), pStart.x, pStart.y );
 
     vertex( pEnd.x, pEnd.y, pEnd.z);
 
-shape( createShape( SPHERE, pStep), pEnd.x, pEnd.y );
+// shape( createShape( SPHERE, pStep), pEnd.x, pEnd.y );
 
   endShape(CLOSE);
 

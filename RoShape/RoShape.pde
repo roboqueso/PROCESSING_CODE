@@ -15,17 +15,17 @@ Fixlib fix = Fixlib.init(this);
 
 
 
-boolean s1 = false;	//	vertex
+boolean s1 = true;	//	vertex
 boolean s2 = false;	//	sphere
 boolean s3 = false;	//	box
-boolean s4 = true;	//	triangle *BETA
+boolean s4 = false;	//	triangle *BETA
 float z;
 int cY, cX;
 ArrayList<PVector> alPath;
 
 
 Integer minP = 9;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
-Integer maxP = 13;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer maxP = 11;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer pStep;
 
 
@@ -87,7 +87,7 @@ println("pv: "+pv.x + " "+pv.y + " "+pv.z);
 	tmpShp = createShape(SPHERE, pStep );
 
 
-	drawTriangle(pg, pv, pStep);
+	// drawTriangle(pg, pv, pStep);
 
 pg.rectMode(CENTER);
 pg.beginShape(POLYGON);
@@ -99,7 +99,7 @@ pg.sphereDetail(44);
 	// sj = fix.shapeJous( pv.x, pv.y, width, (int)random(3,18) );
 	sj = fix.shapeJous( pv.x, pv.y, width-pStep, 3 );	//	9 & 12 are nice
 
-pg.translate(pv.x, pv.y, pv.z);
+pg.translate(-pv.x, -pv.y, pv.z);
 
 if(s1){
 
@@ -111,7 +111,7 @@ if(s1){
 		lrpV = PVector.lerp(tmpV, tmpV2, .5 );
 
 	//	cool flat background grid shifting action
-	pg.shape( createShape( RECT, tmpV.x, tmpV.y, vv*pStep, vv ) );	// rect(a, b, c, d)
+	pg.shape( createShape( RECT, tmpV.x, tmpV.y, vv*pStep, vv+pStep ) );	// rect(a, b, c, d)
 	pg.shape( createShape( SPHERE, pStep ), tmpV.x, tmpV.y, pStep, pStep+vv );	//	sphere(r)
 	pg.shape( createShape( BOX, pStep+vv, pStep, pStep+vv ), tmpV.x, tmpV.y );	//	box(w, h, d)
 

@@ -8,3 +8,5 @@ _allmodelsP5/*
 *.obj
 *.hdr
 *.mtl
+*.java
+*.class
