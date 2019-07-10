@@ -25,7 +25,7 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s, s1, s2, s3, s4, s5, s6, s7;
 float x, y;
 PVector vect = new PVector();
-Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 // int radius = 50;  //  circle radius
 // int getRad = (int)(width/4);  //  Radius increaser
 // int frameMod = getRad;  //8;  // % frameCount to control how many shapes get laid down
@@ -41,7 +41,7 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 // String OBJ_NAME = "NuObj-9s1.obj";
 // String OBJ_NAME = "NuObj-9s2.obj";
-String OBJ_NAME = "JuiceBoxJuiceBox@5a729583.obj";
+String OBJ_NAME = "ShapeFrom625201915141242.obj";
 
 
 // String OBJ_NAME = "HUNDIES1.obj";
@@ -118,9 +118,9 @@ void draw() {
 
 	// rotateX(ry*.09);
 	// rotateY(ry*noise(frameCount));
-	// rotateZ(ry*.43);
+	// rotateZ(ry*.44);
 
-	rotateX(ry*.43);
+	rotateX(ry*.44);
 	rotateY(ry*TWO_PI);
 	rotateZ(ry*.69+noise(frameCount));
 	// rotateZ(frameCount%360 + (ry*.69+noise(frameCount)) );
@@ -133,13 +133,13 @@ void draw() {
 	// fill( (102+frameCount)%202, frameCount%69, 50+ry );
 
 	//St.Patrick's GREEN?
-	// fill( ry, frameCount%43, frameCount%69 );
+	// fill( ry, frameCount%44, frameCount%69 );
 
 	//	tealium
-	// fill( frameCount%75, random(frameCount, frameCount%43), random(frameCount, frameCount%24) );
+	// fill( frameCount%75, random(frameCount, frameCount%44), random(frameCount, frameCount%24) );
 
 	//	earth tones
-	fill( frameCount%90, frameCount%69, frameCount%43 );
+	// fill( frameCount%90, frameCount%69, frameCount%44 );
 
 	//	B&W
 	// fill(frameCount%255);
@@ -155,21 +155,21 @@ void draw() {
 
 
 	//	REDISH?
-	// fill( (43+frameCount%90)%180, frameCount%24, (frameCount%18) );
+	// fill( (44+frameCount%90)%180, frameCount%24, (frameCount%18) );
 
 
 	//	DEEP PURPLE
-	// fill( frameCount%69, frameCount%9, frameCount%69 );
+	fill( frameCount%69, frameCount%24, frameCount%44 );
 
 	//	purps / greens
-	// fill( frameCount%75, frameCount%43, frameCount%75 );
+	// fill( frameCount%75, frameCount%44, frameCount%75 );
 	}
 
 	shape(s1);
 
   // ry += 0.024;
-  // ry += 0.043;
-  ry += 0.43;
+  // ry += 0.044;
+  ry += 0.44;
   // ry += .69;
 
 
@@ -180,7 +180,7 @@ void draw() {
 	lightSpecular(255, 255, 255);
 	centerSpinner();
 
-  if(xx > width){
+  if(xx > height){
 
   	save(fix.pdeName()+'_'+OBJ_NAME+'_'+fix.getTimestamp()+SAVE_TYPE);
   	exit();
@@ -203,7 +203,9 @@ void centerSpinner(){
 	rotateZ(ry*.45);
 
 
-	// s2.disableStyle();
+	
+		// s2.disableStyle();
+	
 	specular(0,0,255);
     shininess(10.0);
     // ambient(255,0,0);

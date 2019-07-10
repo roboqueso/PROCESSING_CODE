@@ -54,7 +54,7 @@ void draw() {
     obj.endDraw();
     
 
-  image(obj, xx, yy);
+  image(obj, frameCount%width, random(yy,xx) );
     
     obj.dispose();
     obj = null;
@@ -83,15 +83,18 @@ void drawNoise(PGraphics pg,  float a, float b, float amp ) {
 
 //  TODO: build a P5 GIF maker that runs this shapeJous and increments the T+ value by .5
 //  record frames and animate, include spitting out of T value so you know 
-  for ( float t = 0; t <= 360; t+=12)
+  for ( float t = 0; t <= 360; t+=9)
   {
-    x = a - amp * sin(a * t * PI/180);
-    y = b - amp * sin(b * t * PI/180);
+    // x = a - amp * sin(a * t * PI/180);
+    // y = b - amp * sin(b * t * PI/180);
+
+    x = amp * sin(a * t * PI/180);
+    y = amp * sin(b * t * PI/180);
 
     pg.vertex(x, y, t );
 
   }  
-  pg.endShape();  
+  pg.endShape(CLOSE);  
 
   
 }

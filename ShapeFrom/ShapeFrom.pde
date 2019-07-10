@@ -2,7 +2,7 @@ import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
-  
+  // see: https://processing.org/reference/PVector_fromAngle_.html
   
 PShape s;
 float x, y;
