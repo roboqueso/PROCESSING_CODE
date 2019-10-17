@@ -25,7 +25,7 @@ ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s, s1, s2, s3, s4, s5, s6, s7;
 float x, y;
 PVector vect = new PVector();
-Boolean fillStyle = false;  //  TRUE: fill w/x,y or FALSE: leave style as is
+Boolean fillStyle = true;  //  TRUE: fill w/x,y or FALSE: leave style as is
 // int radius = 50;  //  circle radius
 // int getRad = (int)(width/4);  //  Radius increaser
 // int frameMod = getRad;  //8;  // % frameCount to control how many shapes get laid down
@@ -41,7 +41,7 @@ String DATA_PATH = "";//"../FIXOBJ_DATA/";
 
 // String OBJ_NAME = "NuObj-9s1.obj";
 // String OBJ_NAME = "NuObj-9s2.obj";
-String OBJ_NAME = "JuiceBoxJuiceBox@5a729583.obj";
+String OBJ_NAME = "RoShape-11s1.obj";
 
 
 // String OBJ_NAME = "HUNDIES1.obj";

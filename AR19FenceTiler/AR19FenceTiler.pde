@@ -6,8 +6,8 @@ w:  20"
 h:  5"
 
 */
-//import processing.dxf.*;
-import processing.pdf.*;
+import processing.dxf.*;
+// import processing.pdf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 int bumpRight = 44;
@@ -17,7 +17,8 @@ boolean record;
     int ct = 0, w = 81;    //51;
     int inc;
     // int[] cts = { 2, 4, 5, 8, 9, 10, 12, 15, 18 };  // AR19 yr9 incrementors
-    int[] cts = { 3, 6, 9, 18 };  // AR19 yr9 incrementors
+    // int[] cts = { 3, 6, 9, 18 };  // AR19 yr9 incrementors
+    int[] cts = { 9 };  // AR19 yr9 fence print uses 9
     int colCt = 10;
     PShape tmp = new PShape();
     PShape cShp = new PShape();
@@ -64,8 +65,8 @@ boolean record;
      
 
     if (record) {
-        // beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ ct + ".DXF");
-        beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ".PDF");
+        beginRaw(DXF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ".DXF");
+        // beginRecord( PDF, PNG_OUT + fix.pdeName() + shapeX +"-"+ shapeY +"-"+ w +"-"+ inc + ".PDF");
     }
       
         background(#EFEFEF);
@@ -153,11 +154,11 @@ System.gc();
         println( msg );
 
         //  end DXF
-        // endRaw();
+        endRaw();
 
 
         //  end PDF
-        endRecord();
+        // endRecord();
 
         record = false;
 

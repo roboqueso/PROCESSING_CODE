@@ -90,8 +90,187 @@ String SAVE_TYPE = ".png";  // ".tif";
 //  NOTE: This script now runs off of imgs[] to allow for multi-source image support
 //  BG image is still static ATM
 String[] imgs = { 
-  "jbro1.png"
+  "fs14 copy.png",
+"fs16 copy 2.png"
   };
+  /*
+"fs16 copy.png",
+"fs19 copy 3.png",
+"fs19.png",
+"fs20 copy 2.png",
+"fs23 copy 2.png",
+"fs23 copy 3.png",
+"fs23.png",
+"fs28 copy 2.png",
+"fs28 copy 3.png",
+"fs3 copy 3.png",
+"fs3 copy.png",
+"fs3.png",
+"fs31 copy 3.png",
+"fs31 copy.png",
+"fs31.png",
+"fs39 copy 2.png",
+"fs39 copy.png",
+"fs39.png",
+"fs40 copy.png",
+"fs40.png",
+"fs41 copy.png",
+"fs42 copy 2.png",
+"fs42 copy.png",
+"fs44 copy 2.png",
+"fs44 copy 3.png",
+"fs44 copy.png",
+"fs44.png",
+"fs45 copy 2.png",
+"fs46.png",
+"fs49 copy 2.png",
+"fs49 copy 3.png",
+"fs49 copy.png",
+"fs49.png",
+"fs52 copy.png",
+"fs54 copy.png",
+"fs60 copy 3.png",
+"fs60.png",
+"fs68 copy 2.png",
+"fs68 copy 3.png",
+"fs68 copy.png",
+"fs68.png",
+"fs74 copy 2.png",
+"fs74 copy 3.png",
+"fs74 copy.png",
+"greens1 copy.png",
+"greens1.png",
+"greens12 copy.png",
+"greens12.png",
+"greens13 copy.png",
+"greens13.png",
+"greens14 copy.png",
+"greens15.png",
+"greens16 copy.png",
+"greens16.png",
+"greens2 copy.png",
+"greens2.png",
+"greens20 copy.png",
+"greens20.png",
+"greens3 copy.png",
+"greens3.png",
+"greens4 copy.png",
+"greens4.png",
+"greens5 copy.png",
+"greens5.png",
+"greens7 copy.png",
+"greens7.png",
+"greens8 copy.png",
+"greens8.png",
+"greens9 copy.png",
+"localTestlow copy 10.png",
+"localTestlow copy 11.png",
+"localTestlow copy 12.png",
+"localTestlow copy 14.png",
+"localTestlow copy 18.png",
+"localTestlow copy 19.png",
+"localTestlow copy 2.png",
+"localTestlow copy 20.png",
+"localTestlow copy 21.png",
+"localTestlow copy 22.png",
+"localTestlow copy 23.png",
+"localTestlow copy 24.png",
+"localTestlow copy 25.png",
+"localTestlow copy 26.png",
+"localTestlow copy 27.png",
+"localTestlow copy 9.png",
+"localTestlow copy.png",
+"localTestlow.png",
+"merge1.png",
+"merge2.png",
+"pinks1 copy.png",
+"pinks2 copy.png",
+"pinks2.png",
+"pinks3 copy.png",
+"pinks3.png",
+"pinks4 copy.png",
+"pinks4.png",
+"pinks6 copy.png",
+"pinks6.png",
+"pinks7 copy.png",
+"pinks7.png",
+"pinks8 copy.png",
+"pinks8.png",
+"pinks9 copy.png",
+"pinks9.png",
+"Texture0 copy 11.png",
+"Texture0 copy 12.png",
+"Texture0 copy 15.png",
+"Texture0 copy 16.png",
+"Texture0 copy 2.png",
+"Texture0 copy 3.png",
+"Texture0 copy 6.png",
+"Texture0 copy 8.png",
+"Texture11 copy 10.png",
+"Texture11 copy 11.png",
+"Texture11 copy 13.png",
+"Texture11 copy 14.png",
+"Texture11 copy 16.png",
+"Texture11 copy 5.png",
+"Texture11 copy 6.png",
+"Texture11 copy 7.png",
+"Texture11 copy 9.png",
+"Texture14 copy 10.png",
+"Texture15 copy 10.png",
+"Texture15 copy 11.png",
+"Texture15 copy 12.png",
+"Texture15 copy 13.png",
+"Texture15 copy 14.png",
+"Texture15 copy 16.png",
+"Texture15 copy 2.png",
+"Texture15 copy 3.png",
+"Texture15 copy 6.png",
+"Texture15 copy 7.png",
+"Texture15 copy 9.png",
+"Texture4 copy 11.png",
+"Texture4 copy 14.png",
+"Texture4 copy 21.png",
+"Texture4 copy 6.png",
+"Texture5 copy 4.png",
+"Texture7 copy 11.png",
+"Texture7 copy 12.png",
+"Texture7 copy 3.png",
+"Texture7 copy 4.png",
+"Texture7 copy 5.png",
+"Texture7 copy 6.png",
+"Texture7 copy 7.png",
+"Texture7 copy 8.png",
+"Texture7 copy 9.png",
+"Texture8 copy 12.png",
+"Texture8 copy 13.png",
+"Texture8 copy 3.png",
+"Texture8 copy 5.png",
+"yellow11 copy.png",
+"yellow13 copy.png",
+"yellow13.png",
+"yellow15 copy.png",
+"yellow17 copy.png",
+"yellow17.png",
+"yellow18 copy.png",
+"yellow18.png",
+"yellow19 copy.png",
+"yellow20 copy.png",
+"yellow20.png",
+"yellow21.png",
+"yellow22 copy.png",
+"yellow22.png",
+"yellow23 copy.png",
+"yellow23.png",
+"yellow24 copy.png",
+"yellow24.png",
+"yellow26 copy.png",
+"yellow26.png",
+"yellow3 copy.png",
+"yellow4 copy.png",
+"yellow7 copy.png",
+"yellow7.png"
+  };
+*/
 
 boolean saveFrame = true;
 boolean saveLast = true; // NOTE: this switch is hit or miss depending on your source image.
@@ -117,9 +296,9 @@ boolean rotateY = false;  // Rotates each tile's Y axis
 boolean rotateZ = false;  // Rotates each tile's Z axis
 
 
-int frmCt = 1;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
-int colCt = 40;//  2, 4, 8, 16
-int colSpacing = 4;
+int frmCt = 2;//  2, 4, 8, 16  //7;  //  NOTE: saving starts @ 0.  7 gets you 8 frames and 1 FINAL
+int colCt = 8;//  2, 4, 8, 16
+int colSpacing = 2;
 /* ------------------------------------------------------------------------- */
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
@@ -140,7 +319,7 @@ int imgIdx = 0;
 
 void  settings ()  {
     //  For best results, change size() to match dimensions of mainImgFile
-    size(1920, 1080, P3D);
+    size(2048, 2048, P3D);
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -176,7 +355,7 @@ void setup() {
   
   //  BACKGROUND IMAGE
   bgHImg = new HImage( bgImg );
-  bgHImg.anchorAt(H.CENTER).loc(width/2, height/2);
+  bgHImg.anchorAt(H.CENTER).loc(0,0);	//width/2, height/2);
   H.add(bgHImg);
 
 
