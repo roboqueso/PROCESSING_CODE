@@ -38,14 +38,15 @@ Date date = sdf.parse(dateString);
 
 
 */
-SimpleDateFormat myFormat = new SimpleDateFormat("MM-DD-yyyy");
-// String inputString1 = "08-16-2017";
-String inputString2 = "01-05-2020";
+SimpleDateFormat myFormat = new SimpleDateFormat("MM-dd-yyyy");
+String inputString1;// = "04-24-2020";
+String inputString2 = "06-01-2020";
 Date date1;  //  TODAY
 Date date2;
 ZonedDateTime z1;
 ZonedDateTime z2;
 int daysLeft;
+int counter = 0;
 
 
 
@@ -64,7 +65,9 @@ try {
   date2 = myFormat.parse(inputString2);
   z1 = date1.toInstant().atZone(ZoneId.systemDefault());
   z2 = date2.toInstant().atZone(ZoneId.systemDefault());
-  daysLeft = (int)ChronoUnit.DAYS.between(z1, z2);  // 29
+  //daysLeft = (int)ChronoUnit.DAYS.between(z1, z2);  // 29
+  daysLeft = (int)z1.until(z2, ChronoUnit.DAYS);
+
 
   //  debug
   println("Today = " + date1 );
@@ -86,11 +89,11 @@ try {
 
   pool.autoAddToStage()
     .add(
-      //new HRect()
-      //.rounding(1)
+      new HRect()
+      .rounding(1)
       
-      // new HPath().drawLissajous( random(width/2), height/2, random(42) )
-      new HMetal().kiln( random(width/2), height/2, random(42), 16 )
+       //new HPath().drawLissajous( random(width/2), height/2, random(42) )
+      //new HMetal().kiln( random(width/2), height/2, random(42), 16 )
     )
 
     .onCreate(
