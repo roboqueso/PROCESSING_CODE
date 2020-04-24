@@ -212,6 +212,13 @@ void draw() {
   }
 
   H.drawStage();
+  
+  if(counter<daysLeft){
+    saveFrame(this+"###.png");
+    counter++;
+  } else {
+    exit();
+  }
 }
 
 
