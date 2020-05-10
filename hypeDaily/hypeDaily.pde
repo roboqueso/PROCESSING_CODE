@@ -81,7 +81,7 @@ try {
 
 
 
-  PFont type = createFont("Phosphate-Inline", 24);
+  PFont type = createFont("Phosphate-Inline", 69);
 
   //  total days left
   pool = new HDrawablePool( daysLeft );
@@ -90,7 +90,7 @@ try {
   pool.autoAddToStage()
     .add(
       new HRect()
-      .rounding(1)
+      .rounding( random(-daysLeft,daysLeft) )
       
        //new HPath().drawLissajous( random(width/2), height/2, random(42) )
       //new HMetal().kiln( random(width/2), height/2, random(42), 16 )
@@ -212,10 +212,16 @@ void draw() {
   }
 
   H.drawStage();
+
   
-  if(counter<daysLeft){
-    saveFrame(this+"###.png");
-    counter++;
+  //  check counter for auto exit
+  if(counter<daysLeft ){
+    
+    //  save and increment counter every MOD of Frame Per Second so you get loads of pool objects
+    if(frameCount % ((int)frameRate) == 0 ){
+      saveFrame(this+"####.png");
+      counter++;
+    }
   } else {
     exit();
   }
