@@ -48,7 +48,7 @@ void draw() {
   y4 = cY - int( sin(radians(angle4)) * sz4 );  // * noise(frameCount);
 
 
-m = random(height);
+m = (int)random(height);
 strokeWeight(.37);
 stroke(frameCount%75);
 ellipse( cX, cY, m, m );
@@ -211,4 +211,3 @@ void artDaily( String dailyMsg ) {
   fill(#efefef);
   text( " "+dailyMsg, 0, height-3);
 }
-
