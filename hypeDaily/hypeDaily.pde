@@ -40,7 +40,7 @@ Date date = sdf.parse(dateString);
 */
 SimpleDateFormat myFormat = new SimpleDateFormat("MM-dd-yyyy");
 String inputString1;// = "04-24-2020";
-String inputString2 = "06-01-2020";
+String inputString2 = "07-06-2020";
 Date date1;  //  TODAY
 Date date2;
 ZonedDateTime z1;
