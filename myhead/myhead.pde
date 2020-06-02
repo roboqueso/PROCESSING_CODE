@@ -11,11 +11,12 @@ float xx, yy, theta, r, i, cX, cY;
 ///////////////////////////////////////////////////////////////////////////////
 void setup()
 {
-  size(displayWidth, displayHeight);//, P3D);
+  size(7680, 4320);  // 8K
+  smooth(8);
   background(#EFEFEF);
-  frameRate(420);
+  frameRate(666);
   
-  smooth();
+
 
 		strokeCap(ROUND);
 
@@ -86,6 +87,8 @@ strokeWeight(sqrt(sz));
   }
   
 
+//  write every 6th frame
+  if(frameCount%6==0)  saveFrame("FRAMES/#########.png");
   
   if( sz < 39 ){
 
