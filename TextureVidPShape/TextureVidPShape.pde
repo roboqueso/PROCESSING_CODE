@@ -1,6 +1,6 @@
 /*
 setTexture( videoFrame )
-
+http://brendandawes.com/blog/ffmpeg-images-to-video
 TextureVidPShape
 
 if(color)
