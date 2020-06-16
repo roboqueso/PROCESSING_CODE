@@ -1,15 +1,5 @@
 /*
-ALPHA  : square one starting point P5/HYPE template sketch
-* BLOOD-DRAGON : 1920 x 1071
-* size(displayWidth, displayHeight, P3D)
-* HDR w, h is 2x1 EX: 2048, 1024
-
-if(color)
-  GO TIFF
-  TIFF = Tagged Image File Format. This is one of the most complex image formats, and it can hold more kinds and depth of information than almost any other format. The standard is owned and maintained by Adobe.
-else
-  PNG
-
+frame maker script to stich together as MP4 to later be used as a texture
 
 */
 
