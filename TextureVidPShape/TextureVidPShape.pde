@@ -61,9 +61,6 @@ void movieEvent(Movie m) {
 /* ------------------------------------------------------------------------- */
 void draw() {
   
-
-
-  stroke(random(255));
   
   //if (myMovie.available()) {
   //  myMovie.read();
@@ -93,7 +90,7 @@ void draw() {
   
       //  BOX
       beginShape();
-        myBox = createShape( BOX, sz, sz, sz );
+        myBox = createShape( BOX, sz, sz, frameCount%STOP_SZ );
         myBox.setTexture(txtImg);
       endShape(CLOSE);
     
@@ -107,19 +104,22 @@ void draw() {
     //  IT'S ON
     lights();
   
+  //  pull colors from texture
+  stroke(txtImg.get(txtImg.width/2, txtImg.height/2));
+  
     //  SET THE STAGE
-    rotate(frameCount/100);
+    rotate(frameCount);
     
     //  BOX
     pushMatrix();
-      translate(cX-STOP_SZ, cY, STOP_SZ);
+      translate(cX-(sz*.5), cY, STOP_SZ);
       shape(myBox);
     popMatrix();
   
   
     //  SPHERE
     pushMatrix();
-      translate(cX+STOP_SZ, cY, STOP_SZ);
+      translate(cX+(sz*.5), cY, STOP_SZ);
       shape(mySphere);
     popMatrix();
   
@@ -134,8 +134,8 @@ void draw() {
     }
     
     
-    //saveFrame( "pshapes#######.tif");  //  USE .TIF IF COLOR or TO BE GLITCHED
-    saveFrame( "pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
+    //saveFrame( "frames/pshapes#######.tif");  //  USE .TIF IF COLOR or TO BE GLITCHED
+    saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
 
 }
 
