@@ -18,9 +18,9 @@ Movie myMovie;
 
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
-float sz = 3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
-int STOP_SZ = 16;
-String VIDEO_NAME = "ellipseses.mp4";
+float sz = 1920;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
+int STOP_SZ = 8;
+String VIDEO_NAME = "BikeRide720_preWarp.mp4";
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
@@ -29,7 +29,8 @@ PShape myBox, mySphere;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(3840,2160, P3D); //  always use P3D!!!
+    //size(3840,2160, P3D); //  always use P3D!!!
+    size(1920,1080, P3D); //  always use P3D!!!
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -42,7 +43,7 @@ void setup() {
   myMovie.loop();
   myMovie.volume(0);
   
-  bg = createImage(3840,2160,RGB);
+  bg = createImage(1920,1080,RGB);
   
   cX = (int) width/2;
   cY = (int) height/2;
@@ -50,31 +51,8 @@ void setup() {
   noStroke();
   textureMode(NORMAL);
   textureWrap(REPEAT);
-  
-  //  TODO: 
-  //  1. Is blendMode working?
-  //  2. which mode kicks out the best shit?
-//BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
+  blendMode(LIGHTEST);
 
-//ADD - additive blending with white clip: C = min(A*factor + B, 255)
-
-//SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
-
-//DARKEST - only the darkest color succeeds: C = min(A*factor, B)
-
-//LIGHTEST - only the lightest color succeeds: C = max(A*factor, B)
-
-//DIFFERENCE - subtract colors from underlying image.
-
-//EXCLUSION - similar to DIFFERENCE, but less extreme.
-
-//MULTIPLY - multiply the colors, result will always be darker.
-
-//SCREEN - opposite multiply, uses inverse values of the colors.
-
-//REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
-
-blendMode(REPLACE);
 }
 
 
@@ -87,26 +65,28 @@ void movieEvent(Movie m) {
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+  
+    lights();
+    ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
+  
+  
+  
       if(frameCount%2==0)
       {
         bg.filter(INVERT);
+        bg.filter(BLUR);
       } 
       else 
       {
-        bg.filter(ERODE);
+        bg.filter(POSTERIZE,255);
       }
 
-//  TODO: trying to apply a thin mask of the previous frame to BLEND with the new frame
-//  IS TINT even helping???
-tint(255,50);
-image(bg,0,0);
-noTint();
-  
-    lights();
-    ambientLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
-    directionalLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
-    pointLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
-    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
+// TODO: cool?
+//blendMode(LIGHTEST);
+blend(bg, 0,0,1920,1080,0,0,1920,1080, DARKEST);
 
     //  w = h * 1.8
     //  increment by 8 until > sz  h
@@ -123,23 +103,28 @@ noTint();
     
       //  SPHERE
       beginShape();
-        sphereDetail( (int)(frameCount+sz)%8 );
+        sphereDetail((int)random(PI,45));
         mySphere = createShape( SPHERE, sz );
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
   
   //  pull colors from texture
-  //stroke(txtImg.get(txtImg.width/2, txtImg.height/2));
+  strokeWeight(random(.09, HALF_PI));
+  stroke(bg.get(bg.width/2, bg.height/2));
+  
   
     //  SET THE STAGE
-    rotateX(frameCount);
-    rotateY(frameCount);
-    rotateZ(-frameCount);
-    
+    //rotateX(frameCount);
+    //rotateY(frameCount);
+    //rotateZ(-frameCount);
+// TODO: how do we BLEND the previous frames on the last?
     //  BOX
     pushMatrix();
       translate(cX-(sz*.5), cY, 0);
+      rotateX(frameCount%75);
+      rotateY(45);
+      rotateZ(-frameCount);
       shape(myBox);
     popMatrix();
   
@@ -153,7 +138,8 @@ noTint();
   
     if(sz>STOP_SZ)
     {
-      sz -= STOP_SZ;
+      //sz -= STOP_SZ;
+      sz -= HALF_PI;
     }
     else
     {
