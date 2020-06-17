@@ -53,8 +53,8 @@ void setup() {
   
   cX = (int) width/2;
   cY = (int) height/2;
-  textureMode(NORMAL);
-  textureWrap(REPEAT);
+  textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
+  textureWrap(CLAMP);   //  CLAMP ( default ) or REPEAT --> was bike2  
   blendMode(DIFFERENCE);
 }
 
@@ -103,34 +103,28 @@ image(bg, 0,0,width,height);
   
       //  BOX
       beginShape();
-        myBox = createShape( BOX, sz, sz, frameCount%STOP_SZ );
+        myBox = createShape( BOX, sz, sz, sz );
         myBox.setTexture(txtImg);
       endShape(CLOSE);
     
       //  SPHERE
       beginShape();
-        sphereDetail((int)random(PI,45));
+        sphereDetail( ((STOP_SZ+frameCount)%45) );
         mySphere = createShape( SPHERE, sz );
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
   
-  //  pull colors from texture
-  strokeWeight(random(.09, HALF_PI));
-  stroke(bg.get(bg.width/2, bg.height/2));
+      //  pull colors from texture
+      strokeWeight(random( HALF_PI, TWO_PI ));  // MAKE IT FATTER
+      stroke(bg.get(bg.width/2, bg.height/2));
   
-  
-    //  SET THE STAGE
-    //rotateX(frameCount);
-    //rotateY(frameCount);
-    //rotateZ(-frameCount);
-// TODO: how do we BLEND the previous frames on the last?
     //  BOX
     pushMatrix();
       translate(cX-(sz*.5), cY, 0);
-      rotateX(frameCount%75);
+      rotateX(frameCount%45);  //frameCount%75);
       rotateY(45);
-      rotateZ(-frameCount);
+      rotateZ(frameCount%90);
       shape(myBox);
     popMatrix();
   
@@ -138,6 +132,7 @@ image(bg, 0,0,width,height);
     //  SPHERE
     pushMatrix();
       translate(cX+(sz*.5), cY, 0);
+      rotate(frameCount);
       shape(mySphere);
     popMatrix();
   
@@ -145,7 +140,7 @@ image(bg, 0,0,width,height);
     if(sz>STOP_SZ)
     {
       //sz -= STOP_SZ;
-      sz -= HALF_PI;
+      sz -= PI;
     }
     else
     {
