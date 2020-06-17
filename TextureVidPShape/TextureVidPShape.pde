@@ -1,4 +1,8 @@
 /*
+
+DA MEETING CRASHER
+
+
 setTexture( videoFrame )
 http://brendandawes.com/blog/ffmpeg-images-to-video
 TextureVidPShape
@@ -18,7 +22,7 @@ Movie myMovie;
 
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
-float sz = 1920;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
+float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
 String VIDEO_NAME = "BikeRide720_preWarp.mp4";
 float w, h;
@@ -27,10 +31,10 @@ PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
 PShape myBox, mySphere;
 /* ------------------------------------------------------------------------- */
-
-void  settings ()  {
     //size(3840,2160, P3D); //  always use P3D!!!
-    size(1920,1080, P3D); //  always use P3D!!!
+    
+void  settings ()  {
+    size(2704,1520, P3D); //  always use P3D!!!
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -43,36 +47,28 @@ void setup() {
   myMovie.loop();
   myMovie.volume(0);
   
-  bg = createImage(1920,1080,RGB);
+  //bg = createImage(2704,1520,RGB);
+  bg = get(0,0,2704,1520);
+
   
   cX = (int) width/2;
   cY = (int) height/2;
-  //strokeWeight(STOP_SZ);
-  noStroke();
   textureMode(NORMAL);
   textureWrap(REPEAT);
-  blendMode(LIGHTEST);
-
+  blendMode(DIFFERENCE);
 }
 
 
 // Called every time a new frame is available to read
 void movieEvent(Movie m) {
   m.read();
-  txtImg = m; 
+  txtImg = m;
 }
 
 
 /* ------------------------------------------------------------------------- */
 void draw() {
-  
-    lights();
-    ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
-  
-  
+ 
   
       if(frameCount%2==0)
       {
@@ -83,10 +79,20 @@ void draw() {
       {
         bg.filter(POSTERIZE,255);
       }
-
+      
 // TODO: cool?
-//blendMode(LIGHTEST);
-blend(bg, 0,0,1920,1080,0,0,1920,1080, DARKEST);
+//tint(255);//,50);
+blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+tint(255, 45);
+image(bg, 0,0,width,height);
+  
+    //lights();
+    //ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    //directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    //pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
+  
+ 
 
     //  w = h * 1.8
     //  increment by 8 until > sz  h
@@ -143,7 +149,7 @@ blend(bg, 0,0,1920,1080,0,0,1920,1080, DARKEST);
     }
     else
     {
-      exit();
+      doExit();
     }
     
     
@@ -152,7 +158,7 @@ blend(bg, 0,0,1920,1080,0,0,1920,1080, DARKEST);
     
     saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
     //  GRAB A SCREENSHOT
-    bg = get();
+    bg = get(0,0,2704,1520);
 }
 
 
@@ -168,20 +174,20 @@ blend(bg, 0,0,1920,1080,0,0,1920,1080, DARKEST);
 /**
   End of sketch closer
 */
-//void doExit(){
-//  String msg = "ericfickes.com";
-//  //  stamp bottom right based on textSize
-//  fill(0);
-//  textSize(16);
-//  text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
+void doExit(){
+  //String msg = "ericfickes.com";
+  ////  stamp bottom right based on textSize
+  //fill(0);
+  //textSize(16);
+  //text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-//  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
+  //save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
   
-//  //  cleanup
-//  fix = null;
+  ////  cleanup
+  //fix = null;
   
-//  noLoop();
-//  exit();
-//  System.gc();
-//  System.exit(1);
-//}
+  noLoop();
+  exit();
+  System.gc();
+  System.exit(1);
+}
