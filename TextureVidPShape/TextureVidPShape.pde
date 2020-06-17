@@ -80,12 +80,20 @@ void draw() {
         bg.filter(POSTERIZE,255);
       }
       
-// TODO: cool?
-//tint(255);//,50);
-blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-tint(255, 45);
-image(bg, 0,0,width,height);
+    // TODO: cool?
+// bike2
+    //blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+    //tint(255, 69);
+    //image(bg, 0,0,width,height);
   
+// bike3
+    tint(255, 69);
+    image(bg, 0,0,width,height);
+    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+
+    
+    
+    
     //lights();
     //ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     //directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
