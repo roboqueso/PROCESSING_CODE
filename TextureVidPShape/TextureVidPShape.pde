@@ -9,7 +9,7 @@ if(color)
 else
   PNG
 
-
+//  ffmpeg -r 60 -f image2 -pattern_type glob -i "*?png" -vcodec libx264 -crf 20 -pix_fmt yuv420p output60.mp4
 */
 
 import fixlib.*;
@@ -19,12 +19,12 @@ Movie myMovie;
 /* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
 float sz = 3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
-int STOP_SZ = 8;
-String VIDEO_NAME = "fishtank8.mp4";
+int STOP_SZ = 16;
+String VIDEO_NAME = "ellipseses.mp4";
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
-
+PImage bg;
 PShape myBox, mySphere;
 /* ------------------------------------------------------------------------- */
 
@@ -37,17 +37,44 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-  //frameRate(888);  //  this doesn't seem to matter when saving frames
   background(255);
   myMovie = new Movie(this, VIDEO_NAME);
   myMovie.loop();
   myMovie.volume(0);
   
+  bg = createImage(3840,2160,RGB);
+  
   cX = (int) width/2;
   cY = (int) height/2;
-  strokeWeight(STOP_SZ);
+  //strokeWeight(STOP_SZ);
+  noStroke();
   textureMode(NORMAL);
   textureWrap(REPEAT);
+  
+  //  TODO: 
+  //  1. Is blendMode working?
+  //  2. which mode kicks out the best shit?
+//BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
+
+//ADD - additive blending with white clip: C = min(A*factor + B, 255)
+
+//SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
+
+//DARKEST - only the darkest color succeeds: C = min(A*factor, B)
+
+//LIGHTEST - only the lightest color succeeds: C = max(A*factor, B)
+
+//DIFFERENCE - subtract colors from underlying image.
+
+//EXCLUSION - similar to DIFFERENCE, but less extreme.
+
+//MULTIPLY - multiply the colors, result will always be darker.
+
+//SCREEN - opposite multiply, uses inverse values of the colors.
+
+//REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
+
+blendMode(REPLACE);
 }
 
 
@@ -60,32 +87,32 @@ void movieEvent(Movie m) {
 
 /* ------------------------------------------------------------------------- */
 void draw() {
+      if(frameCount%2==0)
+      {
+        bg.filter(INVERT);
+      } 
+      else 
+      {
+        bg.filter(ERODE);
+      }
+
+//  TODO: trying to apply a thin mask of the previous frame to BLEND with the new frame
+//  IS TINT even helping???
+tint(255,50);
+image(bg,0,0);
+noTint();
   
-  
-  //if (myMovie.available()) {
-  //  myMovie.read();
-    
-//    //  LOAD TEXTURE IMAGE
-//    try{
-//      //  TODO : loadMovie(), onMovieEvent() txtImg = movie.read();
-//      txtImg = myMovie;  //loadImage("testframe.png");  // realtime load to simulate loading from movie
-////image(txtImg, 0,0);
-//    }
-//    catch(Exception exc){
-//      println("TEXTURE IMAGE EXC:  \n"+ exc.getMessage() );
-//      txtImg = get();
-//    }
-    
-    //  TESTING
-    //image(txtImg,0,0);
-    
-    
+    lights();
+    ambientLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
+    directionalLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
+    pointLight( random(cX%255), random(cY%255), STOP_SZ, cX, cY, STOP_SZ);
+    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
+
     //  w = h * 1.8
     //  increment by 8 until > sz  h
     h = sz;
     w = h * 1.8;
-    //stroke( (frameCount % 2 == 0 ? 0 : color(255,0,0) )); 
-  
+
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
   
       //  BOX
@@ -101,32 +128,32 @@ void draw() {
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
-    //  IT'S ON
-    lights();
   
   //  pull colors from texture
-  stroke(txtImg.get(txtImg.width/2, txtImg.height/2));
+  //stroke(txtImg.get(txtImg.width/2, txtImg.height/2));
   
     //  SET THE STAGE
-    rotate(frameCount);
+    rotateX(frameCount);
+    rotateY(frameCount);
+    rotateZ(-frameCount);
     
     //  BOX
     pushMatrix();
-      translate(cX-(sz*.5), cY, STOP_SZ);
+      translate(cX-(sz*.5), cY, 0);
       shape(myBox);
     popMatrix();
   
   
     //  SPHERE
     pushMatrix();
-      translate(cX+(sz*.5), cY, STOP_SZ);
+      translate(cX+(sz*.5), cY, 0);
       shape(mySphere);
     popMatrix();
   
   
     if(sz>STOP_SZ)
     {
-      sz -= 64;
+      sz -= STOP_SZ;
     }
     else
     {
@@ -135,8 +162,11 @@ void draw() {
     
     
     //saveFrame( "frames/pshapes#######.tif");  //  USE .TIF IF COLOR or TO BE GLITCHED
+    //  FFMPEG doesn't like these .tif????
+    
     saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
-
+    //  GRAB A SCREENSHOT
+    bg = get();
 }
 
 
