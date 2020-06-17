@@ -46,16 +46,18 @@ void setup() {
   myMovie = new Movie(this, VIDEO_NAME);
   myMovie.loop();
   myMovie.volume(0);
-  
-  //bg = createImage(2704,1520,RGB);
-  bg = get(0,0,2704,1520);
 
-  
   cX = (int) width/2;
   cY = (int) height/2;
+  rectMode(CENTER);      //  NOTE: bike3 experimentation
+  shapeMode(CENTER);    //  NOTE: bike3 experimentation
+  imageMode(CENTER);    //  NOTE: bike3 experimentation
+  
   textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
   textureWrap(CLAMP);   //  CLAMP ( default ) or REPEAT --> was bike2  
   blendMode(DIFFERENCE);
+  
+  bg = get(0,0,width, height);
 }
 
 
@@ -161,7 +163,8 @@ void draw() {
     
     saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
     //  GRAB A SCREENSHOT
-    bg = get(0,0,2704,1520);
+    //bg = get(0,0,2704,1520);
+    bg = get(0,0,width,height);
 }
 
 
