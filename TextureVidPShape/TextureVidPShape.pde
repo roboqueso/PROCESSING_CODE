@@ -16,15 +16,15 @@ else
 //  ffmpeg -r 60 -f image2 -pattern_type glob -i "*?png" -vcodec libx264 -crf 20 -pix_fmt yuv420p output60.mp4
 */
 
-import fixlib.*;
+//import fixlib.*;
 import processing.video.*;
 Movie myMovie;
 
 /* ------------------------------------------------------------------------- */
-Fixlib fix = Fixlib.init(this);
+//Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "BikeRide720_preWarp.mp4";
+String VIDEO_NAME = "output60_PC.mp4";
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
@@ -55,7 +55,8 @@ void setup() {
   
   textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
   textureWrap(CLAMP);   //  CLAMP ( default ) or REPEAT --> was bike2  
-  blendMode(DIFFERENCE);
+  blendMode(EXCLUSION);
+  strokeWeight(.45);  // MAKE IT FATTER
   
   bg = get(0,0,width, height);
 }
@@ -88,18 +89,17 @@ void draw() {
     //tint(255, 69);
     //image(bg, 0,0,width,height);
   
-// bike3
     tint(255, 69);
-    image(bg, 0,0,width,height);
+    //image(bg, 0,0,width,height);
     blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
 
     
     
     
-    //lights();
-    //ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    //directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    //pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+lights();
+ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
   
  
@@ -126,15 +126,12 @@ void draw() {
     
   
       //  pull colors from texture
-      strokeWeight(random( HALF_PI, TWO_PI ));  // MAKE IT FATTER
       stroke(bg.get(bg.width/2, bg.height/2));
-  
+
     //  BOX
     pushMatrix();
       translate(cX-(sz*.5), cY, 0);
-      rotateX(frameCount%45);  //frameCount%75);
-      rotateY(45);
-      rotateZ(frameCount%90);
+      rotate(frameCount);
       shape(myBox);
     popMatrix();
   
