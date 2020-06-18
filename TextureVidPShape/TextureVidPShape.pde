@@ -44,7 +44,7 @@ void  settings ()  {
 void setup() {
   background(0xCCEF20);
   myMovie = new Movie(this, VIDEO_NAME);
-  myMovie.loop();
+  myMovie.loop(); 
   myMovie.volume(0);
 
   cX = (int) width/2;
@@ -56,7 +56,8 @@ void setup() {
   textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
   textureWrap(REPEAT);   //  CLAMP ( default ) or REPEAT --> was bike2  
   blendMode(EXCLUSION);
-  strokeWeight(.45);  // MAKE IT FATTER
+  //strokeWeight(.45);  // MAKE IT FATTER
+  noStroke();
   
   bg = get(0,0,width, height);
 }
@@ -89,11 +90,9 @@ void draw() {
     //tint(255, 69);
     //image(bg, 0,0,width,height);
   
-
-    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-
     tint(255, 45);
-    image(bg, 0,0,width,height);    
+      blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+      image(bg, 0,0,width,height);    
     noTint();
     
 lights();
@@ -110,7 +109,9 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     w = h * 1.8;
 
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
-  
+
+
+tint(bg.get(bg.width/2, bg.height/2), 169);
       //  BOX
       beginShape();
         myBox = createShape( BOX, sz, sz, sz );
@@ -126,7 +127,7 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     
   
       //  pull colors from texture
-      stroke(bg.get(bg.width/2, bg.height/2));
+      //stroke(bg.get(bg.width/2, bg.height/2));
 
     //  BOX
     pushMatrix();
@@ -142,7 +143,7 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
       rotate(frameCount);
       shape(mySphere);
     popMatrix();
-  
+ noTint();
   
     if(sz>STOP_SZ)
     {
