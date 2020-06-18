@@ -24,7 +24,7 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "BikeRide720_preWarp_audio.mp4";
+String VIDEO_NAME = "output29_latest.mp4";
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
@@ -72,15 +72,20 @@ void movieEvent(Movie m) {
 void draw() {
  
 
+//  TODO: blending is causing lame gray
+strokeWeight(.45);
+stroke(0xCCEF20);
+
   
       if(frameCount%2==0)
       {
         bg.filter(INVERT);
-        //bg.filter(BLUR);
+        line(0,random(height),width, random(height));
       } 
       else 
       {
         bg.filter(POSTERIZE,255);
+        line(random(width),0, random(width), height);
       }
       
     // TODO: cool?
@@ -154,11 +159,7 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
       doExit();
     }
     
-      //  TODO: blending is causing lame gray
-  strokeWeight(.45);
-  stroke(0xCCEF20);
-  line(0,random(height),width, random(height));
-  noStroke();
+
   
     //saveFrame( "frames/pshapes#######.tif");  //  USE .TIF IF COLOR or TO BE GLITCHED
     //  FFMPEG doesn't like these .tif????
