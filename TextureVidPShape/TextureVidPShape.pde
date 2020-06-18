@@ -55,8 +55,6 @@ void setup() {
   
   textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
   textureWrap(REPEAT);   //  CLAMP ( default ) or REPEAT --> was bike2  
-  blendMode(EXCLUSION);
-  //strokeWeight(.45);  // MAKE IT FATTER
   noStroke();
   
   bg = get(0,0,width, height);
@@ -73,11 +71,12 @@ void movieEvent(Movie m) {
 /* ------------------------------------------------------------------------- */
 void draw() {
  
+
   
       if(frameCount%2==0)
       {
         bg.filter(INVERT);
-        bg.filter(BLUR);
+        //bg.filter(BLUR);
       } 
       else 
       {
@@ -86,22 +85,19 @@ void draw() {
       
     // TODO: cool?
 // bike2
-    //blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-    //tint(255, 69);
-    //image(bg, 0,0,width,height);
-  
-    tint(255, 45);
-      blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-      image(bg, 0,0,width,height);    
+    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+    tint(255, 69);
+    image(bg, 0,0,width,height);
     noTint();
     
 lights();
-ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
+ambientLight( 0xCCEF20, cX, cY);
 directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
 pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
-  
- 
+  //clear();
+  noStroke();
+
 
     //  w = h * 1.8
     //  increment by 8 until > sz  h
@@ -111,27 +107,30 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
 
 
-tint(bg.get(bg.width/2, bg.height/2), 169);
+
       //  BOX
       beginShape();
         myBox = createShape( BOX, sz, sz, sz );
+        myBox.disableStyle();
         myBox.setTexture(txtImg);
       endShape(CLOSE);
     
       //  SPHERE
       beginShape();
-        sphereDetail( ((STOP_SZ+frameCount)%45) );
+        sphereDetail(6);
         mySphere = createShape( SPHERE, sz );
+        mySphere.disableStyle();
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
   
       //  pull colors from texture
       //stroke(bg.get(bg.width/2, bg.height/2));
+      tint(bg.get(bg.width/2, bg.height/2) );//, 240 );
 
     //  BOX
     pushMatrix();
-      translate(cX-(sz*.5), cY, 0);
+      translate((cX-(sz*.5))%width, cY, 0);
       rotate(frameCount);
       shape(myBox);
     popMatrix();
@@ -139,7 +138,7 @@ tint(bg.get(bg.width/2, bg.height/2), 169);
   
     //  SPHERE
     pushMatrix();
-      translate(cX+(sz*.5), cY, 0);
+      translate( (cX+(sz*.5))%width, cY, 0);
       rotate(frameCount);
       shape(mySphere);
     popMatrix();
@@ -155,7 +154,12 @@ tint(bg.get(bg.width/2, bg.height/2), 169);
       doExit();
     }
     
-    
+      //  TODO: blending is causing lame gray
+  strokeWeight(.45);
+  stroke(0xCCEF20);
+  line(0,random(height),width, random(height));
+  noStroke();
+  
     //saveFrame( "frames/pshapes#######.tif");  //  USE .TIF IF COLOR or TO BE GLITCHED
     //  FFMPEG doesn't like these .tif????
     
