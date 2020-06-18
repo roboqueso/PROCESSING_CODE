@@ -24,7 +24,7 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "output60_PC.mp4";
+String VIDEO_NAME = "BikeRide720_preWarp_audio.mp4";
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
@@ -42,7 +42,7 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-  background(255);
+  background(0xCCEF20);
   myMovie = new Movie(this, VIDEO_NAME);
   myMovie.loop();
   myMovie.volume(0);
@@ -54,7 +54,7 @@ void setup() {
   imageMode(CENTER);    //  NOTE: bike3 experimentation
   
   textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
-  textureWrap(CLAMP);   //  CLAMP ( default ) or REPEAT --> was bike2  
+  textureWrap(REPEAT);   //  CLAMP ( default ) or REPEAT --> was bike2  
   blendMode(EXCLUSION);
   strokeWeight(.45);  // MAKE IT FATTER
   
@@ -89,12 +89,12 @@ void draw() {
     //tint(255, 69);
     //image(bg, 0,0,width,height);
   
-    tint(255, 69);
-    //image(bg, 0,0,width,height);
+
     blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
 
-    
-    
+    tint(255, 45);
+    image(bg, 0,0,width,height);    
+    noTint();
     
 lights();
 ambientLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
