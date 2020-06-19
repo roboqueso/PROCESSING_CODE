@@ -24,7 +24,8 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "output29_latest.mp4";
+String VIDEO_NAME = "1704608546.MP4";  //"output29_latest.mp4";
+//TODO: COLLAB_FICKES_RND_FICKES_DISCPLACEMENT_NATURAL_ANIMATION_01.mp4
 float w, h;
 int cX, cY;
 PImage txtImg;  //  frame to use in setTexture(txtImg)
@@ -49,13 +50,13 @@ void setup() {
 
   cX = (int) width/2;
   cY = (int) height/2;
-  rectMode(CENTER);      //  NOTE: bike3 experimentation
-  shapeMode(CENTER);    //  NOTE: bike3 experimentation
-  imageMode(CENTER);    //  NOTE: bike3 experimentation
+  //rectMode(CENTER);      //  NOTE: bike3 experimentation
+  //shapeMode(CENTER);    //  NOTE: bike3 experimentation
+  //imageMode(CENTER);    //  NOTE: bike3 experimentation
   
-  textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
-  textureWrap(REPEAT);   //  CLAMP ( default ) or REPEAT --> was bike2  
-  noStroke();
+  //textureMode(IMAGE);    //  NORMAL was bike2, what does IMAGE look like?
+  //textureWrap(REPEAT);   //  CLAMP ( default ) or REPEAT --> was bike2  
+  //noStroke();
   
   bg = get(0,0,width, height);
 }
@@ -88,27 +89,13 @@ stroke(0xCCEF20);
         line(random(width),0, random(width), height);
       }
       
-    // TODO: cool?
-// bike2
-    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-    tint(255, 69);
-    image(bg, 0,0,width,height);
-    noTint();
-    
-lights();
-ambientLight( 0xCCEF20, cX, cY);
-directionalLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
-    //  TODO: figure out a good algo for https://processing.org/reference/spotLight_.html
-  //clear();
-  noStroke();
-
 
     //  w = h * 1.8
     //  increment by 8 until > sz  h
     h = sz;
     w = h * 1.8;
 
+// TODO: come back and make all of these
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
 
 
@@ -116,7 +103,7 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
       //  BOX
       beginShape();
         myBox = createShape( BOX, sz, sz, sz );
-        myBox.disableStyle();
+        //myBox.disableStyle();
         myBox.setTexture(txtImg);
       endShape(CLOSE);
     
@@ -124,15 +111,26 @@ pointLight( random(cX%255), random(cY%255), random(cY%255), cX, cY, STOP_SZ);
       beginShape();
         sphereDetail(6);
         mySphere = createShape( SPHERE, sz );
-        mySphere.disableStyle();
+        //mySphere.disableStyle();
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
   
       //  pull colors from texture
       //stroke(bg.get(bg.width/2, bg.height/2));
-      tint(bg.get(bg.width/2, bg.height/2) );//, 240 );
+      //tint(bg.get(bg.width/2, bg.height/2) );//, 240 );
 
+      // TODO: NEIL BLENDER IT!!!
+    tint(255, 45);
+    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
+    
+    tint(255, 45);
+    image(bg, 0,0,width,height);
+    
+    tint(255, 45);
+
+  
+  
     //  BOX
     pushMatrix();
       translate((cX-(sz*.5))%width, cY, 0);
