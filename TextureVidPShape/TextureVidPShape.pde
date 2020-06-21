@@ -24,7 +24,7 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "PleasureCruise2_RELIVE40mph.mp4";
+String VIDEO_NAME = "Night Rider Two Horses.mp4";
 
 float w, h;
 int cX, cY;
@@ -46,40 +46,12 @@ void  settings ()  {
 
 void setup() {
   background(0xCCEF20);  // SAFETY FIRST
-
-  // TODO: do these do anything?
-  hint(ENABLE_OPTIMIZED_STROKE);
-  hint(ENABLE_STROKE_PERSPECTIVE);
-  hint(ENABLE_STROKE_PURE);
-
-
-  hint(ENABLE_DEPTH_MASK);
-  //  Using hint(ENABLE_DEPTH_SORT) can improve the appearance of 3D geometry drawn to 2D file formats.
-  hint(ENABLE_DEPTH_SORT);
-  hint(ENABLE_DEPTH_TEST);
-
-  hint(ENABLE_ASYNC_SAVEFRAME);
-  hint(ENABLE_BUFFER_READING);
-  hint(ENABLE_TEXTURE_MIPMAPS);
-
-
-  // TODO: what HINTs should be looked at for additional smoothing
-  // TODO: is there a blendMode P3D likes?
-  /*
-  BLEND - linear interpolation of colours: C = A*factor + B. This is the default blending mode.
-  SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
-  DARKEST - only the darkest colour succeeds: C = min(A*factor, B)
+  //blendMode(EXCLUSION);
+  imageMode(CORNERS);
+  shapeMode(CORNERS);  // CORNER, CORNERS, CENTER
+  rectMode(RADIUS); 
   
-  DIFFERENCE - subtract colors from underlying image.
-  EXCLUSION - similar to DIFFERENCE, but less extreme.
-  MULTIPLY - multiply the colors, result will always be darker.
-  REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
-  */
-  blendMode(REPLACE);
-  
-  strokeCap(ROUND);
-  strokeJoin(ROUND);
-  strokeWeight(2);
+  strokeWeight(PI);
   
   //  SAFETY FIRST!
   stroke(0xCCEF20);
@@ -93,6 +65,7 @@ void setup() {
   cY = (int) height/2;
 
   bg = get(0,0,width, height);
+
 }
 
 
@@ -105,15 +78,10 @@ void movieEvent(Movie m) {
 
 /* ------------------------------------------------------------------------- */
 void draw() {
- 
-        // 3D code
-        hint(DISABLE_DEPTH_TEST);
+
         camera();
         lights(); //    because P3D
 
-        ambientLight((frameCount+sz)%255,sz%255,sz%255);
-        emissive(sz%255,(frameCount+sz)%255,sz%255);
-        specular(sz%255,sz%255,(frameCount+sz)%255);
 
   
       if(frameCount%2==0)
@@ -123,7 +91,7 @@ void draw() {
       } 
       else 
       {
-        bg.filter(POSTERIZE,255);
+        bg.filter(OPAQUE);
         line(random(width),0, random(width), height);
       }
       
@@ -133,6 +101,21 @@ void draw() {
     h = sz;
     w = h * 1.8;
 
+
+      // TODO: NEIL BLENDER IT!!!
+pushMatrix();
+translate(0,0,0);
+    tint(255, 11);
+    txtImg.blend(bg, 0,0,width,height, 0, 0,width,height, REPLACE);
+    scale(-1,-1);
+    blend(bg, 0,0,width,height, 0, 0,width,height, REPLACE);
+    
+    tint(255, 11);
+    image(txtImg, cX,cY,width,height);
+    noTint();
+popMatrix();
+//
+
 // TODO: come back and make all of these
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
 
@@ -141,61 +124,31 @@ void draw() {
       //  BOX
       beginShape();
         myBox = createShape( BOX, sz, sz, sz );
-        //myBox.disableStyle();
         myBox.setTexture(txtImg);
       endShape(CLOSE);
     
       //  SPHERE
       beginShape();
-        sphereDetail(6);
+        sphereDetail(9);
         mySphere = createShape( SPHERE, sz );
-        //mySphere.disableStyle();
         mySphere.setTexture(txtImg);
       endShape(CLOSE);
     
       //  JOUS
       beginShape();
-        myJous = shapeJous( frameCount%width, frameCount%height, sz%height, STOP_SZ );
+        myJous = shapeJous( cX,cY, sz, STOP_SZ );
         myJous.setTexture(txtImg);
       endShape(CLOSE);
   
-      //  pull colors from texture
-      //stroke(bg.get(bg.width/2, bg.height/2));
-      //tint(bg.get(bg.width/2, bg.height/2) );//, 240 );
-
-      // TODO: NEIL BLENDER IT!!!
-    tint(255, 45);
-    blend(bg, 0,0,width,height, cX, cY,width,height, DIFFERENCE);
-    
-    tint(255, 45);
-    image(bg, 0,0,width,height);
-    
-    noTint();
-    
-  //tint(0xCCEF20, 45);
   
     //  BOX
     pushMatrix();
-      translate((cX-(sz*.5))%width, cY, 0);
-      rotate(frameCount);
+      translate(cX,cY, 0);
+//tint(0xCCEF20,20);
+      rotateY(sz);
+      rotateZ(frameCount);
       shape(myBox);
-    popMatrix();
-  
-  
-    //  SPHERE
-    pushMatrix();
-      translate( (cX+(sz*.5))%width, cY, 0);
-      rotate(frameCount);
       shape(mySphere);
-    popMatrix();
- 
- //noTint();
-  
-  
-    //  JOUS
-    pushMatrix();
-      translate(cX, cY, PI );
-      rotate(frameCount);
       shape(myJous);
     popMatrix();
   
@@ -217,7 +170,6 @@ void draw() {
     
     saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
     //  GRAB A SCREENSHOT
-    //bg = get(0,0,2704,1520);
     bg = get(0,0,width,height);
 }
 
