@@ -24,7 +24,7 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "Night Rider Two Horses.mp4";
+String VIDEO_NAME = "DoubleHDoutrunToArvadaSkatepark.mp4";
 
 float w, h;
 int cX, cY;
@@ -51,7 +51,7 @@ void setup() {
   shapeMode(CORNERS);  // CORNER, CORNERS, CENTER
   rectMode(RADIUS); 
   
-  strokeWeight(PI);
+  strokeWeight(8);
   
   //  SAFETY FIRST!
   stroke(0xCCEF20);
