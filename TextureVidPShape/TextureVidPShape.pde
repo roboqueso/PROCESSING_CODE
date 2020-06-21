@@ -24,7 +24,7 @@ Movie myMovie;
 //Fixlib fix = Fixlib.init(this);
 float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 int STOP_SZ = 8;
-String VIDEO_NAME = "DoubleHDoutrunToArvadaSkatepark.mp4";
+String VIDEO_NAME = "Night Rider Two Horses.mp4";
 
 float w, h;
 int cX, cY;
@@ -143,8 +143,21 @@ popMatrix();
   
     //  BOX
     pushMatrix();
+
+directionalLight(102, 102, 102, 0, 0, -1);
+lightSpecular(204, 204, 204);
+directionalLight(102, 102, 102, 0, 1, -1);
+lightSpecular(102, 102, 102);
+
+
       translate(cX,cY, 0);
-//tint(0xCCEF20,20);
+
+ambient(0xCCEF20);
+emissive(0xCCEF20);
+specular(0xCCEF20);
+
+
+shininess(5.0);
       rotateY(sz);
       rotateZ(frameCount);
       shape(myBox);
