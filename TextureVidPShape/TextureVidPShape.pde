@@ -32,7 +32,7 @@ float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this wid
 float w,h;
 int STOP_SZ = 8;
 int cX, cY;
-String VIDEO_NAME = "BRUNCH.MP4";  //  Texture image source
+String VIDEO_NAME = "GH011276.MP4";  //  Texture image source
 PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
 
@@ -91,23 +91,26 @@ void draw() {
   lights(); //    because P3D
 
   //  SAFETY FIRST - don't assume the movie is readable
-  if ( myMovie.available() ) {
-    image(myMovie, 0, 0);
-
+  //  NOTE: using myMovie.available() causes Java heap space crash.
+  //  Just confirm txtImg isn't null since this gets set from Movie reads
+  if ( txtImg  != null ) {
 
     if (frameCount%2==0)
     {
       bg.filter(INVERT);
       line(0, random(height), width, random(height));
+      scale(-1,-1);
     } else 
     {
+      scale(.45,.45);
       bg.filter(OPAQUE);
       line(random(width), 0, random(width), height);
     }
 
+    tint(255,24);
+    image(myMovie, 0, 0);
+    
 
-    //  w = h * 1.8
-    //  increment by 8 until > sz  h
     h = sz;
     w = h * 1.8;
 
@@ -155,6 +158,7 @@ void draw() {
     endShape(CLOSE);
 
 
+
     //  BOX
     pushMatrix();
 
@@ -162,18 +166,18 @@ void draw() {
       lightSpecular(204, 204, 204);
       directionalLight(102, 102, 102, 0, 1, -1);
       lightSpecular(102, 102, 102);
-  
+
+      tint(255,11);  
   
       translate(cX, cY, 0);
   
       ambient(0xCCEF20);
       emissive(0xCCEF20);
       specular(0xCCEF20);
-  
-  
+        
       shininess(5.0);
-      rotateY(sz);
-      rotateZ(frameCount);
+      rotateY(sz*.11);
+      rotateZ(frameCount*.11);
       shape(myBox);
       shape(mySphere);
       shape(myJous);
