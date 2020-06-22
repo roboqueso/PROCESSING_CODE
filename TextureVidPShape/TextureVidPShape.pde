@@ -97,6 +97,7 @@ void draw() {
 
     if (frameCount%2==0)
     {
+      bg.filter(BLUR, 45);
       bg.filter(INVERT);
       line(0, random(height), width, random(height));
       scale(-1,-1);
@@ -104,6 +105,7 @@ void draw() {
     {
       scale(.45,.45);
       bg.filter(OPAQUE);
+      bg.filter(POSTERIZE,45 );
       line(random(width), 0, random(width), height);
     }
 
