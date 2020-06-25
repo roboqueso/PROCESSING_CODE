@@ -32,13 +32,13 @@ float sz = 3840;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this wid
 float w,h;
 int STOP_SZ = 8;
 int cX, cY;
-String VIDEO_NAME = "GH011284.MP4";  // NEXT >> "G5622T_RUN.mp4";  //  Texture image source
+String VIDEO_NAME = "G5622T_RUN.mp4";  //  Texture image source
 
 PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
 
 PShape myBox, mySphere, myJous;
-
+color txClr;
 
 /* ------------------------------------------------------------------------- */
 
@@ -55,14 +55,8 @@ void  settings () {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-  background(0xCCEF20);  // SAFETY FIRST
-  //blendMode(EXCLUSION);
-  imageMode(CORNERS);
-  shapeMode(CORNERS);  // CORNER, CORNERS, CENTER
-  rectMode(RADIUS); 
-
+  background(0xCCEF20);  // SAFETY FIRS
   strokeWeight(8);
-
   //  SAFETY FIRST!
   stroke(0xCCEF20);
 
@@ -75,8 +69,7 @@ void setup() {
   cY = (int) height/2;
 
   bg = get(0, 0, width, height);
-  //  NOTE: testing width based start size
-  sz = width;
+
 }
 
 
@@ -90,7 +83,7 @@ void movieEvent(Movie m) {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  camera();
+  //camera();
   lights(); //    because P3D
 
   //  SAFETY FIRST - don't assume the movie is readable
@@ -100,21 +93,19 @@ void draw() {
 
     if (frameCount%2==0)
     {
-      bg.filter(BLUR, 45);
       bg.filter(INVERT);
       line(0, random(height), width, random(height));
-      scale(-1,-1);
     } else 
     {
-      scale(.45,.45);
-      bg.filter(OPAQUE);
       bg.filter(POSTERIZE,45 );
       line(random(width), 0, random(width), height);
     }
 
-    tint(255,24);
-    image(myMovie, 0, 0);
-    
+    tint(255,11);
+    pushMatrix();
+      translate(cX,cY,0);
+      image(myMovie, 0,0);
+    popMatrix();
 
     h = sz;
     w = h * 1.8;
@@ -122,18 +113,18 @@ void draw() {
 
     // TODO: NEIL BLENDER IT!!!
     pushMatrix();
-    translate(0, 0, 0);
+    translate(cX,cY,0);
     tint(255, 11);
     //  NOTE: if Movie can't be read, thee PImages will be null
     if (null!=bg && txtImg!=null) { 
       txtImg.blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
     }
-    scale(-1, -1);
+    //scale(-1, -1);
     blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
 
     tint(255, 11);
     //  NOTE: if Movie can't be read, thee PImages will be null
-    if (null!=bg && txtImg!=null)image(txtImg, cX, cY, width, height);
+    if (null!=bg && txtImg!=null)image(txtImg, 0, width, height);
     noTint();
     popMatrix();
     //
@@ -181,14 +172,13 @@ void draw() {
       //specular(0xCCEF20);
 //  BETA : NEW LIGHTING FROM TEXTURE
       //  pull tint from texture
-      color txClr = txtImg.get( cX, cY ); 
+      txClr = txtImg.get( cX, cY ); 
       ambient(txClr);
       emissive(txClr);
       specular(txClr);
         
       shininess(5.0);
-      rotateY(sz*.11);
-      rotateZ(frameCount*.11);
+
       shape(myBox);
       shape(mySphere);
       shape(myJous);
@@ -203,21 +193,18 @@ void draw() {
     text( "MOVIE:ERROR:" + frameCount, random(width), random(height) );
   }
 
-// HOT OR NOT?
-//System.gc();
-
   //  FRAME SAVER
   saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
   
-  
+  // HOT OR NOT?
+System.gc();
   
   //  SKETCH STOPPER
   //  KEEP THIS HERE OR
   //  JAVA WILL RUN OUT OF HEAP SPACE
     if (sz>STOP_SZ)
     {
-      //sz -= STOP_SZ;
-      sz -= TWO_PI;
+      sz -= STOP_SZ;
 // debug
 if(frameCount%100==0)  println( frameCount + " : " + sz + " > " + STOP_SZ );
     } else
