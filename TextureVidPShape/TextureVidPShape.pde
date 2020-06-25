@@ -124,7 +124,7 @@ void draw() {
 
     tint(255, 11);
     //  NOTE: if Movie can't be read, thee PImages will be null
-    if (null!=bg && txtImg!=null)image(txtImg, 0, width, height);
+    if (null!=bg && txtImg!=null)image(txtImg, 0, 0);
     noTint();
     popMatrix();
     //
