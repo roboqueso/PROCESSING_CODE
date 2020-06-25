@@ -28,11 +28,12 @@ import processing.video.*;
 Movie myMovie;
 
 /* ------------------------------------------------------------------------- */
-float sz = 2704;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
+float sz = 3840;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this width of sketch
 float w,h;
 int STOP_SZ = 8;
 int cX, cY;
-String VIDEO_NAME = "GH011276.MP4";  //  Texture image source
+String VIDEO_NAME = "GH011284.MP4";  // NEXT >> "G5622T_RUN.mp4";  //  Texture image source
+
 PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
 
@@ -42,7 +43,7 @@ PShape myBox, mySphere, myJous;
 /* ------------------------------------------------------------------------- */
 
 void  settings () {
-  size(1900, 1200, P3D); //  always use P3D!!!
+  size(3840, 2160, P3D); //  always use P3D!!!
   smooth(8);  //  smooth() can only be used in settings();
   pixelDensity(displayDensity());
 
@@ -74,6 +75,8 @@ void setup() {
   cY = (int) height/2;
 
   bg = get(0, 0, width, height);
+  //  NOTE: testing width based start size
+  sz = width;
 }
 
 
@@ -173,9 +176,15 @@ void draw() {
   
       translate(cX, cY, 0);
   
-      ambient(0xCCEF20);
-      emissive(0xCCEF20);
-      specular(0xCCEF20);
+      //ambient(0xCCEF20);
+      //emissive(0xCCEF20);
+      //specular(0xCCEF20);
+//  BETA : NEW LIGHTING FROM TEXTURE
+      //  pull tint from texture
+      color txClr = txtImg.get( cX, cY ); 
+      ambient(txClr);
+      emissive(txClr);
+      specular(txClr);
         
       shininess(5.0);
       rotateY(sz*.11);
@@ -195,7 +204,7 @@ void draw() {
   }
 
 // HOT OR NOT?
-System.gc();
+//System.gc();
 
   //  FRAME SAVER
   saveFrame( "frames/pshapes#######.png");  //  USE .PNG IF NEEDING SPACE
@@ -208,9 +217,17 @@ System.gc();
     if (sz>STOP_SZ)
     {
       //sz -= STOP_SZ;
-      sz -= HALF_PI;
+      sz -= TWO_PI;
+// debug
+if(frameCount%100==0)  println( frameCount + " : " + sz + " > " + STOP_SZ );
     } else
     {
+      try{
+        //  TESTING
+        launch("/usr/bin/say All done chief");
+      } catch (Exception e ){
+        println("END EXC :: " + e.getMessage() );
+      }
       doExit();
     }
     
