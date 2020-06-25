@@ -32,7 +32,7 @@ float sz = 3840;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this wid
 float w,h;
 int STOP_SZ = 8;
 int cX, cY;
-String VIDEO_NAME = "G5622T_RUN.mp4";  //  Texture image source
+String VIDEO_NAME = "ElectroExclusion-720saucey.mp4";  //  Texture image source
 
 PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
@@ -43,21 +43,19 @@ color txClr;
 /* ------------------------------------------------------------------------- */
 
 void  settings () {
-  size(3840, 2160, P3D); //  always use P3D!!!
+  //size(3840, 2160, P3D); //  always use P3D!!!
+  size(1920,1080, P3D); //  always use P3D!!!
   smooth(8);  //  smooth() can only be used in settings();
   pixelDensity(displayDensity());
-
-  // TODO - what is sketchSmooth();
-  sketchSmooth();
 }
 
 
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-  background(0xCCEF20);  // SAFETY FIRS
+  background(0xCCEF20);  // SAFETY FIRST
+  frameRate(666);
   strokeWeight(8);
-  //  SAFETY FIRST!
   stroke(0xCCEF20);
 
   //  let us begin
@@ -68,7 +66,7 @@ void setup() {
   cX = (int) width/2;
   cY = (int) height/2;
 
-  bg = get(0, 0, width, height);
+  //bg = get(0, 0, width, height);
 
 }
 
@@ -83,7 +81,7 @@ void movieEvent(Movie m) {
 /* ------------------------------------------------------------------------- */
 void draw() {
 
-  //camera();
+  camera();
   lights(); //    because P3D
 
   //  SAFETY FIRST - don't assume the movie is readable
@@ -91,6 +89,7 @@ void draw() {
   //  Just confirm txtImg isn't null since this gets set from Movie reads
   if ( txtImg  != null ) {
 
+    if(bg != null){
     if (frameCount%2==0)
     {
       bg.filter(INVERT);
@@ -100,39 +99,30 @@ void draw() {
       bg.filter(POSTERIZE,45 );
       line(random(width), 0, random(width), height);
     }
-
-    tint(255,11);
-    pushMatrix();
-      translate(cX,cY,0);
-      image(myMovie, 0,0);
-    popMatrix();
+    
+      // TODO: NEIL BLENDER IT!!!
+      pushMatrix();
+      translate(0,0,0);
+      tint(255, 11);
+        //  NOTE: if Movie can't be read, thee PImages will be null
+        if (null!=bg && txtImg!=null) { 
+          txtImg.blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
+        }
+      
+        scale(-1);
+        blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
+    
+        //  NOTE: if Movie can't be read, thee PImages will be null
+        if (null!=bg && txtImg!=null)image(txtImg, cX, cY);
+      noTint();
+      popMatrix();
+      
+    }
 
     h = sz;
     w = h * 1.8;
-
-
-    // TODO: NEIL BLENDER IT!!!
-    pushMatrix();
-    translate(cX,cY,0);
-    tint(255, 11);
-    //  NOTE: if Movie can't be read, thee PImages will be null
-    if (null!=bg && txtImg!=null) { 
-      txtImg.blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
-    }
-    //scale(-1, -1);
-    blend(bg, 0, 0, width, height, 0, 0, width, height, REPLACE);
-
-    tint(255, 11);
-    //  NOTE: if Movie can't be read, thee PImages will be null
-    if (null!=bg && txtImg!=null)image(txtImg, 0, 0);
-    noTint();
-    popMatrix();
-    //
-
     // TODO: come back and make all of these
     //  ELLIPSE, RECT, ARC, TRIANGLE, SPHERE, BOX, QUAD
-
-
 
     //  BOX
     beginShape();
@@ -204,7 +194,7 @@ System.gc();
   //  JAVA WILL RUN OUT OF HEAP SPACE
     if (sz>STOP_SZ)
     {
-      sz -= STOP_SZ;
+      sz -= PI;
 // debug
 if(frameCount%100==0)  println( frameCount + " : " + sz + " > " + STOP_SZ );
     } else
@@ -273,16 +263,6 @@ private PShape shapeJous( float a, float b, float amp, int inc )
  End of sketch closer
  */
 void doExit() {
-  //String msg = "ericfickes.com";
-  ////  stamp bottom right based on textSize
-  //fill(0);
-  //textSize(16);
-  //text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
-
-  //save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
-
-  ////  cleanup
-  //fix = null;
 
   noLoop();
   exit();
