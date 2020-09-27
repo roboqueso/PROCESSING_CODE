@@ -35,7 +35,9 @@ void setup()
   minim = new Minim(this);
   
   // use the getLineIn method of the Minim object to get an AudioInput
-  in = minim.getLineIn();
+  //in = minim.getLineIn();  //  null
+  //  BUILD P5 V4
+  in = minim.getLineIn(Minim.MONO);
 }
 
 void draw()

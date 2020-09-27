@@ -32,7 +32,7 @@ float sz = 3840;  //3840;  //  THIS SKETCH GOES FROM BIG TO SMALL, keep this wid
 float w,h;
 int STOP_SZ = 8;
 int cX, cY;
-String VIDEO_NAME = "ElectroExclusion-720saucey.mp4";  //  Texture image source
+String VIDEO_NAME = "41secWarmup_2.MP4";  //  Texture image source
 
 PImage txtImg;  //  frame to use in setTexture(txtImg)
 PImage bg;
