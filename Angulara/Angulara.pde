@@ -1,3 +1,4 @@
+// see: https://ello.co/ericfickes/post/o3a09blb2lrbpctwm6pu8g
 float cX, cY, xx, yy, xx2, yy2, rad = 404, angle, sw = 11;
 PVector pv1;
 
@@ -108,5 +109,3 @@ boolean isFibonacci(float n)
       angle++;
     }
   }
-
-
