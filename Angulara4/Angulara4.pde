@@ -1,19 +1,25 @@
+// SEE : https://ello.co/ericfickes/post/en4ahtzb23mjdkc9xyqwwa
+
+import fixlib.*;
+
 float cX, cY, xx, yy, xx2, yy2, rad = 404, angle;
 PVector pv1, pv2;
 ArrayList<PVector> pts = new ArrayList<PVector>();
+Fixlib fix;
 
 void setup()
 {
   size(displayWidth, displayHeight);
   background(0);
-  smooth();
+  
+  smooth(8);
   noFill();
   frameRate(420);
   rectMode(CENTER);
   ellipseMode(CENTER);
   cX = width/2;
   cY = height/2;
-  
+  fix = Fixlib.init(this);
 }
 
 
@@ -129,5 +135,3 @@ boolean isFibonacci(float n)
       angle++;
     }
   }
-
-
