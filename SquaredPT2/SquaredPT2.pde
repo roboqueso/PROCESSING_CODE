@@ -1,3 +1,4 @@
+//  see: https://ello.co/ericfickes/post/hzqrfa1ky6iniduqqgqhlq
 // something got jacked in translations
 float centerX, centerY;
 float x, y;
@@ -5,7 +6,7 @@ float a,b;
 float amp = 666;
  
  void settings(){
-  size(displayWidth, displayHeight, FX2D);
+  size(displayWidth, displayHeight);
   pixelDensity(displayDensity());
   smooth(8);
 }
@@ -39,8 +40,9 @@ void draw() {
         y = centerY - amp * sin(b * t * TWO_PI/180);
  
         point( x, y );
-        point( y, x );
- 
+//        point( (y*x)%width, (x*y)%height );
+         point( (y*x)-width, (x*y)-height );
+
     }
  
     if( frameCount % 60 == 0 )
