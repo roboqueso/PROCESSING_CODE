@@ -15,17 +15,17 @@ Fixlib fix = Fixlib.init(this);
 
 
 
-boolean s1 = true;	//	vertex
+boolean s1 = false;	//	vertex
 boolean s2 = false;	//	sphere
 boolean s3 = false;	//	box
-boolean s4 = false;	//	triangle *BETA
+boolean s4 = true;	//	triangle *BETA
 float z;
 int cY, cX;
 ArrayList<PVector> alPath;
 
 
 Integer minP = 9;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
-Integer maxP = 11;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer maxP = 18;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer pStep;
 
 
