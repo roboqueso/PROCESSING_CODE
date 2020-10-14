@@ -1,3 +1,4 @@
+//  SEE: https://ello.co/ericfickes/post/1acvilno8xmlypxjhkl12a
 /*
   RAINBOWER - Part of the "SPACE RAINBOWS" theme
   * Draw half a circle, move back sliceWidth, draw another half circle, close shape
