@@ -1,38 +1,43 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  see: https://ello.co/ericfickes/post/7vk8ayth5wao2k_xglbnuq
+import fixlib.*;  // goto: https://github.com/ericfickes/FIXLIB
 
 Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 50;
+int alf = 256;
 
 //  art frame settings
 int outerRectX;
 int outerRectY;
-int outerRectWidth = 227;
-int outerRectHeight = 37;
+int outerRectWidth = 256;  //227;
+int outerRectHeight = 45;  //37;
 
 int cX = int( 1024 / PI );
 int cY = int( 768 / PI );
 
 float px, py, px2, py2;
-float angle = 45;
+float angle = 41;
 float angle2;
-float radius = 50;
-float frequency = 11;
-float frequency2 = 11;
+float radius = 69;
+float frequency = 13;
+float frequency2 = 9;
 float x, x2;
 
 int xx;
 int yy;
+int goodVar = 15;
 
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);
+}
 
 ////////////////////////////////////////////////////
 //
 void setup(){
-  size(1024, 768 );
+  //size(1024, 768 );
   background (36);
   fix.alpha(alf);
 }
@@ -58,7 +63,7 @@ void draw(){
 //  rect (px, py, 5, 5);
   heart( int(px), int(py), int(angle), int(angle) );
   
-  if( frameCount % 11 == 0 ) {    //  <-------- good var to tweak
+  if( frameCount % goodVar == 0 ) {    //  <-------- good var to tweak
   
     // draw ellipse around a circle
     for (int i = 0; i <= 360; i++)
@@ -69,12 +74,12 @@ void draw(){
 
       if( i % 4 == 0 )
       {
-        stroke( #EFEFEF, 5 );
+        stroke( #EFEFEF, 10 );  // 5
       }
       else
       {
         strokeWeight( .1 );
-        stroke( #EF1975, 1 );
+        stroke( #EF1975, 5 );  // .1
       }
 
       smooth();
@@ -136,7 +141,8 @@ void doExit()
 //
 //  Spit out ART DAILY message
 void artDaily( String dailyMsg ) {
-  fill( #EFEFEF, 100 );
+  //fill( #EFEFEF, 100 );
+  fill( #45EF20 );
   
   PFont font = createFont( "Silom", 11 );
   textFont( font );
@@ -181,4 +187,3 @@ void heart( int x, int y, int w, int h )
   line( x+(w*2), y, x, y + w*PI);
   
 }
-
