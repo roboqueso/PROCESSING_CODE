@@ -1,9 +1,10 @@
+//  see:  https://ello.co/ericfickes/post/4koctahrjatnpqjpqs1uoq
 //
 //  NOTE: this sketch is incomplete.  The goal is to generate OBJ files out of the wavey line
 import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-int strokin = 2;  // 1, 2, or 3 - adjust color
+int strokin = 3;  // 1, 2, or 3 - adjust color
 
 ////////////////////////////////////////////////////////////////////////////////////////
 public class EPoint {
@@ -49,8 +50,8 @@ void settings() {
 
 void setup() {
   background(#EFEFEF);
-  cX = (int)width/2;
-  cY = (int)height/2;
+  cX = (int)displayWidth/2;
+  cY = (int)displayHeight/2;
 
   cubeA = createGraphics(300, cY, P3D);
 } 
@@ -64,7 +65,7 @@ void draw() {
           frameCount%displayHeight );
 
 
-  if ( xx >= (width+cubeA.width) && yy < height ) {
+  if ( xx >= (displayWidth+cubeA.width) && yy < height ) {
 
     xx  = 0;
     yy += 180;
@@ -99,7 +100,7 @@ void draw() {
 
     save(this+"_"+frameCount+".png");
     //exit();
-  } else if (xx >= (width+cubeA.width) && yy > height) {
+  } else if (xx >= (displayWidth+cubeA.width) && yy > height) {
 
 
 
@@ -121,11 +122,11 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   /*
 LIGHTEST - only the lightest colour succeeds: C = max(A*factor, B)
  
-DIFFERENCE - subtract colors from underlying image.
+  DIFFERENCE - subtract colors from underlying image.
  
-EXCLUSION - similar to DIFFERENCE, but less extreme.
+  EXCLUSION - similar to DIFFERENCE, but less extreme.
  
-SCREEN - opposite multiply, uses inverse values of the colors.
+  SCREEN - opposite multiply, uses inverse values of the colors.
  
   REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
    */
@@ -143,7 +144,7 @@ SCREEN - opposite multiply, uses inverse values of the colors.
       break;
       
     case 2:
-      cube.stroke(xx%255, frameCount%255, yy%255);
+      cube.stroke(xx%255, frameCount%255, yy%255);  
       break;
   
     case 3:
