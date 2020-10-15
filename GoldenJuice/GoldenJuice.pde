@@ -34,7 +34,7 @@ import fixlib.*;
 
 
 //	this sketch is all about point() used w/strokeWeight() to add the magic
-float strokeWt = .45;
+float strokeWt = 1.5;
 //	control JFX global Blend mode
 boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 
@@ -89,8 +89,8 @@ void setup()
 //  TODO: determine DARK + Gold color themes from StarWars Darth Vaders
 //  revisit these gradients
 
-gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
-gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2020 30%, #45EF20 60%, #1975EF 80%)");
+gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #1975EF 24%, #19EF75 69%, #EF1975 93% )");
+gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2020 24%, #20EF20 69%, #2020EF 93%)");
 
 }
 
