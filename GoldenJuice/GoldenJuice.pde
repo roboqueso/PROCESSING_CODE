@@ -34,12 +34,12 @@ import fixlib.*;
 
 
 //	this sketch is all about point() used w/strokeWeight() to add the magic
-float strokeWt = .69;
+float strokeWt = .45;
 //	control JFX global Blend mode
-boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 
 Fixlib fix = Fixlib.init(this);
-float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
+float GR = (sqrt(5) + 1) * TWO_PI;  // TWO_PI* - golden ratio
 String SAVE_NAME = "thisShouldBeDynamic";
 GraphicsContext ctx;
 Light.Distant light;
@@ -58,7 +58,7 @@ float gX,gY;
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1920, 1080, FX2D);//, P3D, P2D, FX2D	NOTE: P2D throwing tesselation errors
+    size(displayWidth, displayHeight, FX2D);//, P3D, P2D, FX2D	NOTE: P2D throwing tesselation errors
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -90,7 +90,7 @@ void setup()
 //  revisit these gradients
 
 gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #080808 30%, #EF2424 60%, #C0C0C0 80% )");
-gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2018 30%, #EF4308 60%, #1975EF 80%)");
+gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2020 30%, #45EF20 60%, #1975EF 80%)");
 
 }
 
@@ -150,8 +150,7 @@ fxBloom.setThreshold(.8);//frameCount/10 % 1.0);
 
 //  GLOW
 fxGlow.setLevel(.8);	// 1.0
-
-
+//  see:  https://ello.co/ericfickes/post/4dqpze_yd1iyi1uwdojdlw
 //  LIGHTING
   //  NOTE: Light works differently depending on how you set Inputs and combinations of when and where
   light = new Light.Distant();//cX, cY, frameCount%69, Color.rgb( 255, 255, 255 )  );
