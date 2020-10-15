@@ -1,35 +1,48 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  see:  https://ello.co/ericfickes/post/xbfq-nnbcomxgutjdilorg 
+import fixlib.*;  // https://github.com/ericfickes/FIXLIB
 
 Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
-int alf = 37;
+int alf = 185;
 float shapeSize = alf;
 
 int cX;
 int cY;
 
 /*
-#6e5c5f, #684f53, #765c5e, #988586, #887475, #c6aeaf, #977c7d, #937475, #fefdfd, #fbf8f8, #6e5a5a, #9e8787, #766e6e, #8a8181, #867777, #847c7c, #705857, #6a5251, #7c6867, #907c7b, #bda2a0, #ae9593, #8d7775, #79605d, #dfcfcd, #f4edec, #6f6867, #b29692, #987772, #8e7470, #8e6c65, #af958f, #8a6c65, #ceb6b0, #887c79, #5a5655, #9c7970, #9f7e74, #816b64, #544641, #755c52, #8e6e5f, #605a57, #89827d, #7f766f, #a49a91, #55504b, #685f56
-#78726a, #625d55, #7b7568, #78766e, #716e5f, #416e24, #365a28, #c9d950, #4c6c30, #659443, #729741, #698338, #587e3a, #385529, #5b7f3b, #89b552, #87a347, #4c7036, #5b7436, #446735, #689048, #87a24c, #56763b, #688c46, #849948, #84ab55, #70964c, #638c49, #8a9b49, #5b733a, #5f7f42, #82a756, #759750, #7e924a, #476639, #8e9e50, #425e35, #405a33, #92b362, #b3cd6f, #4b653a, #c0d472, #819b57, #4f6d40, #65854f, #c8d878, #8ca15c, #899c59, #a5be6d, #8aa965, #768c54, #84a464, #7d9a5e, #5a7549, #718753, #5a7449, #a6ca7e, #57754b, #435637, #405336
-*/
-color[] palette = { 
 #8B5F1A,#CBA53A,#3F230E,#FBDC8B,#A4A590,#E96303,#86724A,#B1CEA0,#D4D6CE,#FEF3C1,#CCBF8E,#F62200,#882E02,#B1D6D3,#858B64,#D4F0D5,#80B1C2,#B1BABB,#FBDCC4,#D6F1F1,#5D6260,#D48421,#D7DDEE,#CDBABF,#8D827F,#F0DDEE,#A14232,#EFEEEA,#FFFFE8,#ECFFEC,#EEFFFF,#FFFFFF,
 #6e5c5f, #684f53, #765c5e, #988586, #887475, #c6aeaf, #977c7d, #937475, #fefdfd, #fbf8f8, #6e5a5a, #9e8787, #766e6e, #8a8181, #867777, #847c7c, #705857, #6a5251, #7c6867, #907c7b, #bda2a0, #ae9593, #8d7775, #79605d, #dfcfcd, #f4edec, #6f6867, #b29692, #987772, #8e7470, #8e6c65, #af958f, #8a6c65, #ceb6b0, #887c79, #5a5655, #9c7970, #9f7e74, #816b64, #544641, #755c52, #8e6e5f, #605a57, #89827d, #7f766f, #a49a91, #55504b, #685f56,
 #78726a, #625d55, #7b7568, #78766e, #716e5f, #416e24, #365a28, #c9d950, #4c6c30, #659443, #729741, #698338, #587e3a, #385529, #5b7f3b, #89b552, #87a347, #4c7036, #5b7436, #446735, #689048, #87a24c, #56763b, #688c46, #849948, #84ab55, #70964c, #638c49, #8a9b49, #5b733a, #5f7f42, #82a756, #759750, #7e924a, #476639, #8e9e50, #425e35, #405a33, #92b362, #b3cd6f, #4b653a, #c0d472, #819b57, #4f6d40, #65854f, #c8d878, #8ca15c, #899c59, #a5be6d, #8aa965, #768c54, #84a464, #7d9a5e, #5a7549, #718753, #5a7449, #a6ca7e, #57754b, #435637, #405336
+
+*/
+
+color[] palette = { 
+#6e5c5f, #684f53, #765c5e, #988586, #887475, #c6aeaf, #977c7d, #937475, #fefdfd, #fbf8f8, #6e5a5a, #9e8787, #766e6e, #8a8181, #867777, #847c7c, #705857, #6a5251, #7c6867, #907c7b, #bda2a0, #ae9593, #8d7775, #79605d, #dfcfcd, #f4edec, #6f6867, #b29692, #987772, #8e7470, #8e6c65, #af958f, #8a6c65, #ceb6b0, #887c79, #5a5655, #9c7970, #9f7e74, #816b64, #544641, #755c52, #8e6e5f, #605a57, #89827d, #7f766f, #a49a91, #55504b, #685f56,
+#78726a, #625d55, #7b7568, #78766e, #716e5f, #416e24, #365a28, #c9d950, #4c6c30, #659443, #729741, #698338, #587e3a, #385529, #5b7f3b, #89b552, #87a347, #4c7036, #5b7436, #446735, #689048, #87a24c, #56763b, #688c46, #849948, #84ab55, #70964c, #638c49, #8a9b49, #5b733a, #5f7f42, #82a756, #759750, #7e924a, #476639, #8e9e50, #425e35, #405a33, #92b362, #b3cd6f, #4b653a, #c0d472, #819b57, #4f6d40, #65854f, #c8d878, #8ca15c, #899c59, #a5be6d, #8aa965, #768c54, #84a464, #7d9a5e, #5a7549, #718753, #5a7449, #a6ca7e, #57754b, #435637, #405336
+
 };
 
 ArrayList _pvectors = new ArrayList();
 int ct = 0;
 int maxCt = 0;
 
-////////////////////////////////////////////////////
-//
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);
+}
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+//size(1024,768);  //  big:  1024x768
+
+  background(alf);
+  fix.alpha(alf);
+
+  cX = width/2;
+  cY = height/2;
+
   frameRate(303);
   background(0);
   fix.alpha(alf);
@@ -172,7 +185,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName()+".png" );
+    save( this+".png" );
   }
 
   noLoop();
@@ -193,4 +206,3 @@ void artDaily( String dailyMsg ) {
   text( " "+dailyMsg, this.width*.45, this.height-18);
 
 }
-
