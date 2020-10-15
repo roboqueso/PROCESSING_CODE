@@ -1,19 +1,26 @@
+//  seee: https://ello.co/ericfickes/post/szcmczw66gyrc0ndv1o76q
+import fixlib.*;
 
 Boolean isFinal = true;
-int alf = 37;
+int alf = 200;
 float ii = 0;
 
 float cX, cY;
 
-float shapeSize = 10;
+float shapeSize = 11;
 float ct, maxCt;
 Boolean flip = true;
+Fixlib fix;
 
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);
+}
 ////////////////////////////////////////////////////
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  //size(1024, 768);
   frameRate(303);
   background(9);
 
@@ -25,7 +32,7 @@ void setup() {
 
   ct = 0;
   maxCt = width; //height;
-
+  fix = Fixlib.init(this);
 }
 
 
@@ -78,7 +85,9 @@ if(flip) {
 
   // max count or size is too big
   if( ct > maxCt ) {
-      exit();
+
+    doExit();
+
   } else if (shapeSize > width) {
      shapeSize = floor( sqrt( shapeSize ) );
   } else {
@@ -260,4 +269,3 @@ while( yy <= height ) {
 */
 
 }
-
