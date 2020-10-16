@@ -8,7 +8,7 @@
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
-int strokin = 3;  // 1, 2, or 3 - adjust color
+int strokin = 1;  // 1, 2, or 3 - adjust color
 //  1
 int min = 69;
 int max = 420;
@@ -17,20 +17,22 @@ int max = 420;
 /*
 DIFFERENCE - subtract colors from underlying image.
 EXCLUSION - similar to DIFFERENCE, but less extreme
-REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
 
-TODO: figure out transparent canvas, then revisit full blend list
-  BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
-  ADD - additive blending with white clip: C = min(A*factor + B, 255)
-  SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
-  DARKEST - only the darkest color succeeds: C = min(A*factor, B)
-  LIGHTEST - only the lightest color succeeds: C = max(A*factor, B)
-  MULTIPLY - multiply the colors, result will always be darker
-  SCREEN - opposite multiply, uses inverse values of the colors.
+REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
+++ BREAKS TRANSPARENT PGRAPHICS, still might be interesting
+
+SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
+* duper dark
+
+DARKEST - only the darkest color succeeds: C = min(A*factor, B)
+
+MULTIPLY - multiply the colors, result will always be darker
+
+BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
 */
 public static int BLMODE = DIFFERENCE;
 public static int BGCLR = 255;
-int innerMin = 69;
+int innerMin = 32;
 Boolean clear = false; //  clean child PGraphic before draw
 
 ArrayList<EPoint> eps = new ArrayList<EPoint>();
@@ -73,13 +75,13 @@ void setup() {
 
 void draw() {
 
-  drawAndSave(cubeA, cubeA.width, cubeA.height, eps, xx+frameCount+randomGaussian(), (cY-frameCount-randomGaussian())%displayHeight );
+  drawAndSave(cubeA, cubeA.width, cubeA.height, eps, xx+frameCount+randomGaussian()+noise(frameCount), (cY-frameCount-randomGaussian())%displayHeight );
   image(  cubeA, 
           (frameCount%(displayWidth+cubeA.width))-cubeA.width, 
           frameCount%displayHeight );
 
 
-  drawAndSave(cubeB, cubeB.height, cubeB.width, eps, (cY-frameCount-randomGaussian())%displayHeight, xx+frameCount+randomGaussian() );
+  drawAndSave(cubeB, cubeB.height, cubeB.width, eps, (cY-frameCount-randomGaussian())%displayHeight, xx+frameCount+randomGaussian()+noise(frameCount) );
   image(  cubeB, 
           (frameCount%(displayWidth+cubeB.width))-cubeB.width, 
           (displayHeight-frameCount)%displayHeight );
@@ -170,7 +172,7 @@ PGraphics recycle(PGraphics g)
 
 //  master PNG saver
 void sv(){
-  save(this+"_"+strokin+"_"+BLMODE+"_"+BGCLR+"_"+frameCount+".png");
+  save(this+"_"+strokin+"_"+BLMODE+"_"+BGCLR+"_"+frameCount+".tiff");
 }
 
 void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float xx, float yy) {
@@ -180,7 +182,7 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   
   cube.beginDraw();
   if(clear) cube.clear();
-  cube.background(BGCLR,0 ); // clear background with color??
+  cube.background(BGCLR,0); // clear background with color??
   cube.blendMode( getBlent() );
   cube.camera();
   cube.lights();
@@ -188,15 +190,12 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   cube.smooth(8);
   cube.strokeCap(ROUND);
   cube.strokeJoin(ROUND);
-  cube.strokeWeight(TWO_PI);
-
-  
-  
-
-  
-  cube.translate( vX, vY);
+  cube.strokeWeight(HALF_PI);
+  cube.translate( vX, vY );
   
   PShape pBox = cube.createShape( RECT, 0,0,cube.width, cube.height );
+  //PShape pBox = cube.createShape( BOX, vY );
+
 
   
   switch(strokin){
@@ -205,8 +204,8 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
       cube.emissive(frameCount%255, xx%255, yy%255 );
       cube.specular(frameCount%255, xx%255, yy%255 );
 
-      cube.fill(frameCount%255, xx%255, yy%255, (frameCount%innerMin) );
-      cube.stroke(frameCount%255, xx%255, yy%255);
+      //cube.fill(frameCount%255, xx%255, yy%255, (frameCount%innerMin) );
+      cube.stroke(frameCount%255, xx%255, yy%255 );
       break;
       
     case 2:
@@ -214,8 +213,8 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
       cube.emissive(xx%255, frameCount%255, yy%255 );
       cube.specular(xx%255, frameCount%255, yy%255 );
       
-      cube.fill(xx%255, frameCount%255, yy%255, (frameCount%innerMin) );
-      cube.stroke(xx%255, frameCount%255, yy%255);  
+      //cube.fill(xx%255, frameCount%255, yy%255, (frameCount%innerMin) );
+      cube.stroke(xx%255, frameCount%255, yy%255 );
       break;
   
     case 3:
@@ -223,13 +222,13 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
       cube.emissive(xx%255, yy%255, frameCount%255 );
       cube.specular(xx%255, yy%255, frameCount%255 );
 
-      cube.fill(xx%255, yy%255, frameCount%255, (frameCount%innerMin) );
-      cube.stroke(xx%255, yy%255, frameCount%255);
+      //cube.fill(xx%255, yy%255, frameCount%255, (frameCount%innerMin) );
+      cube.stroke(xx%255, yy%255, frameCount%255 );
       break;
   }
 
-  //cube.noFill();
-  //cube.fill(BGCLR, (frameCount%255) );
+  cube.noFill();
+
   
   cube.rotateX(frameCount/xd);
   cube.rotateY(frameCount/yd);
@@ -238,7 +237,7 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
 
   eps.add( new EPoint(vX+(frameCount/xd), vY+(frameCount/yd), frameCount%xd, frameCount%xd, vY+(frameCount/yd), vX+(frameCount/xd)  ) );
 
-  for (int vv = 0; vv <= pBox.getVertexCount(); vv++)
+  for (int vv = 0; vv < pBox.getVertexCount(); vv++)
   {
     PVector pv = pBox.getVertex(vv);
     // debug
