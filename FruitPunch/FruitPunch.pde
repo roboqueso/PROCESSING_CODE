@@ -8,7 +8,7 @@
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
-int strokin = 1;  // 1, 2, or 3 - adjust color
+int strokin = 3;  // 1, 2, or 3 - adjust color
 //  1
 int min = 69;
 int max = 420;
@@ -33,7 +33,7 @@ BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
 public static int BLMODE = DIFFERENCE;
 public static int BGCLR = 255;
 int innerMin = 32;
-Boolean clear = false; //  clean child PGraphic before draw
+Boolean clear = true; //  clean child PGraphic before draw
 
 ArrayList<EPoint> eps = new ArrayList<EPoint>();
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,6 @@ ArrayList<PVector> biggin = new ArrayList<PVector>();
 void settings() {
 // TODO: do these do anything?
 
-
-
 sketchSmooth();
   size(displayWidth, displayHeight, P3D);
   smooth(8);
@@ -62,7 +60,7 @@ sketchSmooth();
 
 void setup() {
   background(BGCLR,innerMin);
-  blendMode( getBlent() );
+  blendMode( BLMODE );
   rectMode(CENTER);
   
   cX = (int)displayWidth/2;
@@ -157,10 +155,6 @@ void draw() {
   }
 }
 
-int getBlent()
-{
-  return BLMODE;
-}
 
 PGraphics recycle(PGraphics g)
 {
@@ -183,13 +177,13 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   cube.beginDraw();
   if(clear) cube.clear();
   cube.background(BGCLR,0); // clear background with color??
-  cube.blendMode( getBlent() );
+  cube.blendMode( BLMODE );
   cube.camera();
   cube.lights();
   cube.rectMode(CENTER);
   cube.smooth(8);
-  cube.strokeCap(ROUND);
-  cube.strokeJoin(ROUND);
+  //cube.strokeCap(ROUND);
+  //cube.strokeJoin(ROUND);
   cube.strokeWeight(HALF_PI);
   cube.translate( vX, vY );
   
@@ -228,8 +222,8 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   }
 
   cube.noFill();
-
-  
+  //cube.rotateX(frameCount/xd);
+  //cube.rotateY(frameCount/yd);
   cube.rotateX(frameCount/xd);
   cube.rotateY(frameCount/yd);
   cube.shape(pBox);
