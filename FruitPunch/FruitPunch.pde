@@ -1,19 +1,15 @@
 //  TODO:
-  //  1. ADD RANDOM TO WAVE ( each pass, each run, all unique lines )
-  //  * NEEDS Q&A OF min & max VALUESE
-//  3. FIX PT RECORDER, IT'S SAVING CHUNKS OF DUPLICATES **** only save unique points ***
-//  4. //  THIS POINT DUMP NEEDS A FIXIN
-//  5. TRANSPARENT PGRAPHIC BG???
-
+//  1. MUSIC VIDEO
+//  3. PT RECORDER SAVING CHUNKS OF DUPLICATES **** only save unique points ***
+//  4. POINT DUMP NEEDS A FIXIN
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 int strokin = 3;  // 1, 2, or 3 - adjust color
-//  1
-int min = 69;
-int max = 420;
+int min = 45;
+int max = 303;
+boolean saveFrames = false; // saves to frames/THIS
 
-//  2
 /*
 DIFFERENCE - subtract colors from underlying image.
 EXCLUSION - similar to DIFFERENCE, but less extreme
@@ -31,7 +27,7 @@ MULTIPLY - multiply the colors, result will always be darker
 BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
 */
 public static int BLMODE = DIFFERENCE;
-public static int BGCLR = 255;
+public static int BGCLR = 0;
 int innerMin = 32;
 Boolean clear = true; //  clean child PGraphic before draw
 
@@ -49,20 +45,17 @@ ArrayList<PVector> biggin = new ArrayList<PVector>();
 
 
 void settings() {
-// TODO: do these do anything?
-
-sketchSmooth();
   size(displayWidth, displayHeight, P3D);
   smooth(8);
   pixelDensity(displayDensity());
-
+  sketchSmooth(); //  WTF does this do?
 }
 
 void setup() {
   background(BGCLR,innerMin);
   blendMode( BLMODE );
-  rectMode(CENTER);
-  
+  // rectMode(CENTER);
+
   cX = (int)displayWidth/2;
   cY = (int)displayHeight/2;
 
@@ -153,6 +146,12 @@ void draw() {
   } else {
     xx++;
   }
+
+if(saveFrames){
+  //  TEST : save frame, reassemble in QT??
+  saveFrame("frames/"+this+"######.png"); //  tiff are hotter, but 21MB each
+}
+
 }
 
 
@@ -180,15 +179,19 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float
   cube.blendMode( BLMODE );
   cube.camera();
   cube.lights();
-  cube.rectMode(CENTER);
+  // cube.rectMode(CENTER);
   cube.smooth(8);
-  //cube.strokeCap(ROUND);
-  //cube.strokeJoin(ROUND);
+  cube.strokeCap(ROUND);
+  cube.strokeJoin(ROUND);
   cube.strokeWeight(HALF_PI);
   cube.translate( vX, vY );
   
-  PShape pBox = cube.createShape( RECT, 0,0,cube.width, cube.height );
-  //PShape pBox = cube.createShape( BOX, vY );
+  
+  // Haveen't decided which shape is best, but TRIANGLE is the current hotness
+    //PShape pBox = cube.createShape( RECT, 0,0,cube.width, cube.height );
+    //PShape pBox = cube.createShape( BOX, vY );
+    PShape pBox = cube.createShape( RECT, 0,0,cube.width, cube.height, cube.width*.5, cube.height*.5, cube.width*.25, cube.height*.25 );
+
 
 
   
