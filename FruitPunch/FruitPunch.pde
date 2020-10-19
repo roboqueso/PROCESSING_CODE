@@ -7,7 +7,7 @@ Fixlib fix = Fixlib.init(this);
 
 int strokin = 3;  // 1, 2, or 3 - adjust color
 int min = 45;
-int max = 303;
+int max = 666;
 boolean saveFrames = false; // saves to frames/THIS
 
 /*
@@ -29,7 +29,7 @@ BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
 public static int BLMODE = DIFFERENCE;
 public static int BGCLR = 0;
 int innerMin = 32;
-Boolean clear = true; //  clean child PGraphic before draw
+Boolean clear = false; //  clean child PGraphic before draw
 
 ArrayList<EPoint> eps = new ArrayList<EPoint>();
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ void draw() {
           frameCount%displayHeight );
 
 
-  drawAndSave(cubeB, cubeB.height, cubeB.width, eps, (cY-frameCount-randomGaussian())%displayHeight, xx+frameCount+randomGaussian()+noise(frameCount) );
+  drawAndSave(cubeB, cubeB.height, cubeB.width, eps, (cY-frameCount-randomGaussian()), (xx+frameCount+randomGaussian()+noise(frameCount))%displayHeight );
   image(  cubeB, 
           (frameCount%(displayWidth+cubeB.width))-cubeB.width, 
           (displayHeight-frameCount)%displayHeight );
