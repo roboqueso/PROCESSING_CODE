@@ -1,13 +1,14 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/qutcebewisvonz2c1tqskg
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 float cX, cY;
 float x, y;
 float a,b;
-float amp = 13;
-int alf = 42;
-
+float amp = 234;
+int alf = 45;
+String msg = this.toString();
 float r;
 float g;
 //float b;
@@ -15,13 +16,15 @@ float g;
 Boolean isFinal = true;
 
 
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+}
+
 //////////////////////////////////////////////////////////////////////////////
 void setup() {  // this is run once.   
     
-    background(#EF2018);
-    size( 1024, 768, P3D ); 
- 
-    smooth();
+    background(#B0BDAD); 
     noFill();
  
     fix.alpha(alf);
@@ -29,8 +32,6 @@ void setup() {  // this is run once.
     cX = width/2;
     cY = height/2;
  
-    smooth();
-    
 //    strokeWeight(.5);
 
   // scan lines
@@ -88,7 +89,7 @@ updatePixels();
       line( x, y, y, x );
     } finally {
       fill(random(amp), random(amp), random(amp), alf);
-      text("whatev", random(width), random(height) ); 
+      text(msg, random(width), random(height) ); 
     }
     translate(width/2, height/2);
     rotateY(map(frameCount, 0, width, -PI, PI));
@@ -138,7 +139,3 @@ updatePixels();
   }
  
 }
-
-
-
-
