@@ -1,4 +1,5 @@
-// https://github.com/ericfickes/FIXLIB 
+//  see:   https://ello.co/ericfickes/post/mi3lhedi0dwytnafjjferq
+//  goto:  https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
@@ -6,7 +7,7 @@ Fixlib fix = Fixlib.init(this);
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 11;
+int alf = 24;
 
 int cX;
 int cY;
@@ -17,21 +18,27 @@ int outerXX = 0;
 int outerYY = 0;
 
 int pad = 1;
-int cubeSize = 50;
+int cubeSize = 9;  //45;
 
-float angle = 1;
+float angle = 180;  //1;
 float maxAngle;
-float radius = 50;
+float radius = 69;  //50;
 float outerRadius;
 
 int offsetX = 0;
 int offsetY = 0;
 
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);
+}
+
 ////////////////////////////////////////////////////
 //
 void setup() {
   // size to match image
-  size(1024, 768);
+  //size(1024, 768);
   frameRate(303);
   background(21);
 
@@ -56,9 +63,7 @@ void setup() {
   maxAngle = 360 * 6;
 
   outerRadius = pow(radius,2);  //pow( radius, 2 );
-  noFill();
-    strokeWeight(2);
-//  drawCore( offsetX, offsetY, int(maxAngle) );
+
 }
 
 
@@ -66,6 +71,7 @@ void setup() {
 //
 void draw()
 {
+  noFill();
   smooth();
   xx = ( offsetX - int( cos(radians(angle)) * radius ) );
   yy = ( offsetY - int( sin(radians(angle)) * radius ) );
@@ -73,18 +79,18 @@ void draw()
   outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
   outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
 
-///////// FIGURE OUT ZIGZAGLINE
+///////// FIGURE OUT zLine
 if( frameCount % 15 == 0 ) {
 
   //stroke( #EFEF00, alf );
   stroke( #EFEFEF, alf );
 
-  ellipse( xx, yy, angle, angle );
+  ellipse( yy, xx, angle, angle );
 
 //  stroke( #EF0000, alf );
   stroke( #1919EF, alf );
-  zigzagLine(xx,yy,outerXX,outerYY, angle);
-  ellipse( yy, xx, angle, angle ); 
+  zLine(xx%displayWidth,yy%displayHeight,outerXX/2,outerYY/2, angle);
+  ellipse( xx%displayWidth, yy%displayHeight, angle, angle ); 
 }
 
 ////////////////////////////////
@@ -92,7 +98,7 @@ if( frameCount % 15 == 0 ) {
   angle+=0.5;
 
 
-  if( angle % 60 == 0 )
+  if( angle % 69 == 0 )
   {
     radius++;
     outerRadius++;
@@ -132,10 +138,7 @@ void doExit()
 
 ///////////////////////////////////////////////////////////////
 //  stroke a random color out of loaded image
-void zigzagLine( float x1, float y1, float x2, float y2, float zag ) {
-
-// DEBUG
-//zag = 3;
+void zLine( float x1, float y1, float x2, float y2, float zag ) {
 
   //  split line in the middle, and zag over a bit then completing the line
   float midX = ( x1+zag );
@@ -157,12 +160,13 @@ text( x1 +","+ y1 +","+ midX +","+ midY, x1, y1 );
   
   //  ZAG!
   stroke( #00FF00, zag );
-  line( midX, midY, zagX, zagY );
+  line( midX, midY, zagX%displayWidth, zagY%displayHeight );
 text( midX +","+ midY +","+ zagX +","+ zagY, midX, midY );
   
   stroke( #0000FF, zag );  
   line( zagX, zagY, endX, endY );
-text( zagX +","+ zagY +","+ endX +","+ endY, zagX, zagY);
+text( zagX +","+ zagY +","+ endX +","+ endY, zagX%displayWidth, zagY%displayHeight );
+noFill();
 }
 
 
