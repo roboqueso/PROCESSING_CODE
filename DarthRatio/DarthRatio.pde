@@ -1,3 +1,5 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 /**
   InnerShadow
   https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
@@ -28,18 +30,19 @@ import javafx.scene.shape.*;
 
 import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 
 //	this sketch is all about point() used w/strokeWeight() to add the magic
 float swtIndex = 1;	//	counts the current strokeWeight starting point ( want to run 1 - 360 )
-float swtMax = 100;	//	Use this to control ending the sketch.  The max swtIndex value before exiting.
+float swtMax = 44;	//	(68 writes until 69) Use this to control ending the sketch.  The max swtIndex value before exiting.
 float strokeWt = swtIndex;	//69;	//69;	//.69;
 
 //	control JFX global Blend mode
 boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+//  note: changing GR to too large causes "java.lang.RuntimeException: Requested texture dimension (16832) requires dimension (0) that exceeds maximum texture size (16384)"
+//  Processing is a turd
+float GR = (sqrt(TWO_PI) + 1) * .69; //0.5;  // *TWO_PI; seems to blow this shit up
 
-
-Fixlib fix = Fixlib.init(this);
-float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
 String SAVE_NAME = "thisShouldBeDynamic";
 GraphicsContext ctx;
 Light.Distant light;
