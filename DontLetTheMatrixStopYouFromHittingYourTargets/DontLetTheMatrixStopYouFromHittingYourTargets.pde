@@ -1,22 +1,30 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/283qzseyxxm0dvdjidfg5a
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
+
 
 Fixlib fix = Fixlib.init(this);
 
 int[] nz = new int[966];
-boolean gotNoise = false, isFinal = true;
+boolean gotNoise = true, isFinal = true;
 boolean vert = true;
 float xx=0, yy=0;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1024, 768);  //640, 960);
-  background(#001800);
+
+  background(#DAD411);  //#001800);
   frameRate(303);
-  smooth();
   noFill();
   rectMode(CENTER);
-
   strokeWeight(1);
 }
 
@@ -37,60 +45,64 @@ void draw() {
   else {
     yy =0;
     xx += 21;
-    stroke(random(42, 255), 37, 37, 42);
+    stroke(random(45, 220), 45, 45, 45);
+    //stroke(#CCEF20,42);
   }
 
 
-
-  stroke( 0, random(11, 50), 0);
+  stroke(random(180));
+  //stroke( 75, 45,random(11, 75) );
+  //stroke(#242424);
 
   strokeWeight(random(TWO_PI,11));
   point(xx+cos(frameCount), yy+sin(frameCount));
 
+  stroke(random(255));
   strokeWeight(1);
   line(xx+cos(frameCount)-random(42), yy+sin(frameCount), xx+random(42), yy);
 
 
 
-  if (xx>1024||xx<-11)
+  if (xx>displayWidth||xx<-11)
   {
     xx=random(xx);
 
     fix.bullsEye( xx, yy, random(42, 210));
 
-    strokeWeight(random(11, 42));
-    stroke(random(42, 96), 11, 11);
-    line(1024, yy, xx, yy);
+    strokeWeight(random(11, 45));
+    stroke(75, 11, random(45, 99));
+    //stroke(#DAA520);
+    line(displayWidth, yy, xx, yy);
 
     //  draw dot core
     strokeWeight(1);
     noFill();
-    for ( int dx = 1024; dx >= xx; dx-= 12 ) {
+    for ( int dx = displayWidth; dx >= xx; dx-= 12 ) {
       if(int(random(2))%2==0){
-        stroke(random(42, 96), 11, 11);  
+        stroke(11, random(42, 96), 11);
       } else {
-        stroke(#001100);
+        stroke(#420DAD);
       }
       rect( dx, yy, 5, 5 );
     }
 
     //  always reset strokeWeight
     strokeWeight(1);
-    stroke(random(227));
+    stroke(random(222));
   }
 
-  if ( frameCount>(1024+768)*21) {
+  if ( frameCount>(displayWidth+displayHeight)*11 ) {
 
     fill(#EF2012);
-    textFont(createFont("Silom", 23));
+    textFont(createFont("Silom", 24));
 
     fill(#EFEFEF);
 
     //    TOP RIGHT CORNER-ISH ( between the time and the battery )
-    text("ERICFICKES.COM", (1024/2)*1.2, 25 );  // 28
+    text("ERICFICKES.COM", (displayWidth/2)*1.2, 25 );  // 28
 
     if (isFinal) {
-      save( fix.pdeName() + fix.getTimestamp() + ".png" );
+      save( fix.pdeName() + fix.getTimestamp() + ".tif" );
     }
     noLoop();
     exit();
