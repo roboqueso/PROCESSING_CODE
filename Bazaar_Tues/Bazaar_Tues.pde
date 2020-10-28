@@ -1,9 +1,10 @@
+//  SEE:   https://ello.co/ericfickes/post/8kgrqh3fl0ne7ulxy6b1aw
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-int alf = 100;
+int alf = 180;
 PImage img;
 ArrayList p3;
 
@@ -13,38 +14,42 @@ int cX, cY;
 float angle = 0, angle2 = 0;
 float x2, y2;
 
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1024,768, P3D);
+
 
   background(alf*TWO_PI);
   noFill();
 
   fix.alpha(alf);
 
-  cX = 1024/2;
-  cY = 768/2;
+  cX = displayWidth/2;
+  cY = displayHeight/2;
 
-  img = loadImage("apple-models.jpg");
-  p3 = fix.getImgColors(img, false);  
-
-
-  image( img, 1024-400, 768-400);
+  img = loadImage("Bazaar_Tues-10272020173521870.png");
+  p3 = fix.getImgColors(img);  
+  image( img, 0,0, cX, cY);
   filter(GRAY);  
   
   //  vertical scan lines
   strokeWeight(.75);
-  for( int w = 0; w < 1024; w+=2 ) {
+  for( int w = 0; w < displayWidth; w+=2 ) {
     fix.randStroke();
-    line( w, 0, w, 768 ); 
+    line( w, 0, w, displayHeight ); 
   }
   
 }
 
 /////////////////////////////////////////////////////////////////////////
 void draw() {
-  smooth();
-
+  
   strokeWeight(1);
   stroke(random(255));
   fill(random(75), random(TWO_PI) );
@@ -59,7 +64,7 @@ void draw() {
 
 
   // color
-  if ( frameCount > 768*.75 ) {
+  if ( frameCount > displayHeight*.75 ) {
 //    stroke( random(37), random(75), random(37) );
     fix.ranPalStroke(p3);
     strokeWeight(.5);
@@ -75,20 +80,20 @@ fix.ranPalStroke(p3);
               i*noise(i), i*cos(frameCount), 
               i*cos(frameCount), i*noise(i), 
               cX*noise(frameCount), cY*noise(frameCount),
-              1024-frameCount
+              displayWidth-frameCount
             );
             
-      curveVertex( cX-i* cos( radians(i) * i ), cY-i* sin( radians(i) * i ), 1024-frameCount );
+      curveVertex( cX-i* cos( radians(i) * i ), cY-i* sin( radians(i) * i ), displayWidth-frameCount );
 
         vertex( i*noise(i), i*cos(frameCount) );
         
-      curveVertex( i*noise(i), i*cos(frameCount), 1024-frameCount );
+      curveVertex( i*noise(i), i*cos(frameCount), displayWidth-frameCount );
 
       vertex( i*cos(frameCount), i*noise(i) );
       
-      curveVertex( i*cos(frameCount), i*noise(i), 1024-frameCount );
+      curveVertex( i*cos(frameCount), i*noise(i), displayWidth-frameCount );
 
-      curveVertex( cX*noise(frameCount), cY*noise(frameCount), 1024-frameCount );
+      curveVertex( cX*noise(frameCount), cY*noise(frameCount), displayWidth-frameCount );
 
       vertex( cX*noise(frameCount), cY*noise(frameCount) );
       
@@ -105,14 +110,14 @@ fix.ranPalStroke(p3);
 
 
   // move over a pixel
-  if (i < 1024) {
+  if (i < displayWidth) {
     i++;
   } 
   else {
     i = 0;
   }
 
-  if ( frameCount > 768 ) {
+  if ( frameCount > displayHeight ) {
 
     doExit();
   }
@@ -147,9 +152,8 @@ void artDaily( String dailyMsg ) {
   smooth();
 
   fill(#EFEFEF);
-  text( " "+dailyMsg, 10, 768-10);
+  text( " "+dailyMsg, 10, displayHeight-10);
 
   fill(0);
-  text( " "+dailyMsg, 11, 768-11);
+  text( " "+dailyMsg, 11, displayHeight-11);
 }
-
