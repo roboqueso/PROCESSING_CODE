@@ -1,4 +1,6 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/8ppiti7wccfqa_jfdf_stw
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
@@ -6,7 +8,7 @@ Fixlib fix = Fixlib.init(this);
 Atomic looking PC chip maker tray
 */
 Boolean isFinal = true;
-int alf = 42;
+int alf = 100;
 float cX, cY;
 
 float ct = 0;
@@ -41,13 +43,20 @@ float angle1, angle2, angle3, angle4, angle5;
 float startX1, startY1, startX2, startY2, startX3, startY3, startX4, startY4, startX5, startY5;
 
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D); // FX2D required
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
   frameRate(303);
-  background(#001100);
+  background(#000011);
   noFill();
   fix.alpha(alf);
   cX = width * .5;
@@ -211,4 +220,3 @@ while( yy <= height ) {
 */
 
 }
-
