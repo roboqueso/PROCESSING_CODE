@@ -1,7 +1,11 @@
+//  SEE:   https://ello.co/ericfickes/post/y1a9tn5b-drgfcflay3cjg
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 
-int alf = 21;
+int alf = 24;
 
 int cX;
 int cY;
@@ -14,9 +18,9 @@ int outerXX = 0;
 int outerYY = 0;
 
 float angle = 0;
-float maxAngle;
+float maxAngle = 42*303;
 float radius = 4;
-float outerRadius = 10;  //50;
+float outerRadius = 45;  //50;
 
 int offsetX = 0;
 int offsetY = 0;
@@ -34,13 +38,20 @@ color[] palette = {
     , #DD570D, #D4190D, #9D0D0D, #65A90A, #660D0C, #D8930C, #DFDD0E, #595C0B
 };
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // size to match image
-  size(1024, 768);
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D); // FX2D required
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(-1);  //  EF2018
   frameRate(303);
-  background(6);
+  
 
   //  -------------------------------------------
 
@@ -55,8 +66,7 @@ void setup() {
   offsetX = cX;///2;
   offsetY = cY;///2;
 
-  //  max angle = where does the circle stop?
-  maxAngle = (360*20);
+
 
 
   //  scan lines
@@ -118,7 +128,7 @@ randStroke();
   if ( angle >= maxAngle )
   {    
 
-    exit();
+    doExit();
   }
 }
 
@@ -155,7 +165,7 @@ void doExit()
     save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -204,5 +214,3 @@ void artDaily( String dailyMsg ) {
   fill(#CADDAC, pow(alf, 3) );
   text( " "+dailyMsg, this.width-226, this.height-16);
 }
-
-
