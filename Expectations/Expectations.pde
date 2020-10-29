@@ -1,6 +1,8 @@
+//  SEE:   https://ello.co/ericfickes/post/oqtfsp18r3kwonwboy74gg
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 /*
     //  float amp = 33;
@@ -23,7 +25,7 @@ int angle;
 void setup() {
   // setup core sketch settings items
   size(displayWidth, displayHeight, P3D);
-  background(255);//#EF2014);
+  background(#2014EF);
   stroke(0);
   strokeWeight(2);
   smooth();
@@ -53,7 +55,7 @@ void draw()
         // fill(amp%3==0?0:255, amp%200);
         // stroke(amp%3==0?255:0);        
 
-        fill(amp%255);
+        fill(amp%255,amp%255);
         stroke(255);
         strokeWeight(PI);
 
@@ -142,4 +144,3 @@ smooth();
   fill(39);
   text( " "+dailyMsg, 0, height-sz );
 }
-
