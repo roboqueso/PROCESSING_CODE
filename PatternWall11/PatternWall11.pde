@@ -1,3 +1,9 @@
+//  SEE:   https://ello.co/ericfickes/post/95onfrldnnv2sonl08jiiq
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 //
 //  Rotate the circles so the crown looking opening points up
 
@@ -20,26 +26,32 @@ color[] p2 = {
 };
 
 color[] p1 = { 
-#000000, #000011
+#696969, #EFEFEF
 };
 
-//    #0e75f0, #031224, #E19F36, #E0BF36, #69a136, #b00be5
+//    #0e75f0, #031224, #E19F36, #E0BF36, #69a136, #b00be5, 
 
 
+/* ------------------------------------------------------------------------- */
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D);
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(-1);  //  EF2018
   frameRate(303);
-  background(#1975EF);  //  #ff0000  #EF1975
+  background(#2020EF);  //  #ff0000  #EF1975
 
   cX = width/2;
   cY = height/2;
 
   noFill();
-  smooth();
+
 
   ct = 0;
   maxCt = width; //height;
@@ -100,7 +112,7 @@ if(flip) {
 
   // max count or size is too big
   if( ct > maxCt ) {
-      exit();
+      doExit();
   } else if (shapeSize > width) {
      shapeSize = floor( sqrt( shapeSize ) );
   } else {
@@ -282,4 +294,3 @@ while( yy <= height ) {
 */
 
 }
-
