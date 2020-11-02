@@ -1,13 +1,13 @@
+//  SEE:   https://ello.co/ericfickes/post/p4r4spemhtaej7fsw7dfva
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 /**
 GoldenJuice = Draw fix.shapeJous() around the Golden Ratio
-
-
 
   InnerShadow
   https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
 
   DropShadow
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DropShadow.html
+  https://docsq.oracle.com/javafx/2/api/javafx/scene/effect/DropShadow.html
 
   JavaFX GLOW
   https://docs.oracle.com/javafx/2/api/javafx/scene/effect/Glow.html
@@ -22,8 +22,7 @@ GoldenJuice = Draw fix.shapeJous() around the Golden Ratio
   https://docs.oracle.com/javafx/2/api/javafx/scene/effect/BlendMode.html
 
   DisplacementMap
-  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DisplacementMap.html
-
+  https://docs.oracle.com/javafx/2/api/javafx/scene/effect/DisplacementMap.htm
 */
 import javafx.scene.canvas.*;
 import javafx.scene.effect.*;
@@ -32,11 +31,11 @@ import javafx.scene.shape.*;
 
 import fixlib.*;
 
-
 //	this sketch is all about point() used w/strokeWeight() to add the magic
-float strokeWt = 1.5;
+float strokeWt = 377;// 610;// 987;// 1597;// 2584;// 4181;// 6765;
+
 //	control JFX global Blend mode
-boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 
 Fixlib fix = Fixlib.init(this);
 float GR = (sqrt(5) + 1) * TWO_PI;  // TWO_PI* - golden ratio
@@ -66,13 +65,13 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(-1);	//	EF2018
+  background(#EF2020);
 
   //  Generate filename containing sketch settings meta NOW
-  SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
+  SAVE_NAME = fix.pdeName() + "_s"+strokeWt+(blendDark?"_DK_":"_")+fix.getTimestamp()+".png";
 
-  cX = width/2;
-  cY = height/2;
+  cX = displayWidth/2;
+  cY = displayHeight/2;
 
   // JAVAFX!
   fxColorAdjust = new ColorAdjust();
@@ -86,11 +85,21 @@ void setup()
   ctx = ((Canvas) surface.getNative()).getGraphicsContext2D();
 
 
-//  TODO: determine DARK + Gold color themes from StarWars Darth Vaders
-//  revisit these gradients
+//  TODO: revisit these gradients
 
-gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #1975EF 24%, #19EF75 69%, #EF1975 93% )");
-gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+width+"px 0px, #EF2020 24%, #20EF20 69%, #2020EF 93%)");
+//	1
+// gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #1975EF 24%, #19EF75 69%, #EF1975 93% )");
+// gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #EF2020 24%, #20EF20 69%, #2020EF 93%)");
+
+// 2
+//gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #CCEF20 24%, #DADDAD 69%, #45EF20 93% )");
+//gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #EFCCE9 24%, #DAD420 69%, #420DAD 93%)");
+
+//	3
+ gradient = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #EF2020 24%, #20EF20 69%, #2020EF 93% )");
+ gradStroke = LinearGradient.valueOf("linear-gradient(from 0px 0px to "+displayWidth+"px 0px, #242424 24%, #454545 69%, #757575 93%)");
+
+
 
 }
 
@@ -103,57 +112,56 @@ void draw() {
 //  SHADOWS
 
   //  mix up inner shadow color
-  if(frameCount%7==0)
+  if((int)(strokeWt*frameCount)%7==0)
   {
-    fxDropShadow.setColor(Color.rgb(frameCount%242, (int)random(frameCount%242), frameCount%242) );
+    fxDropShadow.setColor(Color.rgb( (int)(strokeWt*frameCount)%((int)random(42,210)), (int)random((int)(strokeWt*frameCount)%(random(42,210))), (int)(strokeWt*frameCount)%((int)random(42,210))) );
     fxDropShadow.setInput(fxBloom);
-    fxInnerShadow.setColor(Color.rgb(frameCount%242, (int)random(frameCount%242), frameCount%242) );
+    fxInnerShadow.setColor(Color.rgb((int)(strokeWt*frameCount)%((int)random(42,210)), (int)random((int)(strokeWt*frameCount)%(random(42,210))), (int)(strokeWt*frameCount)%((int)random(42,210))) );
     fxInnerShadow.setInput(fxGlow);
   }
-  else if(frameCount%13==0)
+  else if((int)(strokeWt*frameCount)%13==0)
   {
-    fxDropShadow.setColor(Color.rgb(frameCount%255, (int)random(frameCount%255), frameCount%255) );
-    fxInnerShadow.setColor(Color.rgb(frameCount%255, (int)random(frameCount%255), frameCount%255) );
+    fxDropShadow.setColor(Color.rgb((int)(strokeWt*13+frameCount)%255, (int)random((int)(strokeWt*13+frameCount)%255), (int)(strokeWt*13+frameCount)%255) );
+    fxInnerShadow.setColor(Color.rgb((int)(strokeWt*13+frameCount)%255, (int)random((int)(strokeWt*13+frameCount)%255), (int)(strokeWt*13+frameCount)%255) );
   }
-  else if(frameCount%24==0)
+  else if((int)(strokeWt*frameCount)%24==0)
   {
-    fxDropShadow.setColor(Color.rgb((int)random(frameCount%255), (int)random(frameCount%255), (int)random(frameCount%255) ) );
-    fxInnerShadow.setColor(Color.rgb((int)random(frameCount%255), (int)random(frameCount%255), (int)random(frameCount%255) ) );
+    fxDropShadow.setColor(Color.rgb((int)random((int)(strokeWt*frameCount)%240), (int)random((int)(strokeWt*frameCount)%240), (int)random((int)(strokeWt*frameCount)%240) ) );
+    fxInnerShadow.setColor(Color.rgb((int)random((int)(strokeWt*frameCount)%240), (int)random((int)(strokeWt*frameCount)%240), (int)random((int)(strokeWt*frameCount)%240) ) );
   }
   else
   {
-    fxDropShadow.setColor(Color.rgb(frameCount%3,frameCount%3,frameCount%3));
-    fxInnerShadow.setColor(Color.rgb(frameCount%3, frameCount%3, frameCount%3));
+    fxDropShadow.setColor(Color.rgb((int)(strokeWt*frameCount)%3,(int)(strokeWt*frameCount)%6,(int)(strokeWt*frameCount)%9));
+    fxInnerShadow.setColor(Color.rgb((int)(strokeWt*frameCount)%12, (int)(strokeWt*frameCount)%15, (int)(strokeWt*frameCount)%18));
   }
 
-  fxDropShadow.setOffsetX(frameCount%3f);
-  fxDropShadow.setOffsetY(frameCount%3f);
+  fxDropShadow.setOffsetX((int)(strokeWt*frameCount)%3f);
+  fxDropShadow.setOffsetY((int)(strokeWt*frameCount)%3f);
   fxDropShadow.setInput(fxGlow);
 
-  fxInnerShadow.setOffsetX(frameCount%3f);
-  fxInnerShadow.setOffsetY(frameCount%3f);
+  fxInnerShadow.setOffsetX((int)(strokeWt*frameCount)%3f);
+  fxInnerShadow.setOffsetY((int)(strokeWt*frameCount)%3f);
   fxInnerShadow.setInput(fxBloom);
-
-
 
 //  BLOOM
 fxBloom.setThreshold(.8);//frameCount/10 % 1.0);
 
-
 //  COLOR ADJUST
 
-  fxColorAdjust.setSaturation(1.0);  //frameCount/10 % 1.0);
-  fxColorAdjust.setHue(1.0);  //frameCount/10 % 1.0);
-  fxColorAdjust.setBrightness(1.0);  //frameCount/10 % 1.0);
+  //fxColorAdjust.setSaturation(1.0);  //frameCount/10 % 1.0);
+  //fxColorAdjust.setHue(1.0);  //frameCount/10 % 1.0);
+  //fxColorAdjust.setBrightness(1.0);  //frameCount/10 % 1.0);
 
-
+  fxColorAdjust.setSaturation(frameCount/10 % 1.0);
+  fxColorAdjust.setHue(frameCount/10 % 1.0);
+  fxColorAdjust.setBrightness(frameCount/10 % 1.0);
 
 //  GLOW
-fxGlow.setLevel(.8);	// 1.0
+fxGlow.setLevel(strokeWt);	// 1.0
 //  see:  https://ello.co/ericfickes/post/4dqpze_yd1iyi1uwdojdlw
 //  LIGHTING
   //  NOTE: Light works differently depending on how you set Inputs and combinations of when and where
-  light = new Light.Distant();//cX, cY, frameCount%69, Color.rgb( 255, 255, 255 )  );
+  light = new Light.Distant();//cX, cY, (int)(strokeWt*frameCount)%69, Color.rgb( 255, 255, 255 )  );
   light.setAzimuth(-135.0);
   lighting.setLight(light);
   lighting.setSurfaceScale(10);	//10);	//5.0);
@@ -161,11 +169,11 @@ fxGlow.setLevel(.8);	// 1.0
 //  TODO: Add a Blur here?
   lighting.setBumpInput(fxGlow);
   lighting.setContentInput(fxBloom);	//	fxBloom UNSHARPENS?
-  lighting.setDiffuseConstant(.96);	//frameCount/10%2.0f);  //  2.0
+  lighting.setDiffuseConstant(strokeWt); //.96);	//frameCount/10%2.0f);  //  2.0
 
 //	these two are cool, but kind of wash out the others.  VERY B&W
-  lighting.setSpecularConstant(.69);	//frameCount/10% 2.0f);  //  2.0
-  lighting.setSpecularExponent(4.20);//(frameCount*.1)% 13.0f);  //  40.0
+  lighting.setSpecularConstant(strokeWt);//.69);	//frameCount/10% 2.0f);  //  2.0
+  lighting.setSpecularExponent(strokeWt);//4.20);//(frameCount*.1)% 13.0f);  //  40.0
   
   //  TODO: does this ever make a difference?
   ctx.setFillRule(FillRule.NON_ZERO);
@@ -179,16 +187,13 @@ fxGlow.setLevel(.8);	// 1.0
 //	TODO: come back to displacementMap
 // ctx.setEffect(displacementMap);
 
-
-  
-
 //  DO DRAWING HERE
 translate(cX, cY);
 
 //  STROKE
 strokeWeight(strokeWt);
 
-  for (int r = 0; r < height; r++) 
+  for (int r = 0; r < displayHeight; r++) 
   {
   	//	get the point
     gX = cos(GR*r)*r;
@@ -223,43 +228,40 @@ stroke( gX%255 );//, gY%255, r%255 );	//	rings of color
 
 
  	//	JFX STROKE
+ ctx.setLineWidth(strokeWt);
 	if(r%2==0)
 		ctx.setStroke(gradStroke);
 	else
 		ctx.setStroke(gradient);
     // NOTE: big variable in the resulting circle pattern
     if(r%24==0){
-    	strokeWt = (strokeWt*GR)%2.1;	//sqrt(height);
-    	strokeWeight(strokeWt);
+    	strokeWt = (strokeWt*GR)%4.2;	//2.1;	//sqrt(displayHeight);
+    	//strokeWeight(strokeWt);
     }
 
 //	TODO: need gradual incrementor code, or "TWEEN" logic applies ( HOscillator? )
-    // strokeWeight((r*GR)%(int)sqrt(width));		//	cool sprinklery
+    // strokeWeight((r*GR)%(int)sqrt(displayWidth));		//	cool sprinklery
 
     // strokeWeight((r*GR)%cX);	//	crazy spiderman face
-	// strokeWeight((r/GR)%width);	//	crazy spiderman face
+	// strokeWeight((r/GR)%displayWidth);	//	crazy spiderman face
 	// strokeWeight((r*GR)%(r/GR));	//	interesting cloud spiral
-	// strokeWeight( 1+(r/TWO_PI)%sqrt(width) );	// More open DOT spiral
-	// strokeWeight( HALF_PI+(r/GR)%sqrt(width) );	// More open DOT spiral
+	// strokeWeight( 1+(r/TWO_PI)%sqrt(displayWidth) );	// More open DOT spiral
+	// strokeWeight( HALF_PI+(r/GR)%sqrt(displayWidth) );	// More open DOT spiral
 	// strokeWeight( noise(r)+(r/GR) );	// smooth tight spiral
 	// strokeWeight( random(r)+(r/GR) );	// kinda wu-tangish
     
     //	NOTE: r%{loop number} would make for great GIF frames
     // if(r%43==0){
-    // 	// strokeWt = (strokeWt*GR)%sqrt(height);
-    // 	strokeWt = (strokeWt*GR)%sqrt(height);
+    // 	// strokeWt = (strokeWt*GR)%sqrt(displayHeight);
+    // 	strokeWt = (strokeWt*GR)%sqrt(displayHeight);
     // 	strokeWeight(strokeWt);
     // }
 
-
-
-
-
     // point(gX, gY);
-	shape( fix.shapeJous( gX, gY, 42, (int)strokeWt ) );	//	
+	shape( fix.shapeJous( gX, gY, 45, (int)(strokeWt+noise(strokeWt)) ) );	//	
 
     //	TODO: Get point & strokeWeight + FX figured out, then visit the other primitives
-    // rect(cos(GR*r)*r, sin(GR*r)*r, sqrt(width), sqrt(width));
+    // rect(cos(GR*r)*r, sin(GR*r)*r, sqrt(displayWidth), sqrt(displayWidth));
     // ellipse(cos(GR*r)*r, sin(GR*r)*r, (GR*r)%180, (GR*r)%180 );
   } 
 
@@ -277,7 +279,7 @@ stroke( gX%255 );//, gY%255, r%255 );	//	rings of color
 
 void doExit(){
 
-   save(SAVE_NAME+".png");
+   save(SAVE_NAME);
     // noLoop();
     // System.gc();
     super.exit();
