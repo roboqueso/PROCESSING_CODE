@@ -1,6 +1,11 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+
+import fixlib.*;
 //
 //  Rotate the circles so the crown looking opening points up
 
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int alf = 37;
 
@@ -72,11 +77,18 @@ float dx, dy;
 //  vars for draw()
 
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D);//, P3D, P2D, FX2D  NOTE: P2D throwing tesselation errors
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(#EF2020);
   frameRate(303);
   background(3);
 
@@ -88,30 +100,30 @@ void setup() {
   smooth();
 
   //  init
-radius1 = 100;  //75;
-radius2 = 150;  //130;
-radius3 = 250;  //175;
-radius4 = 333;  //222;
-radius5 = 666;  //333;
-
-startX1 = cX*1.5;
-startX2 = cX*1.5;
-startX3 = cX*1.5;
-startX4 = cX*1.5;
-startX5 = cX*1.5;
-
-startY1 = cY;
-startY2 = cY;
-startY3 = cY;
-startY4 = cY;
-startY5 = cY;
-
-angle1 = 90;
-angle2 = 0;
-
-angle3 = 103;
-angle4 = 110;
-angle5 = 100;
+  radius1 = 100;  //75;
+  radius2 = 150;  //130;
+  radius3 = 250;  //175;
+  radius4 = 333;  //222;
+  radius5 = 666;  //333;
+  
+  startX1 = cX*1.5;
+  startX2 = cX*1.5;
+  startX3 = cX*1.5;
+  startX4 = cX*1.5;
+  startX5 = cX*1.5;
+  
+  startY1 = cY;
+  startY2 = cY;
+  startY3 = cY;
+  startY4 = cY;
+  startY5 = cY;
+  
+  angle1 = 90;
+  angle2 = 0;
+  
+  angle3 = 103;
+  angle4 = 110;
+  angle5 = 100;
 
   // white scan lines
   stroke(111, alf ); // 255
@@ -131,7 +143,6 @@ angle5 = 100;
 void draw()
 {
     noFill();
-    smooth();
 
     xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
     yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
@@ -363,4 +374,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-

@@ -3,11 +3,8 @@ import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
-
-//  Prozac color theme
-//
 Boolean isFinal = true;
-int alf =  21;
+int alf =  24;
 
 int cX;
 int cY;
@@ -26,26 +23,29 @@ PImage img, img2;
 //ArrayList p1;
 float a, b, amp = 3, x, y, r, g;
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  //size( 1024, 768 );//
-  size( 2900, 4060, FX2D );//);
+
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight );// P3D, P2D, FX2D
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
   colorMode(HSB, 360, 100, 100);
   
   background(8);
   frameRate(303);
   fix.alpha(alf*2 );
   //  setup variables
-  smooth(8);
-  //noFill();
-
   cX = width/2;
   cY = height/2;
 
   // get colors from image
-  img = loadImage( "fluoxetine.jpg");
+  img = loadImage( "IMG_1412.JPG" );
   p1 = img.pixels;
   //p1 = fix.getImgColorsAll ( img );
 

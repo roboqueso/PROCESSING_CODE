@@ -1,28 +1,38 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/dwl_aiarfdzpkji8b-ciba  
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-int alf = 13;
+int alf = 69;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
-float w = 21;
+float w = 69;
 
 
 // image
 PImage img;
 ArrayList p3;
 
-int i = 0, cX, cY, rad = 37; 
+int i = 0, cX, cY, rad = 69; 
 Boolean on = false;
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size( 1024, 768);
+
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D);//, P3D, P2D, FX2D  NOTE: P2D throwing tesselation errors
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(#EF6969);
+
   background(0);
   frameRate(666);
 
@@ -31,10 +41,10 @@ void setup() {
   smooth();
   ellipseMode(CENTER);
   //  setup variables
-  cX = floor(width*.42);
-  cY = height/2;
+  cX = floor(displayWidth*.42);
+  cY = displayHeight/2;
   
-  img = loadImage("emco2.png");
+  img = loadImage("./WhatYouEC2b-11420201012240.png");
 
   //  MAKE TILED BACKGROUND
   for( int yy = 0; yy <= 768; yy += img.height ){
@@ -59,12 +69,12 @@ void setup() {
 void draw()
 {
     strokeWeight(1);  
-    if( yy < height ) {
+    if( yy < displayHeight ) {
       fix.ranPalStroke( p3 );
       fix.drawLissajous( xx, yy, alf/HALF_PI );
     }
     
-    if( xx < height ) {
+    if( xx < displayHeight ) {
       fix.ranPalStroke( p3 );
       fix.drawLissajous( yy, xx, alf/HALF_PI );
     }
@@ -143,7 +153,7 @@ void draw()
   
   t++;
 
-  if( xx > width ) {
+  if( xx > displayWidth ) {
     xx = -(w/2);
     yy += w;
   } else {
@@ -153,7 +163,7 @@ void draw()
 
 
 
-  if( yy > width ) {
+  if( yy > displayWidth ) {
     doExit();
   }
 
@@ -192,13 +202,13 @@ void artDaily( String dailyMsg ) {
   smooth();
   
   fix.ranPalFill( p3 );
-  text( " "+dailyMsg, width-222, this.height-10);
+  text( " "+dailyMsg, displayWidth-222, displayHeight-10);
   
   fix.ranPalFill( p3 );
-  text( " "+dailyMsg, width-222, this.height-9);
+  text( " "+dailyMsg, displayWidth-222, displayHeight-9);
   
   fill(#EFEFEF);
-  text( " "+dailyMsg, width-222, this.height-8);
+  text( " "+dailyMsg, displayWidth-222, displayHeight-8);
 }
 
 ///////////////////////////////////////////////////////////
@@ -239,4 +249,3 @@ void ec2Stamp( int x, int y ){
   fill(#EFEFEF);
   text( "c", x+127, y-2 );//text( "c", cX+127, cY-2 );
 }
-

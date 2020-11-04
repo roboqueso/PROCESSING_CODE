@@ -53,12 +53,12 @@ String fnt;
 // String[] fontList = PFont.list();  //  P5 FONT LIST
 
 //  ALL INSTALLED FONTS - as known by JFX
-// String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
+ String[] fontList = javafx.scene.text.Font.getFamilies().toArray(new String[0]); //  JFX FONT LIST
 
 //  DEVASKATION FONTS
 // String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo" };
 
-String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic", "Arial Rounded MT Bold" };
+//String[] fontList = { "Myriad Pro", "AMCAP Eternal", "Helvetica", "Cardo","Slaytanic", "Arial Rounded MT Bold" };
 
 /*
 //  FAVORITES

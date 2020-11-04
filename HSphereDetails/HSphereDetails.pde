@@ -17,9 +17,9 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 3;
+int colCt = 11;
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 1;
+int colSpacing = colCt;
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
@@ -33,7 +33,8 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-
+    background(0);
+    
   //  init VARIABLES
   drawW = (int)( (width-(colSpacing))/colCt)-colSpacing;
   drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
@@ -41,7 +42,7 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true).autoClear(false);
+  H.init(this).background(0).use3D(true).autoClear(false);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
@@ -86,9 +87,9 @@ HSphere hs = (HSphere)obj;
 hs
 	.scale(.25)
 	.strokeWeight( 1*noise(frameCount) )
-    //.anchorAt(H.CENTER)
+  .anchorAt(H.CENTER)
  	.noFill()
- 	.stroke( (int) hs.x()%255, (int) hs.y()%255, (int) hs.z()%255, 160-frameCount );
+ 	.stroke( (int) hs.x()%255, (int) hs.y()%90, (int) hs.z()%180, 160-frameCount );
         }
       }
     )
@@ -130,7 +131,6 @@ void draw() {
 // save(this+".png");
 
   if(frameCount>9)doExit();
-  // doExit();
 
 }
 
