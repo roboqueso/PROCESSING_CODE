@@ -1,3 +1,5 @@
+//  SEE:   https://ello.co/ericfickes/post/iuk7ehypdz8_gm8bs-2y3g
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 /*
 ALPHA  : square one starting point P5/HYPE template sketch
 * BLOOD-DRAGON : 1920 x 1071
@@ -25,15 +27,15 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 8;
+int colCt = 2;  //  2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 8;
+int colSpacing = 2;  //  2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
 int drawW, drawH; //  HDrawable Width / Height
 
 /* ------------------------------------------------------------------------- */
 
 void  settings ()  {
-    size(1280, 720, P3D); //"processing.opengl.PGraphics3D");
+    size(displayWidth, displayHeight, P3D); //"processing.opengl.PGraphics3D");
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 }
@@ -49,7 +51,7 @@ void setup() {
   gridY = (drawH/2)+colSpacing;
 
   //  init HYPE
-  H.init(this).background(-1).use3D(true);
+  H.init(this).background(0).use3D(true);
 
   pool = new HDrawablePool(colCt*rowCt);
   pool.autoAddToStage()
@@ -77,7 +79,7 @@ void setup() {
           d
             .size( drawW, drawH )
             .noFill()
-            .stroke( (int) d.x()%255, (int) d.y()%255, (int) d.z()%255 )
+            .stroke( (int) (colCt*d.x())%255, (int) (colCt+d.y())%255, (int) (colCt*d.z())%255 )
             .anchorAt(H.CENTER)
           ;
         
@@ -118,7 +120,7 @@ void draw() {
   }
   */
 
-  if(frameCount>43)doExit();
+  if(frameCount>45)doExit();
 
 }
 
@@ -142,7 +144,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
+  save( fix.pdeName() + "-" + fix.getTimestamp()+"_"+colCt+"_"+colSpacing+  ".png" );    //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;
