@@ -1,3 +1,5 @@
+//  SEE:   https://ello.co/ericfickes/post/erj73rc81gqs0mdhqatk9q
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
 import nervoussystem.obj.*;
 import fixlib.*;
 
@@ -40,7 +42,7 @@ void draw()
   obj.beginDraw();
 
     obj.translate(cX, cY);
-    obj.beginShape(TRIANGLE_STRIP);
+    obj.beginShape(TRIANGLE_FAN);
     obj.stroke(0);
     obj.noFill();
     obj.setColor(false);
