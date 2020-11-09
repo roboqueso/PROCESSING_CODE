@@ -1,24 +1,30 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/ux6bt6ul1blrtxszgs6skw
+//  GOTO:  https://github.com/ericfickes/FIXLIB   
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
-public float x=0,y=0, col1024=0, row768=0, rX, rY;
-public int i = 0, gridSize = 11, cX, cY;
+public float x=0,y=0, colwidth=0, rowheight=0, rX, rY;
+public int i = 0, gridSize = 13, cX, cY;
 public Boolean isFinal = true;
 
-/////////////////////////////////////////////////////////////////////////////////
+void settings() {
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+}
+
+////////////////////////////////////////////////////
+//
 void setup() {
-    background(#012345);
-    size(1024,768);
-//size(display1024, display768);
-    smooth();
+  frameRate(420);
+  background(#0420EF);  //  orange : #EF4520
     noFill();
     
-    cX = int(1024/2);
-    cY = int(768/2);
-    col1024 = 1024/gridSize;
-    row768 = 768/row768;
+    cX = int(width/2);
+    cY = int(height/2);
+    colwidth = width/gridSize;
+    rowheight = height/rowheight;
     
     ellipseMode(CENTER);
     rectMode(CENTER);
@@ -43,8 +49,8 @@ void draw() {
 
       strokeWeight(random(gridSize));
         
-        rX = random(1024-x);
-        rY = random(768-y);
+        rX = random(width-x);
+        rY = random(height-y);
  
         stroke(random(255),gridSize,gridSize, random(222) );
         bezier( rX, rY, cX+random(x), cY+random(y), gridSize+x, gridSize+y, y, x );
@@ -63,13 +69,13 @@ void draw() {
         rect(y, x, gridSize*TWO_PI, gridSize*TWO_PI );
  
         gridSize = int(random(PI,42));
-        col1024 = 1024/gridSize;
-        row768 = 768/row768;
+        colwidth = width/gridSize;
+        rowheight = height/rowheight;
     }
-    if(frameCount>768+1024){
+    if(frameCount>height+width){
         fill(#000075);
         textFont(createFont("Monospace", 11));
-        text("ERICFICKES.COM", 11, 768-11);
+        text("ERICFICKES.COM", 11, height-11);
         
         if(isFinal){
           save( fix.pdeName() + fix.getTimestamp() + ".png");
@@ -83,33 +89,33 @@ void draw() {
 void xySystem( float a, float b ){
     switch( int( random( 3 ) ) ){
         case 0:{
-            if (a < 1024) {
-                x += col1024;
+            if (a < width) {
+                x += colwidth;
             } else {
-                x = col1024;
-                y += row768;
+                x = colwidth;
+                y += rowheight;
             }
         } break;
         
         case 1:
         {
-            if (b < 768) {
-                x += col1024*2;
-                y += row768;
+            if (b < height) {
+                x += colwidth*2;
+                y += rowheight;
             } else {
-                y = row768;
-                x = col1024;
+                y = rowheight;
+                x = colwidth;
             }
         } break;
         
         case 2:
         {
-            if (b < 768) {
-                y += row768;
-                x += col1024;
+            if (b < height) {
+                y += rowheight;
+                x += colwidth;
             } else {
-                y = row768;
-                x += col1024;
+                y = rowheight;
+                x += colwidth;
             }
         } break;
     }

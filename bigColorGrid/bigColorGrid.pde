@@ -21,13 +21,21 @@ int y = 0;
 int ct = 0;
 int maxCt = 0;
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D);//, P3D, P2D, FX2D  NOTE: P2D throwing tesselation errors
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(#2020EF);
   frameRate(303);
-  background(9);
+
   fix.alpha(alf);
   //  setup variables
   cX = width/2;
@@ -100,4 +108,3 @@ void artDaily( String dailyMsg ) {
   fill(#EE0000);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-

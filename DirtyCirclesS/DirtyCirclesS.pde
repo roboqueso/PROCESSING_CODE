@@ -82,7 +82,7 @@ void draw()
 
 	strokeWeight(11);
     stroke(random(55,255),alf*PI);
-    point( lerp(x, rX, noise(frameCount)),  lerp(y, rY, noise(frameCount)));
+    sphere( lerp(x, rX, noise(frameCount)),  lerp(y, rY, noise(frameCount)));
 
     if( null != pvLast ){
     	strokeWeight(6);
