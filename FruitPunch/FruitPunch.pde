@@ -149,7 +149,7 @@ void draw() {
 
 if(saveFrames){
   //  TEST : save frame, reassemble in QT??
-  saveFrame("frames/"+this+"######.png"); //  tiff are hotter, but 21MB each
+  saveFrame("frames/"+this+"######.tiff"); //  tiff are hotter, but 21MB each
 }
 
 }
