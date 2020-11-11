@@ -1,5 +1,6 @@
 //  see: https://ello.co/ericfickes/post/7vk8ayth5wao2k_xglbnuq
-import fixlib.*;  // goto: https://github.com/ericfickes/FIXLIB
+// goto: https://github.com/ericfickes/FIXLIB
+import fixlib.*; 
 
 Fixlib fix = Fixlib.init(this);
 
