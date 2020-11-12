@@ -1,21 +1,27 @@
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/r0lhzmhrmk4w9rjiouwjwq
+//  GOTO:  https://github.com/ericfickes/FIXLIB   
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 //
 Boolean isFinal = true;
-int alf = 42;
-float shapeSize = 400;
+Boolean gotZoog = false;  //  enables colored mouse follower brush
+int alf = 100;
+float shapeSize = 420;
 
 int cX;
 int cY;
 
 float xx, yy;
 
-//  #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
-color[] palette = { 
-#EF0000, #00EF00, #0000EF, #EFEFEF
+color[] palette = {
+//#A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
+
+//#EF0000, #00EF00, #0000EF, #EFEFEF
+
+
+#EFEFEF, #EF1975, #19EF75, #1975EF, #DEFDAD, #DAD420, #420DAD, #ACEDAD, #B0000B, #B000B5, #B00B1E
+
 };
 
 int outerXX = 0;
@@ -23,7 +29,7 @@ int outerYY = 0;
 
 float angle = 0;
 float maxAngle;
-float radius = 150;
+float radius = 75;
 float outerRadius;
 
 int offsetX = 0;
@@ -33,13 +39,17 @@ int offsetY = 0;
 int ct = 0;
 int maxCt = 0;
 
+void settings() {
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+}
+
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);
-  background(69);
+  frameRate(420);
+  background(#DEFDAD);
   fix.alpha(alf);
   //  setup variables
   cX = width/2;
@@ -75,29 +85,29 @@ void draw()
 
   outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
   outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
-
-stroke(random(255), alf*2);
-point(xx, yy);
-
-stroke(random(222), alf*2);
-point(outerXX, outerYY);
-
-stroke(random(199), alf);
-point( random(xx, outerXX), random( yy, outerYY ) );
-
-stroke(random(69), alf);
-point( lerp(xx, outerXX, random(.9) ), lerp( yy, outerYY, random(.9) ) );
-
   
+  stroke(random(255), alf*2);
+  point(xx, yy);
+  
+  stroke(random(222), alf*2);
+  point(outerXX, outerYY);
+  
+  stroke(random(199), alf);
+  point( random(xx, outerXX), random( yy, outerYY ) );
+  
+  stroke(random(69), alf);
+  point( lerp(xx, outerXX, random(.9) ), lerp( yy, outerYY, random(.9) ) );
+  
+    
 if( angle >= maxCt ) {
   doExit();
 }
 
-if( frameCount % 40 == 0 ) {
-  angle+= 10;
-  radius+=3;
-  offsetY = (int)random(cY);
-  offsetX = (int)random(cX);
+if( frameCount % 45 == 0 ) {
+  angle+=  TWO_PI;  //10;
+  radius+= PI;  //3;
+  offsetY = (int)random(displayHeight);
+  offsetX = (int)random(displayWidth);
   
   stroke(random(255));
   line( xx, yy, outerXX, outerYY );
@@ -107,6 +117,10 @@ if( frameCount % 40 == 0 ) {
   
 } else {
   angle += 5;
+  
+  //  wonky mouse followerr
+  if(gotZoog)  zoog2();
+  
 }
 
 }
