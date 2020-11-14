@@ -1,36 +1,39 @@
-//	IMPORTS	////////////////////////////////////////////////////
-import processing.opengl.*;
+//  SEE:   https://ello.co/ericfickes/post/aluc-qom_4wgjz69hk-kra
+//  GOTO:  https://github.com/ericfickes/FIXLIB   
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
+
 Boolean isFinal = true;
-int alf = 42; //37;
+int alf = 69;
 
 
 color[] p2 = { #000000, #000055, #005555, #555555, #5555AA, #55AAAA, #555500, #AAAAAA, #AA5500, #AA5555, #AAAA55, #FFAA00, #FFAA55, #AAAA00, #005500, #550000, #FFFFFF, #FFAAAA, #FFFFAA, #55AA55, #FFFF55, #AA55AA, #FFAAFF, #AAAAFF, #AAFFFF, #55AAFF, #550055, #FF5500, #AAFFAA, #0055AA, #FF5555, #AA0000, #AA0055, #FF55AA }; 
 
-float angle, radius = TWO_PI, x, y, cX, cY;
+float angle, radius = PI, x, y, cX, cY;
 
 //  controls at which angle % == 0 starts and stops the noise
-int flipStart = 180, flipEnd = 360;
+int flipStart = 24, flipEnd = 240;
 Boolean flip = false;
+
+void settings() {
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);  //  P2D, P3D, OPENGL, PDF
-  background(#000011);
+  frameRate(420);
+  background(0);
+
   fix.alpha(alf);
 
   ellipseMode(CENTER);
   rectMode(CENTER);
-  
-  frameRate(100);
-  // smooth();
+
 
   cX = width/2;
   cY = height/2;
@@ -86,9 +89,6 @@ void draw()
       vertex(x,y);
       bezierVertex(cX, cY, random(width), random(height), x,y);
       curveVertex(x,y);
-
-
-
     endShape();
 
 
@@ -140,4 +140,3 @@ void artDaily( String dailyMsg ) {
   fill(255);
   text( " "+dailyMsg, 11, height-11 );
 }
-
