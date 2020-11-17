@@ -1,23 +1,23 @@
+//  SEE:   https://ello.co/ericfickes/post/uuabublnsdadpvfxznew-q
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 //  source
 //  http://studio.sketchpad.cc/sp/pad/view/ro.9ZdbPHUvjZkMn/latest
 //  clone
 //  http://studio.sketchpad.cc/sp/pad/newsketch?clonePadId=ro.9ZdbPHUvjZkMn&cloneRevNum=5
-
-
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
 int buf;
-int alf = 42, tX, tY, inLeft, inRight, wvStart,i;
+int alf = 123, tX, tY, inLeft, inRight, wvStart,i;
 
 
 ////  CIRCLEY THING
 float cX, cY, inc, m; 
 float r, g, b;
-int tmr_Interval = 10;  // seconds
+int tmr_Interval = 9;  // seconds
 
 float x, y, angle, sz=75;
 float x2, y2, angle2, sz2; 
@@ -25,29 +25,32 @@ float x3, y3, angle3, sz3;
 float x4, y4, angle4, sz4; 
 
 
-/////////////////////////////////////////////////////////////////////////////////
-void setup()
-{
-	size(2048,1024);	//	 .hdr dimensions
-  // size(1024,768);  //  big:  1024x768
-//size(128,96);  //  thumb:  128x96
-  
-  background(#efefef); 
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
+void setup() {
+
+  background(#2020EF); 
   noFill();
   ellipseMode(CENTER);
   rectMode(CENTER); 
   strokeCap(ROUND); 
   strokeJoin(ROUND);
-  textFont( createFont( "AnonymousPro", 22 ) );
+
   
   fix.alpha(alf);
 
   cX = width/2;
   cY = height/2;
-  sz = 100;
-  sz2 = 109;
-  sz3 = 150;
-  sz4 = 185;
+  sz = random(100,200);
+  sz2 = random(109,209);
+  sz3 = random(150,250);
+  sz4 = random(185,285);
 
 
   y = cY;
@@ -102,7 +105,7 @@ void draw()
  
 getFlowery( random(cX), random(cY), 
             y-i, x-i,
-            x, y,
+            x+noise(frameCount), y+noise(frameCount),
             random(width-x), random(height-y) );
  
 
@@ -142,7 +145,7 @@ void getFlowery(
     bezier( x, y, x2, y2, x3, y3, x4, y4);
  
     strokeWeight(2);
-    stroke(#000037);
+    stroke(#000045);
     bezier( x, y, x2, y2, x3, y3, x4, y4);
 }
 
@@ -173,7 +176,7 @@ void doExit()
 //  Spit out ART DAILY message
 void artDaily( String dailyMsg ) {
 
-  textFont( createFont( "AppleGaramond", 37 ) );  //  "TrajanPro-Bold"
+  textFont( createFont( "QuickSand", 37 ) );  //  "TrajanPro-Bold"
   smooth();
 
   fill(#EFEFEF);
@@ -182,4 +185,4 @@ void artDaily( String dailyMsg ) {
   fill(0);
   text( " "+dailyMsg, width-301, height-3);
 }
-
+//  REMEMBER, FUCK JVASCRIPT
