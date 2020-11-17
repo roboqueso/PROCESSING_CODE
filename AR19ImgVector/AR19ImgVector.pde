@@ -10,7 +10,7 @@ int step = 9; // Higher = Less precision but more speed
 void setup() {
   size(800, 800, P3D);
   ambientLight(255, 255, 255, 0, 0, 0);
-  img = loadImage("yr9-symbol-test1.png");
+  img = loadImage("5-action.png");
   camera = new PeasyCam(this, img.width/2, img.height/2, 0, 1000);
   img.loadPixels();
   

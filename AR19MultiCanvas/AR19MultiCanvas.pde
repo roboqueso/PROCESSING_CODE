@@ -28,7 +28,7 @@ ArrayList<PVector> biggin = new ArrayList<PVector>();
 
 
 void settings(){
-	size(2000, 1000, P3D);
+	size(displayWidth, displayHeight, P3D);
 	smooth(8);
 	pixelDensity(displayDensity());
 	sketchSmooth();
@@ -40,7 +40,7 @@ void setup() {
   cX = (int)width/2;
   cY = (int)height/2;
   
-  cubeA = createGraphics(300,cY, P3D);
+  cubeA = createGraphics( (int)random(300,42),cY, P3D);
   // cubeB = createGraphics(300,300, P3D);
   
   //  create your group
@@ -48,20 +48,20 @@ void setup() {
 } 
 
 void draw() {
-  drawAndSave(cubeA, 100, 200, biggin);
+  drawAndSave(cubeA, 100+noise(frameCount), 200+noise(frameCount), biggin);
 
-  image(cubeA, xx, cY);
+  image(cubeA, xx, (frameCount%displayHeight)+noise(frameCount));
  
 
   if( xx >= width && yy < height ){
 
   	xx  = 0;
-  	yy += 180;
+  	yy += random(180);
 
 println("DOES THIS WORK?!?.............................");
 println("biggin: "+biggin.size());
 
-	OBJExport obj = (OBJExport) createGraphics( width, height, "nervoussystem.obj.OBJExport", fix.pdeName()+".obj");
+	OBJExport obj = (OBJExport) createGraphics( width, height, "nervoussystem.obj.OBJExport", fix.pdeName()+fix.getTimestamp()+".obj");
 	obj.beginDraw();
 	obj.pushMatrix();
 	//obj.translate(cubeA.width/2, cubeA.height/2);
@@ -71,9 +71,8 @@ println("biggin: "+biggin.size());
 		{
 		
 			PVector pv = (PVector)biggin.get(i);
-  //obj.rotateX(frameCount/100);
-  //obj.rotateY(frameCount/200);
-			obj.vertex(pv.x,pv.y,pv.z);
+
+			obj.vertex(pv.x+noise(frameCount),pv.y+noise(frameCount),pv.z+noise(frameCount));
 		}
 	obj.endShape(CLOSE);
 	obj.popMatrix();
@@ -82,9 +81,6 @@ println("biggin: "+biggin.size());
     obj.dispose();
 
 
-
-//	clear it and restart it
-// biggin = new ArrayList<PVector>();
 
     save(this+".png");
     exit();
@@ -98,7 +94,7 @@ println("biggin: "+biggin.size());
     exit();
   } else {
   	xx++;
-
+    yy++;
   }
 }
 
@@ -110,47 +106,25 @@ void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<PVector> rt) {
 	cube.beginDraw();
 	cube.lights();
 	cube.clear();
-	/*
-LIGHTEST - only the lightest colour succeeds: C = max(A*factor, B)
-
-DIFFERENCE - subtract colors from underlying image.
-
-EXCLUSION - similar to DIFFERENCE, but less extreme.
-
-SCREEN - opposite multiply, uses inverse values of the colors.
-
-REPLACE - the pixels entirely replace the others and don't utilize alpha (transparency) values
-*/
-// PShape pBox = cube.createShape( BOX, 80, vX, vY);
-PShape pBox = cube.createShape( RECT, 90, 44, vX, vY);
+	
+PShape pBox = cube.createShape( RECT, 90+noise(frameCount), 45+noise(frameCount), vX+noise(frameCount), vY+noise(frameCount));
 
 	cube.blendMode(LIGHTEST);
-	// cube.translate(vX, vY);
-
 	cube.strokeWeight(TWO_PI);
-	cube.stroke(frameCount%255, xx%255, yy%255);
+	cube.stroke(frameCount%255+noise(frameCount), xx%255, yy%255);
 	cube.noFill();
-	cube.rotateX(frameCount/xd);
-	cube.rotateY(frameCount/yd);
+	cube.rotateX(frameCount/xd+noise(frameCount) );
+	cube.rotateY(frameCount/yd+noise(frameCount) );
 	// cube.box(80);
 	cube.shape(pBox);
-	// cube.rotateX(frameCount/xd);
-	// cube.rotateY(frameCount/yd);
-	// 	cube.strokeWeight(TWO_PI);
-	// 	cube.stroke(frameCount%255, xx%255, yy%255);
-	// cube.fill(255);
-	// cube.box(80);
-//println("pBox: " + pBox.x + " " + pBox.y + " " + pBox.z + " ");
-	//	TODO: Figure out how to record all the vertices of the above BOX objects into
-	//	on PShape ( GROUP? )
+
 	cube.endDraw();
 
 
 	for(int vv = 0; vv <= pBox.getVertexCount(); vv++)
 	{
 		PVector pv = pBox.getVertex(vv);
-		// rt.add(pv);	//vertex( pv.x, pv.y, pv.z );
-    //rt.add( new PVector( pv.x, pv.y, pv.z+random(44) ) );
+
     rt.add( new PVector( vX+pv.x, vY+pv.y, pv.z ) );
 
 	}
