@@ -1,3 +1,5 @@
+//  SEE:   https://ello.co/ericfickes/post/xo5zby6vamy1lprrzduwhw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 //  source
 //  http://studio.sketchpad.cc/sp/pad/view/ro.9ZdbPHUvjZkMn/latest
 //  clone
@@ -5,13 +7,11 @@
 
 
 import fixlib.*;
-
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 int buf;
-int alf = 42, tX, tY, inLeft, inRight, wvStart,i;
+int alf = 45, tX, tY, inLeft, inRight, wvStart,i;
 
 
 ////  CIRCLEY THING
@@ -24,33 +24,35 @@ float x3, y3, angle3, sz3;
 float x4, y4, angle4, sz4; 
 
 
-/////////////////////////////////////////////////////////////////////////////////
-void setup()
-{
-	// size(2048,1024);	//	 .hdr dimensions
-  size(1024,768, FX2D);  //  big:  1024x768
+void settings(){
+  size(displayWidth, displayHeight);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
-  
-  background(#efefef); 
+
+////////////////////////////////////////////////////////////////////////
+void setup() {
+
+  background(255); 
   noFill();
   ellipseMode(CENTER);
   rectMode(CENTER); 
   strokeCap(ROUND); 
   strokeJoin(ROUND);
-  
+  noFill();  // this ties the room together  
   fix.alpha(alf);
 
   cX = width/2;
   cY = height/2;
-  sz = 100;
-  sz2 = 109;
-  sz3 = 150;
-  sz4 = 185;
+  sz = random(555);
+  sz2 = random(444);
+  sz3 = random(333);
+  sz4 = random(222);
 
 
   y = cY;
 
-    smooth(8);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -59,36 +61,38 @@ void draw()
 
 
     //  CIRCLE CIRCLE DOT DOT
-    x = cX - int( cos(radians(angle)) * sz +noise(frameCount) );
-    y = cY - int( sin(radians(angle)) * sz +noise(frameCount) );
+    x = cX - int( cos(radians(angle)) * sz +noise(frameCount) )+noise(frameCount);
+    y = cY - int( sin(radians(angle)) * sz +noise(frameCount) )+noise(frameCount);
  
     strokeWeight(14);
-    stroke(frameCount%2==0?0:255);
+    //stroke(frameCount%2==0?0:255);
+    stroke(frameCount%2==0? #454545 : #EFEFEF);
+
     point( x, y );
     point( width-x, height-y );
  
     strokeWeight(9);
-    stroke(frameCount%2==0?255:0);
+    stroke(frameCount%2==0? #EFEFEF : #454545);
     point( x, y );
     point( width-x, height-y );
     
     strokeWeight(4);
-    stroke(frameCount%2==0?0:255);
+    stroke(frameCount%2==0? #454545 : #EFEFEF);
     point( x, y );
     point( width-x, height-y );
  
     strokeWeight(1);
-    stroke(frameCount%2==0?0:255,alf/2);
+    stroke(frameCount%2==0? #DAAAAD : #B0000B, alf+noise(frameCount));
     ellipse( cX, cY, angle+i, angle+i);
 
     if( frameCount % 42 == 0 ){
       sz+=15;
     }
 
-    if( angle < width)
+    if( angle < width )
         angle+=TWO_PI;
     else
-        angle = 0;
+        angle = random(cX,width);
     
      x = cX - int( cos(radians(angle)) * sz +noise(frameCount) );
      y = cY - int( sin(radians(angle)) * sz +noise(frameCount) );
@@ -104,7 +108,7 @@ getFlowery( cX, cY,
 }
  
  
-    if (i < (height/2) ) {
+    if (i < cY ) {
         i+=2;
     } else {
         i = 0; 
@@ -113,7 +117,7 @@ getFlowery( cX, cY,
 
     
   ////  STOPPER
-  if ( frameCount > height ) {
+  if ( frameCount > displayWidth ) {
     doExit();
   }
 }
@@ -130,15 +134,15 @@ void getFlowery(
 {
 
     strokeWeight(12);
-    stroke(#EF0000);
+    stroke(#EF2020);   
     bezier( x, y, x2, y2, x3, y3, x4, y4);
  
     strokeWeight(6);
-    stroke(#EFEF00);
+    stroke(#20EF20);
     bezier( x, y, x2, y2, x3, y3, x4, y4);
  
     strokeWeight(2);
-    stroke(#000037);
+    stroke(#2020EF);
     bezier( x, y, x2, y2, x3, y3, x4, y4);
 }
 
@@ -155,10 +159,10 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    fill(#EF2018);
+    fill(#DAD666);
     text("ericfickes.com", width-100, height-11);
 
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    save( fix.pdeName() + "-" + fix.getTimestamp()+".tif" );
   }
 
   noLoop();
