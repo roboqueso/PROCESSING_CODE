@@ -1,35 +1,42 @@
+//  SEE:   https://ello.co/ericfickes/post/w-5jdxsotujdi7s7bo-zlw
+
 import java.util.Date;
 
 public boolean isFinal = false;
 public float xx=0,yy=0, coldisplayWidth=0, rowdisplayHeight=0;
-public int i = 0, gridSize = 4, cX, cY;
-public int[] sz = { 3, 6, 9, 11, 15, 23, 38, 61, 99, 111 };
+public int i = 0, gridSize = 10, cX, cY;
+public int[] sz = { 3, 6, 9, 11, 13, 15, 24, 45, 69, 75, 99, 111 };
+
 
 void settings(){
   size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 void setup() {
-    background(0);
-    //size(1024,768);
-//size(displaydisplayWidth, displaydisplayHeight);
-    smooth();
+    frameRate(420);
+    background(#DAD720);
     noFill();
     coldisplayWidth = displayWidth/gridSize;
     rowdisplayHeight = displayHeight/gridSize;
+    
+    filter(INVERT);
 } 
 /////////////////////////////////////////////////////////////////////////////////
 void draw() {  // this is run repeatedly.  
-    
+
+filter(INVERT);
+
     stroke(random(255), 100);
     
     xySystem( xx, yy );
 
     
     strokeWeight(random(PI,gridSize));
-    stroke(random(gridSize, 255), gridSize, gridSize );
+    stroke(random(gridSize, 255)+noise(gridSize), gridSize, gridSize );
         
     point( xx, yy );
     point( yy-xx, yy );
@@ -40,17 +47,17 @@ void draw() {  // this is run repeatedly.
         ellipse(xx, yy, gridSize*PI, gridSize*PI );
         ellipse(yy, xx, gridSize*PI, gridSize*PI );
 
-        stroke(random(gridSize,255), gridSize, gridSize, 100);
+        stroke(random(gridSize,255), gridSize, gridSize+noise(gridSize), 100);
         bezier( xx, yy, xx+yy, random(gridSize)+xx, random(xx), random(yy), displayWidth/2-xx, displayHeight/2-yy );
 
         beginShape();
           vertex( xx, xx);
           vertex( displayWidth/2-xx, random(gridSize)-yy);
-          vertex( random(xx), random(yy));
+          vertex( random(xx)+noise(xx), random(yy)+noise(yy));
           vertex( yy, yy );
         endShape();
         
-        curve( yy, yy, displayWidth/2, random(gridSize), random(xx), random(yy), xx, xx );
+        curve( yy, yy, displayWidth/2, random(gridSize)+noise(gridSize), random(xx)+noise(xx), random(yy)+noise(yy), xx, xx );
         
         strokeWeight(1);
         stroke(random(255), 100);
@@ -68,7 +75,7 @@ void draw() {  // this is run repeatedly.
     
     
     if(frameCount>displayHeight){//+displayWeight){
-        fill(#EF2012);
+        fill(#EF2020);
         textFont(createFont("Monospace", 11));
         text("nothing says ART like bezier", 11, displayHeight-11);
         
