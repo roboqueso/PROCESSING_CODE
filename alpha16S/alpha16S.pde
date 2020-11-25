@@ -1,3 +1,6 @@
+//  SEE:   https://ello.co/ericfickes/post/k2qmabtoy5mexstcpibc2g
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
 //  2.
 //  alpha16S is the ALPHA reference sketch for all legacy sketches being ported to 16S_{legacySketchName}
 //  * 16S_ prefix groups new work
@@ -30,7 +33,7 @@ import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 String SAVE_NAME = "thisShouldBeDynamic";
-int maxFrame = 43;
+int maxFrame = 45;
 
 GraphicsContext ctx;
 
@@ -47,24 +50,23 @@ float cX, cY;
 //  SRC_OVER = DEFAULT, use while concepting
 
 
-//  16 BlendModes : Run final sketch through all 16 BlendModes
+//  16 BlendModes : 
 //  ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
 //  HARD_LIGHT, LIGHTEN, MULTIPLY, OVERLAY, RED, SCREEN, SOFT_LIGHT, SRC_ATOP
-BlendMode bMode = BlendMode.SRC_OVER;
+BlendMode bMode = BlendMode.SRC_ATOP;
 
 
-/* ------------------------------------------------------------------------- */
 
-void  settings ()  {
-    size(1920, 1080, FX2D); // FX2D required
-    smooth(8);  //  smooth() can only be used in settings();
-    pixelDensity(displayDensity());
+void settings(){
+  size(displayWidth, displayHeight, FX2D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
 }
 
 /*****************************************************************************/
 void setup() 
 {
-  background(#EFEFEF);
+  background(255);
 
   ellipseMode(CENTER);
   rectMode(CENTER);
@@ -132,10 +134,10 @@ point( random(width), random(height) );
 strokeWeight(random( 1, HALF_PI ));
 
 line( random(width), random(height), random(width), random(height) );
-rect( random(width), random(height), 69, 69, random(-frameCount, frameCount) );
+rect( random(width), random(height), 75, 75, random(-frameCount, frameCount) );
 
 strokeWeight(random(.8, 1.6));
-ellipse( random(width), random(height), 69, 69 );
+ellipse( random(width), random(height), 75, 75 );
 
 
 //  TEXT - are differences noticeable?
@@ -145,8 +147,11 @@ if(frameCount%2==0)
 }
 else
 { 
-  ctx.fillText( "JFX fillText "+ frameCount, random(width), random(height) );
-  ctx.strokeText( "JFX strokeText "+ frameCount, random(width), random(height) );
+  //ctx.fillText( "JFX fillText "+ frameCount, random(width), random(height) );
+  //ctx.strokeText( "JFX strokeText "+ frameCount, random(width), random(height) );
+  ctx.fillText( this+""+ frameCount, random(width), random(height) );
+  ctx.strokeText( this+""+ frameCount, random(width), random(height) );
+
 }
 
 
@@ -175,7 +180,7 @@ else
 void doExit(){
   String msg = "ERICFICKES.com ";
   //  stamp bottom right based on textSize
-  fill(#EF1975);
+  fill(#EF2020);
   textSize(13);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
   
