@@ -1,48 +1,54 @@
-/*
-Base with color ( x,y powered RGB )
- 
- SEVEN items from Eve
- 
- 1. Rainbows
- 2. hearts
- 3. diamonds
- 4. crystals
- 5. stars
- 6. peace signs
- 7. moon
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
 
- */
-
+Fixlib fix = Fixlib.init(this);
 
 
 PImage deskTop;
 PImage[] masks;  // array of PImage masks
-int xx = 0, yy = 0, sz = 42;
+int xx = 0, yy = 0, sz = 45;
 
-void setup() {
-  size(1260, 840);
-  masks = new PImage[6];
+/* ------------------------------------------------------------------------- */
+
+void  settings ()  {
+    //size(displayWidth, displayHeight, P3D);//, P3D, P2D, FX2D  NOTE: P2D throwing tesselation errors
+    size(2760, 3672, P3D);// P3D or P2D??? // FX2D can't handle this sketch
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/*****************************************************************************/
+void setup() 
+{
+  background(-1);
+  frameRate(666);
+  masks = new PImage[8];  // NOTE : keep PImage size in sync with how many images you are loading below
 
   // keep track of the masks
-  masks[0] = loadImage("bigmask.png");
-  masks[1] = loadImage("bigmask_black.png");
-  masks[2] = loadImage("diamonds_black_wbg.png");
-  masks[3] = loadImage("diamonds_black.png");
-  masks[4] = loadImage("diamonds_bw.png");
-  masks[5] = loadImage("diamonds_white.png");
+  masks[0] = loadImage("lasers1.png");
+  masks[1] = loadImage("lasers2.png");
+  masks[2] = loadImage("lasers3.png");
+  masks[3] = loadImage("lasers4.png");
+  masks[4] = loadImage("lasers5.png");
+  masks[5] = loadImage("lasers6.png");
+  masks[6] = loadImage("lasers7.png");
+  masks[7] = loadImage("lasers8.png");
 }
+
+
 
 void draw() {
   
-  fill(sz+noise(frameCount, yy, xx),xx,yy, 200);
+  fill(sz+noise(frameCount, yy, xx),xx,yy, 180);
   stroke(xx, yy, sz+noise(frameCount, xx, yy));
   
   strokeWeight(1+noise(frameCount, xx, yy)+(int)random(masks.length));
-  line( 0, xx, width, xx);
+  line( 0, xx, 2760, xx);
   rect( xx, yy, sz, sz, sz*-noise(xx));
 
 
-  fill(xx,yy,sz+noise(frameCount, yy, xx), 200);
+  fill(xx,yy,sz+noise(frameCount, yy, xx), 180);
   stroke(xx, frameCount%255, yy);
   strokeWeight(random(7));  
   ellipse(yy,xx, sz, sz);
@@ -53,11 +59,11 @@ void draw() {
 
 
 
-  if(frameCount%42==0){
+  if(frameCount%45==0){
 
-    line(xx, 0, xx, height);
+    line(xx, 0, xx, 3672);
 
-    deskTop = get();
+    deskTop = get(0,0,2760, 3672);
     //  random mask
     //println("42 : "+ masks[(int)random(masks.length)] );
     deskTop.mask(masks[(int)random(masks.length)]);
@@ -77,17 +83,18 @@ void draw() {
     filter(ERODE);
     filter(DILATE);
     
-    image(deskTop,0,0);
+    image(deskTop,0,0,2760, 3672);
   }
 
 
-  if ( xx >= width ) {
+  if ( xx >= 2760 ) {
     yy += sz+noise(frameCount, xx, yy);
     xx = (int)random(sz);
   }
 
   //  stopper
-  if(yy>=height){
+  //if(yy>=height){
+    if(xx>width){
 
     save(fix.pdeName()+fix.getTimestamp()+".png");
 
