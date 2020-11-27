@@ -1,43 +1,41 @@
-/*
-Base with color ( x,y powered RGB )
- 
- SEVEN items from Eve
- 
- 1. Rainbows
- 2. hearts
- 3. diamonds
- 4. crystals
- 5. stars
- 6. peace signs
- 7. moon
-
-filters ( no gray )
-
-stroke shades of gray
-
- */
-
+//  SEE:   https://ello.co/ericfickes/post/ea1nocrbbpdonof1i4xnew
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
 
 
 PImage deskTop;
 PImage[] masks;  // array of PImage masks
-int xx = 0, yy = 0, sz = 42;
+int xx = 0, yy = 0, sz = 45;
 
-/////////////////////////////////////////////////////////////////////
+
+
+void settings(){
+  // NOTE: match to mask size
+  size(3360, 2100);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
-  size(1260, 840);
-  masks = new PImage[7];
+
+  background(-1);
+  frameRate(420);
+  noFill();
+  ellipseMode(CENTER);
+  rectMode(CENTER); 
+  strokeCap(ROUND); 
+  strokeJoin(ROUND);
+  masks = new PImage[3];
 
   // keep track of the masks
-  masks[0] = loadImage("one.png");
-  masks[1] = loadImage("two.png");
-  masks[2] = loadImage("three.png");
-  masks[3] = loadImage("four.png");
-  masks[4] = loadImage("five.png");
-  masks[5] = loadImage("six.png");
-  masks[6] = loadImage("seven.png");
+  masks[0] = loadImage("1.png");
+  masks[1] = loadImage("2.png");
+  masks[2] = loadImage("3.png");
 
-  smooth(sz);
+
   imageMode(CORNER);
 
 }
@@ -45,22 +43,22 @@ void setup() {
 /////////////////////////////////////////////////////////////////////
 void draw() {
   
-  fill(getSeven(xx,245), sz, getSeven(7,245), getSeven(sz,245));
+  //fill(getSeven(xx,245), sz, getSeven(7,245), getSeven(sz,245));
+    fill(sz, getSeven(xx,245), getSeven(7,245), getSeven(sz,245));
+
   stroke(getSeven(7,245));
-  
-  // strokeWeight(sqrt(1+noise(frameCount, xx, yy)+(int)getSeven(masks.length, sz)));
   strokeWeight(random(.7,2.8));
 
   line( 0, xx, yy, xx);
   ellipse(yy,xx, sz, sz);
   
   noFill();
-  // strokeWeight(getSeven(7,sz));  
+strokeWeight(getSeven(7,sz));  
   rect( xx, yy, sz, sz);
   
   strokeWeight(getSeven(1,sz));
   point( getSeven(sz,xx), getSeven(sz,yy) );
-  // point( yy,yy);
+ point( yy,yy);
   point( yy, xx);
 
 
@@ -70,26 +68,25 @@ void draw() {
 
     line(xx, 0, xx, height);
 
-    deskTop = get();
+    deskTop = get(0,0,3360, 2100);
 
     deskTop.mask(masks[(int)random(masks.length)]);
 
     //  https://processing.org/reference/filter_.html
     filter(POSTERIZE, (int)getSeven(7,245) );
-    //filter(BLUR, (int)getSeven(0,7));
     filter(DILATE);
 
-    //tint(getSeven(7,245), getSeven(7,245), getSeven(7,245), getSeven(70,140) );
-    stroke(getSeven(7,xx), getSeven(sz ,245), getSeven(7,yy), 245);
+ tint(getSeven(7,245), getSeven(7,245), getSeven(7,245), getSeven(70,140) );
+    stroke(getSeven(7,yy), getSeven(sz ,xx), getSeven(7,245), 245);
     strokeWeight(sz);
 
     rect(xx,yy,getSeven(sz,xx), getSeven(sz,yy), -getSeven( (int)random(sz), sz) );
 
     //	slap it down
-    image(deskTop, 0,0 );
+    image(deskTop, 0,0, random(width), random(height));
 
     //	one w/flavor
-    // filter(INVERT);
+filter(INVERT);
     tint(getSeven(7,245), getSeven(7,245), getSeven(7,245), getSeven(70,203) );
     image(deskTop, getSeven(sz,xx),getSeven(sz,yy), getSeven(xx, width), getSeven(yy, height) );
     
@@ -111,7 +108,7 @@ void draw() {
 
 
   //  stopper
-  if(frameCount>width ){
+  if(frameCount>height ){
 
     save(fix.pdeName()+fix.getTimestamp()+".png");
 
