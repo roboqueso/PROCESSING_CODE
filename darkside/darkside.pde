@@ -1,24 +1,26 @@
+//  SEE:   https://ello.co/ericfickes/post/zspb2_t6o1otga8xrgvvgw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
 
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 42; //37;
+int alf = 45; //37;
 
 int cX;
 int cY;
 
-int cubeSize = 150;
+int cubeSize = 180;
 
-int dotSize     = 22;  //16;  // size of ellipse used to draw sine wave
-int xspacing    = 22, yspacing = xspacing;   // How far apart should each horizontal location be spaced
+int dotSize     = 24;  //16;  // size of ellipse used to draw sine wave
+int xspacing    = 24, yspacing = xspacing;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta     = 0.0;  // Start angle at 0
-float amplitude = 22;  // Height of wave
+float amplitude = 24;  // Height of wave
 float period    = 100.0;  // How many pixels before the wave repeats
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] xvalues, yvalues;  // Using an array to store height values for the wave
@@ -52,13 +54,18 @@ color[] p1 = { #484547, #4c4434, #575550, #3c3a2f, #44432b, #3f3f2c, #383828, #3
  };
 
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(displayWidth, displayHeight);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
-  // size to match image
-  size(1024, 768);
   frameRate(303);
-  background(9);
+  background(#901234);
 
   //  -------------------------------------------
 
@@ -160,92 +167,6 @@ if( angle % 45 == 0 ) {
   }
 }
 
-
-/*
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-void circle( float startX, float startY, float w, float h ) {
-
-  float angle = 0;
-  float xx, yy;
-  noFill();
-  
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % 3 == 0 ) {
-
-    xx = startX - int( cos(radians(angle)) * w );
-    yy = startY - int( sin(radians(angle)) * w );
-
-
-    ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void circle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      ellipse( xx, yy, w, h );
-    }
-    angle++;
-  }
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-//  Draw manual circle
-//  OVERRIDE : @modAngle - restrict drawing to angle % @modAngle
-void dotCircle( float startX, float startY, float w, float h, float modAngle ) {
-
-  float angle = 0;
-  float xx, yy;
-
-  while ( angle < 360 ) {
-
-    // make circle draw faster by skipping angles
-    if( angle % modAngle == 0 ) {
-
-      xx = startX - int( cos(radians(angle)) * w );
-      yy = startY - int( sin(radians(angle)) * w );
-  
-      smooth();
-      point( xx, yy );
-    }
-    angle++;
-  }
-}
-
-//////////////////////////////////////////////////////////////////////////
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-void hexagon( float startX, float startY, float shapeSize ) {
-
-  line( startX, startY+(shapeSize*.5), startX+(shapeSize*.25), startY );
-  line( startX+(shapeSize*.25), startY, startX+(shapeSize*.75), startY );
-  line( startX+(shapeSize*.75), startY, startX+(shapeSize), startY+(shapeSize*.5) );
-
-  line( startX+(shapeSize), startY+(shapeSize*.5), startX+(shapeSize*.75), startY+shapeSize );
-  line( startX+(shapeSize*.75), startY+shapeSize, startX+(shapeSize*.25), startY+shapeSize );
-  line( startX+(shapeSize*.25), startY+shapeSize, startX, startY+(shapeSize*.5) );
-}
-*/
 
 
 
@@ -398,4 +319,3 @@ point(startX+yvalues[xx], yy*yspacing);//,dotSize, dotSize);
     yy++;
   }
 }
-
