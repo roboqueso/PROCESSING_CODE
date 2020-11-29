@@ -63,8 +63,8 @@ void setup()
   in = minim.getLineIn();
   
 
-    img = loadImage( "MosqueinBaghdad.jpg");
-    p3 = fix.getImgColors( img, false );
+    img = loadImage( "1.png");
+    p3 = fix.getImgColors( img );
     image(img, width-2297, 0);
     filter(GRAY);
 }

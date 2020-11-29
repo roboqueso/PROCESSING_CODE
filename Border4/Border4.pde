@@ -1,4 +1,5 @@
-// https://github.com/ericfickes/FIXLIB	
+//  SEE:   https://ello.co/ericfickes/post/hfasawa4urtk1skzz-tmrw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
@@ -14,11 +15,17 @@ ArrayList _pvectors = new ArrayList();
 int ct = 0;
 int maxCt = 0;
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(displayWidth, displayHeight);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(6);
   fix.alpha(alf);
@@ -136,7 +143,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() +".png" );
+    save( fix.pdeName() +fix.getTimestamp()+".tif" );
   }
 
   noLoop();
@@ -162,4 +169,3 @@ void artDaily( String dailyMsg ) {
   fill(#CADDAC, pow(alf,3) );
   text( " "+dailyMsg, this.width-226, this.height-16);
 }
-
