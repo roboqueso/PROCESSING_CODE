@@ -1,8 +1,11 @@
-//
-//  Rotate the circles so the crown looking opening points up
+//  SEE:   https://ello.co/ericfickes/post/ayrdsyupw4o8g6uspideuw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-int alf = 15;
+int alf = 24;
 
 /*
 float shapeSize = 333;
@@ -67,13 +70,22 @@ float dx, dy;
 //  vars for draw()
 
 
-////////////////////////////////////////////////////
-//
+
+
+void settings(){
+  size(displayWidth, displayHeight);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
 void setup() {
+
   // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
-  background(3);
+  background(#EFEFEF);
 
   cX = width/2;
   cY = height/2;
@@ -230,7 +242,7 @@ strokeWeight(2);
 
   
   if ( angle1 >= 10000 ) {
-    exit();
+    doExit();
   }
 }
 
@@ -314,4 +326,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
