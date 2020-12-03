@@ -1,29 +1,34 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/qexrnmzfx3jxyb9wif57dw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-int alf = 13;
+int alf = 69;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
-float w = 13;
+float w = 69;
 
 
 // image
 PImage img;
 ArrayList p3;
 
-int i = 0, cX, cY, rad = 13; 
+int i = 0, cX, cY, rad = 69;
 Boolean on = true;
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  // NOTE: match to mask size
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup() {
-  // setup core sketch settings items
-  size( 1024, 768);
-  background(9);
+  background(#EFEFEF);
   fix.alpha(alf);
   noFill();
   smooth();
@@ -33,7 +38,7 @@ void setup() {
   cY = height/2;
 
 
-  img = loadImage("THEDIFFERENCEBETWEENWHO.JPG");  //  
+  img = loadImage("DP2.png");  //  
 
 p3 = fix.getImgColors( img );
     
@@ -49,6 +54,10 @@ p3 = fix.getImgColors( img );
 //
 void draw()
 {
+  
+  
+  filter(INVERT);
+  
     strokeWeight(1);  
     if( yy < height ) {
       fix.ranPalStroke( p3 );
@@ -184,4 +193,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, width-222, this.height-8);
 }
-
