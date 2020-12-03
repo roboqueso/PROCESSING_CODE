@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/ep6llcx41-c_l8metm4fya
 //  GOTO:  https://github.com/ericfickes/FIXLIB 
 
 import fixlib.*;
@@ -7,7 +7,7 @@ import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
-int alf = 37;
+int alf = 69;
 
 /*
 float shapeSize = 333;
@@ -88,16 +88,15 @@ void  settings ()  {
 /*****************************************************************************/
 void setup() 
 {
-  background(#EF2020);
+  background(#757575);
   frameRate(303);
-  background(3);
 
   cX = width/2;
   cY = height/2;
 
   noFill();
   strokeWeight(.5);
-  smooth();
+
 
   //  init
   radius1 = 100;  //75;
@@ -142,6 +141,8 @@ void setup()
 
 void draw()
 {
+  
+ 
     noFill();
 
     xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
@@ -236,7 +237,7 @@ point( sqrt(xx1*xx2+yy1*yy2)+3, cos(sqrt(xx3*xx4+yy3*yy4))+5 );
 
   
   if ( angle1 >= (width+height)*37 ) {
-    exit();
+    doExit();
   }
 }
 

@@ -3,7 +3,7 @@ import processing.pdf.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 int bumpRight = 44;
-boolean record;
+boolean record = false;  //  for using DXF rendering
 
     int cX, cY;
     int ct = 0, w = 81;    //51;
@@ -27,8 +27,8 @@ boolean record;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  settings ()  {
-        // size(612, 460, P3D);
-        size(1836, 1380, P3D);  //  DXF or PDF
+         size(displayWidth, displayHeight);//, P3D);
+        //size(1836, 1380, P3D);  //  DXF or PDF
         smooth(8);
         pixelDensity(displayDensity());
         sketchSmooth();
@@ -184,8 +184,8 @@ System.gc();
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void mouseClicked() {
 
-        // doStampAndSave();
-        record = !record;
+         doStampAndSave();
+        //record = !record;
     }
 
 
