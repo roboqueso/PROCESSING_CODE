@@ -1,6 +1,8 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 //
@@ -12,10 +14,18 @@ public Branch br;
 public Branch br2;
 
 
-//////////////////////////////////////////////////////////////////////////
-void setup(){
-  size(1024,768);
-  background( #DADDAD );
+
+void settings(){
+  size(displayWidth, displayHeight);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+////////////////////////////////////////////////////////////////////////
+void setup() {
+
+  background( -1 );
   br = new Branch( 1024, 3);
   br2 = new Branch( 1024, 2);
   smooth();
@@ -27,7 +37,7 @@ void setup(){
 
 //////////////////////////////////////////////////////////////////////////
 void draw(){
-  
+  filter(INVERT); 
   //  draw all kids
   for( PVector thisPV : br.KIDS ) {
   
