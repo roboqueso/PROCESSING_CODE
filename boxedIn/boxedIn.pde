@@ -1,25 +1,46 @@
+//  SEE:   https://ello.co/ericfickes/post/hesjjhnhdadcytrklq8jzg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
+
 float x,y,z,rot;
 
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 void setup() {
-  size(1024, 768,P3D);
-  x = width/2;
-  y = height/2;
+  frameRate(666);
+  background(#ef69ef);
+
   rectMode(CENTER);
   noFill();
-  smooth();
   strokeWeight(PI);
-  frameRate(420);
+
+  x = width/2;
+  y = height/2;
+
 }
 
 
 void draw() {
   
+  
   translate(x,y,z);
   rotate(radians(rot));
   
-  strokeWeight(rot/z+(HALF_PI));
+  // this one is touchy
+  strokeWeight(rot/z/PI);
   
-  rect(0,0, rot*PI, rot*PI, z);
+  rect(0,0, rot*PI, rot*PI, -z*TWO_PI);    //  fun
+  //rect(0,0, rot*PI, rot*PI, z*TWO_PI);    // standard
   
   stroke(frameCount%2==0?0:255);
   
@@ -34,7 +55,6 @@ void draw() {
   
   if( (rot*PI)>width){
   	save(fix.pdeName()+fix.getTimestamp()+".png");
-    noLoop();
+    exit();
   }
 }
-
