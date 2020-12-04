@@ -1,11 +1,12 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/2rvckisnypau3rsm4ztafw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
 Boolean drawBoard = false;
-int alf = 42; //36;
+int alf = 45;
 float cX, cY;
 
 color[] p1 = { #EFEFEF, #FFFFFF, #EFEFEF,#3A3A3A,#4D4D4D,#606060,#737373,#868686,#9A9A9A,#ADADAD,#C0C0C0,#C6C6C6,#CDCDCD,#D3D3D3,#D9D9D9,#E0E0E0,#E6E6E6,#ECECEC,#F2F2F2,#F9F9F9, #FFFFFF};
@@ -32,14 +33,18 @@ float rot = 360.0/pts;
 //  circle vars
 float angle1, x1, y1, startX1, startY1, radius1;
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 void setup() {
-  // setup core sketch settings items
-  // size(1024, 768);
-  size(1494,437);
-  frameRate(303);
-  background(#EFEFEF);
+  background(255);
+  
   fix.alpha(alf);
   cX = width * .5;
   cY = height * .5;
@@ -49,10 +54,9 @@ void setup() {
   y  = cY+30;
    noFill();
 
-
-    img = loadImage( "colorado.jpg"); // Flag_of_Colorado.png
+    img = loadImage("2.png");
     p3 = fix.getImgColors( img );
-    image(img, 0, 0 );
+    //image(img, 0, 0 );
 
 
 //    filter(POSTERIZE, alf );
@@ -137,8 +141,8 @@ void iHeartCO() {
   strokeWeight( 5 );
 
 
-// tint( #EFEFEF, 100 );
-// image(img, 0, 0 );
+tint( #EFEFEF, 100 );
+image(img, 0, 0 );
 
 
 ////////////////////////////////////////////////////////////////
@@ -209,8 +213,6 @@ if( drawBoard ) {
 }
 
 
-
-
 ///////////////////////////////////////////////////////////
 //  
 //  End handler, saves png to ../OUTPUT
@@ -226,8 +228,9 @@ void doExit()
   }
 
   noLoop();
-  exit(); 
+  exit();
 }
+
 
 
 ///////////////////////////////////////////////////////////
@@ -250,4 +253,3 @@ float y = 0;
    }
    */
 }
-
