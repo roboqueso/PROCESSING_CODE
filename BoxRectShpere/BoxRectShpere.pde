@@ -8,7 +8,7 @@ import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
-boolean s1 = false;  //  vertex
+boolean s1 = true;  //  vertex
 boolean s2 = true;  //  sphere
 boolean s3 = true;  //  box
 // boolean s4 = false;  //  triangle *BETA
@@ -17,8 +17,8 @@ int cY, cX;
 ArrayList<PVector> alPath;
 
 
-Integer minP = 45;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
-Integer maxP = 90;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer minP = 1;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer maxP = 100;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer pStep;
 
 
@@ -29,7 +29,6 @@ float angleX, angleY, angleZ; // rotation of 3D shape
 ///////////////////////////////////////////////////////////////////////////////
 void setup() {
   size(900, 900,P3D);
-  background(-1);  //0x16161E);
 
   cX = (int)width/2;	//random(width);
   cY = (int)height/2;	//random(height);
@@ -86,7 +85,7 @@ pg.sphereDetail(9);
 
   // sj = fix.shapeJous( pv.x, pv.y, width, (int)random(3,18) );
   // sj = fix.shapeJous( pv.x, pv.y, width, 2 );  //  9 & 12 are nice
-  sj = shapeJous9( pv.x, pv.y, random(height, width), 3 );  //  9 & 12 are nice
+  sj = shapeJous9( pv.x, pv.y, random(pv.y, pv.x), 9 );  //  9 & 12 are nice
 
 // pg.translate(-pv.x, -pv.y, pv.z);
 
