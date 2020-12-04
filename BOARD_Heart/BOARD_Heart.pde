@@ -1,4 +1,5 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/7hubeo-vvvasbojtjlvleg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
@@ -40,13 +41,18 @@ color[] boobColors = {
 };
 
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
   frameRate(303);
-  background(255);
+  background(#2045EF);
   fix.alpha(alf);
   cX = width * .5;
   cY = height * .5;
@@ -58,14 +64,7 @@ void setup() {
 //
 void draw()
 {
-
-//  drawSuns( cX+15, cY);
-
   fix.bitHeart( cX-180, cY-180, true );
-  
-/*  line( cX, 0, cX, height );
-  line( cX+30, 0, cX+30, height );
-  line( 0, cY, width, cY );*/
 
   doExit();
 }
@@ -199,4 +198,3 @@ void artDaily( String dailyMsg ) {
   fill(0);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
