@@ -1,9 +1,15 @@
+//  SEE:   https://ello.co/ericfickes/post/q9w2cgtodttdztlxlefuwg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+
+//  NOTE: This sketch spits out .OBJ files, not a visual sketch
+
 import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 boolean s1 = false;  //  vertex
-boolean s2 = false;  //  sphere
+boolean s2 = true;  //  sphere
 boolean s3 = true;  //  box
 // boolean s4 = false;  //  triangle *BETA
 float z;
@@ -11,8 +17,8 @@ int cY, cX;
 ArrayList<PVector> alPath;
 
 
-Integer minP = 9;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
-Integer maxP = 9;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer minP = 45;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer maxP = 90;  //  9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer pStep;
 
 
@@ -80,7 +86,7 @@ pg.sphereDetail(9);
 
   // sj = fix.shapeJous( pv.x, pv.y, width, (int)random(3,18) );
   // sj = fix.shapeJous( pv.x, pv.y, width, 2 );  //  9 & 12 are nice
-  sj = shapeJous9( pv.x, pv.y, width, 3 );  //  9 & 12 are nice
+  sj = shapeJous9( pv.x, pv.y, random(height, width), 3 );  //  9 & 12 are nice
 
 // pg.translate(-pv.x, -pv.y, pv.z);
 
