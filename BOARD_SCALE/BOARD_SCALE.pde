@@ -1,20 +1,25 @@
+//  SEE:   https://ello.co/ericfickes/post/nbtnenwpy7dgkuz2bf_otg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 PImage bg;
 PImage tmp;
 
-//	todo: get "bubbles" to remain inside deck after being masked out
-void setup()
-{
-  // size(8192,2391, P3D);	//	1/8 = 1024, 298
-  size(1024,298,P3D);
-  
-//	DO VECTOR
-//	SCALE BACK UP IN AI
 
-  //	shrink template
-  bg = loadImage("deck_template.png");
-  bg.resize(width,height);
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
-  background( bg );
+
+
+void setup() {
+  frameRate(303);
+  background(#ACEDAD);
   smooth();
 }
 
@@ -33,7 +38,7 @@ void draw ()
 			tmp.filter(INVERT);
 		}
 
-		tmp.mask(bg);
+		//tmp.mask(bg);
 
 		image(tmp, random(width), frameCount%height, width, height);
 	}
@@ -42,10 +47,10 @@ void draw ()
 	if(frameCount> (width+height)){
 		
 		tmp = get();
-		tmp.mask(bg);
+		//tmp.mask(bg);
 		background(tmp);
 
-		save(fix.pdeName()+fix.getTimestamp()+".png");
+		save(fix.pdeName()+fix.getTimestamp()+".png");  //  4 tifs, 4 pngs
 		noLoop();
 		exit();
 	}
