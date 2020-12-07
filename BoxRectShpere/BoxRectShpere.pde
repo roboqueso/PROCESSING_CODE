@@ -1,7 +1,6 @@
 //  SEE:   https://ello.co/ericfickes/post/q9w2cgtodttdztlxlefuwg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 
-
 //  NOTE: This sketch spits out .OBJ files, not a visual sketch
 
 import nervoussystem.obj.*;
