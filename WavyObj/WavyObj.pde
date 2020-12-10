@@ -1,8 +1,7 @@
-import nervoussystem.obj.*;
+//  SEE:   https://ello.co/ericfickes/post/vh01bkcjgfiydr5t-x1ega
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
-
-
-
+import nervoussystem.obj.*;
 
 boolean record = true;
 
@@ -11,7 +10,7 @@ int cY;
 float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
-Integer pStep = 11;  //  SMALLER = more complex shapes
+Integer pStep = 93;  //  SMALLER = more complex shapes
 //Integer pStep = 90;  //  SMALLER = more complex shapes
 
 Fixlib fix = Fixlib.init(this);
