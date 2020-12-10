@@ -1,4 +1,5 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE: https://ello.co/ericfickes/post/kbuluw5_mauc9bpgqkunfq
+//  GOTO: https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
@@ -9,7 +10,7 @@ Fixlib fix = Fixlib.init(this);
 //
 
 Boolean isFinal = true;
-int alf = 42;
+int alf = 45;
 
 float shapeSize = 1000;
 float minShapeSize = 2.5;
@@ -53,6 +54,9 @@ void setup() {
 
 void draw()
 {
+  
+  
+ filter(INVERT);
   //  keep drawing smaller and smaller square grids
 
     x = y = ct = 0;
@@ -124,4 +128,3 @@ void artDaily( String dailyMsg ) {
   fill(#EE0000);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
