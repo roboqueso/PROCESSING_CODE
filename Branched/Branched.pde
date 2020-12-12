@@ -1,13 +1,9 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/h3awh0heswelufsl_nb2hg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
-
+//  http://en.wikipedia.org/wiki/Branch-decomposition
 
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-
-//
-//  http://en.wikipedia.org/wiki/Branch-decomposition
-//  
 
 public Boolean isFinal = true;
 public Branch br;
@@ -24,11 +20,10 @@ void settings(){
 
 ////////////////////////////////////////////////////////////////////////
 void setup() {
-
-  background( -1 );
-  br = new Branch( 1024, 3);
-  br2 = new Branch( 1024, 2);
-  smooth();
+  frameRate(420);
+  background(-1);
+  br = new Branch( 1024, 6);
+  br2 = new Branch( 1024, 9);
   noFill();
   ellipseMode(CENTER);
   rectMode(CENTER);
@@ -37,7 +32,7 @@ void setup() {
 
 //////////////////////////////////////////////////////////////////////////
 void draw(){
-  filter(INVERT); 
+ 
   //  draw all kids
   for( PVector thisPV : br.KIDS ) {
   
@@ -93,6 +88,10 @@ void draw(){
       fill(#efefef);
       textFont(createFont("Silom",11));
       text("ERICFICKES.COM", 11, height-11 );
+      
+// TODO: Gliltch TIFS
+//  Run 8 pngs using the hot neon hex
+//  do the sauce
       if(isFinal){
         save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }

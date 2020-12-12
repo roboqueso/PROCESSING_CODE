@@ -1,7 +1,10 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
 
 
 Boolean isFinal = true;
@@ -13,7 +16,7 @@ Boolean isFinal = true;
 //  
 //  B&W sunbeams slowly alpha out?
 //  
-int alf = 69;
+int alf = 45;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;
@@ -28,11 +31,16 @@ color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #00700
 PImage b;
 ArrayList p3;
 
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);//);
   fix.alpha(alf);
 
@@ -40,7 +48,7 @@ void setup() {
 //p3 = getImgColors(b);
 //background(b);
   background(255);
-
+fill(#EFEFEF,alf*PI);
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -62,14 +70,14 @@ void draw()
   xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
   yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
   
-  xx2 = startX2 - int( cos(radians(angle2)) * radius2 );
-  yy2 = startY2 - int( sin(radians(angle2)) * radius2 );
+  xx2 = startX2 - int( cos(radians(angle2)) * radius2 )+noise(xx1);
+  yy2 = startY2 - int( sin(radians(angle2)) * radius2 )+noise(yy1);
   
-  xx3 = startX3 - int( cos(radians(angle3)) * radius3 );
-  yy3 = startY3 - int( sin(radians(angle3)) * radius3 );
+  xx3 = startX3 - int( cos(radians(angle3)) * radius3 )+noise(xx2);
+  yy3 = startY3 - int( sin(radians(angle3)) * radius3 )+noise(yy2);
   
-  xx4 = startX4 - int( cos(radians(angle4)) * radius4 );
-  yy4 = startY4 - int( sin(radians(angle4)) * radius4 );
+  xx4 = startX4 - int( cos(radians(angle4)) * radius4 )+noise(xx3);
+  yy4 = startY4 - int( sin(radians(angle4)) * radius4 )+noise(yy3);
   
   //  -------------
 //  strokeWeight(random(alf/TWO_PI));
@@ -80,6 +88,9 @@ void draw()
   yy4 += random(noise(yy4))+TWO_PI;//+random(TWO_PI);
   
 
+
+translate( cX, cY, 0);
+pushMatrix();
 
 //  sun beams
 fix.drawLissajous( xx4, yy4, alf/PI );
@@ -93,6 +104,7 @@ fix.drawLissajous( xx4, yy4, alf/PI );
     vertex( xx4, yy4 );
 
   endShape();
+popMatrix();
 
   angle1 += 3;
   angle2 += 5;
@@ -156,6 +168,5 @@ void artDaily( String dailyMsg ) {
   smooth();
 
   fill(#676800);
-  text( " "+dailyMsg, this.width-230, this.height-14);
+  text( " "+dailyMsg, displayWidth-230, displayHeight-14);
 }
-
