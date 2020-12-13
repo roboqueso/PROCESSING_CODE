@@ -1,6 +1,7 @@
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/zbwsyv4ujzvh1o-twfefca
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 
@@ -14,11 +15,19 @@ int cY;
 //ArrayList palette = new ArrayList();//{ #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
 
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 ////////////////////////////////////////////////////
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(#110000);
   fix.alpha(alf);
