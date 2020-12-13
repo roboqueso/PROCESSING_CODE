@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/8sddq5vjjvwv3ptlamgupg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 
 import fixlib.*;
@@ -16,7 +16,7 @@ Boolean isFinal = true;
 //  
 //  B&W sunbeams slowly alpha out?
 //  
-int alf = 45;
+int alf = 56;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;
@@ -43,7 +43,7 @@ void setup() {
   fix.alpha(alf);
 //  b = loadImage("HOTmess3.png");
 //  background(b);
-background(#EF4520);
+background(-1);
 
   //  setup variables
   cX = width/2;
@@ -90,6 +90,7 @@ pushMatrix();
 
   fill(#EFEFEF,alf);
   stroke(0,alf);
+  //  rotate(noise(xx4));  //  on the fence
   rect( xx4, yy4, alf, alf);
   
   fill(#EFEFEF,alf*PI);
@@ -135,7 +136,9 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
   }
 
   noLoop();
