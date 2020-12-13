@@ -1,25 +1,34 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/ylwzq7sepm_c_ftrc30yoq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 // make the vert system shakier
 public float xx=0, yy=0;
 
-public boolean isFinal = true, flip = false, wobble = false;
+public boolean isFinal = true, flip = false, wobble = true;
 
-public int gridSize=5, shapeSize = 100;
+public int gridSize=5, shapeSize = 75;
 public float colWidth, rowHeight;
 public int tmp;
 
+
+void settings(){
+  size(displayWidth, displayHeight );
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 //////////////////////////////////////////////////////////////////////
 void setup() {
-    background(#012345);
-    size(1024,768);
+    background(#720420);
 
     ellipseMode(CENTER);
     rectMode(CENTER);
-    smooth();
+
     noFill();
     colWidth = int(width/gridSize);
     rowHeight = int(height/gridSize);
@@ -27,6 +36,11 @@ void setup() {
 //////////////////////////////////////////////////////////////////////
 void draw() {
 
+  
+    if(frameCount%2==0)
+    fix.bullsEye( xx, yy, shapeSize );  
+  else
+    fix.rectEye( xx, yy, shapeSize );
     
 //  XY SYSTEM
     
@@ -35,19 +49,19 @@ void draw() {
       xx += shapeSize;
 
       if(wobble) {
-        yy -= 1+random(-PI,PI);
+        yy -= noise(yy)+random(-PI,PI);
       }
       
     } else {
       
       xx = 0;
-      yy += shapeSize/2;
+      yy += shapeSize;//2;
       
     if(wobble) {
       if(flip)
         xx = random(-shapeSize/2,shapeSize/2);
       else
-        xx = -shapeSize/2;
+        xx = -shapeSize;///2;
 
       flip = !flip;
     }
@@ -55,20 +69,14 @@ void draw() {
 
     }
     
-    
-  if(frameCount%2==0)
-    fix.bullsEye( xx, yy, shapeSize );  
-  else
-    fix.rectEye( xx, yy, shapeSize );
-
-    
-    
+   
   
   
    if(xx > width && yy > height){
         fill(255);
         text("ERICFICKES.COM", 11, height-11);
         if(isFinal){
+          save( fix.pdeName() + fix.getTimestamp() + ".tif");
           save( fix.pdeName() + fix.getTimestamp() + ".png");
         }
         noLoop();
