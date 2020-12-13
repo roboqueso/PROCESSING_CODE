@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/-jwqkppmpslstlaz86pe2q
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 
 import fixlib.*;
@@ -16,7 +16,7 @@ Boolean isFinal = true;
 //  
 //  B&W sunbeams slowly alpha out?
 //  
-int alf = 45;
+int alf = 84;
 
 //  circle vars
 float angle1 = 0, xx1, yy1, startX1, startY1, radius1 = alf;
@@ -48,7 +48,8 @@ void setup() {
 //p3 = getImgColors(b);
 //background(b);
   background(255);
-fill(#EFEFEF,alf*PI);
+  fill(#EFEFEF,alf*PI);
+
   //  setup variables
   cX = width/2;
   cY = height/2;
@@ -65,7 +66,7 @@ fill(#EFEFEF,alf*PI);
 //
 void draw()
 {
-  smooth();
+  stroke(frameCount%242);
 
   xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
   yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
