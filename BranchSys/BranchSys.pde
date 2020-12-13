@@ -1,7 +1,16 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/-fltw_qzag8mzxw_k7pbwq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 //  NO COLOR UNTIL SYSTEM IS FULLY BAKED
 //  JUST BLACK POINTS !!!!!!!!!!!!!!!!!!
@@ -14,10 +23,10 @@ public Branch br;
 
 //////////////////////////////////////////////////////////////////////////
 void setup(){
-  size(1024,768);
-  background( #EFEFEF );
-  br = new Branch( 999, 2);
-  smooth();
+
+  background( #EFEFEF );  
+  br = new Branch( 1024, 3 );
+
 }
 
 //////////////////////////////////////////////////////////////////////////
