@@ -1,13 +1,11 @@
-      
+//  SEE:  https://www.behance.net/gallery/62024697/Experimentation-in-programmatic-DXFs
+//  GOTO: https://github.com/ericfickes/FIXLIB 
 
 
-      // TODO: CHANGE OVER TO USING STL FILES AND HE_MESH
-// SEE: BRENDAN'S BLOG POST
 //  wasting to much time on DXFs
 
 import processing.opengl.*;
 import processing.dxf.*;
-// https://github.com/ericfickes/FIXLIB  
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
