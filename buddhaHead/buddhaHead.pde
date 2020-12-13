@@ -1,11 +1,13 @@
-// https://github.com/ericfickes/FIXLIB	
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/f-pipbtc6z35jiafns0u5g
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 42;//37;
+int alf = 90;
 
 int cX;
 int cY;
@@ -31,13 +33,17 @@ float angle4, xx4, yy4, startX4, startY4, radius4;
 
 float maxAngle;
 
-////////////////////////////////////////////////////
-//
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup() {
-  // size to match image
-  size(1024, 768);
+
   frameRate(303);
-  background(42);
+  background(random(-1,256));
   fix.alpha(alf);
   //  -------------------------------------------
   smooth();
@@ -59,7 +65,7 @@ void setup() {
   radius3 = 300;
   radius4 = 500;
 
-  strokeWeight( 1 );
+  strokeWeight( QUARTER_PI );
 }
 
 
@@ -67,7 +73,6 @@ void setup() {
 //
 void draw()
 {
-  smooth();
   noFill();
 
 
@@ -100,7 +105,6 @@ beginShape();
   bezierVertex(xx2, yy2, xx3, yy3, xx4, yy4);
 endShape();
     //  TRIANGLE
-//  strokeWeight( 1 );
   fix.ranPalStroke(p1);
    point(xx1, yy1);
    point(xx2, yy2);
@@ -141,7 +145,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
   noLoop();
@@ -235,5 +239,3 @@ void heart( int x, int y, int w, int h )
   line( x-(w*2), y, x, y + w*PI);
   line( x+(w*2), y, x, y + w*PI);
 }
-
-
