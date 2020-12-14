@@ -1,23 +1,28 @@
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/8amiyontj72jdsyjtqfzqg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
-Boolean isFinal = true, fwd = true;
-int alf = 42, sz = 30;
-float angle = 90, radius = 42, x, y, x2, y2, cX, cY, strokeSz = 2;
 
+Boolean isFinal = true, fwd = true;
+int alf = 45, sz = 33;
+float angle = 90, radius = 45, x, y, x2, y2, cX, cY, strokeSz = 2;
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
 
-
-  // setup core sketch settings items
-  size(1024, 768);
-  background(#EFEFEF);
+  background(#BEEEEF);
   strokeWeight(strokeSz);
-  frameRate(303);
+  frameRate(420);
   fix.alpha(alf);
 
   //  setup variables
@@ -56,7 +61,7 @@ void draw()
 
 
     if ( y >= height ){
-      cX = random(width);
+      cX = frameCount%width;
       cY = random(sz);
     }
 
@@ -102,5 +107,3 @@ smooth();
   fill(#1975EF);
   text( " "+dailyMsg, 0, height-22 );
 }
-
-
