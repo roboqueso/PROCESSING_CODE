@@ -1,17 +1,25 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/dvpl93oz93wzugaql2zb1a
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
 public float x, y;
 public int alf = 11, gridSize = 4, colWidth, rowHeight, maxCt;
-public int[] nums = { 2, 4, 6, 10, 16, 26, 42 };
+public int[] nums = { 2, 3, 5, 8, 13, 21, 34 };  //  { 2, 4, 6, 10, 16, 26, 42 };
+
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 /////////////////////////////////////////////////////////
 void setup() {
-  background(#011223);
-  size(1024, 768 );
+  background(#EF6969);
   noFill();
   smooth();
   fix.alpha(alf);
@@ -43,7 +51,9 @@ void draw() {
     text("ERICFICKES.COM", width-100, height-11);
 
     if(isFinal){
-      save( fix.pdeName() + fix.getTimestamp() + ".png");
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
     }
     noLoop();
     exit();
@@ -105,7 +115,7 @@ void xySystem( float a, float b)
     x = y = 0;
     stroke(random(42,242),gridSize, gridSize);
 
-      textFont( createFont("monospace", alf*gridSize ) );
+      textFont( createFont("Silom", alf*gridSize ) );
       fill(#034567,alf);
       text( gridSize,  width-a*cos(frameCount), height-b*sin(frameCount) );
       fill(#1975EF,alf);
@@ -116,5 +126,3 @@ void xySystem( float a, float b)
   
   
 }
-
-
