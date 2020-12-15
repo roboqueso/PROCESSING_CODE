@@ -1,5 +1,10 @@
+//  SEE:   https://ello.co/ericfickes/post/ik2uttf0qb6kvr50dek4qq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
 import nervoussystem.obj.*;
 import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
 
 
 
@@ -13,9 +18,8 @@ float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
 //Integer pStep = 3;  //  SMALLER = more complex shapes
-Integer pStep = 18;  //  SMALLER = more complex shapes
-
-Fixlib fix = Fixlib.init(this);
+Integer pStep = 9;  //  SMALLER = more complex shapes
+//  8, 13, 21, 34, 55
 PVector pStart, pEnd, pt;
 ArrayList<PVector> fullPath;
 
@@ -47,12 +51,14 @@ liner
 
 
 /* ------------------------------------------------------------------------- */
-void  settings ()  {
-    //  For best results, change size() to match dimensions of mainImgFile
-    size( 666, 666, P3D);
-    smooth(8);  //  smooth() can only be used in settings();
-    pixelDensity(displayDensity());
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
 }
+
+
 
 
 ///////////////////////////////////////////////////////
