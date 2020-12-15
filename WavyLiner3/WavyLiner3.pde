@@ -1,44 +1,26 @@
-/*
-liner
+//  SEE:   https://ello.co/ericfickes/post/sedaaxwkl3nm6uuhgmujkq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-1. define start and stop points
-
-2. calculate left to right coordinates between start and stop
-
-3. return PVector[] fullPath[]
-
-4. Draw path 
-
-* increment starting Y to avoid overlaps
-
-- ellipse
-
-- vertex : http://processing.org/reference/vertex_.html
-
-- bezierVertex : http://processing.org/reference/bezierVertex_.html
-
-- curveVertex : http://processing.org/reference/curveVertex_.html
-
-- quadraticVertex : http://processing.org/reference/quadraticVertex_.html
-
-*/
-///////////////////////////////////////////////////////
-// https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
-
 
 PVector pStart, pEnd, pt;
 Integer pStep = 22;
 ArrayList<PVector> fullPath;
 
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 void setup() {
-	size(displayWidth, displayHeight);
+
 	// background( loadImage("photo.jpg") );
 	background(255, 0);
 	strokeWeight(HALF_PI);
-	smooth();
 	noFill();
 
 	// create start and end points
