@@ -1,22 +1,25 @@
-//  IMPORTS  ////////////////////////////////////////////////////
-
-
-// https://github.com/ericfickes/FIXLIB	
+//  SEE:   https://ello.co/ericfickes/post/avwyaa8kposj4hbivdqqww
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 
 Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true, fwd = true;
-int alf = 37, sz = 30;
-float angle = -90, radius = 66, x, y, x2, y2, cX, cY, strokeSz = 2;
+int alf = 45, sz = 56;
+float angle = -90, radius = 69, x, y, x2, y2, cX, cY, strokeSz = 2;
 
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
 
-
-  // setup core sketch settings items
-  size(1024, 768);
   background(#EFEFEF);
   strokeWeight(strokeSz);
   frameRate(303);
@@ -92,7 +95,9 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
   }
 
 
