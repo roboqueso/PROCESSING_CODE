@@ -1,20 +1,24 @@
-import fixlib.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 int sColor = 0;
 float x, y, sz = 66;
 float xx, yy, theta, r, i, cX, cY;
 
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 void setup()
 {
-//  size(displayWidth, displayHeight);
-  size(1024,768);
   background(255);
   frameRate(420);
-  
-  smooth();
   noFill();
   
   x = y = -sz;
