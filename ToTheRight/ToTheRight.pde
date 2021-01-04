@@ -1,6 +1,7 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 //  Grow horizontally ( L to R )
@@ -17,12 +18,16 @@ public Boolean isFinal = true;
 public Branch br;
 
 
-//////////////////////////////////////////////////////////////////////////
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 void setup(){
-  size(1024,768);
-  background( #000022 );
-  br = new Branch( 666, 1);
-  smooth();
+
+  background( #FADFAD );
+  br = new Branch( 720, 89);
   noFill();
 
 }
@@ -84,7 +89,9 @@ void draw(){
       textFont(createFont("Silom",11));
       text("ERICFICKES.COM", 11, height-11 );
       if(isFinal){
-        save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
       }
       noLoop();
       exit();
