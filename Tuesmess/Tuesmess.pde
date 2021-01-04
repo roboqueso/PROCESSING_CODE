@@ -1,15 +1,26 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/ah_absvwi65kysm43rj50a
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-int alf = 42;
+
+
+int alf = 69;
 float x, y;
 float a, b, x2, y2;
 Boolean isFinal = true;
-///////////////////////////////////////////////////////////////////////////////
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup() {  // this is run once.   
     background(alf);
-    size(1024,768);
+
     frameRate(666);
     rectMode(CENTER);
     ellipseMode(CENTER);
@@ -21,10 +32,10 @@ void draw() {
     noFill();
     smooth();
     strokeWeight(3);
-    stroke(random(222), random(37), random(37));
+    stroke(random(222), random(96), random(96));
     ellipse( y, x, alf+noise(alf), alf+noise(alf) );
  
-    stroke(random(37), random(111), random(37), alf/PI );
+    stroke(random(96), random(111), random(96), alf/PI );
     ellipse( x, y, alf, alf );
  
     strokeWeight( random(noise(frameCount)) + alf );
@@ -60,11 +71,11 @@ stroke(#1975EF);
     point( a, b );
     point( b, a );
  
-stroke(random(37), random(37), random(250) );
+stroke(random(96), random(96), random(250) );
     point( x2, y2 );
     point( y2, x2 );
  
-stroke(random(37), random(250), random(37));
+stroke(random(96), random(250), random(96));
     point( a, y2 );
     point( b, x2 );
  
@@ -81,7 +92,7 @@ stroke(#EF1975);
 
   if ( isFinal )
   {
-save( fix.pdeName()+fix.getTimestamp()+".png" );
+    save( fix.pdeName()+fix.getTimestamp()+".png" );
   }
 
   noLoop();
