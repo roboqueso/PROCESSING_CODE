@@ -1,25 +1,28 @@
-//  IMPORTS  ////////////////////////////////////////////////////
+//  SEE:   https://ello.co/ericfickes/post/o1piymlzum_kvg2tva9qsa
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-
-// https://github.com/ericfickes/FIXLIB	
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
+
+
 Boolean isFinal = true, fwd = true;
-int alf = 37, sz = 30;
-float angle = -90, radius = 90, x, y, x2, y2, cX, cY, strokeSz = 4;
+int alf = 45, sz = 75;
+float angle = -90, radius = 90, x, y, x2, y2, cX, cY, strokeSz = 3;
 
 
-////////////////////////////////////////////////////
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 //
 void setup() {
-
-
-  // setup core sketch settings items
-  size(1024, 768);
   background(#EFEFEF);
   strokeWeight(strokeSz);
-  frameRate(303);
+  frameRate(666);
   fix.alpha(alf);
   //  setup variables
   cX = width/2;
@@ -41,18 +44,18 @@ void draw()
     y2 = cY - int( cos(radians(-angle)) * radius );
 
 fill(random(radius));
-    stroke(random(155,255), sz, sz);
+    stroke(random(x,y)%255, sz, sz);
     ellipse( x, angle, sz, sz);
 
-    stroke(random(100));
+    stroke(random(100)+noise(sz));
     ellipse( x2, angle, sz, sz);
 
 fill(random(sz));
 
-    stroke(sz,random(155,255), sz);
+    stroke(sz+noise(sz),random(x2,y2)%255, sz*noise(sz));
     ellipse( angle, y+x, sz, sz);
 
-    stroke(random(100));
+    stroke(random(100)+noise(sz));
     ellipse( angle, y2+x2, sz, sz);
 
 
@@ -75,7 +78,7 @@ fill(random(sz));
     }
 
     // STOPPER
-    if( frameCount > (width+height)*radius ){
+    if( frameCount > (width+height)* (alf/2) ){
     	doExit();
     }
 }
@@ -93,7 +96,8 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
   }
 
 
