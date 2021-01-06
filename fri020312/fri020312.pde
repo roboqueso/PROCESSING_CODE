@@ -1,3 +1,9 @@
+//  SEE:   https://ello.co/ericfickes/post/ppnsxhf77krh5hci76wfsa
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
 //  draw circles and stuff, save on exit
 Boolean isFinal = true;
 
@@ -7,14 +13,20 @@ float theta = 0;
 int cX = 0;
 int cY = 0;
 
-int alf = 100.00;
+int alf = 100;
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 ///////////////////////////////////////////////////////////
 //  
 void setup() {
-  size( 1024, 768);
+
   background(19);
-  smooth();
 
   cX = width/2;
   cY = height/2;
@@ -29,15 +41,13 @@ void draw() {
   float y = r * sin(theta);
 
   noFill();
-  smooth();
   
-  stroke( 37, 37, 37, r );
+  stroke( x+45, y+45, r+45, r );
   ellipse( x + cX, y + cY, r, theta ); // Adjust for center of windowstroke(  
 
-  stroke( 75, 75, 75, theta );    
+  stroke( x-75, y-75, r-75, theta );    
   ellipse( x + cX, y + cY, theta, r ); // Adjust for center of windowstroke(  
 
-  
   theta += 1;
   r += 1;
 
@@ -49,7 +59,7 @@ void draw() {
   //
   if( r >= 768 )
   {
-    exit();
+    doExit();
   }
 
 }
@@ -69,7 +79,7 @@ void doExit()
   while( x < this.width ) {
 
     if( x % 2 == 0 )
-      stroke( 55, 55, 255, alf );
+      stroke( 55, 55, 255, alf ); 
     else if ( x % 3 == 0 )
       stroke( 255, 55, 55, alf );
 
@@ -88,8 +98,10 @@ void doExit()
   //  if final, save output to png
   if( isFinal )
   {
-save( fix.pdeName() + fix.getTimestamp()+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
   }
 
   super.stop();
+  exit();
 }
