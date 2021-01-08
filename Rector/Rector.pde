@@ -1,17 +1,26 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   https://ello.co/ericfickes/post/mc6-hti5yn3kpjgqi4jaza
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
 
 //  RECT GRID playing with rounded rectangle radiuss
 
 public Boolean isFinal = true;
 public Branch br;
-public int rectSz = 9;
+public int rectSz = 11;
+
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 void setup(){
-  size(1024,768);
+  frameRate(666);
   background( #001111 );
 
   smooth();
@@ -19,7 +28,7 @@ void setup(){
   ellipseMode(CENTER);
   rectMode(CENTER);
   
-  br = new Branch( 420, 2 );
+  br = new Branch( 303, 5 );
 }
 
 
@@ -61,7 +70,9 @@ void draw(){
       text("ERICFICKES.COM", 11, height-11 );
 
       if(isFinal){
-        save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
       }
       noLoop();
       exit();
@@ -107,7 +118,9 @@ void drawSys( PVector pv ) {
   
   noFill();
   strokeWeight(2);
-  stroke(random(255) );
+  
+  //stroke(random(255) );
+  stroke( pv.y, rectSz, pv.x );
 
   ellipse( pv.x, pv.y, rectSz, rectSz );
   rect( pv.x, pv.y, 50, 50, rectSz );
