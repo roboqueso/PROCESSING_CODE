@@ -7,7 +7,7 @@ Fixlib fix = Fixlib.init(this);
 
 public Boolean isFinal = true;
 public Branch br;
-public int rectSz = 11;
+public int rectSz = 1;
 
 
 
@@ -21,19 +21,21 @@ void settings(){
 //////////////////////////////////////////////////////////////////////////
 void setup(){
   frameRate(666);
-  background( #001111 );
+  background(#EF1975);
 
   smooth();
   noFill();
   ellipseMode(CENTER);
   rectMode(CENTER);
   
-  br = new Branch( 303, 5 );
+  br = new Branch( 666, 2 );
 }
 
 
 //////////////////////////////////////////////////////////////////////////
 void draw(){
+  
+ 
   
   //  draw all kids
   for( PVector thisPV : br.KIDS ) {
@@ -117,10 +119,11 @@ void moveSys( PVector pv ) {
 void drawSys( PVector pv ) {
   
   noFill();
-  strokeWeight(2);
+  //strokeWeight(2);
   
-  //stroke(random(255) );
-  stroke( pv.y, rectSz, pv.x );
+  stroke(random(255) );
+  //stroke( random(pv.y+pv.x)%255 );
+  //stroke((pv.x/pv.y)%255);
 
   ellipse( pv.x, pv.y, rectSz, rectSz );
   rect( pv.x, pv.y, 50, 50, rectSz );

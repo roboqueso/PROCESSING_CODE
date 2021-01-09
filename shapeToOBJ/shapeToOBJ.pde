@@ -1,8 +1,7 @@
 import nervoussystem.obj.*;
 
-//  FIGURE OUT HOW TO EXPORT HYPE SKETCHES
-
-// COOL SHAPES
+// dead simple OBJ exporter
+// Run sketch > press R > spits out OBJ
 
 boolean record;
 
@@ -15,13 +14,13 @@ void draw() {
   background(0);
   
   if (record) {
-    beginRecord("nervoussystem.obj.OBJExport", "filename.obj");
+    beginRecord("nervoussystem.obj.OBJExport", "filename"+frameCount+".obj");
   }
   
   translate(width/2, height/2);
-  box( width, width/2,100);
+  box( random(width), random(height),100);
   
-  sphere(width/4);
+  sphere( random(width/4) );
   
   if (record) {
     endRecord();

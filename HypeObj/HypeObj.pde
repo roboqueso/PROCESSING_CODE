@@ -1,7 +1,6 @@
-/*
-HypeObj.pde : Export HYPE sketches as OBJ
-
-*/
+//  SEE:   https://ello.co/ericfickes/post/0uf5njq3mklyjwmoc2lifq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+//  HypeObj.pde : Export HYPE sketches as OBJ
 import nervoussystem.obj.*;
 
 import hype.*;
@@ -16,11 +15,11 @@ Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 
 int gridX,gridY;
-int colCt = 9;
+int colCt = 10;
 int rowCt = colCt;  //  NOTE: remember to update this value
-int colSpacing = 18;
+int colSpacing = 20;  
 int drawW, drawH; //  HDrawable Width / Height
-
+String saveName;
 
 PShape box, square, sphere;
 
@@ -35,7 +34,7 @@ void  settings ()  {
 /* ------------------------------------------------------------------------- */
 
 void setup() {
-
+  sphereDetail(3);
   rectMode(CENTER);
   ellipseMode(CENTER);
 
@@ -44,8 +43,8 @@ void setup() {
   drawH = (int)( (height-(colSpacing))/rowCt)-colSpacing;
   gridX = (drawW/2)+colSpacing;
   gridY = (drawH/2)+colSpacing;
-
-this.beginRecord("nervoussystem.obj.OBJExport", this+""+colCt+".obj");
+  saveName = fix.pdeName() + "-" + fix.getTimestamp();
+this.beginRecord("nervoussystem.obj.OBJExport", saveName+".obj");
 
   //  init HYPE
   H.init(this).background(H.CLEAR).use3D(true).autoClear(false);
@@ -101,23 +100,21 @@ this.beginRecord("nervoussystem.obj.OBJExport", this+""+colCt+".obj");
   
 
         pushMatrix();
-          translate( d.x(), d.y(), d.z() );
+          translate( d.y(), d.z(), d.x() );
 
-          // shape(box, width/2, height/2);
-          // shape(square, width/2, height/2);
+           shape(box, width/2, height/2);
+           shape(square, width/2, height/2);
 
-          sphereDetail( (int)random(3,90) );
+          //sphereDetail( (int)random(3,90) );
+          sphereDetail(pool.currentIndex()%15);
           sphere(drawW);
 
-          sphereDetail( pool.currentIndex(), (int)(pool.currentIndex()+PI) );
-          shape(sphere, width/2, height/2);
+          //sphereDetail( pool.currentIndex(), (int)(pool.currentIndex()+PI) );
+          //shape(sphere, width/2, height/2);
 
-          sphereDetail( (int)random(3,colCt), colCt );
+          //sphereDetail( (int)random(3,colCt), colCt );
           sphere(drawW+colCt);
 
-
-
-          // box(drawW);
 
         popMatrix();
 
@@ -168,7 +165,7 @@ void doExit(){
   textSize(16);
   text(msg, width-(textWidth(msg)+textAscent()), height-textAscent());
 
-  save( fix.pdeName() + "-" + fix.getTimestamp()+"_FINAL.png" );    //  USE .TIF IF COLOR  
+  save( saveName+"_FINAL.png" );    //  USE .TIF IF COLOR  
   
   //  cleanup
   fix = null;
