@@ -1,3 +1,9 @@
+//  SEE:   https://ello.co/ericfickes/post/vh2ulsnai250_ljduq5wxw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
 /**
 	InnerShadow
 	https://docs.oracle.com/javafx/2/api/javafx/scene/effect/InnerShadow.html
@@ -26,9 +32,6 @@ import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
-import fixlib.*;
-
-Fixlib fix = Fixlib.init(this);
 
 GraphicsContext ctx;
 
@@ -47,20 +50,20 @@ float cX, cY;
 //	NOTE: some of these BlendModes cause the sketch to only show a blank white screen
 //	ADD, BLUE, COLOR_BURN, COLOR_DODGE, DARKEN, DIFFERENCE, EXCLUSION, GREEN, 
 //	HARD_LIGHT, LIGHTEN, MULTIPLY, OVERLAY, RED, SCREEN, SOFT_LIGHT, SRC_ATOP, SRC_OVER
-BlendMode bMode = BlendMode.SRC_OVER;
+BlendMode bMode = BlendMode.COLOR_BURN;
 
-/* ------------------------------------------------------------------------- */
 
-void  settings ()  {
-    size(1920, 1080, FX2D); // FX2D required
-    smooth(8);  //  smooth() can only be used in settings();
-    pixelDensity(displayDensity());
+void settings(){
+  size(displayWidth, displayHeight, FX2D); // FX2D required
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
 }
+
 
 /*****************************************************************************/
 void setup() 
 {
-	background(#242424);
+	background(#EFEFEF);
 
 	ellipseMode(CENTER);
 	rectMode(CENTER);
@@ -210,9 +213,9 @@ void draw() {
 
 void doExit(){
 
-   save(fix.pdeName()+""+fix.getTimestamp()+"-"+bMode+".png");
-    // noLoop();
-    // System.gc();
-    super.exit();
-
+    String saveName = fix.pdeName()+""+fix.getTimestamp()+"-"+bMode;
+    save( saveName +".tif" );
+    save( saveName +".png" );
+    
+  exit();
 }
