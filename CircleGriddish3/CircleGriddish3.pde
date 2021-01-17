@@ -1,18 +1,21 @@
 
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/zkswoogxdp6nnhovtysr6g
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
 //
 //  go smaller
 
 Boolean isFinal = true;
-int alf = 13;
+int alf = 45;
 
 
 float shapeSize = 10000;
-float minShapeSize = 500;
-float finalShapeSize = 50;
+float minShapeSize = 666;
+float finalShapeSize = 69;
 
 
 int cX;
@@ -31,11 +34,18 @@ int y = 0;
 int ct = 0;
 float maxCt = 0;
 
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(alf);
   fix.alpha(alf);
@@ -192,7 +202,12 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() +".png" );
+
+
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
+
   }
   
   noLoop();
