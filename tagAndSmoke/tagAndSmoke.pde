@@ -1,11 +1,14 @@
-// https://github.com/ericfickes/FIXLIB	
-import fixlib.*;
 
+//  SEE:     
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 11;
+int alf = 24;
 
 int cX;
 int cY;
@@ -27,33 +30,41 @@ float angle4, xx4, yy4, startX4, startY4, radius4;
 
 float maxAngle;
 
+
+void settings(){
+  size(displayWidth, displayHeight );
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // size to match image
-  size(1024, 768);
-  frameRate(303);
-  background(222);
+
+  frameRate(666);
+  background( p1[(int)random(p1.length)] );
   fix.alpha(alf);
-  //  -------------------------------------------
-  smooth();
-  noFill();
 
   cX = int( this.width / 2 );
   cY = int( this.height / 2 );
 
   maxAngle = 2222;
   
-  startX1 = startX2 = startX3 = startX4 = cX;
-  startY1 = startY2 = startY3 = startY4 = cY;
+  startX1 = random(cX);
+  startX2 = random(startX1, cX);
+  startX3 = random(startX2, cX);
+  startX4 = random(startX3, cX);
+  startY1 = random(cY);
+  startY2 = random(startY1, cY);
+  startY3 = random(startY2, cY);
+  startY4 = random(startY3, cY);
 
-  stroke(0, alf);
   
   //  setup circles
-  radius1 = 37;
-  radius2 = 42;
-  radius3 = 187;
-  radius4 = 420;
+  radius1 = random(alf, cX);  //37;
+  radius2 = random(alf, cY);  //42;
+  radius3 = random(alf, displayWidth);  //187;
+  radius4 = random(alf, displayHeight);  //420;
 }
 
 
@@ -61,34 +72,37 @@ void setup() {
 //
 void draw()
 {
-  smooth();
   noFill();
-  strokeWeight(random(42));
+  strokeWeight(random(alf));
 
-  xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
-  yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
+  xx1 = startX1 - int( cos(radians(angle1)) * radius1 )+noise(startX1)%displayWidth;
+  yy1 = startY1 - int( sin(radians(angle1)) * radius1 )*noise(startY1)%displayHeight;
   
-  xx2 = startX2 - int( cos(radians(angle2)) * radius2 );
-  yy2 = startY2 - int( sin(radians(angle2)) * radius2 );
+  xx2 = startX2 - int( cos(radians(angle2)) * radius2 )+noise(startX2)%displayWidth;
+  yy2 = startY2 - int( sin(radians(angle2)) * radius2 )+noise(startY2)%displayHeight;
   
-  xx3 = startX3 - int( cos(radians(angle3)) * radius3 );
-  yy3 = startY3 - int( sin(radians(angle3)) * radius3 );
+  xx3 = startX3 - int( cos(radians(angle3)) * radius3 )+noise(startX3)%displayWidth;
+  yy3 = startY3 - int( sin(radians(angle3)) * radius3 )+noise(startY3)%displayHeight;
   
-  xx4 = startX4 - int( cos(radians(angle4)) * radius4 );
-  yy4 = startY4 - int( sin(radians(angle4)) * radius4 );
+  xx4 = startX4 - int( cos(radians(angle4)) * radius4 )+noise(startX4)%displayWidth;
+  yy4 = startY4 - int( sin(radians(angle4)) * radius4 )+noise(startY4)%displayHeight;
   
   //  -------------
-  stroke(random(111), alf);
+  //stroke(random(111), alf*4);
+    stroke( p1[(int)random(p1.length)] );
+
   point( xx1, yy1 );
   point( xx2, yy2 );
   point( xx3, yy3 );
   point( xx4, yy4 );
 
-  stroke(random(255), alf*42);
+  stroke(random(255), alf);
   bezier( yy1, yy2, yy3, yy4, xx4, xx3, xx2, xx1+frameCount );
+  
+  stroke( p1[(int)random(p1.length)], alf*11);
   bezier( xx4+frameCount, xx3, xx2, xx1, yy1, yy2, yy3, yy4 );
   
-  stroke(random(222), random(222), random(222), alf*42);
+  stroke(random(222), random(222), random(222), alf*8);
   curve( xx1, yy1, yy2, xx2, yy3, xx3, xx4, yy4 );
 
   angle1 += 2;
@@ -119,7 +133,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName()+".png" );
+
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
+
   }
 
   noLoop();
