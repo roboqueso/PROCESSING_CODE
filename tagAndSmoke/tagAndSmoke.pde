@@ -1,5 +1,4 @@
-
-//  SEE:     
+//  SEE:   https://ello.co/ericfickes/post/qx12sjuav4uqyvzbv__wdg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 
 import fixlib.*;
