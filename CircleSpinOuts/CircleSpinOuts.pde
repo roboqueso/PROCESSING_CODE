@@ -1,11 +1,13 @@
-// https://github.com/ericfickes/FIXLIB	
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/tgb4egbb21osid4ubudnqg
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
+
 Boolean isFinal = true;
-int alf = 42;
-float shapeSize = 420;
+int alf = (int)random(69,96);
+float shapeSize = random(420,720);
 
 int cX, xx, yy;
 int cY;
@@ -20,8 +22,8 @@ int outerYY = 0;
 
 float angle = 0;
 float maxAngle;
-float radius = 10;
-float outerRadius = 100;
+float radius = random(11,45);
+float outerRadius = random(90,180);
 
 int offsetX = 0;
 int offsetY = 0;
@@ -30,13 +32,18 @@ int offsetY = 0;
 int ct = 0;
 int maxCt = 0;
 
-////////////////////////////////////////////////////
+
+void settings(){
+  size(displayWidth, displayHeight, P3D );
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
-  background(9);
+  background(   palette[(int)random(palette.length)]  );
   fix.alpha(alf);
 
   //  setup variables
@@ -137,7 +144,9 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
   }
 
   noLoop();
@@ -158,4 +167,3 @@ void artDaily( String dailyMsg ) {
   fill(#EE0000);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
