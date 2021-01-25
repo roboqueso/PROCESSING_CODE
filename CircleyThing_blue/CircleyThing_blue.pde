@@ -1,7 +1,9 @@
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/tl8i-rsk7cscj6r8d5e0rq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
 
@@ -16,10 +18,18 @@ float x2, y2, angle2, sz2;
 float x3, y3, angle3, sz3; 
 float x4, y4, angle4, sz4; 
 
+
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 //////////////////////////////////////////////
 void setup() { 
   background(#000011);
-  size(1024, 768);
 
   fix.alpha(alf);
 
@@ -28,10 +38,10 @@ void setup() {
 
   cX = width/2;
   cY = height/2;
-  sz = 11;
-  sz2 = 37;
-  sz3 = 75;
-  sz4 = 185;
+  sz = 24;
+  sz2 = 45;
+  sz3 = 69;
+  sz4 = 96;
 } 
 
 
@@ -162,4 +172,3 @@ void artDaily( String dailyMsg ) {
   fill(#1975ef);
   text( " "+dailyMsg, 0, height-3);
 }
-
