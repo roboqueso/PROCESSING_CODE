@@ -1,6 +1,7 @@
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/7me7dgjwwc8dnqgg6xfyka
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
@@ -16,10 +17,19 @@ float x2, y2, angle2, sz2;
 float x3, y3, angle3, sz3; 
 float x4, y4, angle4, sz4; 
 
+
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 //////////////////////////////////////////////
 void setup() { 
   background(#110000);
-  size(1024,768);  //  big:  1024x768
+
 
   noFill();
   cX = width/2;
@@ -33,10 +43,6 @@ void setup() {
 //////////////////////////////////////////////
 void draw() {
   
-  
-  
-  
-  smooth();
 
   x = cX - int( cos(radians(angle)) * sz );  // * noise(frameCount);
   y = cY - int( sin(radians(angle)) * sz );  // * noise(frameCount);
@@ -190,7 +196,12 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    //save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
+
   }
 
   noLoop();
