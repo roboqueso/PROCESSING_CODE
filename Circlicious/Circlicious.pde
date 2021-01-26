@@ -1,4 +1,5 @@
-//  seee: https://ello.co/ericfickes/post/szcmczw66gyrc0ndv1o76q
+//  SEE:   https://ello.co/ericfickes/post/szcmczw66gyrc0ndv1o76q    
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Boolean isFinal = true;
