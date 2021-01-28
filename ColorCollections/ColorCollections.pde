@@ -1,18 +1,24 @@
-//	NOTE: save() isn't working in this all of a sudden???
+//  SEE:   https://ello.co/ericfickes/post/_wsilmm5ags0q7xlabmr_w
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
+
 
 //  color collection examples
 
-final int SKETCH_HEIGHT  = 1024;
-final int SKETCH_WIDTH   = 768;
+final int SKETCH_HEIGHT  = displayWidth;
+final int SKETCH_WIDTH   = displayHeight;
 
 
 Boolean isFinal = true;
-int alf = 11;
+int alf = 24;
 
 int cX;
 int cY;
 
-int shapeSize = 50;
+int shapeSize = 69;
 
 // circles
 int cirXX;
@@ -20,16 +26,24 @@ int cirYY;
 int startX = 0;
 int startY = 0;
 float angle      = 0; 
-float radius     = 50;  //100;
-int circleSize   = 5;
+float radius     = 99;  //100;
+int circleSize   = 9;
 int cc = 0;
 
 int maxCC = 0;
-
+color theLook;
 
 ////////////////////////////////////////////////////
-color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
-//color[] palette = { #EFEF00, #1975EF, #EFEFEF, #75EF19 };
+color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109,#EFEF00, #1975EF, #EFEFEF, #75EF19 };
+
+
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //  Randomly stroke using image from color list
@@ -46,14 +60,9 @@ void randFillUser()
 //
 void setup() {
 
-  // setup core sketch settings items
-//  size(1024,768); );  // Default = JAVA2D
-size(1024, 768, P2D );
-//  size(1024,768);, P3D );
-//  size(1024,768);, OPENGL );
-//  size(1024,768);, PDF );
-
-  background(1);
+  frameRate(666);
+  theLook = palette[(int)random(palette.length)];
+  background( theLook );
 
   //  setup variables
   cX = width/2;
@@ -76,7 +85,7 @@ void draw()
 {  
   
     noFill();
-    smooth();
+
     
     cirXX = startX - int( cos(radians(angle)) * radius );
     cirYY = startY - int( sin(radians(angle)) * radius );
@@ -108,7 +117,8 @@ void draw()
 
     //  center circle
     strokeWeight(1.5);
-    stroke(#66EF33, alf*2);
+    //stroke(#66EF33, alf*2);
+    stroke(  theLook, 110 );
     ellipse( cirXX, cirYY, shapeSize, shapeSize );
 
     if( cc % 5 == 0) {
@@ -138,7 +148,7 @@ void draw()
   
   if( cc >= maxCC )
   {
-    exit();  
+    doExit();  
   }
 }
 
@@ -164,15 +174,12 @@ void hexagon( float startX, float startY, float shapeSize ) {
 void doExit() 
 {   
   artDaily("ERICFICKES.COM" );
-save(fix.pdeName()+fix.getTimestamp()+".png");
+    
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
 
-  //  if final, save output to png
-  if ( isFinal )
-  {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
-  }
-
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -196,14 +203,7 @@ void randStroke100() {
 //  Spit out ART DAILY message
 void artDaily( String dailyMsg ) {
 
-PFont font = createFont( "AppleGothic", 15 );
-//  PFont font = loadFont( "Silom-20.vlw" );
-  
-  smooth();
-  textFont( font );
   strokeWeight(1);
-
   fill( #6976EF , 666 );
   text( " "+dailyMsg, this.width-190, this.height-5);
 }
-
