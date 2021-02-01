@@ -1,18 +1,16 @@
+//  SEE:     https://ello.co/ericfickes/post/una6zej-xertch5sd0eecw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
 import nervoussystem.obj.*;
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
-
-// based on colorNoise example
-// Generate landscape ground object
-// TODO: look at sphere() for tips
-// https://github.com/processing/processing/blob/master/core/src/processing/core/PGraphics.java
-
+// OBJ maker
 boolean record = true;
 float z;
 int cY, cX;
 ArrayList<PVector> alPath;
 PVector tmpV, tmpV2;
-Integer pStep = 95;  //  SMALLER = more complex shapes
+Integer pStep = 110;  //  SMALLER = more complex shapes
 PShape sj;
 PShape tmpShp;
 Integer tmpShpW;
