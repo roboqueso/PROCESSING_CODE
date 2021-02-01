@@ -1,29 +1,39 @@
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/rvly_eq1ic1grgmij2pczw     
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-//  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
+
+
 
 // TODO: revisit and make super shape generator
 
 Boolean isFinal = true;
-int alf = 42; //37;
+int alf = 45;
 int cX;
 int cY;
 color[] p3 = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
-int a = 3;  //1;
-int b = 3;  //1;
-int m = 12;
-int n1 = 15;  //5;
-int n2 = 18;  //6;
+int a = 9;  //1;
+int b = 11;  //1;
+int m = 18;
+int n1 = 24;  //5;
+int n2 = 45;  //6;
 int n3 = alf; //48;
 float r, x, y, f;
 
-////////////////////////////////////////////////////
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768, P2D);  //  P2D, P3D, OPENGL, PDF
+  frameRate(666);
   background(#EFEFEF);
   fix.alpha(alf);
   rectMode(CENTER);
@@ -117,4 +127,3 @@ void artDaily( String dailyMsg ) {
   fill(0);
   text( " "+dailyMsg, 10, this.height-14);
 }
-
