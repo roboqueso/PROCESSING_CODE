@@ -1,9 +1,12 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/qcc7twybr8yxohuf5urxqw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
 Boolean isFinal = true;
-int alf = 42;
+int alf = 45;
 
 
 int shapeSize = 10000;
@@ -26,11 +29,18 @@ float maxCt = 0;
 
 PImage img;
 
-////////////////////////////////////////////////////
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(#A1A1A1);  //#B4B4B4);  //#CBCBCB);
   fix.alpha(alf);
@@ -243,5 +253,3 @@ void artDaily( String dailyMsg ) {
   text( " "+dailyMsg, 18, this.height-18);
 //  text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
-
