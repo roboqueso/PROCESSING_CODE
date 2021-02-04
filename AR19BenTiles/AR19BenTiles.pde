@@ -1,3 +1,5 @@
+//  see: https://ello.co/ericfickes/post/awpoowut22qsm2yx48rwsq
+ 
  import nervoussystem.obj.*;
 
 ArrayList<Hex> hexes;
@@ -10,14 +12,14 @@ void setup() {
 	background(0);
 
 	// grad = loadImage("../../../data/grad_sweep2.png");
-grad = loadImage("grad_sweep2.png");
+grad = loadImage("Sunny2.png");
 
 	hexes = new ArrayList<Hex>();
 
 	float hexRadius = 75.0;
 
-	int numCols = 3;
-	int numRows = 3;
+	int numCols = 8;
+	int numRows = 8;
 
 	float startX = hexRadius;
 	float startY = hexRadius;
