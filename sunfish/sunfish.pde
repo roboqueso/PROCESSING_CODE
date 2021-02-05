@@ -1,18 +1,28 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/bho_icech9hawissqodizw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
+
+
+
+
 
 float x, y, cX, cY, rad, angle, sw;
 
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup()
 {
-  // size( 1024, 768);
-  size(displayWidth, displayHeight);
-  frameRate(420);
+  frameRate(666);
+  background(#E2F2E2);
   rectMode(CENTER);
   noFill();
-  smooth();
   cX = width/2;
   cY = height/2;
   rad = 2;
@@ -42,10 +52,9 @@ void draw()
     		stroke(x,y,angle);
     		rect(0, 0, rad, rad);
 
-    		stroke(0);
+    		stroke(0, angle);
     		rect(0, 0, rad-HALF_PI, rad-HALF_PI, sw);
       popMatrix();
-		// resetMatrix();
 	}
 
 
@@ -58,8 +67,10 @@ void draw()
 
 
   	if(rad>width){
- 		 save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  		noLoop();
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".tif" );
+    save( saveName +".png" );
+
       exit();
   	}
 
