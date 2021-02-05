@@ -1,3 +1,5 @@
+//  SEE:   https://ello.co/ericfickes/post/zk-z5fw7ukg-x7i4jtwquq     
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 //  grid with shrinking strokeWeight
 import fixlib.*;
 
@@ -11,10 +13,10 @@ void setup()
 {
   size(displayWidth, displayHeight);
   background(#EFEFEF);
-  frameRate(420);
+  frameRate(666);
   
   rectMode(CENTER);
-//  ellipseMode(CENTER);
+
   
   strokeWeight(TWO_PI);
   noFill();
@@ -25,15 +27,7 @@ void setup()
 
 void draw()
 {  
-  rect( x, y, sz, sz );  
- 
-//  TODO: bring in webcam image and fill each box with image
-//pushMatrix();
-//translate(x, y, t);
-//rotateX(radians(amp));
-//box(amp%sz);
-//popMatrix();
- 
+  rect( x, y, noise(frameCount)*sz, noise(frameCount)+sz );  
  
   
   //  increment size
@@ -49,17 +43,16 @@ void draw()
     sz -= sqrt(sz);
     strokeWeight(sqrt(sz));
     sColor = ( sColor == 0 ? 255 : 0 );
-    stroke(sColor, random(200,255));
+    stroke(sColor);
   }
   
   if( sz < 42 ){
-//    fill(#EF2014);
-//    textSize(sz);
-//    text("DONE", sz, height-sz);
+
     
-    save( this+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
     
-    stop();
+    exit();
   }
 
 }
