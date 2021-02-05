@@ -1,19 +1,27 @@
-// https://github.com/ericfickes/FIXLIB 
-import fixlib.*;
+//  SEE:   https://ello.co/ericfickes/post/k36fkfoxceu_qwax9gvt-q
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 
 
 boolean gotNoise = false, isFinal = true;
-
 float x2=0, y2=0, cX, cY;
 PVector thisPV, lastPV;
 
 int sz = 11, angle = 0, nz_ct=1, maxNz = 360;
 int[] nz;
 
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
 void setup() {
-  size(1024, 768);
+
   background(210);
   frameRate(303);
   noFill();
@@ -29,12 +37,12 @@ void setup() {
   
   strokeWeight(HALF_PI);
 
-  for( int yy = 0; yy <= 768; yy += (768/37) ){
+  for( int yy = 0; yy <= height; yy += (height/37) ){
 
     stroke(random(200,255) );
-    line( 0, yy, 1024, yy );
+    line( 0, yy, width, yy );
     stroke(random(200,255) );
-    line( yy, 0, yy, 1024 );
+    line( yy, 0, yy, width );
   }
   
 }
@@ -63,22 +71,22 @@ void draw() {
   ellipse( x2, y2, 11, 11 );
 
 
-//  strokeWeight(HALF_PI);
-//  stroke(random(255), random(42), random(11), 100 );
-//  line(  thisPV.x - nz[int(nz_ct)],
-//          thisPV.y - nz[int(nz_ct)], 
-//          x2, y2 );
+  strokeWeight(HALF_PI);
+  stroke(random(255), random(42), random(11), 100 );
+  line(  thisPV.x - nz[int(nz_ct)],
+          thisPV.y - nz[int(nz_ct)], 
+          x2, y2 );
 
-  //  connect the dots, ah la la la
-//  if( lastPV.x > 0 && lastPV.y > 0 ) {
-//    strokeWeight(.99999);
-//    stroke(random(53),random(35),random(99), 100 );
-//
-//    bezier( cX, cY, 
-//            thisPV.x, thisPV.y,
-//            lastPV.y, lastPV.x,
-//            x2, y2);
-//  }
+    //connect the dots, ah la la la
+  if( lastPV.x > 0 && lastPV.y > 0 ) {
+    strokeWeight(.99999);
+    stroke(random(53),random(35),random(99), 100 );
+
+    bezier( cX, cY, 
+            thisPV.x, thisPV.y,
+            lastPV.y, lastPV.x,
+            y2,x2);
+  }
 
   if ( frameCount % 360 == 0 ) {
     sz += 21;
@@ -98,7 +106,7 @@ void draw() {
 
 
   //  STOPPER
-  if ( thisPV.y > 768)
+  if ( thisPV.y > height)
   {
 
     fill(#EFEFEF);
@@ -108,7 +116,9 @@ void draw() {
     text("ERICFICKES.COM", 3, height-11 );  // 28
 
     if (isFinal) {
-      save( fix.pdeName() + fix.getTimestamp()+".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+ 
+    save( saveName +".png" );
     }
     noLoop();
     exit();
