@@ -1,19 +1,25 @@
+//  SEE:   https://ello.co/ericfickes/post/vlhebylktrcgjd78hcefzw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-// https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
+
+
+
 //
 Boolean isFinal = true;
-int alf = 13;
-float shapeSize = 100;
+int alf = 180;// 24;
+float shapeSize = 75;
 
 int cX, cY, xx, yy;
 
 //  
 color[] palette = { 
-  #EF0000, #00EF00, #0000EF, #EFEFEF, #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
+  // #EF0000, #00EF00, #0000EF, #EFEFEF, #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
+  
+  #EFEF00, #EFEF45, #F2EA02, #E6FB04, #EF0000, #FD1C03, #EF4500, #EF6900, #00EF00, #00EF45, #00EF69, #45EF00, #00EFEF, #099EFF, #0062EF, #0045EF, #EF00EF, #EF00CC, #EF0099, #CC00EF, #9D00EF, #CC00EF, #6E0DD0, #9900EF
 };
+
 
 int outerXX = 0;
 int outerYY = 0;
@@ -31,13 +37,20 @@ int ct = 0;
 int maxCt = 0;
 boolean flip = false;
 
-////////////////////////////////////////////////////
+
+void settings(){
+  size(displayWidth, displayHeight );
+  smooth(8);
+  pixelDensity(displayDensity());
+}
+
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
-  background(9);
+  rectMode(CENTER);
+  ellipseMode(CENTER);
+  background(random(11,69));
   fix.alpha(alf);
   //  setup variables
   cX = width/2;
@@ -65,8 +78,8 @@ void setup() {
 
 void draw()
 {
-  smooth();
-  strokeWeight( random(5.5) );
+  //strokeWeight( random(5.5) );
+  strokeWeight( random(HALF_PI,TWO_PI) );
   stroke( random(6), alf);
   noFill();
 
@@ -76,13 +89,14 @@ void draw()
   outerXX = ( offsetX - int( cos(radians(angle)) * outerRadius ) );
   outerYY = ( offsetY - int( sin(radians(angle)) * outerRadius ) );
 
-  strokeWeight(.5);
+  strokeWeight( random(QUARTER_PI,HALF_PI) );
 
   line(outerXX, outerYY, offsetX, offsetY);
   line(offsetX, offsetY, xx, yy);
 //  point(xx, yy);
   
-  strokeWeight( alf );
+  //strokeWeight( alf );
+  strokeWeight( random(HALF_PI,TWO_PI) );
 
   stroke( #90DEFA , alf);
   
@@ -149,7 +163,9 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
+
   }
 
   noLoop();
@@ -164,9 +180,7 @@ void doExit()
 void artDaily( String dailyMsg ) {
 
   textFont( createFont( "Silom", 18 ) );
-  smooth();
 
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
