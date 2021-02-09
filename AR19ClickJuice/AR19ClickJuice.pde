@@ -1,8 +1,10 @@
-import nervoussystem.obj.*;
-import fixlib.*;
-Fixlib fix = Fixlib.init(this);
-// import processing.dxf.*;
+//  SEE:   https://ello.co/ericfickes/post/108lic0r8spir6ycikueka
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
+import fixlib.*;
+import nervoussystem.obj.*;
+
+Fixlib fix = Fixlib.init(this);
 /*
 AR2019 seed incubator sketch
 
@@ -32,9 +34,8 @@ seed: NEW shapeJuan shape generator for stamp shapes
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public  void  settings ()  {
-        // size(612, 460, P3D);
-        size(1836, 1380, P3D);
-        smooth(8);
+        size(displayWidth, displayHeight, P3D);
+        smooth(8);  //  smooth() can only be used in settings();
         pixelDensity(displayDensity());
         sketchSmooth();
     }

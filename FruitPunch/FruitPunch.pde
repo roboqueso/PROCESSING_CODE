@@ -1,7 +1,4 @@
-//  TODO:
-//  1. MUSIC VIDEO
-//  3. PT RECORDER SAVING CHUNKS OF DUPLICATES **** only save unique points ***
-//  4. POINT DUMP NEEDS A FIXIN
+
 import fixlib.*;
 Fixlib fix = Fixlib.init(this);
 

@@ -1,13 +1,19 @@
-//
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
-//
+//  SEE:     
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
+
+
+
 Boolean isFinal = true;
 int alf = 37;
 
 int cX;
 int cY;
 
-int shapeSize = 50;
+int shapeSize = 69;
 int gridWidth = 800+shapeSize;
 int gridHeight;
 
@@ -16,22 +22,29 @@ int outerXX = 0;
 int outerYY = 0;
 
 int pad = 69;
-int cubeSize = 333;
+int cubeSize = 345;
 
 float angle = 0;
 float maxAngle;
-float radius = 25;
+float radius = 36;
 float outerRadius;
 
 int offsetX = 0;
 int offsetY = 0;
+
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
 
   // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(25);
 
@@ -118,7 +131,7 @@ void draw()
 
   if ( angle >= maxAngle )
   {    
-    exit();
+    doExit();
   }
 
 }
@@ -149,10 +162,13 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
+    save( saveName +".tif" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
