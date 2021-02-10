@@ -1,4 +1,4 @@
-//  SEE:   https://ello.co/ericfickes/post/szcmczw66gyrc0ndv1o76q    
+//  SEE:   https://ello.co/ericfickes/post/szcmczw66gyrc0ndv1o76q
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -35,8 +35,6 @@ void setup() {
   maxCt = width; //height;
   fix = Fixlib.init(this);
 }
-
-
 
 void draw()
 {
