@@ -1,3 +1,5 @@
+//  SEE:   https://ello.co/ericfickes/post/ar97gf_wsduyrjs-egppvq     
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import org.processing.wiki.triangulate.*;
 import fixlib.*;
 
@@ -9,7 +11,7 @@ click to generate a jewel
 */
 Fixlib fix = Fixlib.init(this);
 
-boolean debug = true;
+boolean debug = false;
 int numPoints = 10;
 int dimension = 200;
 
@@ -25,13 +27,16 @@ ArrayList<PShape> shapes;
   float xpos;//= cos(radians(rotation))*orbitRadius;
   float zpos;//= sin(radians(rotation))*orbitRadius;
 
-
-void setup() {
-  size(1920, 1080, P3D);
-  hint(DISABLE_DEPTH_TEST);
+void settings(){
+  size(displayWidth, displayHeight, P3D);
   smooth(8);  //  smooth() can only be used in settings();
   pixelDensity(displayDensity());
-  
+}
+
+
+void setup() {
+
+  hint(DISABLE_DEPTH_TEST);  
   newPosition = new ArrayList<PVector>();
   triangles = new ArrayList<Triangle>();
   shapes = new ArrayList<PShape>();
@@ -67,8 +72,8 @@ void draw() {
   //  ENDER
   if(frameCount>maxFrameNum)
   {
-    save(fix.pdeName()+"_"+fix.getTimestamp()+".png");
-    noLoop();
+    String saveName = fix.pdeName() + "-" + fix.getTimestamp();
+    save( saveName +".png" );
     exit();
   }
 
