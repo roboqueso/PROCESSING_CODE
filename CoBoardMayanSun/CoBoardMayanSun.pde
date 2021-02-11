@@ -1,8 +1,11 @@
+//  SEE:   https://ello.co/ericfickes/post/jke_iwcrwskz1kn4mfgmpw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 
-// https://github.com/ericfickes/FIXLIB 
 import fixlib.*;
-
 Fixlib fix = Fixlib.init(this);
+
+
+
 
 Boolean isFinal = true;
 Boolean drawBoard = false;
@@ -33,11 +36,17 @@ float rot = 360.0/pts;
 //  circle vars
 float angle1, x1, y1, startX1, startY1, radius1;
 
-////////////////////////////////////////////////////
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+
   frameRate(303);
   background(#EFEFEF);
   fix.alpha(alf);
@@ -50,7 +59,7 @@ void setup() {
    noFill();
 
 
-    img = loadImage( "colorado.jpg");
+    img = loadImage( "i.png");
     p3 = fix.getImgColors( img );
     image(img, 0, 0 );//, width, height);
 
@@ -252,4 +261,3 @@ float y = 0;
    }
    */
 }
-
