@@ -1,3 +1,15 @@
+//  SEE:   https://ello.co/ericfickes/post/iyxa4ljs9qwcpthjsko7za
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+}
+
 public float xx=0,yy=0, colWidth=0, rowHeight=0;
 public int i = 0, gridSize = 4;
 public int[] gSizes = { 2, 3, 4, 8, 9, 11, 13, 21, 34, 55, 89  };
@@ -5,8 +17,7 @@ public boolean isFinal = true;
 
 /////////////////////////////////////////////////////////////////////////////////
 void setup() {
-    background(#123456);
-    size(1024, 768);
+    background(#EF4521);
     frameRate(303);
     smooth();
     noFill();
@@ -41,7 +52,7 @@ void draw() {  // this is run repeatedlyy.
         if(isFinal){
           save(fix.pdeName()+fix.getTimestamp()+".png");
         }
-        noLoop();
+        exit();
     }
 }
 /////////////////////////////////////////////////////////////////////////////////
