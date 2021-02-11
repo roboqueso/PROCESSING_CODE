@@ -1,6 +1,11 @@
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
+
 OBJExport obj;
 
 //  CLICK to export group as .OBJ

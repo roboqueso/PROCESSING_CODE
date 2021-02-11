@@ -1,5 +1,9 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
 
 //  TODO: redo the grid logic to tile LEFT to RIGHT, TOP to BOTTOM
 //  use calculate textWidth(msg) for each font to calculate NEXT X,Y

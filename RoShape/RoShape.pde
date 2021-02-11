@@ -1,7 +1,12 @@
 //  see:  https://ello.co/ericfickes/post/x7-7pbhkacqeawhntok2cq
 import nervoussystem.obj.*;
+
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
+
 
 /*
 1 Currate the hotness in OBJs

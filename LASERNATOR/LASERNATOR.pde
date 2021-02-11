@@ -1,7 +1,11 @@
 //import processing.dxf.*;
 import processing.pdf.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
 int bumpRight = 44;
 boolean record;
 

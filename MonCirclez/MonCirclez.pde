@@ -1,13 +1,11 @@
 //	IMPORTS	////////////////////////////////////////////////////
 import processing.opengl.*;
-import fixlib.*;
-
-//	https://github.com/ericfickes/FIXLIB
-Fixlib fix = Fixlib.init(this);
-// https://github.com/ericfickes/FIXLIB	
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 int alf = 42;	//37;
 float angle, radius = 2, x, y, cX, cY, strokeSz = 1;

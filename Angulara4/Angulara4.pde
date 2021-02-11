@@ -1,11 +1,16 @@
 // SEE : https://ello.co/ericfickes/post/en4ahtzb23mjdkc9xyqwwa
 
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 float cX, cY, xx, yy, xx2, yy2, rad = 404, angle;
 PVector pv1, pv2;
 ArrayList<PVector> pts = new ArrayList<PVector>();
-Fixlib fix;
+
 
 void setup()
 {
@@ -19,7 +24,7 @@ void setup()
   ellipseMode(CENTER);
   cX = width/2;
   cY = height/2;
-  fix = Fixlib.init(this);
+
 }
 
 

@@ -1,24 +1,10 @@
-/**
- STOCK_rotator
- * Load and Display an OBJ Shape -> rotate RnD
- ** Kaleidescope
- ** rotate OBJ around circle to point proper direction like clock face
- 
- */
-
-
-
-
-
-
-/**
- stock_ModelSpiral
- */
-
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
+
 PShape s;
 float cX, cY, x, y;
 int preScale = 1;

@@ -1,11 +1,9 @@
-//  
-//  http://ericfickes.com
-//
-
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 
 Boolean isFinal = true;
 int alf = 75;

@@ -26,7 +26,12 @@ import hype.extended.behavior.*;
 import hype.extended.colorist.*;
 import hype.extended.layout.*;
 import hype.interfaces.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -305,7 +310,6 @@ int rowCt = colCt;  //  Maintains even 1:1 grid
 int drawW, drawH, gridX, gridY; // slice dimensions, grid position
 PImage mainImg, bgImg, tmpSlice;
 
-Fixlib fix = Fixlib.init(this);
 HDrawablePool pool;
 HImage tmpImg, bgHImg;  //  background image reference
 

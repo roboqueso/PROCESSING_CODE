@@ -11,11 +11,17 @@ import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
-import fixlib.*;
 
 import hype.*;
 import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.*;
+
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 
 HShape tmpShp;
@@ -29,7 +35,6 @@ float strokeWt = .69;
 boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 boolean displace = false;	//	Apply displacementMap
 
-Fixlib fix = Fixlib.init(this);
 float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
 String SAVE_NAME = "thisShouldBeDynamic";
 GraphicsContext ctx;

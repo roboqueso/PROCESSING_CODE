@@ -16,10 +16,14 @@ import javafx.geometry.VPos;
 import javafx.scene.text.TextAlignment;
 
 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
 Fixlib fix = Fixlib.init(this);
+
+
+
 String SAVE_NAME = "thisShouldBeDynamic";
 String SAVE_EXTENSION = ".PNG"; //  ".TIF";
 

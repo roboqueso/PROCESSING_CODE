@@ -1,10 +1,10 @@
-// https://github.com/ericfickes/FIXLIB  
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-// NOTE: this code is shit and doesn't do what it's supposed to yet
-
-
 Fixlib fix = Fixlib.init(this);
+
+
 
 /*  GOAL: Face point cloud to DXF */
 

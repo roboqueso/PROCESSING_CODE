@@ -31,10 +31,15 @@ import javafx.scene.effect.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
-import fixlib.*;
-
 import hype.*;
 import hype.extended.colorist.HColorPool;
+
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 
 HColorPool colors;
@@ -43,8 +48,6 @@ HShape tmpShp;
 float strokeWt = .69;
 //	control JFX global Blend mode
 boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
-
-Fixlib fix = Fixlib.init(this);
 float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
 String SAVE_NAME = "thisShouldBeDynamic";
 GraphicsContext ctx;

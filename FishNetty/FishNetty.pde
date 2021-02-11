@@ -1,7 +1,10 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
+
 
 //  Grow horizontally ( L to R )
 //  OnSplit - use fibonacci sequence for SplitBy

@@ -1,4 +1,10 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 int cX;
 int cY;
@@ -9,7 +15,7 @@ float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
 float w = 33;
-Fixlib fix = Fixlib.init(this);
+
 
 
 void keyPressed(){

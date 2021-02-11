@@ -137,7 +137,13 @@ import hype.extended.behavior.*;
 import hype.extended.colorist.*;
 import hype.extended.layout.*;
 import hype.interfaces.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -164,7 +170,7 @@ float sw = 1;
 float drawZ;
 
 int rowCt = colCt;  //  Maintains even 1:1 grid
-Fixlib fix = Fixlib.init(this);
+
 HDrawablePool pool;
 HGridLayout hgl;
 HBox tmpB;

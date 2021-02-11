@@ -1,8 +1,9 @@
-
-// https://github.com/ericfickes/FIXLIB	
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 /*
 Specifies vertex coordinates for curves. This function may only be used between beginShape() and 
  endShape() and only when there is no MODE parameter specified to beginShape(). 

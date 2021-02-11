@@ -1,7 +1,9 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 
 //  make rounded rect that match the app group
 //  http://en.wikipedia.org/wiki/Silver_(color)

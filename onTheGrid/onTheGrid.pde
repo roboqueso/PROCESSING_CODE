@@ -1,7 +1,9 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 
 public Boolean isFinal = true;
 public float xx=0,yy=0, colWidth=0, rowHeight=0;

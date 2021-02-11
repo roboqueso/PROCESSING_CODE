@@ -1,8 +1,9 @@
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 float cX, cY, xx, yy, xx2, yy2, rad = 3, angle, shim = .360;
 PVector pv1, pv2;
 ArrayList<PVector> pts = new ArrayList<PVector>();

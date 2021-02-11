@@ -1,13 +1,9 @@
-/**
-NOTE: large OBJs cause this sketch to choke
-** local machine problem perhaps?
-*/
-
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;

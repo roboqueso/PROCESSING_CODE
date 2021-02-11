@@ -23,10 +23,13 @@ import hype.extended.behavior.*;
 import hype.extended.colorist.*;
 import hype.extended.layout.*;
 import hype.interfaces.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-/* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
+
+
 HDrawablePool pool;
 
 int gridX,gridY;

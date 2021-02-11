@@ -107,8 +107,12 @@ https://stock.adobe.com/collections/G8eYeCWZyF0PMNOZZxgVNzpNFPADcljj?content_id=
 */
 
 
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 //  NOTE: NO NERVOUS SYSTEM FOR MAC?!?!?!
 //  import nervoussystem.obj.*;
@@ -126,12 +130,6 @@ float preScale = 11;  //  pre-scale up shapes if needed
 String OBJ_NAME = "190403630/juice_box_a_082.obj";  //  FOR META
 String GROUP =  "FIXBOMB";  // "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS", "LIQUIDS"
 
-
-//  END SETTINGS
-
-
-
-Fixlib fix = Fixlib.init(this);
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float cX, cY, x, y;

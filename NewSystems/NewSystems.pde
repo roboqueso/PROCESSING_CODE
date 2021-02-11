@@ -1,8 +1,9 @@
-
-// https://github.com/ericfickes/FIXLIB	
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 public int x = 0, y = 0, alf = 21, gridSize = 2, colWidth, rowHeight, maxCt;
 public int[] nums = { 37, 11, 2, 4, 13, 8 };

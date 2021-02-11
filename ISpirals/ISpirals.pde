@@ -1,8 +1,9 @@
-// HOT : P5 TRIANGLE
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 
 //  ISpirals - figure out the iPhone desktop app layout dimensions for sweet background patterns
 //iPhone5

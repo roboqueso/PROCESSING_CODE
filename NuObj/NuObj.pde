@@ -1,6 +1,10 @@
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
 
 // based on colorNoise example
 // Generate landscape ground object

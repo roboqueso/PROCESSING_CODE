@@ -13,8 +13,15 @@ box()	34	sphere()
 box()	55	sphere()
 box()	89	sphere()
 */
+
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 int numFrames = 9;
 int sd = 2;	//	2, 3, 5, 8, 13, 21, 34, 55, 89
@@ -22,7 +29,7 @@ int txtSz = 100;
 int bxSz;
 float cX, cY;
 String fnt = "DoppioOne-Regular";
-Fixlib fix = Fixlib.init(this);
+
 PShape psSphere, psBox;
 
 /* ------------------------------------------------------------------------- */

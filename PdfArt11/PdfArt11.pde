@@ -1,7 +1,9 @@
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 
 String lines[];
 // color[] palette = { #013459, #CF1312, #EF6900, #E8DA83, #CBFB5C, #1A74E2, #061C3F };

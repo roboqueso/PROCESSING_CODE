@@ -1,7 +1,9 @@
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 
 public Boolean isFinal = true;
 int dWidth, dHeight, r,g,b,opacity,nSides,cx,cy;

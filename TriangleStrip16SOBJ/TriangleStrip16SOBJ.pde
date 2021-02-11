@@ -5,11 +5,14 @@ TriangleStrip16S
 OG: http://fix400.tumblr.com/post/74207786552/trianglestrip
 
 */
-import fixlib.*;
-import nervoussystem.obj.*;
 
+import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 String SAVE_NAME = "thisShouldBeDynamic";
 float cX, cY;
 

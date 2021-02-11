@@ -1,14 +1,10 @@
-/**
-STOCK_ModelSpiral
-  - groups by category ( re-run on PC for textures )
-
-*/
-
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
+
 
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;

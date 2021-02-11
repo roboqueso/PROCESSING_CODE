@@ -1,13 +1,12 @@
-//  Using P5 primitives from this example
-//  https://processing.org/examples/shapeprimitives.html
-//  Make DXF from P5 -> render in Fusion360
-
 import processing.opengl.*;
 import processing.dxf.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
 Fixlib fix = Fixlib.init(this);
+
+
 
 PShape tmp;
 int numFrames = 6;

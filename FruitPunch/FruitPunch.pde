@@ -1,6 +1,10 @@
-
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
 Fixlib fix = Fixlib.init(this);
+
+
 
 int strokin = 3;  // 1, 2, or 3 - adjust color
 int min = 45;

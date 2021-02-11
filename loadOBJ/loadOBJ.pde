@@ -1,13 +1,16 @@
 import processing.opengl.*;
 import processing.dxf.*;
-// https://github.com/ericfickes/FIXLIB  
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
 
 PShape s;
 int numFrames = 4;
 int childCt;
 
-Fixlib fix = Fixlib.init(this);
 
 void setup() {
   background(-1);

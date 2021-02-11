@@ -1,10 +1,13 @@
-// HOT
-public float xx = 0, yy = 0;
-// https://github.com/ericfickes/FIXLIB 
+
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
+
+// HOT
+public float xx = 0, yy = 0;
 
 Boolean isFinal = true;
 /////////////////////////////////////////////////////////

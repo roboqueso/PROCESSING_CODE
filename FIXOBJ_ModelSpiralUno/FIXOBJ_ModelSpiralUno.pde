@@ -106,9 +106,13 @@ https://stock.adobe.com/collections/G8eYeCWZyF0PMNOZZxgVNzpNFPADcljj?content_id=
 
 */
 
-
-// https://github.com/ericfickes/FIXLIB ssssssssss
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 import nervoussystem.obj.*;
 
 
@@ -129,7 +133,6 @@ String GROUP =  "FIXBOMB";	// "FIXBOMB", BOXES", "BRAND", "BUSINESS", "DISPLAYS"
 
 
 
-Fixlib fix = Fixlib.init(this);
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s;
 float cX, cY, x, y;

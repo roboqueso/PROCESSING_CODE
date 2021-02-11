@@ -2,7 +2,13 @@
 rough beginnings of shapeJouse OBJ maker
 */
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 
 boolean record = true;
@@ -13,7 +19,7 @@ int sd = 3;
 int numFrames = 1;
 
 //PShape lj = fix.shapeJous( float a, float b, float amp, int inc )
-Fixlib fix = Fixlib.init(this);
+
 PShape psSphere, psBox;
 
 void setup() {

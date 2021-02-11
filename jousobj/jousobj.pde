@@ -1,7 +1,9 @@
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
+Fixlib fix = Fixlib.init(this);
 
 
 boolean record = false;
@@ -13,7 +15,6 @@ float x,y, t;
 float angle = 0;
 float xx, yy, startX, startY;
 int w = 33;
-Fixlib fix = Fixlib.init(this);
 
 /* ------------------------------------------------------------------------- */
 void  settings ()  {

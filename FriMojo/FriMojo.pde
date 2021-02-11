@@ -1,7 +1,9 @@
-//	IMPORTS	////////////////////////////////////////////////////
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 int alf = 42; //37;
 

@@ -1,12 +1,17 @@
 import nervoussystem.obj.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+
 
 
 boolean record = true;
 float noiseScale = .05;
 
 //PShape lj = fix.shapeJous( float a, float b, float amp, int inc )
-Fixlib fix = Fixlib.init(this);
 PShape fl;
 
 void setup() {

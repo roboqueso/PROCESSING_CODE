@@ -1,9 +1,9 @@
-
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
-//  https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 PShape oBrush;
 String BRUSH_OBJ = "brush.obj";
 Boolean isFinal = true;

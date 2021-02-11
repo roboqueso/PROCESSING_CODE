@@ -19,10 +19,12 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
 Fixlib fix = Fixlib.init(this);
+
 String SAVE_NAME = "thisShouldBeDynamic";
 String txtMsg;
 int maxFrame = 8;

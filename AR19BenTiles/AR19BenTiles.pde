@@ -1,6 +1,6 @@
 //  see: https://ello.co/ericfickes/post/awpoowut22qsm2yx48rwsq
  
- import nervoussystem.obj.*;
+import nervoussystem.obj.*;
 
 ArrayList<Hex> hexes;
 PImage grad;

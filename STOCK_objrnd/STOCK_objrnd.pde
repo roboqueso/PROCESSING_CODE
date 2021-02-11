@@ -1,25 +1,9 @@
-/**
- * Load and Display an OBJ Shape. 
- * 
- * The loadShape() command is used to read simple SVG (Scalable Vector Graphics)
- * files and OBJ (Object) files into a Processing sketch. This example loads an
- * OBJ file of a rocket and displays it to the screen. 
- */
-
-
-
-
-
-  
-/**
-stock_ModelSpiral
-*/
-
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 float ry;
 ArrayList<PShape> shapes = new ArrayList<PShape>();
 PShape s, s1, s2, s3, s4, s5, s6, s7;

@@ -1,11 +1,12 @@
-//  Make DXF from P5 -> render in Fusion360
-
 import processing.opengl.*;
 import processing.dxf.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
 Fixlib fix = Fixlib.init(this);
+
+
 
 int numFrames = 2;
 float lastX, lastY, lastZ;

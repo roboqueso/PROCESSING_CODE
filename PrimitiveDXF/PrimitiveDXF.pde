@@ -2,10 +2,12 @@
 
 import processing.opengl.*;
 import processing.dxf.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-
 Fixlib fix = Fixlib.init(this);
+
 
 int numFrames = 8;
 

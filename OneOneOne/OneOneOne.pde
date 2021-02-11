@@ -1,9 +1,11 @@
 //  IMPORTS ////////////////////////////////////////////////////
 import processing.opengl.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-//	https://github.com/ericfickes/FIXLIB
 Fixlib fix = Fixlib.init(this);
+
 Boolean isFinal = true;
 
 //  blues

@@ -14,10 +14,13 @@ DS_attachSVG : assets in 11 columns concept
 import hype.*;
 import hype.extended.layout.HGridLayout;
 import hype.extended.colorist.HColorPool;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
-/* ------------------------------------------------------------------------- */
 Fixlib fix = Fixlib.init(this);
+
+
 
 HColorPool    colors;
 HDrawablePool pool;

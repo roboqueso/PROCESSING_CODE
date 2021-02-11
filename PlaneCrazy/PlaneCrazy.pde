@@ -1,7 +1,10 @@
-import fixlib.*;
 import processing.video.*;
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 
 
 Capture cam;

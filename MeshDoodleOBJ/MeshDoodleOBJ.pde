@@ -1,14 +1,12 @@
-//  RTFM, this originated as a sample
-//  NOTE: this code is loosy goosy globals and shit
-//  get it rockin, come back and ellegantify
-
-import fixlib.*;
 import toxi.geom.*;
 import toxi.geom.mesh.*;
 import java.util.Iterator;
-
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
 TriangleMesh mesh;
 
 Vec3D prev=new Vec3D();

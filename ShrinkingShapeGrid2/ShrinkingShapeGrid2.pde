@@ -1,8 +1,10 @@
-
-// https://github.com/ericfickes/FIXLIB 
+//  SEE:   
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
+
+
 //
 //  Learning Processing CH6 EX 6-8 -> Grid of shapes where the shapeSize shrinks
 //
