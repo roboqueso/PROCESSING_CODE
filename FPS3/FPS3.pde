@@ -1,11 +1,11 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/hprlkk42rvkw57ax8e9rqa
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
 Boolean isFinal = true;
-int alf = 11;
+int alf = 24;
 int shapeSize = 15;
 float strokeSize = 20;
 
@@ -26,11 +26,19 @@ color[] palette = {
 #DD570D,#D4190D,#9D0D0D,#65A90A,#660D0C,#D8930C,#DFDD0E,#595C0B,#A7700C,#190D09,#DDAC0B,#AF8B0C,#8ACF11,#77C00E,#DE7D0D,#C8B556,#E8AB0E,#BA9E4B,#C48919,#D4A826,#916D32,#D9D439,#74532A,#E0BF13,#493608,#E39519,#B4D11F,#523523,#5B860B,#BC772A,#371F11,#7D410B
   };
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
+
+
+void settings(){
+  size(displayWidth, displayHeight, FX2D);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+void setup(){
+
   frameRate(303);
   background(18);
 
@@ -104,7 +112,7 @@ cc++;
       line( 0, ll, width, ll );
     }
     
-    exit();
+    doExit();
 
   }
 }
@@ -142,7 +150,7 @@ void doExit()
     save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
