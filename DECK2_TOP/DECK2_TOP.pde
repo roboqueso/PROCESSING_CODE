@@ -1,6 +1,10 @@
+//  SEE:   https://ello.co/ericfickes/post/p0zkgdoaekb5z7qgszdkcq
+//  GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
 // import geomerative.*;
 //import processing.pdf.*;
-
 
 Boolean isFinal = true;
 int ctMAIN = 0;
@@ -16,12 +20,18 @@ float angle = 0;
 float radius = 10;
 
 
+void settings(){
+  size(displayWidth, displayHeight );// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 ////////////////////////////////////////////////////
 //
 void setup(){
-  size(1024,768 );
-  //  ---------------------
-  background (255);
+  
+  background(0);
+  stroke(255);
 
   smooth();
   noFill();
@@ -29,7 +39,7 @@ void setup(){
   cX = width / 2;
   cY = height / 2;
   
-  stroke(0);
+
   strokeWeight(2);
 
   xx = -cubeSize;
@@ -38,7 +48,7 @@ void setup(){
 //  beginRecord( PDF, sketchName() + ".pdf" );
 
   noFill();
-  
+
 }
 
 
@@ -46,7 +56,6 @@ void setup(){
 //
 void draw()
 {
-
   if( xx % 5 == 0 )
     ellipse( xx, yy, cubeSize*2, cubeSize*2 );
   else
