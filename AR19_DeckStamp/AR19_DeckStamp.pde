@@ -1,6 +1,5 @@
-//import processing.dxf.*;
 import processing.pdf.*;
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/rnurj6swaygm8pcd3bx1rq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
