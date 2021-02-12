@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/_-n699dmrbsxmnstmlnqya
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -13,10 +13,19 @@ public Boolean isFinal = true;
 public int cols = 5, rows = 4;
 public float xx = 0, yy = 0, rowHeight, colWidth, rectSz, tmp, strokeSz;
 
+
+void settings(){
+  size(displayWidth, displayHeight, FX2D);// FX2D, P3D
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+
+
 //////////////////////////////////////////////////////////////////////////
 void setup(){
-  size(1024,768);
   background(0);
+  frameRate(303);
 
   smooth();
   noFill();
@@ -26,8 +35,8 @@ void setup(){
 
 
   
-  colWidth = 1024/cols;
-  rowHeight = 768/rows;
+  colWidth = displayWidth/cols;
+  rowHeight = displayHeight/rows;
 
   rectSz = (colWidth+rowHeight);
   strokeSz = int(rectSz/cols);
@@ -42,22 +51,22 @@ void draw(){
     ellipse( xx, yy, rectSz, rectSz);    
 
     if( frameCount%2==0)
-      stroke( random(rectSz+strokeSz) );
+      stroke( random(255) );
     else
-      stroke(0);
+      stroke( random(-255), 150 );
 
     point( xx, yy );
 
     
   //  move
-  if( xx < 1024+colWidth ){
+  if( xx < displayWidth+colWidth ){
     xx += colWidth;
   } else {
     xx = 0;
     yy += rowHeight;    
   }
   
-  if( xx >= 1024+colWidth && yy >= 768+rowHeight ) {
+  if( xx >= displayWidth+colWidth && yy >= displayHeight+rowHeight ) {
     xx = 0;
     yy = 0;
   
