@@ -1,10 +1,5 @@
 /**
 DSHOrangeJuice.pde - DEVASKATION flavored HGoldenJuice
-
-TODO:
-- colors
-- fonts
-- assets load shapes
 */
 import javafx.scene.canvas.*;
 import javafx.scene.effect.*;
@@ -16,7 +11,7 @@ import hype.*;
 import hype.extended.colorist.HColorPool;
 import hype.extended.behavior.*;
 
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/p48fvxfxgjxuwit9rjdkqq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
