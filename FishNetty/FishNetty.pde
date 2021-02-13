@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/k9dbdeh-r90pfedsm2odtg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -33,7 +33,7 @@ color[] palette = {
   #000000
 };
 
-color[] boobColors = {
+color[] bc = {
   #0B00B5, 
   #B000B5, 
   #2B00B5, 
@@ -53,12 +53,19 @@ float xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4, xx5, yy5;
 float angle1, angle2, angle3, angle4, angle5;
 float startX1, startY1, startX2, startY2, startX3, startY3, startX4, startY4, startX5, startY5;
 
-//
+void settings() {
+  size(displayWidth, displayHeight);
+  smooth(8);
+  pixelDensity(displayDensity());
+  sketchSmooth(); //  WTF does this do?
+}
 
-//////////////////////////////////////////////////////////////////////////
-void setup(){
-  size(1024,768);
-  background( #343434 );
+////////////////////////////////////////////////////
+//
+void setup() {
+
+  frameRate(420);
+  background( bc[(int)random(bc.length)] );
   br = new Branch( 420, 1);
   smooth();
   noFill();
