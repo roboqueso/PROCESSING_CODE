@@ -1,10 +1,8 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/3v8zedxaogdkx6cawc15rq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
-
-
 
 int strokin = 3;  // 1, 2, or 3 - adjust color
 int min = 45;
@@ -19,7 +17,7 @@ REPLACE - the pixels entirely replace the others and don't utilize alpha (transp
 ++ BREAKS TRANSPARENT PGRAPHICS, still might be interesting
 
 SUBTRACT - subtractive blending with black clip: C = max(B - A*factor, 0)
-* duper dark
+* super dark
 
 DARKEST - only the darkest color succeeds: C = min(A*factor, B)
 
@@ -28,7 +26,7 @@ MULTIPLY - multiply the colors, result will always be darker
 BLEND - linear interpolation of colors: C = A*factor + B. This is the default.
 */
 public static int BLMODE = DIFFERENCE;
-public static int BGCLR = 0;
+public static int BGCLR = 69;
 int innerMin = 32;
 Boolean clear = false; //  clean child PGraphic before draw
 
@@ -166,7 +164,7 @@ PGraphics recycle(PGraphics g)
 
 //  master PNG saver
 void sv(){
-  save(this+"_"+strokin+"_"+BLMODE+"_"+BGCLR+"_"+frameCount+".tiff");
+  save(this+"_"+strokin+"_"+BLMODE+"_"+BGCLR+"_"+frameCount+".png");
 }
 
 void drawAndSave(PGraphics cube, float xd, float yd, ArrayList<EPoint> rt, float xx, float yy) {
