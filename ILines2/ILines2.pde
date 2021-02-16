@@ -1,24 +1,36 @@
-/*  INCOMING  */
-public int color1 = #EF1975, color2 = 42;
+// SEE :  https://ello.co/ericfickes/post/en4ahtzb23mjdkc9xyqwwa
+// GOTO:  https://github.com/ericfickes/FIXLIB
+import fixlib.*;
+
+Fixlib fix = Fixlib.init(this);
+
+public int color1 = #EF4521, color2 = 75;
 public String label = "ERICFICKES.COM";
 
 boolean gotNoise = false;
 public Boolean isFinal = true;
 float[] nz = new float[1000];
 float xx=0,yy=0;
-public float dWidth = 640, dHeight = 960;
+public float dWidth, dHeight;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+void  settings ()  {
+    size(displayWidth, displayHeight, FX2D); //"processing.opengl.PGraphics3D");
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+
+/* ------------------------------------------------------------------------- */
+
 void setup() {
-    size( 1024, 768 );
-    
-    dWidth = 1024;
-    dHeight = 768;
 
     background(255);//#373737);
-    frameRate(1000);
-    smooth();
+    frameRate(666);
     noFill();
+
+	dWidth = displayWidth;
+	dHeight = displayHeight;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -38,7 +50,7 @@ void draw() {
     }
 
   if(yy <= dHeight){
-    xx += nz[int(yy)];
+    xx += nz[int(yy%nz.length)];
     yy += HALF_PI;
   } else {
     yy =0;
