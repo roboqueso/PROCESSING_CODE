@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/7hg58qdrto4hppkeshj0bw
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -6,20 +6,24 @@ Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
-int alf = 75;
+int alf = 69;
 
 int cX;
 int cY;
 
-color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
+color[] palette = { #EF0000, #0DEF10, #EF4521, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
-////////////////////////////////////////////////////
-//
 float i = 0; 
+
+void settings(){
+  size(displayWidth, displayHeight, FX2D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 /////////////////////////////////////////////////////////////////////////
 void setup() {
-    background(#FF0000);
-    size(1024,768); 
+    background( palette[(int)random(palette.length)] );
     noFill();
     rectMode(CENTER);
     
@@ -44,7 +48,7 @@ void setup() {
  
 /////////////////////////////////////////////////////////////////////////
 void draw() {
-    smooth();
+
     i = random(frameCount*noise(frameCount));
     strokeWeight(random(PI));
  
