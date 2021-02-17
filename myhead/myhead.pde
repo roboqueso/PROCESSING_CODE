@@ -10,11 +10,14 @@ float x, y;
 int sz = 1000;
 float xx, yy, theta, r, i, cX, cY;
 
+void settings()
+{	
+	size(displayWidth, displayHeight, FX2D);
+	smooth(8);
+}
 ///////////////////////////////////////////////////////////////////////////////
 void setup()
 {
-  size(7680, 4320);  // 8K
-  smooth(8);
   background(#EFEFEF);
   frameRate(666);
   
@@ -90,7 +93,7 @@ strokeWeight(sqrt(sz));
   
 
 //  write every 6th frame
-  if(frameCount%6==0)  saveFrame("FRAMES/#########.png");
+//  if(frameCount%6==0)  saveFrame("FRAMES/#########.png");
   
   if( sz < 39 ){
 

@@ -1,5 +1,5 @@
-//  see: https://ello.co/ericfickes/post/awpoowut22qsm2yx48rwsq
- 
+//	Nine years was enough thanks
+//  see: https://ello.co/ericfickes/post/awpoowut22qsm2yx48rwsq 
 import nervoussystem.obj.*;
 
 ArrayList<Hex> hexes;
