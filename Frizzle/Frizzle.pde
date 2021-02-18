@@ -24,6 +24,7 @@ void settings(){
 /////////////////////////////////////////////////////////////////////////
 void setup() {
     background( palette[(int)random(palette.length)] );
+    frameRate(666);
     noFill();
     rectMode(CENTER);
     

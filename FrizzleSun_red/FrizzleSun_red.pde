@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/9a2oeuuqburwws1ubt8p6g
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -18,14 +18,22 @@ PImage img;
 
 float xoff, x, y;
 float n,i = 0;
+
+
+void settings(){
+  size(displayWidth, displayHeight, FX2D);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
 /////////////////////////////////////////////////////////////////////////
 void setup() {
   background(#370000);
-  size(1024, 768 );
+  frameRate(420);
   noFill();
   
   
-  img = loadImage("SWITCHES.jpg");
+  img = loadImage("fz.png");
   p3 = fix.getImgColors(img);
 
   cX = width/2;
