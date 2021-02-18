@@ -1,14 +1,7 @@
+//  SEE:   https://ello.co/ericfickes/post/r-lev0cdvyajpktoxydz2g
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 /**
 GradientFillText - use JFX Gradient to create graffit style text
-
-TODO:
-
-- check out examples:
-
-http://learningprocessing.com/examples/chp17/example-17-08-textalongcurve
-http://learningprocessing.com/examples/chp17/example-17-07-boxesoncurve
-
-https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/text-settings.htm
 
 JavaFX LinearGradient
   https://docs.oracle.com/javafx/2/api/javafx/scene/paint/LinearGradient.html
@@ -21,8 +14,6 @@ import javafx.scene.text.*;
 import javafx.geometry.VPos;
 import javafx.scene.text.TextAlignment;
 
-//  SEE:   
-//  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
