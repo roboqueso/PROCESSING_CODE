@@ -1,14 +1,9 @@
-/*
-YELLOW & RED sun coming out of the light in the loaded image
-#FFFF00 & #EE0000
-have processing fade into the hand
-
-- sketch dimensions match loadedImage dimensions ( 956 × 1280 )
-
-*/
+//
+//	SEE: https://ello.co/ericfickes/post/1rhi9dhsvjmfofynoc36ra
+//
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 11;
+int alf = 75;
 
 int cX;
 int cY;
@@ -19,11 +14,11 @@ int outerXX = 0;
 int outerYY = 0;
 
 int pad = 69;
-int cubeSize = 360;
+int cubeSize = 420;
 
 float angle = 1.5;
 float maxAngle;
-float radius = 150;
+float radius = 303;
 float outerRadius;
 
 int offsetX = 0;
@@ -31,21 +26,24 @@ int offsetY = 0;
 
 PImage img;
 color cp;
-////////////////////////////////////////////////////
-//
+
+void settings(){
+  size(3360, 2100);
+  smooth(8);  //  smooth() can only be used in settings();
+  pixelDensity(displayDensity());
+}
+
+/////////////////////////////////////////////////////////////////////////
 void setup() {
-  // size to match image
-  size(956,1280);  //(1024, 768);
-  background(1);
+  background(#EF4521);
+  frameRate(420);
+
 
   // load to stage
-  img = loadImage( "GoBig.png");//GOBIG.JPG");
+  img = loadImage( "1.png");//GOBIG.JPG");
   img.loadPixels();
   image(img, 0, 0);
-  //  -------------------------------------------
 
-
-  smooth();
   noFill();
 
   cX = int( this.width / 2 );
@@ -148,7 +146,7 @@ void draw()
 
   if ( angle >= maxAngle )
   {    
-    exit();
+    doExit();
   }
 }
 
@@ -204,10 +202,10 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    save( this + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
