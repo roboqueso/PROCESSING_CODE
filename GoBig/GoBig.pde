@@ -1,4 +1,3 @@
-//
 //	SEE: https://ello.co/ericfickes/post/1rhi9dhsvjmfofynoc36ra
 //
 Boolean isFinal = true;
