@@ -1,6 +1,10 @@
+//  SEE:   https://ello.co/ericfickes/post/orywlx_fexownkbr28m-cw
+//  GOTO:  https://github.com/ericfickes/FIXLIB
 //
 //  Graphs are represented graphically by drawing a dot or circle for every vertex, and drawing an arc between two vertices if they are connected by an edge. If the graph is directed, the direction is indicated by drawing an arrow.
+import fixlib.*;
 
+Fixlib fix = Fixlib.init(this);
 Boolean isFinal = true;
 int alf = 15;
 
@@ -63,11 +67,17 @@ float angle5;
 //  vars for draw()
 
 
-////////////////////////////////////////////////////
+
+void  settings ()  {
+    size(displayWidth, displayHeight ); // FX2D required
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+
+}
+
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
   frameRate(303);
   background(alf);
 
@@ -174,7 +184,7 @@ if( angle1 % 12 == 0 ) {
   line( dist( xx1, yy2, xx3, yy4 ), dist( xx3, yy3, xx4, yy5 ), xx2, yy2 );
 }
 
-    randStrokeUser();
+    RSU();
     strokeWeight( 10 );
     point( dist( xx1, yy2, xx3, yy4 ), dist( xx3, yy3, xx4, yy5 ) );
 
@@ -199,7 +209,7 @@ if( angle1 % 12 == 0 ) {
   //  and drawing an arc between two vertices if they are connected by an edge. 
   if( angle1 % 6 == 0 ) {
     strokeWeight( .36 );
-    randStroke();
+    RSU();
 
     line( xx1, yy1, xx2, yy2 );
     ellipse( xx2, yy2, alf, alf );
@@ -211,10 +221,21 @@ if( angle1 % 12 == 0 ) {
   //  If the graph is directed, the direction is indicated by drawing an arrow.
 
   if ( angle1 >= 5096 ) {
-    exit();
+    doExit();
   }
 }
 
+
+//  Random Stroke boobColor
+void RSU() {
+
+  stroke( boobColors[ int(random( boobColors.length-1 )) ], alf*.75 );
+}
+
+//  Random Fill User boobColor
+void RFU() {
+  fill( boobColors[ int(random( boobColors.length-1 )) ], alf*.75 );
+}
 
 
 ///////////////////////////////////////////////////////////
