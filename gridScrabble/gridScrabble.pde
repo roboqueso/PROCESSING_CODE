@@ -172,7 +172,7 @@ println(frameCount +":"+ e.toString());
 
 
 
-    exit();
+    doExit();
   }
 
 }
@@ -431,7 +431,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ///////////////////////////////////////////////////////////

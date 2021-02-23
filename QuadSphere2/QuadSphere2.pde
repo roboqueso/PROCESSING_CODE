@@ -57,7 +57,7 @@ void setup() {
 
   // DEBUG
   //  drawSuns(); 
-  //  exit();
+  //  doExit();
 }
 
 
@@ -164,7 +164,7 @@ randStrokeUser();
     angle5 += 2;
   }
 
-  exit();
+  doExit();
 }
 
 
@@ -248,7 +248,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ///////////////////////////////////////////////////////////

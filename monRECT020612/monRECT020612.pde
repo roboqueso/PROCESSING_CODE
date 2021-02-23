@@ -1,3 +1,7 @@
+// ** HOT
+// JAZZ THIS UP
+
+
 //  draw circles and stuff, save on exit
 String dailyMsg = "ERICFICKES.COM";
 String outFileName = "monRECT020612";  //don't add extension
@@ -82,7 +86,7 @@ void draw() {
 
   if( frameCount > height+width ){
     text("ERICFICKES.COM", 0, height-11);
-    exit();
+    doExit();
   }
 }
 

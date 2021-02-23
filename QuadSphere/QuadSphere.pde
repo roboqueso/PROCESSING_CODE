@@ -53,7 +53,7 @@ void setup() {
 
   // DEBUG
   //  drawSuns(); 
-  //  exit();
+  //  doExit();
 }
 
 
@@ -158,7 +158,7 @@ void draw()
     angle5 += 2;
   }
 
-  exit();
+  doExit();
 }
 
 
@@ -241,7 +241,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ///////////////////////////////////////////////////////////

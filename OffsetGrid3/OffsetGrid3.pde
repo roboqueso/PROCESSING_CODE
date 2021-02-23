@@ -42,7 +42,7 @@ void draw()
   squareGrid( ct, ct, shapeSize+ct, alf+ct );
 
   if( ct > maxCt ) {
-    exit();  
+    doExit();  
   } else {
     ct++; 
   }
@@ -200,11 +200,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp()+".png" );
+    save( this+".png" );
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

@@ -44,7 +44,7 @@ void setup()
   if(context.isInit() == false)
   {
      println("Can't init SimpleOpenNI, maybe the camera is not connected!"); 
-     exit();
+     doExit();
      return;  
   }
 
@@ -335,8 +335,8 @@ switch(key){
 
   case 's':
     // image(hirez,0,0);
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
-    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
+    save( this);
+    // save( this + "_BIG2.tiff");
   break;
 
   case ESC:
@@ -344,9 +344,9 @@ switch(key){
    if(context!=null){
      context.close();
    }
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
-    // save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
-    exit();
+    save( this);
+    // save( this + "_BIG2.tiff");
+    doExit();
   break;
 
 

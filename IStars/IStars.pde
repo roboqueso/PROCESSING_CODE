@@ -51,7 +51,7 @@ void draw()
 //      text("ERICFICKES.COM", -2, height-2 );
 
       if(isFinal){
-        save( fix.pdeName() + fix.getTimestamp()+".png" );
+        save( this+".png" );
       }
       noLoop();
   }

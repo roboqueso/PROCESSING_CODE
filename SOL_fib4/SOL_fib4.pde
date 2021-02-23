@@ -113,7 +113,7 @@ if( floor(angle) % 3 == 0 ) {
   
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
   
   
@@ -255,7 +255,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

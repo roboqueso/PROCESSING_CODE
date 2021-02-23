@@ -62,7 +62,7 @@ void draw() {
   //
   if( r >= 1000 )
   {
-    exit();
+    doExit();
   }
   
 }

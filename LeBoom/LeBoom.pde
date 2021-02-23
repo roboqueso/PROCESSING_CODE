@@ -1,4 +1,5 @@
-
+//  JAZZ THIS UP
+//  This was a printout from Josh Class YEAR 2 ( the first Processing year )
 Boolean isFinal = true;
 
 int alf = 11;
@@ -127,7 +128,7 @@ randStroke();
   }
     
     
-    exit();
+    doExit();
   }
 }
 
@@ -161,7 +162,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    save( this + ".png" );
   }
 
   super.stop();

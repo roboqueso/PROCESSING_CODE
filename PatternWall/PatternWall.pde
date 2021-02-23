@@ -56,7 +56,7 @@ void draw()
 
 
   if( ii >= width+height ) {
-      exit();
+      doExit();
   }
 
   ii += shapeSize;
@@ -144,7 +144,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ////////////////////////////////////////////////////

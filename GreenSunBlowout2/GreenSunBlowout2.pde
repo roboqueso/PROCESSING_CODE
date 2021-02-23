@@ -39,16 +39,17 @@ color[] p2 = {
 
 
 
-////////////////////////////////////////////////////
+void  settings ()  {
+    size(displayWidth, displayHeight ); // FX2D required
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+
+}
+
 //
 void setup() {
-
   // setup core sketch settings items
-  //  size(1024,768); );  // Default = JAVA2D
-  size(1024, 768);
-  //  size(1024,768);, P3D );
-  //  size(1024,768);, OPENGL );
-  //  size(1024,768);, PDF );
+  frameRate(303);
   
   background(1);
 
@@ -146,7 +147,7 @@ void draw()
 
 
   if ( cc >= maxCC ) {
-    exit();
+    doExit();
   }
 }
 
@@ -180,10 +181,10 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp() + ".png" );
+    save( this + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////

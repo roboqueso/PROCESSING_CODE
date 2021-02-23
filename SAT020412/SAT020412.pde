@@ -48,8 +48,8 @@ void draw() {
   //
   if( theta == 1666 )
   {
-save(fix.pdeName()+fix.getTimestamp()+".png");
-    exit();
+save(this+".png");
+    doExit();
   }
 
 }
@@ -75,7 +75,7 @@ void doExit()
   //  if final, save output to png
   if( isFinal )
   {
-    save( fix.pdeName() + fix.getTimestamp()+".png" );
+    save( this+".png" );
   }
 
   super.stop();

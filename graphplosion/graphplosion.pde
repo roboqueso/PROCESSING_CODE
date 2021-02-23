@@ -160,7 +160,7 @@ line( xx1, yy2, xx3, yy4 );
 
   //  If the graph is directed, the direction is indicated by drawing an arrow.
 
-  exit();
+  doExit();
 }
 
 
@@ -241,11 +241,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( fix.pdeName() + fix.getTimestamp()+".png" );
+save( this+".png" );
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ///////////////////////////////////////////////////////////

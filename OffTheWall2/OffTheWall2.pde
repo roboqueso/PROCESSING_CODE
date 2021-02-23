@@ -112,7 +112,7 @@ textSize(30);
 text( "REWRITE THIS TO DRAW DIAMONDS IN A GRID, NOT SEPARATE LOOPS", 30,30);
   
   //
-  exit();
+  doExit();
 
 
 }
@@ -128,7 +128,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( fix.pdeName() + fix.getTimestamp() + ".png" );
+save( this + ".png" );
   }
 
   super.stop();

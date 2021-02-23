@@ -88,7 +88,7 @@ if( angle % 180 == 0 ) {
   
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
 }
 
@@ -221,7 +221,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

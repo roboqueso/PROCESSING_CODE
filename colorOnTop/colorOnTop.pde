@@ -120,7 +120,7 @@ if( offsetX > width || offsetX < 0 ) {
 }
   
     if ( angle < -maxCt || angle > maxCt ) {
-    exit();
+    doExit();
   }
   
   
@@ -253,7 +253,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

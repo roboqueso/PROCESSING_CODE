@@ -317,14 +317,14 @@ switch(key){
 
 
   case 's':
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    save( this);
   break;
 
   case ESC:
   	if(context!=null){
   		context.close();
   	}
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    save( this);
     stop();
   break;
 }

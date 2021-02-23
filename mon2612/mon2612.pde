@@ -77,7 +77,7 @@ if( frameCount % 13 == 0 ){
   
       text("ERICFICKES.COM", 0, height-11);
     
-  exit();
+  doExit();
 
   }
 }

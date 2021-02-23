@@ -49,7 +49,7 @@ void draw()
   squareGrid( ct, ct, ct, alf+ct );
 
   if( ct > maxCt ) {
-    exit();  
+    doExit();  
   } else {
     ct++; 
   }
@@ -216,7 +216,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

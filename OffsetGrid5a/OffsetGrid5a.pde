@@ -53,7 +53,7 @@ void draw()
   }
 
   if( ct > maxCt ) {
-    exit();  
+    doExit();  
   } else {
     ct++; 
   }
@@ -228,7 +228,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

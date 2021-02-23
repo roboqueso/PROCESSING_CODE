@@ -1,3 +1,6 @@
+//  JAZZ THIS UP
+//  * convert ellipses to 3D SPHERES w/shiny shiny lighting
+
 //  SEE:   
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;

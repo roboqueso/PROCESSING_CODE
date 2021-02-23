@@ -43,7 +43,7 @@ void draw()
 squareGrid( 0, 0, shapeSize, shapeSize/2 );
 squareGrid( shapeSize/2, shapeSize/2, shapeSize, shapeSize/2 );
   
-  exit();  
+  doExit();  
 }
 
 ///////
@@ -194,11 +194,11 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-save( fix.pdeName() + fix.getTimestamp()+".png" );
+save( this+".png" );
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

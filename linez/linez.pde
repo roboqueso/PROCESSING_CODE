@@ -1,3 +1,5 @@
+//  JAZZ THIS UP
+
 int[] nz = new int[966];
 boolean gotNoise = false;
 boolean vert = true;
@@ -53,7 +55,7 @@ void draw() {
         rect( 111,111, 42, 41, frameCount);
         if(isFinal)
         {
-          save( fix.pdeName() + fix.getTimestamp()+".png" );
+          save( this+".png" );
         }
         noLoop();
     }

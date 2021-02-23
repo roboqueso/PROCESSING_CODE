@@ -63,7 +63,7 @@ void draw(){
  stroke(#355E3B);
 
   else
-    stroke(0);
+    stroke(random(255));
     
   //  move
   if( xx < dWidth+colWidth ){

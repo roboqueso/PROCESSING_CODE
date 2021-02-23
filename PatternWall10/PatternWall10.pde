@@ -102,7 +102,7 @@ if(flip) {
 
   // max count or size is too big
   if( ct > maxCt ) {
-      exit();
+      doExit();
   } else if (shapeSize > width) {
      shapeSize = floor( sqrt( shapeSize ) );
   } else {
@@ -215,7 +215,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ////////////////////////////////////////////////////

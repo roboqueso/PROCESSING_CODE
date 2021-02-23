@@ -152,9 +152,9 @@ if( xx1 < width+alf ) {
   //  
   if ( xx1 > width && yy1 > height )
   {    
-save(fix.pdeName()+fix.getTimestamp()+".png");
+save(this+".png");
 
-    exit();
+    doExit();
   }
  
   

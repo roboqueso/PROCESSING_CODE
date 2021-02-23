@@ -340,8 +340,8 @@ switch(key){
 
 
   case 's':
-    // save( fix.pdeName() + fix.getTimestamp() + ".png");
-    container.save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
+    // save( this);
+    container.save( this + "_BIG2.tiff");
   break;
 
   case ESC:
@@ -350,9 +350,9 @@ switch(key){
   		context.close();
   	}
   
-    // save( fix.pdeName() + fix.getTimestamp() + ".png");
-    container.save( fix.pdeName() + fix.getTimestamp() + "_BIG2.tiff");
-    exit();
+    // save( this);
+    container.save( this + "_BIG2.tiff");
+    doExit();
   break;
 
 

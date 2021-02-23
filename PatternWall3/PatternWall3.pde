@@ -60,7 +60,7 @@ void draw()
 
   // max count or size is too big
   if( ct > maxCt || shapeSize > height) {
-      exit();
+      doExit();
   }
 
   // keep track of the loop
@@ -169,7 +169,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 ////////////////////////////////////////////////////

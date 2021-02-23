@@ -48,4 +48,4 @@ for ( xx = 0; xx <= webData.length-1; xx++)
 text("ERICFICKES.COM", 1200, 600); 
 
 //  save to png
-save( fix.pdeName() + fix.getTimestamp()+".png" );
+save( this+".png" );

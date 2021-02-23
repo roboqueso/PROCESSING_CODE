@@ -111,7 +111,7 @@ void draw()
   
   if ( angle >= maxAngle )
   {
-    exit();
+    doExit();
   }
   
   
@@ -256,7 +256,7 @@ void doExit()
   }
 
   noLoop();
-  exit();
+  doExit();
 }
 
 

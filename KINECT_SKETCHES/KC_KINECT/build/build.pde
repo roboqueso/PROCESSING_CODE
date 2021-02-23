@@ -42,7 +42,7 @@ void setup()
   if(context.isInit() == false)
   {
      println("Can't init SimpleOpenNI, maybe the camera is not connected!"); 
-     exit();
+     doExit();
      return;  
   }
   
@@ -305,14 +305,14 @@ switch(key){
 
 
   case 's':
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    save( this);
   break;
 
   case ESC:
   	if(context!=null){
   		context.close();
   	}
-    save( fix.pdeName() + fix.getTimestamp() + ".png");
+    save( this);
     stop();
   break;
 }
