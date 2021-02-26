@@ -1,3 +1,5 @@
+// jazz this up
+
 //  Draw a heart pattern by using circle code
 //  and nextFib to adjust the radius / angle / shape?
 
@@ -212,7 +214,7 @@ void doExit()
   //  if final, save output to png
   if ( isFinal )
   {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
+    save( this+".png" );
   }
 
   noLoop();

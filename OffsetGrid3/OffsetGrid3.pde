@@ -1,4 +1,4 @@
-//
+// jazz up and merge with Offset variants
 Boolean isFinal = true;
 int alf = 42;
 float shapeSize = 75;

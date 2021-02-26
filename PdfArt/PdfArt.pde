@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/0dpdvlhw11tmxne2m9hgla
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -9,14 +9,17 @@ String lines[];
 String txt;
 float xx,yy, tLen;
 
+void settings(){
+	  size( displayWidth, displayHeight );
+	  pixelDensity(displayDensity());
+	  smooth(8);
+}
+
+
 void setup()
 {
-  size( displayWidth, displayHeight );
-  background(#EF2014);
-
-//	ORANGE - EF6900
-
-  lines = loadStrings("my.pdf");
+  background(#DEFDAD);
+  lines = loadStrings("e.pdf");
 }
 
 

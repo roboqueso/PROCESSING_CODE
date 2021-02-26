@@ -1,4 +1,4 @@
-//  IMPORTS ////////////////////////////////////////////////////
+// jazz up
 import processing.opengl.*;
 //  SEE:   
 //  GOTO:  https://github.com/ericfickes/FIXLIB
