@@ -1,3 +1,4 @@
+// jazz up
 /**
 NeonStroke - Use JFX text effects & strokeText("message") to create NEON SIGN text & shapes
 
