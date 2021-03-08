@@ -1,5 +1,5 @@
 //
-//  HEXAGON inspired by http://www.rdwarf.com/lerickson/hex/index.html
+//  jazz up
 //
 Boolean isFinal = true;
 int alf = 37;

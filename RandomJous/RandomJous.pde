@@ -60,7 +60,7 @@ void draw()
 
   if ( t < 0 ) {
 
-    exit();
+    doExit();
 
   }
 

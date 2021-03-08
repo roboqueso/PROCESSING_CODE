@@ -97,7 +97,6 @@ String getTimestamp() {
   return ""+month()+day()+year()+hour()+minute()+second()+millis()+"";
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //  TODO: Is there a better way to get the current sketch name?
 String pdeName() {
