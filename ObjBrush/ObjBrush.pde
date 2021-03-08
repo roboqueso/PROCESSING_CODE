@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/bfnhjav8pa05nes5sf5jjq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -12,16 +12,21 @@ int alf = 11, varNum = 1;
 int cX;
 int cY;
 
-//color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
+color[] palette = { #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 //ArrayList palette = new ArrayList();//{ #EF0000, #00EF00, #0000EF, #CECE00, #FA7680, #EF1975, #007007, #EFEF00, #FA9187, #007007, #109109 };
 
+
+void settings(){
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(2000, 1000, P3D);
-
+ 
   background(-1);
 
   shapeMode(CENTER);
@@ -50,10 +55,11 @@ void draw()
   if( mousePressed ) {
     
 
-    smooth(8);
+
     strokeWeight(HALF_PI);
     
-    fill(#EF2019);
+    // fill(#EF2019);
+    fill( palette[(int)random(palette.length)]);
     stroke(random(255));
     
     translate(mouseX, mouseY, 3 );

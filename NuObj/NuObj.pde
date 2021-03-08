@@ -42,7 +42,7 @@ int cY, cX;
 ArrayList<PVector> alPath;
 
 
-Integer minP = 24;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
+Integer minP = 18;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer maxP = 24;	//	9, 11, 13, 18, 24, 27, 35, 44, 69
 Integer pStep;
 
