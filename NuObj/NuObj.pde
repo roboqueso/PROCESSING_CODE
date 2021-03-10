@@ -1,36 +1,10 @@
 import nervoussystem.obj.*;
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/48sch884frjgv5mhwuv7oq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
-
-// based on colorNoise example
-// Generate landscape ground object
-// TODO: look at sphere() for tips
-// https://github.com/processing/processing/blob/master/core/src/processing/core/PGraphics.java
-
-//  https://processing.org/reference/bezierVertex_.html
-//  bezierVertex(x2, y2, z2, x3, y3, z3, x4, y4, z4)
-
-//  https://processing.org/reference/curveVertex_.ht-pStepml
-//  curveVertex(x, y, -pStepz)
-
-//  https://processing.org/reference/quadraticVertex_.html
-//  quadraticVertex(cx, cy, cz, x3, y3, z3)
-
-
-/*
-1 Currate the hotness in OBJs
-9, 11, 13, 18, 24, 27, 35, 44, 69
-
-2 Run the individual shapes indidivudally for each winner
-
-3 Assemble full shape in F360 via individual shapes
-
-4 Each shape has diff appearance
-*/
 
 
 
