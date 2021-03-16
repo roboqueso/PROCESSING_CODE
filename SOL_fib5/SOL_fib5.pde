@@ -33,13 +33,25 @@ color[] p2 = {
 #1975EF, #1975EF,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA
 };
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  size(1024, 768 );
+//  SEE:    https://ello.co/ericfickes/post/tdkcnxdvxhlvv1spkot6xg
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    
+    size(displayWidth, displayHeight, P2D);
+    
 
-  //  ---------------------
-  background (18);
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
+void setup() {
+  background (#031221);
+  frameRate(420);
+
+
 
   smooth();
   noFill();
@@ -247,16 +259,12 @@ void hexagon( float startX, float startY, float shapeSize ) {
 void doExit() 
 {
 
-  artDaily("ERICFICKES.COM"+getTimestamp() );
+  artDaily("ERICFICKES.COM" );
 
-  //  if final, save output to png
-  if ( isFinal )
-  {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  }
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".tif" );
+  
+  exit();
 
-  noLoop();
-  doExit();
 }
 
 

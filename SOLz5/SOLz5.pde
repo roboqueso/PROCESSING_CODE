@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:    https://ello.co/ericfickes/post/tdkcnxdvxhlvv1spkot6xg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -37,13 +37,24 @@ color[] p2 = {
  #2C0E0F,#C98599,#F6EDF9,#6C2C2A,#50262B,#966576,#926E89,#BB8595,#CD91AB,#905869,#BC7B95,#8F4D52,#EB774C,#AD4932,#AA6878,#BA7379,#B76A79,#AF534D,#CA8589,#734650,#C87477,#EB8969,#D68674,#B28DAE,#C67B94,#613540,#D3B6D8,#F28753,#B46751,#CE562E,#DC7457,#C96769,#DA7865,#745268,#481411,#AB7388,#D96535,#8C3428,#DA6946,#AB6B85,#EA6B36,#AB5965,#BA6767,#CB7568,#B66B84,#CB6856,#D86A55,#A86667,#D88789,#D7A4B3,#B69DC7,#A67895,#C96A74,#D8979A,#76678B,#C55845,#6A221B,#F8A674,#A97579,#9988B0,#D38A95,#CA6545,#B78576,#F0AB8E,#D77B87,#D98757,#D87976,#E87B60,#BA7466,#7E6377,#DC7445,#946456,#CB9699,#E8B3B8,#9278A1,#EC9783,#9B8595,#3F191E,#CA7557,#55211F,#5B404E,#D8A796,#DB9683,#A97DA6,#CA491D,#5F1712,#A67565,#753D3A,#F4823C,#C79588,#C67544,#BBA6BC,#D26B65,#5E4A63,#E35C29,#8A3F40,#F8A55C,#865E82,#F0C5BB,#C0595F,#7D6059,#E2A076,#E19CA9,#D27B99,#E2531D,#BA3B15,#A26B90,#BB9F9B,#7F80A2,#442E3B,#C67B8C,#BD7384,#BD738C,#BD7B8C,#B57384,#B5738C,#C67B82,#C67384,#CE7B8E,#BD7C82,#CE7B81,#C6738C,#B47B8C,#B47C82,#CE7380,#CE738C,#C66B84
  
   };
-////////////////////////////////////////////////////
-//
+
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    
+    size(displayWidth, displayHeight, P2D);
+    
+
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
 void setup() {
-  size(1024, 768 );
+  background (#031221);
+  frameRate(420);
+
   
   fix.alpha(alf);
-  background (0);
+
 
   smooth();
   noFill();
@@ -136,15 +147,10 @@ void doExit()
 {   
   artDaily("ERICFICKES.COM");
 
-
-  //  if final, save output to png
-  if ( isFinal )
-  {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  }
-
-  noLoop();
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".tif" );
+  
   exit();
+
 }
 
 ///////////////////////////////////////////////////////////

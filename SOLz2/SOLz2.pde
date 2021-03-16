@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:    https://ello.co/ericfickes/post/tdkcnxdvxhlvv1spkot6xg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -28,14 +28,20 @@ float outerRadius;
 int offsetX = 0;
 int offsetY = 0;
 
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    
+    size(displayWidth, displayHeight, P2D);
+    
 
-////////////////////////////////////////////////////
-//
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
 void setup() {
-  size(1024, 768 );
-  
-  fix.alpha(alf);
-  background (18);
+  background (#031221);
+  frameRate(420);
+
 
   smooth();
   noFill();
@@ -118,15 +124,10 @@ void doExit()
 {   
   artDaily("ERICFICKES.COM");
 
-
-  //  if final, save output to png
-  if ( isFinal )
-  {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  }
-
-  noLoop();
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".tif" );
+  
   exit();
+
 }
 
 ///////////////////////////////////////////////////////////

@@ -33,13 +33,25 @@ color[] p2 = {
 #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301
 };
 
-////////////////////////////////////////////////////
-//
-void setup() {
-  size(1024, 768 );
+//  SEE:    https://ello.co/ericfickes/post/tdkcnxdvxhlvv1spkot6xg
+//  GOTO:  https://github.com/ericfickes/FIXLIB 
+import fixlib.*;
+Fixlib fix = Fixlib.init(this);
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    
+    size(displayWidth, displayHeight, P2D);
+    
 
-  //  ---------------------
-  background (18);
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
+void setup() {
+  background (#031221);
+  frameRate(420);
+
+
 
   smooth();
   noFill();
@@ -247,14 +259,10 @@ void doExit()
 
   artDaily("ERICFICKES.COM"+getTimestamp() );
 
-  //  if final, save output to png
-  if ( isFinal )
-  {
-    save( fix.pdeName() + "-" + fix.getTimestamp()+".png" );
-  }
+  save( fix.pdeName() + "-" + fix.getTimestamp()+".tif" );
+  
+  exit();
 
-  noLoop();
-  doExit();
 }
 
 
