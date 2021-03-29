@@ -1,5 +1,5 @@
+// SEE: https://ello.co/ericfickes/post/7iws2zyrvmhz-jlgqss-iq
 //  The center is a sun pattern made of ellipses
-
 //  Start adjusting the shape once the circle is large
 //  enough that the rays have stopped intersecting
 
@@ -25,7 +25,7 @@ float radius     = 25;//  50;  //100;
 int circleSize   = 5;
 int cc = 0;
 
-int maxCC = 0;
+int maxCC;
 
 
 ////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ color[] p2 = {
 
 
 void  settings ()  {
-    size(displayWidth, displayHeight ); // FX2D required
+    size(displayWidth, displayHeight, FX2D );
     smooth(8);  //  smooth() can only be used in settings();
     pixelDensity(displayDensity());
 
@@ -48,10 +48,11 @@ void  settings ()  {
 
 //
 void setup() {
-  // setup core sketch settings items
-  frameRate(303);
-  
-  background(1);
+  background (#032821);
+  frameRate(420);
+
+  maxCC = displayWidth*9; // sketch stopper
+
 
   //  setup variables
   cX = width/2;
@@ -59,8 +60,6 @@ void setup() {
 
   startX = cX;
   startY = cY;
-
-  maxCC = width*8;  //7;
 }
 
 float xx = 0;
@@ -72,7 +71,6 @@ float yy = cY;
 void draw()
 {  
   noFill();
-  smooth();
 
   cirXX = startX - int( cos(radians(angle)) * radius );
   cirYY = startY - int( sin(radians(angle)) * radius );
@@ -174,15 +172,9 @@ void doExit()
 {
 
 
-
-
   artDaily("ERICFICKES.COM");
 
-  //  if final, save output to png
-  if ( isFinal )
-  {
     save( this + ".png" );
-  }
 
   exit();
 }
@@ -220,11 +212,11 @@ void randFillUser()
 void artDaily( String dailyMsg ) {
 
   //  PFont font = createFont( "AppleGothic", 17 );
-  //  PFont font = loadFont( "Silom-20.vlw" );
-  PFont font = loadFont( "Cracked-36.vlw" );
+  // PFont font = loadFont( "Silom-20.vlw" );
+  //PFont font = loadFont( "Cracked-36.vlw" );
 
-  smooth();
-  textFont( font );
+  // smooth();
+  // textFont( font );
   strokeWeight(1);
 
   //  fill( #000000 , 666 );
