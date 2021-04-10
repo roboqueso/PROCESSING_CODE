@@ -1,5 +1,4 @@
-// jazz up
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/fplrbi-i2fgsxgaxus6okw
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -12,11 +11,16 @@ public Branch br;
 
 int cX, cY;
 
-//////////////////////////////////////////////////////////////////////////
-void setup(){
-  size(1024,768);
-  background( #42ABBA );
-  frameRate(303);
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    size(displayWidth, displayHeight);
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
+void setup() {
+  background (#031221);
+  frameRate(420);
   br = new Branch( 420, 1);
   smooth();
   noFill();
