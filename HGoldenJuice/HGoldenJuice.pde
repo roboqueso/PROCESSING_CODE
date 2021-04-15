@@ -34,7 +34,7 @@ import javafx.scene.shape.*;
 import hype.*;
 import hype.extended.colorist.HColorPool;
 
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/dlnp9adquxf9rpwre-gzfw
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -45,9 +45,9 @@ Fixlib fix = Fixlib.init(this);
 HColorPool colors;
 HShape tmpShp;
 //	this sketch is all about point() used w/strokeWeight() to add the magic
-float strokeWt = .69;
+float strokeWt = 1.1;
 //	control JFX global Blend mode
-boolean blendDark = true;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
+boolean blendDark = false;	//	TRUE : DARK, FALSE : COLOR - mix of 3 blend modes each option
 float GR = (sqrt(5) + 1) * 0.5;  // TWO_PI* - golden ratio
 String SAVE_NAME = "thisShouldBeDynamic";
 GraphicsContext ctx;
@@ -88,7 +88,7 @@ ctx = ((Canvas) this.surface.getNative()).getGraphicsContext2D();
   	//	GET HYPED
 	//  init HYPE
 	H.init(this).background(-1).use3D(false);	//	JFX no worky w/3D
-	colors = new HColorPool(#000000, #FFFFFF, #ED7100, #315D15, #3D107B, #E35205);
+	colors = new HColorPool(#454545, #EF4520, #DAD720, #720DAD, #DADACE, #ACEDAD);
 
   //  Generate filename containing sketch settings meta NOW
   SAVE_NAME = fix.pdeName() + "-"+ fix.getTimestamp();
