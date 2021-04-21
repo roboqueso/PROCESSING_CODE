@@ -1,4 +1,4 @@
-//  SEE:     
+//  SEE:   https://ello.co/ericfickes/post/chrgubobio3cxg82ukqsww
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 
 import fixlib.*;
@@ -16,9 +16,9 @@ float rowH, colW, startX = 0, startY = 0, xx = 0, yy = 0, shapeSz, strokeSz = 15
 int clr = #228B22;
 
 //  silvers - http://en.wikipedia.org/wiki/Silver_(color)
-color[] p3 = { #C0C0C0, #C9C0BB, #C4AEAD, #BFC1C2, #ACACAC, #838996, #848482, #757575 };
+// color[] p3 = { #C0C0C0, #C9C0BB, #C4AEAD, #BFC1C2, #ACACAC, #838996, #848482, #757575 };
 //  RED
-//color[] p3 = { #65000B, #B22222, #A52A2A, #E25822, #800000, #8B0000, #7C0A02 };  
+color[] p3 = { #65000B, #B22222, #A52A2A, #E25822, #800000, #8B0000, #7C0A02 };  
 
 
 //  Vermilion
@@ -26,7 +26,7 @@ color[] p3 = { #C0C0C0, #C9C0BB, #C4AEAD, #BFC1C2, #ACACAC, #838996, #848482, #7
 //color[] p3 = { #EF2012, #E34234, #FF5349, #FF3F00, #D9603B, #AA381E, #C0C0C0, #C9C0BB, #C4AEAD, #BFC1C2, #ACACAC, #838996, #848482, #757575, #19EF75, #87A96B, #006400, #71BC78, #228B22, #49796B, #29AB87, #A9BA9D, #90EE90, #74C365, #ADDFAD, #317873, #98FB98, #01796F, #009E60, #008080, #00FF00, #008000, #00A550, #009F6B, #00A877, #4B5320, #006A4E, #66FF00, #1B4D3E, #1E4D2B, #00563F, #00703C, #50C878, #4D5D53, #00AB66, #ADFF2F, #3FFF00, #355E3B, #138808, #009768, #00A86B, #4CBB17, #004953, #18453B, #39FF14, #00853E, #006600, #00A693, #2E8B57, #014421 };
 
 void settings(){
-  size(displayWidth, displayHeight );
+  size(displayWidth, displayHeight, FX2D );
   smooth(8);  //  smooth() can only be used in settings();
   pixelDensity(displayDensity());
 }
@@ -82,7 +82,7 @@ void draw() {
   ellipse( startX+xx, startY+yy, shapeSz, shapeSz);
 
       
-  if( shapeSz <= 9 ) {
+  if( shapeSz <= PI ) {
   
       fill(255);
       textFont(createFont("Silom",23));
@@ -96,7 +96,11 @@ void draw() {
       if(isFinal){
         save( fix.pdeName() + fix.getTimestamp() + ".png" );
       }
-      noLoop();
-      exit();
+      // noLoop();
+      // exit();
+println("RESET FOR TV!!");
+      shapeSz = (rowH+colW);
+      setup();
+      draw();
   }
 }
