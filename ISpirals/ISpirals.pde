@@ -1,38 +1,27 @@
-// jazz up
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/1kihhqa8fvotxwa1ar0u2q
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
 
-//  ISpirals - figure out the iPhone desktop app layout dimensions for sweet background patterns
-//iPhone5
-//- 1136-by-640-pixel resolution at 326 ppi
-//
-//iPhone4S
-//- 960-by-640-pixel resolution at 326 ppi
-
 public Boolean isFinal = true;
 //public Branch br;
-public int dWidth = 1024, dHeight = 768;
-public float cols = 10, rows = 6, xx = 0, yy = 0, rowHeight, colWidth, shapeSz, tmp, strokeSz;
-//  iPhone  : cols = 4.01, rows = 11
-//  desktop : cols = 10, rows = 6
+public int dWidth, dHeight;
+public float cols = 6, rows = 6, xx = 0, yy = 0, rowHeight, colWidth, shapeSz, tmp, strokeSz;
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    size(displayWidth, displayHeight, FX2D); //"processing.opengl.PGraphics3D");
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
 //////////////////////////////////////////////////////////////////////////
 void setup(){
-//  desktop override
-//  dWidth = 1024;
-//  dHeight = 768; 
-  
-  size( 1024, 768 );
+	frameRate(420);
+	dWidth = displayWidth;
+	dHeight = displayHeight;
+	background(0);
 
-//  PImage img;
-//  img = loadImage("iphone_desktop.png");
-//  background(img);
-background(0);
-
-  smooth();
   noFill();
   
   ellipseMode(CENTER);
@@ -82,9 +71,10 @@ void draw(){
   }
 
 
-    strokeWeight(strokeSz);
+
+    strokeWeight(strokeSz*noise(strokeSz));
 //    ellipse( xx, yy, shapeSz, shapeSz);
-    triangle( xx, yy, xx+(shapeSz/2), yy-shapeSz, xx+shapeSz, yy);
+    triangle( xx, yy+shapeSz, xx-(shapeSz*2), yy-shapeSz, xx+shapeSz, yy);
 
   if( shapeSz < 0 ) {
   
