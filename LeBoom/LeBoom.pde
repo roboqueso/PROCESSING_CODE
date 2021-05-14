@@ -1,4 +1,4 @@
-//  JAZZ THIS UP
+//  SEE:   https://ello.co/ericfickes/post/pv8sjntcnvopn5btpafeta
 //  This was a printout from Josh Class YEAR 2 ( the first Processing year )
 Boolean isFinal = true;
 
@@ -16,8 +16,8 @@ int outerYY = 0;
 
 float angle = 0;
 float maxAngle;
-float radius = 4;
-float outerRadius = 32;  //50;
+float radius = 9;
+float outerRadius = 45;
 
 int offsetX = 0;
 int offsetY = 0;
@@ -33,14 +33,17 @@ color[] palette = {
 #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
 #EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619
 };
-// 
+void  settings ()  {
+    size(displayWidth, displayHeight, FX2D); //"processing.opengl.PGraphics3D");
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
   // size to match image
-  size(1024, 768);
-  frameRate(303);
+  frameRate(420);
   background(6);
 
   //  -------------------------------------------
@@ -165,7 +168,7 @@ void doExit()
     save( this + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
