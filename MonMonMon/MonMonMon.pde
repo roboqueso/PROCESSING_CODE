@@ -1,7 +1,4 @@
-//  JAZZ THIS UP
-//  * convert ellipses to 3D SPHERES w/shiny shiny lighting
-
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/ojsw40mtgqxjzlgdiw_wxw
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -17,16 +14,20 @@ color[] p2 = { #D0FFFF, #D0F0FF, #C0F0FF, #C0F0F0, #B0F0F0, #B0E0F0, #A0E0E0, #A
 float angle, radius = TWO_PI, x, y, cX, cY;
 
 //  controls at which angle % == 0 starts and stops the noise
-int flipStart = 180, flipEnd = 360;
+int flipStart = 360, flipEnd = 180;
 Boolean flip = false;
 
-////////////////////////////////////////////////////
-//
+/* ------------------------------------------------------------------------- */
+void  settings ()  {
+    size(displayWidth, displayHeight, P3D); //"processing.opengl.PGraphics3D");
+    smooth(8);  //  smooth() can only be used in settings();
+    pixelDensity(displayDensity());
+}
+/* ------------------------------------------------------------------------- */
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);  //  P2D, P3D, OPENGL, PDF
-  background(alf);  //  #ABCDEF
+
+  frameRate(420);
+  background(p2[(int)random(p2.length)]);  //  #ABCDEF
   fix.alpha(alf);
 
   cX = width/2;
@@ -43,7 +44,6 @@ void setup() {
 void draw()
 {
 
-    smooth();
     angle = frameCount;
  
     if( angle % 333 == 0 ) {
