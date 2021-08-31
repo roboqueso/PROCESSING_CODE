@@ -17,8 +17,8 @@ void setup()
   dWidth = 1024;
   dHeight = 768;
 
-  size(1024, 768);
-  background(42);
+  size(displayWidth, displayHeight);
+  background(#EFEFEF);
 
   smooth();
   rectMode(CENTER);

@@ -1,4 +1,4 @@
-//  draw circles and stuff, save on exit
+//  see:  https://ello.co/ericfickes/post/zqdx7oucehc9pusejabo6q
 String dailyMsg = "ERICFICKES.COM";
 String outFileName = "monTRI-pt2020612";  //don't add extension
 Boolean isFinal = true;
@@ -14,18 +14,18 @@ int y2 = 0;
 //  art frame settings
 int outerRectX;
 int outerRectY;
-int outerRectWidth = 128;
-int outerRectHeight = 28;
+int outerRectWidth = 69;
+int outerRectHeight = 33;
 
 //  grid settings
-int shapeSize = 21;
-float shapePadding = 0.5;
+int shapeSize = 42;
+float shapePadding = 0.69;
 
 
 ///////////////////////////////////////////////////////////
 //  
 void setup() {
-  size( 1024, 768);
+  size( displayWidth, displayHeight );
   background(19);
   smooth();
 
@@ -96,7 +96,7 @@ if ( ! isCollidingCircleRectangle( xx, yy, shapeSize, outerRectX, outerRectY, ou
 
 
 
-  exit();
+  doExit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -187,6 +187,5 @@ void doExit()
     save( outFileName + "-" + month()+day()+year()+hour()+minute()+second()+millis()+".png" );
   }
 
-  super.stop();
+  exit();
 }
-
