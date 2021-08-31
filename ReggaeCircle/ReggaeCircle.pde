@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/onbilgi2_pa5eye8qtiisa
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -22,26 +22,21 @@ void setup()
   rectMode(CENTER);
   cX = width/2;
   cY = height/2;
-  sz = 21;
+  sz = 24;
   strokeWeight(PI);
 }
 
 void draw()
 {
-	xx = cX - int( cos(radians( frameCount )) * sz+noise(frameCount*.3) );
-	yy = cY - int( sin(radians( frameCount )) * sz+noise(frameCount*.3) ); 
+	xx = cX - int( cos(radians( frameCount )) * sz+noise(frameCount*.69) );
+	yy = cY - int( sin(radians( frameCount )) * sz+noise(frameCount*.69) ); 
 	
 	
 	stroke( (frameCount%xx)-sz, (frameCount%yy)-sz, (frameCount%sz)-sz);
-	fill( yy-xx+sz, xx-sz, yy-sz);
-	rect(xx, yy, TWO_PI+noise(sz), TWO_PI+noise(sz), random(-TWO_PI,TWO_PI) );
+  fill( xx-sz, yy-sz, yy-xx+sz);
+	rect(xx, yy, TWO_PI+noise(sz), TWO_PI+noise(sz), random(PI,TWO_PI) );
 
-//	strokeWeight(HALF_PI);
-	// noFill();
- //  stroke( (xx%frameCount)-sz, (yy%frameCount)-sz, (sz%frameCount)-sz);
-	// ellipse(xx, yy, TWO_PI*noise(sz), TWO_PI*noise(sz) );
-
-	sz += .036;
+	sz += .069;
   
 	if(sz>=height){
 		save( fix.pdeName() + fix.getTimestamp() + ".png");
