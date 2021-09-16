@@ -1,4 +1,5 @@
-//  see video : https://www.youtube.com/watch?v=DAXAFkuDgYo&ab_channel=EricFickes
+//  SEE : https://ello.co/ericfickes/post/htwq6cod_iwp2_-kby-s_w
+//  WATCH : https://www.youtube.com/watch?v=DAXAFkuDgYo&ab_channel=EricFickes
 /*
 Remember before running
 
