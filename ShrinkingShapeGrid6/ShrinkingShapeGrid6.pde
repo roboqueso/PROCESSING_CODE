@@ -4,9 +4,10 @@ import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
+// TODO: do something with this three layer cake action
 
 Boolean isFinal = true;
-int alf = 9;
+int alf = 46;
 
 int shapeSize = 100;
 float minShapeSize = 2;
@@ -30,7 +31,7 @@ float maxCt = 0;
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  size( displayWidth, displayHeight );
   frameRate(303);
   background(alf);
   fix.alpha(alf);
@@ -117,4 +118,3 @@ void artDaily( String dailyMsg ) {
   fix.ranPalFill(palette);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-

@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/5zuleb2ggfyh-yf5qutr_q
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -7,7 +7,7 @@ Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
-int alf = 13;
+int alf = 46;
 
 
 int shapeSize = 7680;
@@ -32,7 +32,7 @@ float maxCt = 0;
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  size(displayWidth, displayHeight);
   frameRate(303);
   background(3);
   fix.alpha(alf);
@@ -140,4 +140,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
