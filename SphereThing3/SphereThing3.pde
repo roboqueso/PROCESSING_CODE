@@ -252,4 +252,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
