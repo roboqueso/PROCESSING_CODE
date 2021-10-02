@@ -1,7 +1,4 @@
-//  Vans sole FREAKOUT GRID
-
-//  A VAR IN HERE WAS JACKED UP AND ENDED UP CREATING
-//  A REALLY COOL GRID
+//  see: https://ello.co/ericfickes/post/-xbc6guqiambpb4ckvtoig
 
 //  SKETCH SETTINGS
 Boolean isFinal = true;
@@ -37,7 +34,7 @@ int endYY = 0;
 ///////////////////////////////////////////////////////////
 //  
 void setup() {
-  size( 1024, 768);
+  size( displayWidth, displayHeight );
   background(19);
   smooth();
   stroke(255);
@@ -123,7 +120,7 @@ void doExit()
 save( this + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
