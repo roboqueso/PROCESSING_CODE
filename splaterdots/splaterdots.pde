@@ -11,7 +11,7 @@ Boolean isFinal = true;
 /////////////////////////////////////////////////////////
 void setup() {
   background(#000110);
-  size(1024, 768 );
+  size(displayWidth, displayHeight);
   noFill();
 
 } 

@@ -35,7 +35,7 @@ float maxAngle;
 //
 void setup() {
   // size to match image
-  size(1024, 768);
+  size(displayWidth, displayHeight );
   frameRate(303);
   background(36);
 
@@ -360,6 +360,3 @@ void heart( int x, int y, int w, int h )
   line( x-(w*2), y, x, y + w*PI);
   line( x+(w*2), y, x, y + w*PI);
 }
-
-
-
