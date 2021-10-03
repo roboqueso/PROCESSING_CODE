@@ -1,8 +1,9 @@
+// see:  https://ello.co/ericfickes/post/ut7_w1dgtejnlaxnm0bxya
 //  Load HTML from webpage and spit out a design
-size( 1024, 768);  //TODO: final output : 1024 x 768
+size( displayWidth, displayHeight );  //TODO: final output : 1024 x 768
 background(-1);
 
-String url = "http://www.ericfickes.com";
+String url = "https://www.youtube.com/watch?v=fd6QJ13mk6U&ab_channel=EricFickes";
 
 String[] webData  = loadStrings( url );
 
@@ -45,7 +46,9 @@ for ( xx = 0; xx <= webData.length-1; xx++)
 
 
 //  add words
-text("ERICFICKES.COM", 1200, 600); 
+text(url, 11, displayHeight-13); 
 
 //  save to png
 save( this+".png" );
+
+exit();
