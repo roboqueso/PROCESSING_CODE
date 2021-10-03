@@ -1,24 +1,26 @@
-//  JAZZ THIS UP
+//  see: https://ello.co/ericfickes/post/ryom47uk6ejh24drhn78ja
 
-int[] nz = new int[966];
-boolean gotNoise = false;
+int[] nz;
+boolean gotNoise = true;
 boolean vert = true;
 float xx=0,yy=0;
 boolean isFinal = true;
  
 void setup() {
-    size(1024, 768);
+    size(displayWidth, displayHeight);
     background(255);
-    frameRate(303);
-    smooth();
+    frameRate(420);
+    smooth(8);
     noFill();
     rectMode(CENTER);
     strokeWeight(TWO_PI);
+    
+    nz = new int[displayWidth];
 }
  
 void draw() {
  
-    if(frameCount< 966 )
+    if(frameCount < 966 )
     {
         nz[frameCount-1] =int(random(-6,6)*noise(frameCount));
     }
@@ -30,7 +32,7 @@ void draw() {
     } else {
         yy=0;
         xx += ( xx<width ) ? 4 : -xx+nz[int(yy)];
-        stroke(random(222));
+        stroke(random(240));
     }
  
     //  safety
@@ -39,24 +41,24 @@ void draw() {
     }
  
    strokeWeight(random(13));
- 
-    point( xx, yy );
+
+ point( xx, yy );
  
 
  
  
  
-    if( frameCount>height+width*42)
+    if( frameCount>(height+width)*24)
     {
         stroke(#EF1975);
         fill(#EF2012);
         textFont( createFont( "Silom", 18 ));
-        text( "ERICFICKES.COM", 115, 111 );
+        text( "ERICFICKES.COM", 46, displayHeight-24 );
         rect( 111,111, 42, 41, frameCount);
         if(isFinal)
         {
           save( this+".png" );
         }
-        noLoop();
+        exit();
     }
 }
