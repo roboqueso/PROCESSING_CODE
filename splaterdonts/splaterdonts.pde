@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/vv6oxniq5jexrulp0qwutw
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -11,9 +11,10 @@ Boolean isFinal = true;
 /////////////////////////////////////////////////////////
 void setup() {
   background(#012345);
-  size(1024, 768 );
+  size( displayWidth, displayHeight );
   noFill();
-  smooth();
+  pixelDensity(displayDensity());
+  smooth(8);
 } 
 /////////////////////////////////////////////////////////
 void draw() {
@@ -166,11 +167,11 @@ void xySystem( float a, float b)
   }
   //    ensure x & y are in screen
   if ( x > width || x < 0 ) {
-    stroke(random(175,225));
+    stroke(random(169,227));
     x = random(PI, width-x);
   }
   if ( y > height || y < 0 ) {
-    stroke(42,42,random(42, 242), random(222));
+    stroke(42,42,random(46, 256), random(256));
     y = random(PI, height-y);
   }
 }
