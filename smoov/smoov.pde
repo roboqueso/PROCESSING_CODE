@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/hghyzd-3jdrkviee3umhxg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -11,9 +11,10 @@ ArrayList<PVector> pts = new ArrayList<PVector>();
 void setup()
 {
   size(displayWidth, displayHeight);
-  frameRate(420);
+  frameRate(666);
   background(0);
-  smooth();
+  pixelDensity(displayDensity());
+  smooth(8);
   noFill();
   
   cX = width/2;
