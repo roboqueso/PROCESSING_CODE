@@ -19,12 +19,12 @@ int yy = 0;
 int outerXX = 0;
 int outerYY = 0;
 
-int cubeSize = 25;
+int cubeSize = 24;
 
-float angle = 360;
+float angle = 420;
 float maxAngle;
 float maxCir;
-float radius = 25;
+float radius = 42;
 float outerRadius;
 
 int offsetX = 0;
@@ -34,7 +34,7 @@ int offsetY = 0;
 //
 void setup() {
   // size to match image
-  size(1024, 768);
+  size(displayWidth, displayHeight);
   frameRate(303);
   background(-1);
 

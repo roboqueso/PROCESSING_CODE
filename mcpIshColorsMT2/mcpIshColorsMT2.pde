@@ -1,6 +1,4 @@
-//
-//  Pattern inspired by the MCP
-//
+// see:  https://ello.co/ericfickes/post/1vkehjsu6_mkfo-pcgmg5q
 Boolean isFinal = true;
 
 int alf = 37;
@@ -23,7 +21,7 @@ float strokeSize = 50;
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  size(displayWidth, displayHeight);
   frameRate(303);
   background(9);
 
@@ -32,6 +30,8 @@ void setup() {
   cY = height/2;
 
   mcpWidth = width;
+  siloHeight = (int)random(420,666);
+  strokeSize = (int)random(42, 69);
 
 }
 
@@ -102,7 +102,7 @@ void doExit()
     save( this + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -164,4 +164,3 @@ void heart( int x, int y, int w, int h )
   line( x-(w*2), y, x, y + w*PI);
   line( x+(w*2), y, x, y + w*PI);
 }
-
