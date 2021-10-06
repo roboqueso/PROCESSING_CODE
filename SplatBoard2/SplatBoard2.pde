@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/hzazpp2pxtuoa2ixyaqqra
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -11,42 +11,46 @@ Boolean drawBoard = false;
 int alf = 100;
 float cX, cY;
 
-color[] p1 = { 
-#EFEFEF, #FFFFFF, #EFEFEF,
-#3A3A3A,
-#4D4D4D,
-#606060,
-#737373,
-#868686,
-#9A9A9A,
-#ADADAD,
-#C0C0C0,
-#C6C6C6,
-#CDCDCD,
-#D3D3D3,
-#D9D9D9,
-#E0E0E0,
-#E6E6E6,
-#ECECEC,
-#F2F2F2,
-#F9F9F9,
-#FFFFFF
-};
+//color[] p1 = { 
+//#EFEFEF, #FFFFFF, #EFEFEF,
+//#3A3A3A,
+//#4D4D4D,
+//#606060,
+//#737373,
+//#868686,
+//#9A9A9A,
+//#ADADAD,
+//#C0C0C0,
+//#C6C6C6,
+//#CDCDCD,
+//#D3D3D3,
+//#D9D9D9,
+//#E0E0E0,
+//#E6E6E6,
+//#ECECEC,
+//#F2F2F2,
+//#F9F9F9,
+//#FFFFFF
+//};
 
-//  #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
-//  
+//color[] p2 = { 
+//#A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
+//};
+
+
+color[] p1 = { 
+  #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
+};  
 
 
 color[] p2 = { 
-#A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
-
+  #EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619
 };
-//  #EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619
-  
+
 float x;// = width/2;
 float y;// = height/2;
-float outerRad = 10;//min(width, height) * 0.4;
-float innerRad = outerRad * 0.6;
+float outerRad = 11;//min(width, height) * 0.4;
+float innerRad = outerRad * 0.42;
 float px = 0, py = 0, angle = 0;
 float pts = 60;//36;
 float rot = 360.0/pts;
@@ -55,14 +59,17 @@ float rot = 360.0/pts;
 
 //  circle vars
 float angle1, x1, y1, startX1, startY1, radius1;
+void settings(){
+  size(displayWidth, displayHeight);
+  smooth(8);
+  pixelDensity(displayDensity());
+}
 
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);
   background(#EFEFEF);
+  frameRate(420);
   fix.alpha(alf);
   cX = width * .5;
   cY = height * .5;
@@ -204,9 +211,9 @@ if( drawBoard ) {
 ////////////////////////////////////////////////////////////////
 
   fill(0);
-  text("I", startX-90, cY+180);
+  text("I", startX-90, cY+205);
   fix.bitHeart( startX+100, cY-125, false );
-  text("CO", startX+420, cY+183);
+  text("CO", startX+420, cY+205);
 }
 
 
@@ -240,4 +247,3 @@ void artDaily( String dailyMsg ) {
   fill(#676800);
   text( " "+dailyMsg, this.width-430, this.height-14);
 }
-
