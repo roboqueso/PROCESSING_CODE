@@ -1,5 +1,5 @@
-//  see:  https://ello.co/ericfickes/post/5tf8urwqh1o-cievkx76wq
-//	IMPORTS	////////////////////////////////////////////////////
+//  SEE:   https://ello.co/ericfickes/post/5tf8urwqh1o-cievkx76wq
+//  GOTO:  https://github.com/ericfickes/FIXLIB  
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);Boolean isFinal = true;
