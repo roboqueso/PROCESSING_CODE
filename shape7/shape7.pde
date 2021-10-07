@@ -1,17 +1,24 @@
+//  SEE:  https://ello.co/ericfickes/post/zgjrfzcswuw-lx2hojjpfq
 boolean save = true;
-int xx, yy, sz = 42;
+int xx, yy, sz = 111;
 PShape shp;
 
 void setup() {
-  size(640, 360, P2D);
+  size(displayWidth, displayHeight, P3D);
+  smooth(8);
+  pixelDensity(displayDensity());
+
+  frameRate(666);
+  background(#EF1975);
+  fill(#19DC79);
   //  P2D renders shape() best
   //  P3D renders shape() ok
 /*
 shapeMode(mode)
   mode  int: either CORNER, CORNERS, CENTER
 */
-  noFill();
-  smooth();
+  //noFill();
+
 
   xx = yy = -sz;
 }
@@ -27,11 +34,11 @@ void draw()
 
   //  DRAW SHAPE
   stroke(random(255));
-  strokeWeight(5);
+  strokeWeight((int)random(PI,TWO_PI));
   shape(shp, xx, yy, sz, sz);
   
   stroke(random(255));
-  strokeWeight(2);
+  strokeWeight((int)random(QUARTER_PI,PI));
   shape(shp, xx, yy, sz, sz);
   
   //}
