@@ -1,60 +1,57 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/buoh-df-l4eirlvz5nicrq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
 
-// circles
-Boolean isFinal = true;
-int ctMAIN = 0;
-int alf = 11;
-
-int cX;
-int cY;
-
+//  TWEEKERS
+int alf = 256;
 int cubeSize = 50;
-
 int dotSize = 16;  // size of ellipse used to draw sine wave
-int xspacing = 8, yspacing = xspacing;   // How far apart should each horizontal location be spaced
-int w;              // Width of entire wave
-
+int xspacing = 8; 
+int yspacing = xspacing;   // How far apart should each horizontal location be spaced
 float theta = 0.0;  // Start angle at 0
 float amplitude = 15;  // Height of wave
 float period = 100.0;  // How many pixels before the wave repeats
+int pad = 69;
+float radius = 150;
+Boolean flip = false;
+//  /TWEEKERS
+
+Boolean isFinal = true;
+int ctMAIN = 0;
+int cX;
+int cY;
+int w;              // Width of entire wave
 float dx;  // Value for incrementing X, a function of period and xspacing
 float[] xvalues, yvalues;  // Using an array to store height values for the wave
 float x = 0;
-
 int xx = 0;
 int yy = 0;
-
 int outerXX = 0;
 int outerYY = 0;
-
-int pad = 69;
-
 float angle = 0;
 float maxAngle;
-float radius = 69;  //150;
 float outerRadius;
-
 int offsetX = 0;
 int offsetY = 0;
 
 Boolean gotGrid = false;
 
-Boolean flip = false;
+
 
 color[] palette = { #EF1975, #EF0000, #19EF75, #1975EF, #928986, #918884, #9d9997, #8c8581, #7f7873, #6f6b67, #79746f, #7d7873, #817c77, #80766c, #908a83, #8b8884, #8a847c, #989085, #5e5446, #736e67, #7b756c, #8c8170, #594e3d, #706c65, #6b6457, #757066, #79746a, #555147, #6f6b61, #433c29, #6d674f, #534f3b, #575444, #47432c, #5d5a37, #434311 };
 
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // size to match image
-  size(1024, 768);
-  frameRate(303);
-  background(21);
+  size(displayWidth, displayHeight);
+  smooth(8);
+  pixelDensity(displayDensity());
+
+  frameRate(666);
+  background(#DCEF69);
   fix.alpha(alf);
   //  -------------------------------------------
 
@@ -137,7 +134,7 @@ if( frameCount % 15 == 0 ) {
 
 
   if ( angle >= maxAngle )
-  {    
+  {
     doExit();
   }
 }
@@ -227,4 +224,3 @@ void sineWave( float startX, float startY ) {
     yy++;
   }
 }
-
