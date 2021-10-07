@@ -1,5 +1,4 @@
 //  see: https://ello.co/ericfickes/post/hzqrfa1ky6iniduqqgqhlq
-// something got jacked in translations
 float centerX, centerY;
 float x, y;
 float a,b;
