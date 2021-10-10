@@ -1,10 +1,9 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/wiqqguwkq4brzejpcuxmxa
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
+import processing.javafx.*;
 
 Fixlib fix = Fixlib.init(this);
-
-
 
 /*
 liner
@@ -32,15 +31,18 @@ liner
 */
 ///////////////////////////////////////////////////////
 PVector pStart, pEnd, pt;
-Integer pStep = 16;
+Integer pStep = 69;
 ArrayList<PVector> fullPath;
 
+
 void setup() {
-	  size(1024,768, FX2D);  //  big:  1024x768
-	// background( loadImage("photo.jpg") );
-	background(-1);
+    size(displayWidth, displayHeight, FX2D);
+    smooth(8);
+    pixelDensity(displayDensity());
+
+	background(#69DCEF);
 	strokeWeight(HALF_PI);
-	smooth(8);
+
 	noFill();
 
 	// create start and end points
@@ -48,13 +50,10 @@ void setup() {
 	pEnd = new PVector( width, random(height));
 	//	get path between points
 	fullPath = fix.GeneratePath( pStart, pEnd, pStep);
-
 }
 
 ///////////////////////////////////////////////////////
 void draw() {
-	
-
 
 	// CURVE VERTEX
 	curveTightness(frameCount);
@@ -75,9 +74,6 @@ void draw() {
 		vertex( pEnd.x, pEnd.y);
 	endShape();
 
-
-
-	// stroke(random(255),random(155),random(55));
 	stroke(random(42,242),random(150),random(42));
 	strokeWeight(PI);
 
