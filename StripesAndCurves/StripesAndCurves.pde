@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/dw61udqegchqdchcqpij5w
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -6,17 +6,17 @@ Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
-int alf = 42;
+int alf = 69;
 
 int cX;
 int cY;
 
 float x,y, t;
 
-color[] p1 = { #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
+color[] p2 = { #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
 #EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619 };
 
-color[] p2 = { #EFEFEF, #C0C0C0, #a1a1a1, #1C31C3, #B3B3B3, #C4C4C4, #C5C5C5, #C6C6C6, #C1C1C1 };
+color[] p1 = { #EFEFEF, #C0C0C0, #a1a1a1, #1C31C3, #B3B3B3, #C4C4C4, #C5C5C5, #C6C6C6, #C1C1C1 };
 
 
 float angle = 0;
@@ -27,9 +27,11 @@ float w = 20; //40;
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);
-  background(-1);
+  size(displayWidth, displayHeight);
+  frameRate(666);
+  background(#dcef69);
+  smooth(8);
+  pixelDensity(displayDensity());
 
   //  setup variables
   cX = width/2;
@@ -114,4 +116,3 @@ void artDaily( String dailyMsg ) {
   fill(#EFEFEF);
   text( " "+dailyMsg, this.width-303, this.height-14);
 }
-
