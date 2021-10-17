@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/pnzi0-cvwj8tlllnxu2mpq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -12,19 +12,26 @@ int cY;
 
 float x,y, t;
 
-color[] p1 = { #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
-#EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619 };
+//color[] p1 = { #A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
+//#EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619 };
+
+
+color[] p1 = { #EFEFEF, #696969, #424242, #EF69DC, #DC69EF };
+
+
 float angle = 0;
 float xx, yy, startX, startY;
-float w = 20; //40;
+float w = 20;
 
 ////////////////////////////////////////////////////
 //
 void setup() {
   // setup core sketch settings items
-  size(1024, 768);
+  size(displayWidth, displayHeight);
+  smooth(8);
+  pixelDensity(displayDensity());
   frameRate(303);
-  background(9);
+  background(#426911);
 
   //  setup variables
   cX = width/2;
@@ -51,7 +58,7 @@ void draw()
       drawLissajous( xx, yy, 15 );
     }
 if( yy > height ) {
-  exit();
+  doExit();
 }
 
 t++;
@@ -249,4 +256,3 @@ while( yy <= height ) {
 */
 
 }
-
