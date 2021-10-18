@@ -1,36 +1,37 @@
-
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/g1aidr_jjvr3uiohx1th5a
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
 Fixlib fix = Fixlib.init(this);
 
-
-// HOT
 public float xx = 0, yy = 0;
 
 Boolean isFinal = true;
 /////////////////////////////////////////////////////////
 void setup() {
-  background(0);
-  size(1024, 768 );
+
+  background(-1);
+  size(displayWidth, displayHeight, P3D);
+  pixelDensity(displayDensity());
+  frameRate(666);
+  smooth(8);
   noFill();
-  smooth();
+
 } 
 /////////////////////////////////////////////////////////
 void draw() {
 
   xySystem(xx, yy);
 
-  strokeWeight(random(HALF_PI, TWO_PI));
+  strokeWeight(random(QUARTER_PI, TWO_PI));
   point( xx, yy );
   
 
   // STOPPER
-  if ( frameCount > (1024+768)*PI )
+  if ( frameCount > (1024+768)*4.2 )
   {
     fill(#EFEFEF);
-    textFont( createFont( "Monospace", 11 ) );
+    textFont( createFont( "Monaco", 11 ) );
     text("ERICFICKES.COM", 11, height-11);
 
     if(isFinal){
@@ -91,11 +92,11 @@ void xySystem( float a, float b)
   }
   //    ensure x & y are in screen
   if ( a > width || a < 0 ) {
-    stroke(42, random(255), 42);
+    stroke(46, random(255), 46);
     xx = random(PI, width-xx);
   }
   if ( b > height || b < 0 ) {
-    stroke(42,random(42, 242), 42,random(222));
+    stroke(46,random(46, 242), 46,random(222));
     yy = random(PI, height-yy);
   }
 }
