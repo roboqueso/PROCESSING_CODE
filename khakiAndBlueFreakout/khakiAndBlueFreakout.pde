@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/v_ghrhti6spajgxk0nx1zq
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -7,20 +7,20 @@ Fixlib fix = Fixlib.init(this);
 // circles
 Boolean isFinal = true;
 int ctMAIN = 0;
-int alf = 37;
+int alf = 69;
 
 int cX;
 int cY;
 
-int stroke1 = 1;
-int stroke2 = 2;
+int stroke1 = 6; //2; //1;
+int stroke2 = 9; //4; //2;
 //
 
-color[] p2 = { 
+color[] p1 = { 
 #EF0000, #006768,#EF0000, #EFEF11, #36EF75, #EF7535, #FF1234, #EF3619,#A59DA1,#D96D55,#F36613,#A9ABEA,#D23301,#F6FAFD,#AB6E9C,#D6F9FF,#F8751E,#768A00,#F05510,#FFEE51,#FFB02A,#D7D5FA,
 };
 
-color[] p1 = { 
+color[] p2 = { 
   #0e75f0, #031224,
   #E19F36, #E0BF36
  };
@@ -36,10 +36,12 @@ float maxAngle;
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // size to match image
-  size(1024, 768);
-  frameRate(303);
-  background(36);
+  
+  size(displayWidth, displayHeight);
+  pixelDensity(displayDensity());
+  smooth(8);
+  frameRate(666);
+  background(-1);
 
   //  -------------------------------------------
   smooth();
@@ -60,14 +62,7 @@ void setup() {
   radius2 = 181;
   radius3 = 272;
   radius4 = 453;
-  
-  /*
-  while( angle1 < height ) {
-    text( angle1, angle1, angle1 );
-   angle1 = nextFib(int(angle1)); 
-  }
-  exit();
-  */
+
 }
 
 
@@ -77,7 +72,6 @@ void draw()
 {
   smooth();
   noFill();
-
 
   xx1 = startX1 - int( cos(radians(angle1)) * radius1 );
   yy1 = startY1 - int( sin(radians(angle1)) * radius1 );
@@ -93,33 +87,27 @@ void draw()
   
   //  -------------
   strokeWeight(stroke1);  
+    
+  //
+  //stroke( 0, 50);
+  ranPalStroke(p2);
+  arc( xx1, yy1, radius1, radius1, angle1, angle1);//, alf );
   
-//
-//stroke( 0, 50);
-ranPalStroke(p2);
-arc( xx1, yy1, radius1, radius1, angle1, angle1);//, alf );
-
-stroke( #000000,alf);
-bezier( xx1, random(yy1), xx2, yy2, xx3, yy3, xx4, yy4 );
+  stroke( #000000,alf);
+  bezier( xx1, random(yy1), xx2, yy2, xx3, yy3, xx4, yy4 );
 
   strokeWeight(stroke2);  
-ranPalStroke(p1);
-bezier( xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4 );
+  ranPalStroke(p1);
+  bezier( xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4 );
 
-/*
-ranPalStroke(p2);
-strokeWeight( random(alf) );
-point(xx1, yy1);
-point(xx2, yy2);
-point(xx3, yy3);
-point(xx4, yy4);
-*/
+  strokeWeight(HALF_PI);  
+  stroke(-1);
+  bezier( xx1, yy1, xx2, yy2, xx3, yy3, xx4, yy4 );
 
   angle1 += 2;
   angle2 += alf/2;  //2;
   angle3 += alf/3;  //3;
   angle4 += alf;  //4;
-
 
   if( angle1 % 720 == 0 ) {
     radius1 += alf;
@@ -128,10 +116,9 @@ point(xx4, yy4);
     radius4 += alf;
   }
 
-
   if ( angle1 >= maxAngle )
   {    
-    exit();
+    doExit();
   }
  
 }
@@ -263,7 +250,7 @@ void hexagon( float startX, float startY, float shapeSize ) {
 //  End handler, saves png to ../OUTPUT
 void doExit() 
 {
-  
+
   artDaily("ERICFICKES.COM");
 
   //  if final, save output to png
@@ -272,7 +259,7 @@ void doExit()
     save( fix.pdeName() + fix.getTimestamp() + ".png" );
   }
 
-  super.stop();
+  exit();
 }
 
 ///////////////////////////////////////////////////////////
@@ -377,6 +364,3 @@ void heart( int x, int y, int w, int h )
   line( x-(w*2), y, x, y + w*PI);
   line( x+(w*2), y, x, y + w*PI);
 }
-
-
-
