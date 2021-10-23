@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/c8rn_cofu_mmffj8nf1haa
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -7,23 +7,25 @@ Fixlib fix = Fixlib.init(this);
 
 public Boolean isFinal = true;
 public float xx=0,yy=0, colWidth=0, rowHeight=0;
-public int i = 0, gridSize = 4, cX, cY;
+public int i = 0, gridSize = 222, cX, cY;
 public int[] sz = { 3, 6, 9, 11, 15, 23, 38, 61, 99, 111 };
 /////////////////////////////////////////////////////////////////////////////////
 void setup() {
-    background(0);
-    size(1024,768);
-//size(1024, 768);
-    smooth();
-    noFill();
-    colWidth = width/gridSize;
-    rowHeight = height/gridSize;
+  size(displayWidth, displayHeight);
+  pixelDensity(displayDensity());
+  smooth(8);
+  frameRate(666);
+  background(-1);
+  noFill();
+  
+  colWidth = width/gridSize;
+  rowHeight = height/gridSize;
 } 
 /////////////////////////////////////////////////////////////////////////////////
 void draw() {  // this is run repeatedly.  
     
     stroke(random(255), 100);
-    
+
     xySystem( xx, yy );
 
     
@@ -122,4 +124,3 @@ void lineGrid( int gridSize ){
   }
   
 }
-
