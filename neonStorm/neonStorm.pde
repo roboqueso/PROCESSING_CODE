@@ -1,4 +1,4 @@
-//  SEE:   
+//  SEE:   https://ello.co/ericfickes/post/aqqpvc-qyc-tquqfr_e6vg
 //  GOTO:  https://github.com/ericfickes/FIXLIB
 import fixlib.*;
 
@@ -6,8 +6,8 @@ Fixlib fix = Fixlib.init(this);
 
 
 Boolean isFinal = true;
-int alf = 42;
-float shapeSize = 400;
+int alf = 142;
+float shapeSize = 666;
 
 int cX;
 int cY;
@@ -15,6 +15,7 @@ int cY;
 //  #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
 color[] palette = { 
 #EF0000, #00EF00, #0000EF, #EFEFEF
+// #A59DA1, #D96D55, #F36613, #A9ABEA, #D23301, #F6FAFD, #AB6E9C, #D6F9FF, #F8751E, #768A00, #F05510, #FFEE51, #FFB02A, #D7D5FA
 };
 
 
@@ -28,10 +29,12 @@ PVector thisPt,lastPt, pv1, pv2, pv3, pv4 = new PVector();
 ////////////////////////////////////////////////////
 //
 void setup() {
-  // setup core sketch settings items
-  size(1024, 768);
-  frameRate(303);
-  background(21);
+  size(displayWidth, displayHeight);
+  pixelDensity(displayDensity());
+  smooth(8);
+  frameRate(666);
+  background(0);
+  noFill();
   fix.alpha(alf);
   //  setup variables
   cX = width/2;
@@ -214,4 +217,3 @@ void artDaily( String dailyMsg ) {
   fill(255);
   text( " "+dailyMsg, this.width*.45, this.height-18);
 }
-
